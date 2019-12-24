@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import SortableList from './SortableList';
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
           Learn React
         </a>
       </header>
+        <div>
+            <SortableList user="text" user2={"dddd"}/>
+        </div>
     </div>
   );
 }
