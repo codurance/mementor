@@ -1,7 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import SortableList from './SortableList';
+import SortableList from './components/SortableList';
+import SearchBar from "./components/SearchBar";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         </a>
       </header>
         <div>
+            <SearchBar />
             <SortableList user="text" user2={"dddd"}/>
         </div>
     </div>
