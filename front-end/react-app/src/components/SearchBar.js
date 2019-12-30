@@ -7,16 +7,12 @@ export default class SearchBar extends React.Component {
         this.state = {value: ''};
     }
 
-    handleKeyPress(data){
-        this.setState( {value: data});
-    }
-
     _onChange(data){
       this.setState({value: data});
       console.log(`${this.state.value}`);
     }
 
     render(){
-        return <input type="text" id="search-bar" onChange={e => this._onChange(e.target.value)} value={`${this.state.value}`} />
+        return <input type="text" className="search-bar" onChange={e => this._onChange(e.target.value)} value={`${this.state.value}`} placeholder="Search for craftsperson"/>
     }
 }
