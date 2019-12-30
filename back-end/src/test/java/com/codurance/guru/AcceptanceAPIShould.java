@@ -1,5 +1,6 @@
 package com.codurance.guru;
 
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -27,18 +28,14 @@ public class AcceptanceAPIShould {
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(
                 "http://localhost:8080/craftspeople/1", HttpMethod.GET,entity, String.class);
-        String expected = "{\"id\":1,\"firstName\":\"Jose\",\"lastName\":\"Campos\",\"imageUrl\":null}";
 
-        JSONAssert.assertEquals(expected, response.getBody(), false);
+        JSONObject expected = new JSONObject(){{
+            put("id", 1);
+            put("firstName", "Jose");
+            put("lastName","Campos");
+        }};
+
+        JSONAssert.assertEquals(expected.toString(), response.getBody(), false);
     }
 
-    @Test
-    public void retrieve_all_craftspeople() throws Exception{
-        HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(
-                "http://localhost:8080/craftspeople", HttpMethod.GET,entity, String.class);
-        String expected = "{\"id\":1,\"firstName\":\"Jose\",\"lastName\":\"Campos\",\"imageUrl\":null}";
-
-        JSONAssert.assertEquals(expected, response.getBody(), false);
-    }
 }
