@@ -25,6 +25,11 @@ public class Craftsperson {
         this.imageUrl = imageUrl;
     }
 
+    public Craftsperson(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public Integer getId() {
         return id;
     }

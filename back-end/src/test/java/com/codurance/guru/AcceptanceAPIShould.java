@@ -31,4 +31,14 @@ public class AcceptanceAPIShould {
 
         JSONAssert.assertEquals(expected, response.getBody(), false);
     }
+
+    @Test
+    public void retrieve_all_craftspeople() throws Exception{
+        HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                "http://localhost:8080/craftspeople", HttpMethod.GET,entity, String.class);
+        String expected = "{\"id\":1,\"firstName\":\"Jose\",\"lastName\":\"Campos\",\"imageUrl\":null}";
+
+        JSONAssert.assertEquals(expected, response.getBody(), false);
+    }
 }
