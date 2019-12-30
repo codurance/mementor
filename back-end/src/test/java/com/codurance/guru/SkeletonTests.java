@@ -15,7 +15,6 @@ import static com.jayway.restassured.RestAssured.get;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = GuruApplication.class)
 @TestPropertySource(value={"classpath:application.properties"})
@@ -28,7 +27,7 @@ public class SkeletonTests {
     @BeforeEach
     public void setBaseUri () {
         RestAssured.port = 8080;
-        RestAssured.baseURI = "http://localhost"; // replace as appropriate
+        RestAssured.baseURI = "http://localhost";
     }
 
     @Test
@@ -43,6 +42,8 @@ public class SkeletonTests {
     void client_api_test_call() {
         String expectedJSON = "{\"ok\":true}";
         String response = clientTest.testSlackApi();
+
         assertEquals(expectedJSON, response);
     }
+
 }
