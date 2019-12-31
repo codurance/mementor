@@ -29,4 +29,12 @@ describe("Search Component", () => {
 
         expect(component.prop("placeholder")).toEqual("Search for craftsperson");
     });
+
+    it("should change the state when the event bind is called", () => {
+        const component = shallow(<SearchBar/>);
+
+        component.find("input").simulate("change", {target: {value: "test"}});
+
+        expect(component.state("value")).toEqual("test");
+    })
 });
