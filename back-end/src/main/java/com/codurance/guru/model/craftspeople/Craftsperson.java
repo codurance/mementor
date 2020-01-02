@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Craftsperson {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "first_name")
     private String firstName;
