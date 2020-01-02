@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 public class CraftspeopleService {
 
     @Autowired
-    private CraftpeopleRepository repository;
+    private CraftspeopleRepository repository;
 
-    public Craftsperson retrieveStudent(Integer craftspersonId) {
+    public Craftsperson retrieveCraftsperson(Integer craftspersonId) {
         return repository.findById(craftspersonId).orElse(new Craftsperson());
     }
 }

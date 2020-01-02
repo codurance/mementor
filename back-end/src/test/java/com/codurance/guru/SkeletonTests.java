@@ -3,7 +3,7 @@ package com.codurance.guru;
 import com.codurance.guru.infrastructure.restclient.ClientTest;
 import com.jayway.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,7 +39,7 @@ public class SkeletonTests {
     }
 
     @Test
-    void client_api_test_call() {
+    public void client_api_test_call() {
         String expectedJSON = "{\"ok\":true}";
         String response = clientTest.testSlackApi();
 
