@@ -2,11 +2,11 @@ package com.codurance.guru;
 
 import org.json.JSONObject;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,8 +22,12 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = GuruApplication.class)
 @TestPropertySource(value={"classpath:application-test.properties"})
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AcceptanceAPIShould {
+
+    @LocalServerPort
+    int port;
+
 
     TestRestTemplate restTemplate = new TestRestTemplate();
     HttpHeaders headers = new HttpHeaders();
@@ -37,8 +41,8 @@ public class AcceptanceAPIShould {
     )
     public void retrieve_a_craftsperson() throws Exception{
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(
-                "http://localhost:8080/craftspeople/1", HttpMethod.GET,entity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(String.format(
+                "http://localhost:%s/craftspeople/1", port), HttpMethod.GET,entity, String.class);
 
         JSONObject expected = new JSONObject(){{
             put("id", 1);
