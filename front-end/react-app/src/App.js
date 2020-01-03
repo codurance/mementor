@@ -5,6 +5,9 @@ import SortableList from './components/SortableList';
 import SearchBar from "./components/SearchBar";
 
 function App() {
+    const craftspeople = ["Arnaud", "Etienne", "Riccardo", "Ed", "Jose"];
+    const [filtered, setFiltered] = useState(craftspeople);
+
     const filterCraftspeople = (data) => {
         let filters = craftspeople.filter((name) => {
             return name.toLowerCase().indexOf(data.toLowerCase()) !== -1;
@@ -12,8 +15,6 @@ function App() {
         setFiltered(filters);
     };
 
-    const craftspeople = ["Arnaud", "Etienne", "Riccardo", "Ed", "Jose"];
-    const [filtered, setFiltered] = useState(craftspeople);
 
     return (
         <div className="App">
