@@ -38,4 +38,11 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
-      - run: mvn test
+      - run: mvn test -Dtest=!AcceptanceAPIShould
+
+      - store_test_results: # uploads the test metadata from the `target/test-results` directory so that it can show up in the CircleCI dashboard.
+          # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: target/test-results
+
+      - store_artifacts:
+          path: target/guru-0.0.1-SNAPSHOT.jar

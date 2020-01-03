@@ -28,7 +28,6 @@ public class AcceptanceAPIShould {
     @LocalServerPort
     int port;
 
-
     TestRestTemplate restTemplate = new TestRestTemplate();
     HttpHeaders headers = new HttpHeaders();
 
