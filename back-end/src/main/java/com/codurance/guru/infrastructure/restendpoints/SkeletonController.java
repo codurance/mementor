@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +28,10 @@ public class SkeletonController {
     }
 
     @RequestMapping(path = "/restApiTest", method= RequestMethod.GET)
-    public Response getCraftPeopleForReactTest() {
+    public List<Craftsperson> getCraftPeopleForReactTest() {
         List<Craftsperson> data = new ArrayList<>();
         data.add(new Craftsperson("Riccardo","Toni"));
         data.add(new Craftsperson("Jose", "Campos"));
-        JSONObject jo = new JSONObject(data);
-        return new Response(jo.toString());
+        return data;
     }
 }
