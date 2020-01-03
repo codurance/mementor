@@ -2,6 +2,7 @@ package com.codurance.guru;
 
 import com.codurance.guru.infrastructure.restclient.ClientTest;
 import com.jayway.restassured.RestAssured;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +31,7 @@ public class SkeletonTests {
         RestAssured.baseURI = "http://localhost";
     }
 
+    @Ignore
     @Test
     public void getDataTest() {
         get("/api/tdd/responseData")
@@ -38,6 +40,7 @@ public class SkeletonTests {
                 .body("data", equalTo("responseData"));
     }
 
+    @Ignore
     @Test
     public void client_api_test_call() {
         String expectedJSON = "{\"ok\":true}";
