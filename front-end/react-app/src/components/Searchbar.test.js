@@ -36,5 +36,7 @@ describe("Search Component", () => {
         component.find("input").simulate("change", {target: {value: "test"}});
 
         expect(component.state("value")).toEqual("test");
-    })
+    });
+
+
 });
