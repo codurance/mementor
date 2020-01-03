@@ -1,9 +1,14 @@
 package com.codurance.guru.infrastructure.restendpoints;
 
+import com.codurance.guru.model.craftspeople.Craftsperson;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class SkeletonController {
@@ -24,5 +29,17 @@ public class SkeletonController {
             return data;
         }
     }
+
+    @RequestMapping(path = "/reatApiTest", method= RequestMethod.GET)
+    public Response getCraftPeopleForReactTest() {
+        List<Craftsperson> data = new ArrayList<>();
+
+        data.add(new Craftsperson("Riccardo","Toni"));
+        data.add(new Craftsperson("Jose", "Campos"));
+
+
+        return new Response(data.toString());
+    }
+
 
 }
