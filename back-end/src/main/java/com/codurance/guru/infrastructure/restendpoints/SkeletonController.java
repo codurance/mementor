@@ -20,26 +20,20 @@ public class SkeletonController {
 
     class Response {
         private String data;
-
         public Response(String data) {
             this.data = data;
         }
-
         public String getData() {
             return data;
         }
     }
 
-    @RequestMapping(path = "/reatApiTest", method= RequestMethod.GET)
+    @RequestMapping(path = "/restApiTest", method= RequestMethod.GET)
     public Response getCraftPeopleForReactTest() {
         List<Craftsperson> data = new ArrayList<>();
-
         data.add(new Craftsperson("Riccardo","Toni"));
         data.add(new Craftsperson("Jose", "Campos"));
-
-
-        return new Response(data.toString());
+        JSONObject jo = new JSONObject(data);
+        return new Response(jo.toString());
     }
-
-
 }
