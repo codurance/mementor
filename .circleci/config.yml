@@ -40,4 +40,4 @@ jobs:
 
       # run tests!
       - run: java jar guru-0.0.1-SNAPSHOT.jar
-      - mvn test
+      -d mvn test
