@@ -22,7 +22,6 @@ jobs:
 
     steps:
       - checkout
-      - apk add ca-certificates
 
       # Download and cache dependencies
       - restore_cache:
