@@ -22,11 +22,12 @@ jobs:
 
     steps:
       - checkout
+      - apk add ca-certificates
 
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "back-end/pom.xml" }}
+            - v1-dependencies-{{ checksum "/back-end/pom.xml" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
@@ -35,7 +36,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
-          key: v1-dependencies-{{ checksum "pom.xml" }}
+          key: v1-dependencies-{{ checksum "/back-end/pom.xml" }}
 
       # run tests!
       - run: mvn integration-test
