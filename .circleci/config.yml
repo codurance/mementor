@@ -39,4 +39,5 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       # run tests!
-      - run: mvn test
+      - run: java jar guru-0.0.1-SNAPSHOT.jar
+      - mvn test
