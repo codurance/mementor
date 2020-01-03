@@ -38,6 +38,8 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
-      # run tests!
-      - run: java jar guru-0.0.1-SNAPSHOT.jar
-      -d mvn test
+      workflows:
+        maven_test:
+          jobs:
+            - maven/test :
+                command: '-X verify'
