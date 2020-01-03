@@ -38,8 +38,4 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
-      workflows:
-        maven_test:
-          jobs:
-            - maven/test :
-                command: '-X verify'
+      - run: mvn test
