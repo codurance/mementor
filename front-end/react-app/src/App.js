@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import SortableList from './components/SortableList';
 import SearchBar from "./components/SearchBar";
 
 function App() {
-    const craftspeople = ["Arnaud", "Etienne", "Riccardo", "Ed", "Jose"];
+    // const craftspeople = ["Arnaud", "Etienne", "Riccardo", "Ed", "Jose"];
+    const [craftspeople, setCraftsPeople] = useState([]);
     const [filtered, setFiltered] = useState(craftspeople);
 
     const filterCraftspeople = (data) => {
@@ -15,25 +16,25 @@ function App() {
         setFiltered(filters);
     };
 
+    useEffect(() => {
+        fetch("http://localhost:8080/restApiTest").then(res => {
+            return res.json();
+        }).then(data => {
+            let crafts = data.map((c) => {
+                return c.firstName + ' ' + c.lastName;
+            });
+            setCraftsPeople(crafts);
+        });
+    }, []);
+
+    useEffect(() => {
+        filterCraftspeople('');
+    }, [craftspeople]);
 
     return (
         <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
-                <p>
-                    Fuck you, Ed
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
             <div>
-                <SearchBar onEnter={filterCraftspeople} filter={() => filterCraftspeople()}/>
+                <SearchBar onEnter={filterCraftspeople}/>
                 <SortableList craftspeople={filtered}/>
             </div>
         </div>
