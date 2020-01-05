@@ -24,12 +24,9 @@ function App() {
                 return c.firstName + ' ' + c.lastName;
             });
             setCraftsPeople(crafts);
+            setFiltered(crafts);
         });
     }, []);
-
-    useEffect(() => {
-        filterCraftspeople('');
-    }, [craftspeople]);
 
     return (
         <div className="App">
