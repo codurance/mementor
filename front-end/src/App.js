@@ -7,8 +7,7 @@ import {api} from "./util/api";
 import SortableRow from "./components/SortableRow";
 
 function App() {
-    const craftspeople = ["Arnaud", "Etienne", "Riccardo", "Ed", "Jose"];
-    // const [craftspeople, setCraftsPeople] = useState([]);
+    const [craftspeople, setCraftsPeople] = useState([]);
     const [filtered, setFiltered] = useState(craftspeople);
 
     const filterCraftspeople = (data) => {
@@ -18,21 +17,26 @@ function App() {
         setFiltered(filters);
     };
 
-    // useEffect(() => {
-    //     api('restApiTest').then(data => {
-    //         let crafts = data.map((c) => {
-    //             return c.firstName + ' ' + c.lastName;
-    //         });
-    //         setCraftsPeople(crafts);
-    //         setFiltered(crafts);
-    //     });
-    // }, []);
+    useEffect(() => {
+        api('restApiTest').then(data => {
+            let crafts = data.map((c) => {
+                return c.firstName + ' ' + c.lastName;
+            });
+            setCraftsPeople(crafts);
+            setFiltered(crafts);
+        }).catch(error => {
+            console.log(error);
+            const default_craftspeople = ["Arnaud", "Etienne", "Riccardo", "Ed", "Jose"];
+            setCraftsPeople(default_craftspeople);
+            setFiltered(default_craftspeople);
+        })
+    }, []);
 
     return (
         <div className="App">
             <div>
                 <SearchBar onEnter={filterCraftspeople}/>
-                <SortableList craftspeople={filtered.map((craftsperson) => <SortableRow name={craftsperson} key={`${craftsperson}`}/>)}/>
+                <SortableList craftspeople={filtered.map(craftsperson => <SortableRow key={`${craftsperson}`} name={craftsperson}/>)}/>
             </div>
         </div>
     );
