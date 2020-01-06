@@ -34,13 +34,11 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}-{{ checksum "front-end/package.json" }}
 
-      - run: mvn test && mkdir target/test-results
+      - run: mvn package
       - run: cd front-end && npm test
 
       - store_test_results:
           path: target/test-results
 
       - store_artifacts:
-          path: target/guru-0.0.1-SNAPSHOT.jar
-
-      - run: pwd && ls && cd target && ls
+          path: target/
