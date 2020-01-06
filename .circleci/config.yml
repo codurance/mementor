@@ -41,4 +41,4 @@ jobs:
           path: target/test-results
 
       - store_artifacts:
-          path: target/
+          path: target/*.jar
