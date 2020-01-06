@@ -1,6 +1,6 @@
 package com.codurance.guru.infrastructure.restendpoints;
 
-import com.codurance.guru.model.craftspeople.Craftsperson;
+import com.codurance.guru.craftspeople.Craftsperson;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

@@ -1,6 +1,6 @@
 package com.codurance.guru;
 
-import com.codurance.guru.infrastructure.restclient.ClientTest;
+import com.codurance.guru.slack.SlackApiClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +18,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SkeletonTests {
 
     @Autowired
-    private ClientTest clientTest;
-    
+    private SlackApiClient slackApiClient;
+
     @Test
     public void client_api_test_call() {
         String expectedJSON = "{\"ok\":true}";
-        String response = clientTest.testSlackApi();
+        String response = slackApiClient.apiTest();
 
         assertEquals(expectedJSON, response);
     }
