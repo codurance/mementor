@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.equalTo;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = GuruApplication.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class AcceptanceAPIShould {
+public class CraftspeopleControllerTest {
 
     @Autowired
     CraftspeopleRepository craftspeopleRepository;
