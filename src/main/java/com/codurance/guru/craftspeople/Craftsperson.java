@@ -1,4 +1,4 @@
-package com.codurance.guru.model.craftspeople;
+package com.codurance.guru.craftspeople;
 
 import javax.persistence.*;
 

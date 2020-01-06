@@ -1,8 +1,8 @@
 package com.codurance.guru;
 
-import com.codurance.guru.model.craftspeople.CraftspeopleRepository;
-import com.codurance.guru.model.craftspeople.CraftspeopleService;
-import com.codurance.guru.model.craftspeople.Craftsperson;
+import com.codurance.guru.craftspeople.CraftspeopleRepository;
+import com.codurance.guru.craftspeople.CraftspeopleService;
+import com.codurance.guru.craftspeople.Craftsperson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
