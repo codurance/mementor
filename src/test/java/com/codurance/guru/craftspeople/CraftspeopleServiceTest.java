@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = GuruApplication.class)
 @SpringBootTest
-public class CraftspeopleControllerShould {
+public class CraftspeopleServiceTest {
 
     @Autowired
     CraftspeopleService craftspeopleService;
