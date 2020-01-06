@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = GuruApplication.class)
-@TestPropertySource(value={"classpath:application.properties"})
+@TestPropertySource(value={"classpath:application-test.properties"})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class SkeletonTests {
 
@@ -40,7 +40,6 @@ public class SkeletonTests {
                 .body("data", equalTo("responseData"));
     }
 
-    @Ignore
     @Test
     public void client_api_test_call() {
         String expectedJSON = "{\"ok\":true}";
