@@ -1,7 +1,7 @@
 package com.codurance.guru.craftspeople;
 
 import com.codurance.guru.GuruApplication;
-import com.jayway.restassured.RestAssured;
+import io.restassured.RestAssured;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
