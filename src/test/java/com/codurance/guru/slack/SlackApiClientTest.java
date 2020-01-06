@@ -1,5 +1,6 @@
-package com.codurance.guru;
+package com.codurance.guru.slack;
 
+import com.codurance.guru.GuruApplication;
 import com.codurance.guru.slack.SlackApiClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,9 +14,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = GuruApplication.class)
-@TestPropertySource(value={"classpath:application-test.properties"})
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class SkeletonTests {
+@TestPropertySource(value={"classpath:application.properties"})
+@SpringBootTest
+public class SlackApiClientTest {
 
     @Autowired
     private SlackApiClient slackApiClient;
