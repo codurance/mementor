@@ -39,7 +39,7 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       - run: mvn test
-      - run: apt-get install nodejs npm
+      - run: sudo apt-get install nodejs npm
       - run: cd front-end && npm test
 
       - store_test_results: # uploads the test metadata from the `target/test-results` directory so that it can show up in the CircleCI dashboard.
