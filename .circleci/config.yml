@@ -39,9 +39,9 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       - run: mvn test \
-        sudo apt-get update && sudo apt-get upgrade -y \
-        sudo apt-get install -y npm \
-        cd front-end && npm test
+        -d sudo apt-get update && sudo apt-get upgrade -y \
+        -d sudo apt-get install -y npm \
+        -d cd front-end && npm test
 
       - store_test_results: # uploads the test metadata from the `target/test-results` directory so that it can show up in the CircleCI dashboard.
           # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
