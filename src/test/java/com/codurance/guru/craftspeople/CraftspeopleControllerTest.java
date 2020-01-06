@@ -6,23 +6,23 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = GuruApplication.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(
+        classes = GuruApplication.class,
+        webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class CraftspeopleControllerTest {
 
     @Autowired
     CraftspeopleRepository craftspeopleRepository;
+
     private Craftsperson savedCraftsperson;
 
     @Test
-    public void retrieve_a_craftsperson() throws Exception{
+    public void retrieve_a_craftsperson() {
 
         given_a_craftsperson_in_the_repository();
 
