@@ -32,7 +32,7 @@ jobs:
             - v1-dependencies-
 
       - run: mvn dependency:go-offline
-      - run: npm install
+      - run: cd front-end && npm install
 
       - save_cache:
           paths:
