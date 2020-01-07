@@ -13,26 +13,10 @@ public class Craftsperson {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @Column(name = "image_url")
-    private String imageUrl;
     @ManyToOne
     private Craftsperson mentor;
 
-    public Craftsperson() {
-    }
-
-    public Craftsperson(String firstName, String lastName, String imageUrl) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.imageUrl = imageUrl;
-    }
-
-    public Craftsperson(String firstName, String lastName, String imageUrl, Craftsperson mentor) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.imageUrl = imageUrl;
-        this.mentor = mentor;
-    }
+    public Craftsperson() { }
 
     public Craftsperson(String firstName, String lastName) {
         this.firstName = firstName;
@@ -40,17 +24,8 @@ public class Craftsperson {
     }
 
     public Craftsperson(String firstName, String lastName, Craftsperson mentor) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this(firstName, lastName);
         this.mentor = mentor;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -67,14 +42,6 @@ public class Craftsperson {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public Craftsperson getMentor() {
