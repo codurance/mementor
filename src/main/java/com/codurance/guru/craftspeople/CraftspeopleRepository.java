@@ -1,4 +1,4 @@
-package com.codurance.guru.model.craftspeople;
+package com.codurance.guru.craftspeople;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
