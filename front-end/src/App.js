@@ -21,17 +21,16 @@ function App() {
     useEffect(() => {
         api('craftspeople').then(data => {
             let craftspeople_names = data.map((craftsperson) => {
-                return craftsperson.firstName + ' ' + craftsperson.lastName;
+                return craftsperson["firstName"] + ' ' + craftsperson["lastName"];
             });
             setCraftsPeople(craftspeople_names);
             setFiltered(craftspeople_names);
         }).catch(error => {
-            console.log(error);
-            console.log(Array.from(FIXTURE));
-            const default_craftspeople = Array.from(FIXTURE).sort((a, b) => {
-                return b['mentee'].length - a['mentee'].length
-            }).map((craft) => {
-                return craft.firstName + " " + craft.lastName.slice(0, 3);
+            const default_craftspeople = Array.from(FIXTURE)
+                .sort((a, b) => {
+                    return b['mentee'].length - a['mentee'].length})
+                .map((craft) => {
+                    return craft["firstName"] + " " + craft["lastName"];
             });
             setCraftsPeople(default_craftspeople);
             setFiltered(default_craftspeople);
