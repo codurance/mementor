@@ -20,7 +20,10 @@ function App() {
     useEffect(() => {
         api('craftspeople').then(data => {
             let crafts = data.map((c) => {
-                return c.firstName + ' ' + c.lastName;
+                if(c.mentor != null)
+                    return 'Craftsperson: ' + c.firstName + ' ' + c.lastName + ' - Mentor: ' + c.mentor.firstName + ' ' + c.mentor.lastName;
+                return 'Craftsperson: ' + c.firstName + ' ' + c.lastName;
+
             });
             setCraftsPeople(crafts);
             setFiltered(crafts);

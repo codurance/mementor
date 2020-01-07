@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,10 +20,13 @@ public class CraftspeopleController {
 
     @GetMapping("/craftspeople")
     public List<Craftsperson> retrieveAll() {
-        List<Craftsperson> data = new ArrayList<>();
-        data.add(new Craftsperson("Riccardo","Toni"));
-        data.add(new Craftsperson("Jose", "Campos"));
-        return data;
+        return craftspeopleService.retrieveAllCraftsperson();
+    }
+
+    @GetMapping("/craftspeopleDummy")
+    public List<Craftsperson> retrieveAllDummy() {
+        craftspeopleService.addDummyData();
+        return craftspeopleService.retrieveAllCraftsperson();
     }
 
 }

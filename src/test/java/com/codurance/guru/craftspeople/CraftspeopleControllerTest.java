@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -20,10 +21,10 @@ public class CraftspeopleControllerTest {
     CraftspeopleRepository craftspeopleRepository;
 
     private Craftsperson savedCraftsperson;
+    private Craftsperson mentor;
 
     @Test
     public void retrieve_a_craftsperson() {
-
         given_a_craftsperson_in_the_repository();
 
         RestAssured.get("craftspeople/{craftspersonId}", savedCraftsperson.getId())
@@ -33,9 +34,39 @@ public class CraftspeopleControllerTest {
                 .body("lastName", equalTo(savedCraftsperson.getLastName()));
     }
 
+    @Test
+    public void retrieve_craftsperson_with_a_mentor() {
+        given_a_craftsperson_with_a_mentor();
+
+        RestAssured.get("craftspeople/{craftspersonId}", savedCraftsperson.getId())
+                .then().assertThat()
+                .body("mentor.firstName", equalTo(mentor.getFirstName()))
+                .body("mentor.lastName", equalTo(mentor.getLastName()))
+                .body("mentor.id", equalTo(mentor.getId()));
+    }
+
+    @Test
+    public void retrieve_all_craftspeople() {
+        given_two_craftspeople();
+        long craftspeopleCount = craftspeopleRepository.count();
+
+        RestAssured.get("craftspeople")
+                .then().assertThat()
+                .body("$", hasSize((int) craftspeopleCount));
+    }
+
+    private void given_two_craftspeople() {
+        craftspeopleRepository.save(new Craftsperson("Jose", "Wenzel"));
+        craftspeopleRepository.save(new Craftsperson("Ed", "Rixon"));
+    }
+
+    private void given_a_craftsperson_with_a_mentor() {
+        mentor = craftspeopleRepository.save(new Craftsperson("Jose", "Wenzel"));
+        savedCraftsperson = craftspeopleRepository.save(new Craftsperson("Arnaud", "CLAUDEL", mentor));
+    }
+
     private void given_a_craftsperson_in_the_repository() {
         savedCraftsperson = craftspeopleRepository.save(new Craftsperson("Arnaud","CLAUDEL"));
     }
-
 
 }
