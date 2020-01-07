@@ -77,6 +77,7 @@
 		</dependencies>
 	</dependencyManagement>
 	<build>
+		<finalName>mementor</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -91,6 +92,30 @@
 						<include>**/*Should*.java</include>
 					</includes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>packaging-react</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/classes/public/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/front-end/build</directory>
+									<includes>
+										<include>**/*</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
