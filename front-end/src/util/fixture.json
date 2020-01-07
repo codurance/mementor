@@ -1,0 +1,27 @@
+[
+  {
+    "firstName": "Arnaud",
+    "lastName": "Claudel",
+    "mentee": [1]
+  },
+  {
+    "firstName": "Etienne",
+    "lastName": "Mustow",
+    "mentee": [1]
+  },
+  {
+    "firstName": "Riccardo",
+    "lastName": "Toni",
+    "mentee": [1, 2, 3]
+  },
+  {
+    "firstName": "Ed",
+    "lastName": "Rixon",
+    "mentee": [1, 2]
+  },
+  {
+    "firstName": "Jose",
+    "lastName": "Pablo",
+    "mentee": []
+  }
+]

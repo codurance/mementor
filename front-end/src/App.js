@@ -5,6 +5,7 @@ import SortableList from './components/SortableList';
 import SearchBar from "./components/SearchBar";
 import {api} from "./util/api";
 import SortableRow from "./components/SortableRow";
+import FIXTURE from "./util/fixture.json"
 
 function App() {
     const [craftspeople, setCraftsPeople] = useState([]);
@@ -26,7 +27,12 @@ function App() {
             setFiltered(craftspeople_names);
         }).catch(error => {
             console.log(error);
-            const default_craftspeople = ["Arnaud", "Etienne", "Riccardo", "Ed", "Jose"];
+            console.log(Array.from(FIXTURE));
+            const default_craftspeople = Array.from(FIXTURE).sort((a, b) => {
+                return b['mentee'].length - a['mentee'].length
+            }).map((craft) => {
+                return craft.firstName + " " + craft.lastName.slice(0, 3);
+            });
             setCraftsPeople(default_craftspeople);
             setFiltered(default_craftspeople);
         })
