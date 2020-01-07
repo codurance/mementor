@@ -7,14 +7,9 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/openjdk:11.0.3-jdk-stretch
+      - image: circleci/openjdk:11-stretch-node
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
-    working_directory: ~/repo/back-end
+    working_directory: ~/repo
 
     environment:
       # Customize the JVM maximum heap limit
@@ -27,22 +22,23 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "pom.xml" }}
+            - v1-dependencies-{{ checksum "pom.xml" }}-{{ checksum "front-end/package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
       - run: mvn dependency:go-offline
+      - run: cd front-end && npm install
 
       - save_cache:
           paths:
             - ~/.m2
-          key: v1-dependencies-{{ checksum "pom.xml" }}
+          key: v1-dependencies-{{ checksum "pom.xml" }}-{{ checksum "front-end/package.json" }}
 
-      - run: mvn test
+      - run: mvn package
+      - run: cd front-end && npm test
 
-      - store_test_results: # uploads the test metadata from the `target/test-results` directory so that it can show up in the CircleCI dashboard.
-          # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-          path: target/test-results
+      - store_test_results:
+          path: target/surefire-reports
 
       - store_artifacts:
-          path: target/guru-0.0.1-SNAPSHOT.jar
+          path: target/
