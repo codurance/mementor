@@ -23,10 +23,4 @@ public class CraftspeopleController {
         return craftspeopleService.retrieveAllCraftsperson();
     }
 
-    @GetMapping("/craftspeopleDummy")
-    public List<Craftsperson> retrieveAllDummy() {
-        craftspeopleService.addDummyData();
-        return craftspeopleService.retrieveAllCraftsperson();
-    }
-
 }
