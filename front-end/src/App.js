@@ -18,7 +18,7 @@ function App() {
     };
 
     useEffect(() => {
-        api('restApiTest').then(data => {
+        api('craftspeople').then(data => {
             let crafts = data.map((c) => {
                 return c.firstName + ' ' + c.lastName;
             });
