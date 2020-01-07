@@ -38,7 +38,7 @@ jobs:
       - run: cd front-end && npm test
 
       - store_test_results:
-          path: target/test-results
+          path: target/surefire-reports
 
       - store_artifacts:
-          path: target/*.jar
+          path: target/
