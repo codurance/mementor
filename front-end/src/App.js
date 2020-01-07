@@ -19,11 +19,11 @@ function App() {
 
     useEffect(() => {
         api('craftspeople').then(data => {
-            let crafts = data.map((c) => {
-                return c.firstName + ' ' + c.lastName;
+            let craftspeople_names = data.map((craftsperson) => {
+                return craftsperson.firstName + ' ' + craftsperson.lastName;
             });
-            setCraftsPeople(crafts);
-            setFiltered(crafts);
+            setCraftsPeople(craftspeople_names);
+            setFiltered(craftspeople_names);
         }).catch(error => {
             console.log(error);
             const default_craftspeople = ["Arnaud", "Etienne", "Riccardo", "Ed", "Jose"];
@@ -32,11 +32,15 @@ function App() {
         })
     }, []);
 
+    function convertCraftspeopleToSortableRows() {
+        return filtered.map(craftsperson => <SortableRow key={`${craftsperson}`} name={craftsperson}/>);
+    }
+
     return (
         <div className="App">
             <div>
                 <SearchBar onEnter={filterCraftspeople}/>
-                <SortableList craftspeople={filtered.map(craftsperson => <SortableRow key={`${craftsperson}`} name={craftsperson}/>)}/>
+                <SortableList craftspeople={convertCraftspeopleToSortableRows()}/>
             </div>
         </div>
     );
