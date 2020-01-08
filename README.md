@@ -32,3 +32,14 @@ to do this run the `localdeploy.sh` file.
 Now you can go to http://localhost:8080/ and the app will be deployed.
 
 _note that this steps can be found in the Dockerfile._
+
+## Frontend development
+
+If you're only working in the frontend, you won't need to redeploy the entire application
+on every change.  
+You can start a dev server that will hot reload the frontend and proxy api calls to the backend.
+
+- `./localdeploy.sh`
+- `npm --prefix front-end start` 
+
+The app will now be available on http://localhost:3000/.
