@@ -1,0 +1,28 @@
+[
+  {
+    "firstName": "Arnaud",
+    "lastName": "Claudel",
+    "mentor": "El hombre",
+    "mentees": ["etienne mustow"]
+  },
+  {
+    "firstName": "Etienne",
+    "lastName": "Mustow",
+    "mentees": ["riccardo toni"]
+  },
+  {
+    "firstName": "Riccardo",
+    "lastName": "Toni",
+    "mentees": ["ed rixon", "jose pablo", "giulio perrone"]
+  },
+  {
+    "firstName": "Ed",
+    "lastName": "Rixon",
+    "mentees": ["arnaud claudel", "giulia mantuano"]
+  },
+  {
+    "firstName": "Jose",
+    "lastName": "Pablo",
+    "mentees": []
+  }
+]

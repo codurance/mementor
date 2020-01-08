@@ -5,6 +5,8 @@ import SortableList from './components/SortableList';
 import SearchBar from "./components/SearchBar";
 import {api} from "./util/api";
 import SortableRow from "./components/SortableRow";
+import FIXTURE from "./util/fixture.json"
+import {default_sort} from "./util/sorting";
 
 function App() {
     const [craftspeople, setCraftsPeople] = useState([]);
@@ -17,21 +19,19 @@ function App() {
         setFiltered(filters);
     };
 
+    const SetAndSortCraftspeople = (data) => {
+        const craftspeople_rows = default_sort(data);
+        setCraftsPeople(craftspeople_rows);
+        setFiltered(craftspeople_rows);
+    };
+
     useEffect(() => {
         api('craftspeople').then(data => {
-            let crafts = data.map((c) => {
-                if(c.mentor != null)
-                    return 'Craftsperson: ' + c.firstName + ' ' + c.lastName + ' - Mentor: ' + c.mentor.firstName + ' ' + c.mentor.lastName;
-                return 'Craftsperson: ' + c.firstName + ' ' + c.lastName;
-
-            });
-            setCraftsPeople(crafts);
-            setFiltered(crafts);
+            SetAndSortCraftspeople(data);
         }).catch(error => {
             console.log(error);
-            const default_craftspeople = ["Arnaud", "Etienne", "Riccardo", "Ed", "Jose"];
-            setCraftsPeople(default_craftspeople);
-            setFiltered(default_craftspeople);
+            const fixture_data_for_craftspeople = Array.from(FIXTURE);
+            SetAndSortCraftspeople(fixture_data_for_craftspeople);
         })
     }, []);
 
