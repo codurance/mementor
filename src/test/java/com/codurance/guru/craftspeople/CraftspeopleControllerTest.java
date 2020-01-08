@@ -46,6 +46,18 @@ public class CraftspeopleControllerTest {
     }
 
     @Test
+    public void retrieve_craftsperson_with_mentees() {
+        given_a_craftsperson_with_a_mentor();
+
+        RestAssured.get("craftspeople/{craftspersonId}", mentor.getId())
+                .then().assertThat()
+                .body("mentees", hasSize(1))
+                .body("mentees[0].id", equalTo(savedCraftsperson.getId()))
+                .body("mentees[0].firstName", equalTo(savedCraftsperson.getFirstName()))
+                .body("mentees[0].lastName", equalTo(savedCraftsperson.getLastName()));
+    }
+
+    @Test
     public void retrieve_all_craftspeople() {
         given_two_craftspeople();
         long craftspeopleCount = craftspeopleRepository.count();
