@@ -16,13 +16,14 @@ public class CraftspersonSerializer extends StdSerializer<Craftsperson> {
 
     @Override
     public void serialize(Craftsperson craftsperson, JsonGenerator gen, SerializerProvider provider) throws IOException {
-        Person mentor = null;
-        if(craftsperson.getMentor() != null) {
-            mentor = new Person(craftsperson.getMentor());
-        }
+        Person mentor = craftsperson.getMentor()
+                .map(Person::new)
+                .orElse(null);
+
         List<Person> mentees = craftsperson.getMentees().stream()
                 .map(Person::new)
                 .collect(Collectors.toList());
+
         gen.writeObject(new SerializableCraftsperson(craftsperson, mentor, mentees));
     }
 }

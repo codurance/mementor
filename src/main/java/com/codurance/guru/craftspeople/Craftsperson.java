@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "craftspeople")
@@ -66,8 +67,8 @@ public class Craftsperson {
         this.lastName = lastName;
     }
 
-    public Craftsperson getMentor() {
-        return mentor;
+    public Optional<Craftsperson> getMentor() {
+        return Optional.ofNullable(mentor);
     }
 
     public void setMentor(Craftsperson mentor) {
