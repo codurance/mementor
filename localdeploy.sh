@@ -1,10 +1,6 @@
 #!/bin/bash
 
-cd front-end/
-
-npm install && npm run build
-
-cd ..
+npm install --prefix ./front-end && npm run build --prefix ./front-end
 
 mvn package
 
