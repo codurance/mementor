@@ -1,6 +1,6 @@
 # Guru (Mementor)
 
-This is the final project from the appretices from October to January 2019-20, this tool allows a better overview on the mentor/mentee relationship and track the meeting that they are having.
+This is the final project from the apprentices from October to January 2019-20, this tool allows a better overview on the mentor/mentee relationship and track the meeting that they are having.
 
 ## Tech stack
 
@@ -25,7 +25,7 @@ Infrastructure:
 
 To build the project in your localhost, you need to go to first of all
 build the `front-end` application to package it. After this we package 
-our `back-end`.
+our `back-end`, and then run our `.jar` file.
 
 to do this run the `localdeploy.sh` file.
 
