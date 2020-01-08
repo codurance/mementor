@@ -8,7 +8,7 @@ describe("Testing the API", () => {
    it("should call the endpoint once", () => {
        fetch.mockResponseOnce();
 
-       api("restApiTest").then(res => {});
+       api("restApiTest").then(_ => {});
 
        expect(fetch.mock.calls.length).toEqual(1);
    });
@@ -23,3 +23,5 @@ describe("Testing the API", () => {
        })
    });
 });
+
+

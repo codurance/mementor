@@ -6,6 +6,7 @@ import SearchBar from "./components/SearchBar";
 import {api} from "./util/api";
 import SortableRow from "./components/SortableRow";
 import FIXTURE from "./util/fixture.json"
+import {default_sort} from "./util/sorting";
 
 function App() {
     const [craftspeople, setCraftsPeople] = useState([]);
@@ -20,20 +21,13 @@ function App() {
 
     useEffect(() => {
         api('craftspeople').then(data => {
-            let craftspeople_names = data.map((craftsperson) => {
-                return craftsperson["firstName"] + ' ' + craftsperson["lastName"];
-            });
+            const craftspeople_names = default_sort(data);
             setCraftsPeople(craftspeople_names);
             setFiltered(craftspeople_names);
         }).catch(error => {
-            const default_craftspeople = Array.from(FIXTURE)
-                .sort((a, b) => {
-                    return b['mentee'].length - a['mentee'].length})
-                .map((craft) => {
-                    return craft["firstName"] + " " + craft["lastName"];
-            });
-            setCraftsPeople(default_craftspeople);
-            setFiltered(default_craftspeople);
+            const craftspeople_names = default_sort(Array.from(FIXTURE));
+            setCraftsPeople(craftspeople_names);
+            setFiltered(craftspeople_names);
         })
     }, []);
 

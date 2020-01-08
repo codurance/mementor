@@ -2,26 +2,26 @@
   {
     "firstName": "Arnaud",
     "lastName": "Claudel",
-    "mentee": [1]
+    "mentees": ["etienne mustow"]
   },
   {
     "firstName": "Etienne",
     "lastName": "Mustow",
-    "mentee": [1]
+    "mentees": ["riccardo toni"]
   },
   {
     "firstName": "Riccardo",
     "lastName": "Toni",
-    "mentee": [1, 2, 3]
+    "mentees": ["ed rixon", "jose pablo", "giulio perrone"]
   },
   {
     "firstName": "Ed",
     "lastName": "Rixon",
-    "mentee": [1, 2]
+    "mentees": ["arnaud claudel", "giulia mantuano"]
   },
   {
     "firstName": "Jose",
     "lastName": "Pablo",
-    "mentee": []
+    "mentees": []
   }
 ]
