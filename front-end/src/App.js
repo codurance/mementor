@@ -19,27 +19,27 @@ function App() {
         setFiltered(filters);
     };
 
+    const SetAndSortCraftspeople = (data) => {
+        const craftspeople_rows = default_sort(data);
+        setCraftsPeople(craftspeople_rows);
+        setFiltered(craftspeople_rows);
+    };
+
     useEffect(() => {
         api('craftspeople').then(data => {
-            const craftspeople_names = default_sort(data);
-            setCraftsPeople(craftspeople_names);
-            setFiltered(craftspeople_names);
+            SetAndSortCraftspeople(data);
         }).catch(error => {
-            const craftspeople_names = default_sort(Array.from(FIXTURE));
-            setCraftsPeople(craftspeople_names);
-            setFiltered(craftspeople_names);
+            console.log(error);
+            const fixture_data_for_craftspeople = Array.from(FIXTURE);
+            SetAndSortCraftspeople(fixture_data_for_craftspeople);
         })
     }, []);
-
-    function convertCraftspeopleToSortableRows() {
-        return filtered.map(craftsperson => <SortableRow key={`${craftsperson}`} name={craftsperson}/>);
-    }
 
     return (
         <div className="App">
             <div>
                 <SearchBar onEnter={filterCraftspeople}/>
-                <SortableList craftspeople={convertCraftspeopleToSortableRows()}/>
+                <SortableList craftspeople={filtered.map(craftsperson => <SortableRow key={`${craftsperson}`} name={craftsperson}/>)}/>
             </div>
         </div>
     );
