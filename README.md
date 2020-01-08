@@ -23,11 +23,11 @@ Infrastructure:
 
 ## Build
 
-To build the project in your localhost, you need to go to the 
-`front-end` directory and then `npm install && npm run build` , after this you'll 
-have a packaged front-end application. After this go back to the `guru` directory and run
-`mvn package` this will create a package with both your front-end aplication and your backend 
-application. Once you've done this you run `java -jar target/mementor.jar`.
+To build the project in your localhost, you need to go to first of all
+build the `front-end` application to package it. After this we package 
+our `back-end`.
+
+to do this run the `localdeploy.sh` file.
 
 Now you can go to http://localhost:8080/ and the app will be deployed.
 
