@@ -18,7 +18,7 @@ RUN mvn dependency:go-offline
 
 # build
 COPY . .
-RUN npm --prefix run build
+RUN npm --no-color --prefix front-end run build
 RUN mvn package -B -o -DskipTests
 
 # clean up build artifacts
