@@ -39,7 +39,7 @@ function App() {
         <div className="App">
             <div>
                 <SearchBar onEnter={filterCraftspeople}/>
-                <SortableList craftspeople={filtered.map(craftsperson => <SortableRow key={`${craftsperson}`} name={craftsperson}/>)}/>
+                <SortableList craftspeople={filtered.map(craftsperson => <SortableRow craftsperson={craftsperson}/>)}/>
             </div>
         </div>
     );
