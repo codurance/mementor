@@ -14,8 +14,8 @@ function App() {
     const [filtered, setFiltered] = useState(craftspeople);
 
     const filterCraftspeople = (data) => {
-        let filters = craftspeople.filter((name) => {
-            return name.toLowerCase().indexOf(data.toLowerCase()) !== -1;
+        let filters = craftspeople.filter((craftsperson) => {
+            return `${craftsperson.firstName} ${craftsperson.lastName}`.toLowerCase().indexOf(data.toLowerCase()) !== -1;
         });
         setFiltered(filters);
     };
