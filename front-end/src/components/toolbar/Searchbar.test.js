@@ -18,10 +18,4 @@ describe("Search Component", () => {
         expect(component.hasClass("search-bar")).toBe(true);
     });
 
-    it("should render with placeholder 'Search for craftsperson'", () => {
-        const component = shallow(<SearchBar/>);
-
-        expect(component.prop("placeholder")).toEqual("Search for craftsperson");
-    });
-
 });
