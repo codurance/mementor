@@ -12,8 +12,8 @@ export const default_sort = (data) => {
            let mentees = '-';
            if(craftsperson.mentees.length > 0) {
                mentees = craftsperson.mentees
-                   .map(m => m.firstName + ' ' + m.lastName)
-                   .reduce((m1, m2) => m1 + ', ' + m2);
+                   .map(mentee => mentee.firstName + ' ' + mentee.lastName)
+                   .reduce((name1, name2) => name1 + ', ' + name2);
            }
 
            return [person, 'Mentor: ' + mentor, 'Mentees: ' + mentees].join(' | ');
