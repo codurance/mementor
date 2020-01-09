@@ -3,6 +3,7 @@ import Craftsperson from "./Craftsperson";
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 export default function SortableRow(props){
     return (
@@ -14,7 +15,14 @@ export default function SortableRow(props){
                 </Accordion.Toggle>
                 </Card.Header>
                 <Accordion.Collapse eventKey="0">
-                <Card.Body>{props.craftsperson.mentees.length}</Card.Body>
+                <Card.Body>
+                <ListGroup>
+                    {props.craftsperson.mentees.map(mentee => {
+                            return <ListGroup.Item>{mentee.firstName + ' ' + mentee.lastName}</ListGroup.Item>
+                    })}
+                </ListGroup>   
+                     
+                </Card.Body>
                 </Accordion.Collapse>
             </Card>
         </Accordion>
