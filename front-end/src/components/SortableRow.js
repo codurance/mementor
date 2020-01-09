@@ -1,5 +1,6 @@
 import React from "react";
+import Craftsperson from "./Craftsperson";
 
 export default function SortableRow(props){
-    return <li>{props.name}</li>;
+    return <li><Craftsperson craftsperson={props.craftsperson}/></li>;
 }
