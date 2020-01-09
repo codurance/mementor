@@ -1,9 +1,14 @@
 package com.codurance.guru.craftspeople;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
+import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "craftspeople")
+@JsonSerialize(using = CraftspersonSerializer.class)
 public class Craftsperson {
 
     @Id
@@ -15,6 +20,8 @@ public class Craftsperson {
     private String lastName;
     @ManyToOne
     private Craftsperson mentor;
+    @OneToMany(mappedBy = "mentor")
+    private List<Craftsperson> mentees;
 
     public Craftsperson() { }
 
@@ -26,6 +33,14 @@ public class Craftsperson {
     public Craftsperson(String firstName, String lastName, Craftsperson mentor) {
         this(firstName, lastName);
         this.mentor = mentor;
+    }
+
+    public List<Craftsperson> getMentees() {
+        return mentees;
+    }
+
+    public void setMentees(List<Craftsperson> mentees) {
+        this.mentees = mentees;
     }
 
     public Integer getId() {
@@ -52,8 +67,8 @@ public class Craftsperson {
         this.lastName = lastName;
     }
 
-    public Craftsperson getMentor() {
-        return mentor;
+    public Optional<Craftsperson> getMentor() {
+        return Optional.ofNullable(mentor);
     }
 
     public void setMentor(Craftsperson mentor) {

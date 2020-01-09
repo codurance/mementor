@@ -13,14 +13,17 @@ public class CraftspeopleSampleData {
 
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
-        Craftsperson mentor1 = repository.save(new Craftsperson("Arnaud", "CLAUDEL"));
-        Craftsperson mentor2 = repository.save(new Craftsperson("Stephane", "Meny"));
-        Craftsperson mentor3 = repository.save(new Craftsperson("Sandro", "Mancuso"));
-        repository.save(new Craftsperson("Giulio", "Perrone"));
-        repository.save(new Craftsperson("Jose", "Wenzel", mentor1));
-        repository.save(new Craftsperson("Etienne", "Mustow", mentor2));
-        repository.save(new Craftsperson("Ed", "Rixon", mentor3));
-        repository.save(new Craftsperson("Michael", "Jackson"));
-        repository.save(new Craftsperson("Mahatma", "Gandhi"));
+        Craftsperson sandro = repository.save(new Craftsperson("Sandro", "Mancuso"));
+        Craftsperson steve = repository.save(new Craftsperson("Steve", "Lydford"));
+        Craftsperson stephane = repository.save(new Craftsperson("Stephane", "Meny"));
+        Craftsperson arnaud = repository.save(new Craftsperson("Arnaud", "CLAUDEL", sandro));
+        repository.save(new Craftsperson("Jose", "Wenzel", sandro));
+        repository.save(new Craftsperson("Etienne", "Mustow", sandro));
+        repository.save(new Craftsperson("Ed", "Rixon", steve));
+        repository.save(new Craftsperson("Michael", "Jackson",steve));
+        repository.save(new Craftsperson("Giulio", "Perrone", steve));
+        repository.save(new Craftsperson("Mahatma", "Gandhi", arnaud));
+        repository.save(new Craftsperson("Bob", "Martin", arnaud));
+        repository.save(new Craftsperson("Lev", "Boris", stephane));
     }
 }
