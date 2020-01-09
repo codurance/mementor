@@ -1,7 +1,6 @@
 package com.codurance.guru.craftspeople;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,6 +16,6 @@ public class CraftspeopleService {
     }
 
     public List<Craftsperson> retrieveAllCraftsperson() {
-        return repository.findAll(Sort.by("firstName"));
+        return repository.findAll();
     }
 }

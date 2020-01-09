@@ -1,6 +1,6 @@
 export const default_sort = (data) => {
     return data
-        .sort((a, b) => {return b['mentees'].length - a['mentees'].length})
+        .sort((craftsperson1, craftsperson2) => {return craftsperson2['mentees'].length - craftsperson1['mentees'].length})
         .map((craftsperson) => {
            const person = 'Craftsperson: ' + craftsperson['firstName'] + ' ' + craftsperson['lastName'];
 
