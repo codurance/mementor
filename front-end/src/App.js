@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import SortableList from './components/SortableList';
-import SearchBar from "./components/SearchBar";
+import SortableList from './components/list/SortableList';
+import SearchBar from "./components/toolbar/SearchBar";
 import {api} from "./util/api";
-import SortableRow from "./components/SortableRow";
+import SortableRow from "./components/list/SortableRow";
 import FIXTURE from "./util/fixture.json"
 import {default_sort} from "./util/sorting";
+import Header from './components/header/Header';
 
 function App() {
     const [craftspeople, setCraftsPeople] = useState([]);
     const [filtered, setFiltered] = useState(craftspeople);
 
     const filterCraftspeople = (data) => {
-        let filters = craftspeople.filter((name) => {
-            return name.toLowerCase().indexOf(data.toLowerCase()) !== -1;
+        let filters = craftspeople.filter((craftsperson) => {
+            return `${craftsperson.firstName} ${craftsperson.lastName}`.toLowerCase().indexOf(data.toLowerCase()) !== -1;
         });
         setFiltered(filters);
     };
@@ -38,6 +39,7 @@ function App() {
     return (
         <div className="App">
             <div>
+                <Header />
                 <SearchBar onEnter={filterCraftspeople}/>
                 <SortableList craftspeople={filtered.map(craftsperson => <SortableRow key={craftsperson.id} craftsperson={craftsperson}/>)}/>
             </div>

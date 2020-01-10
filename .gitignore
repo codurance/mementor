@@ -37,9 +37,10 @@ build/
 *.swo
 
 # dependencies
-front-end/node_modules
+**/node_modules
 front-end/.pnp
 front-end/.pnp.js
+package-lock.json
 
 # testing
 frontend/coverage
