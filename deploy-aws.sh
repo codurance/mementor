@@ -10,9 +10,9 @@ if [ $# -lt 1 ] ; then
 fi
 
 ENV=$1
-PLATFORM='64bit Amazon Linux 2018.03 v2.14.0 running Docker 18.09.9-ce'
-APP_NAME='mementor'
-REGION='eu-central-1'
+PLATFORM="64bit Amazon Linux 2018.03 v2.14.0 running Docker 18.09.9-ce"
+APP_NAME="mementor"
+REGION="eu-central-1"
 
-eb init --region $REGION --platform $PLATFORM $APP_NAME
-eb deploy $APP_NAME-$ENV
+eb init --region "$REGION" --platform "$PLATFORM" "$APP_NAME"
+eb deploy "$APP_NAME-$ENV"
