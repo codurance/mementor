@@ -42,3 +42,11 @@ You can deploy the backend one and start a dev server that will hot reload the f
 - `npm --prefix front-end start`
 
 The app will now be accessible on http://localhost:3000
+
+## AWS Deployment
+
+In order to deploy to AWS from your local machine, you need to run `aws configure` and setup the credentials that can
+be found on BitWarden.  
+Then you can run the deploy script:
+
+`./deploy-aws.sh dev`
