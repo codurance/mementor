@@ -1,5 +1,14 @@
 export const default_sort = (data) => {
     return data
-        .sort((craftsperson1, craftsperson2) => {return craftsperson2['mentees'].length - craftsperson1['mentees'].length});
+        .sort((leftCraftsperson, rightCraftsperson) => {
+            if (leftCraftsperson['mentees'].length || rightCraftsperson['mentees'].length){
+                return rightCraftsperson['mentees'].length - leftCraftsperson['mentees'].length;
+            }
+            else{
+                return (leftCraftsperson['firstName'] + leftCraftsperson['lastName']).localeCompare(rightCraftsperson['firstName'] + rightCraftsperson['lastName']);
+            }
+         });
 };
+
+
 
