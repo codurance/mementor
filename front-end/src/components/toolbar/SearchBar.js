@@ -7,13 +7,13 @@ export default function SearchBar(props){
     return (
         <InputGroup className="search-bar mb-3">
             <InputGroup.Prepend>
-                <InputGroup.Text id="inputGroup-sizing-sm">Craftsperson</InputGroup.Text>
+                <InputGroup.Text id="inputGroup-sizing-sm">Search</InputGroup.Text>
             </InputGroup.Prepend>
             <FormControl
                 onChange={(e) => props.onEnter(e.target.value)}
                 aria-label="Craftsperson searchbar"
                 aria-describedby="basic-addon1"
-                placeholder="Search for craftsperson"
+                placeholder="Find Craftsperson..."
             />
       </InputGroup>
       )
