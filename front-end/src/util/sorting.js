@@ -1,11 +1,13 @@
-export const default_sort = function applyDefaultSortToCraftpeople(data){
+export const default_sort = function applyDefaultSortToCraftpeople(data) {
     return data
         .sort((leftCraftsperson, rightCraftsperson) => {
-            if (leftCraftsperson.mentees.length || rightCraftsperson.mentees.length){
-                return rightCraftsperson.mentees.length - leftCraftsperson.mentees.length;
+            if (leftCraftsperson.mentees.length === rightCraftsperson.mentees.length) {
+                return (leftCraftsperson.firstName + leftCraftsperson.lastName)
+                    .localeCompare(rightCraftsperson.firstName + rightCraftsperson.lastName);
             }
-            else{
-                return (leftCraftsperson.firstName + leftCraftsperson.lastName).localeCompare(rightCraftsperson.firstName + rightCraftsperson.lastName);
+
+            if (leftCraftsperson.mentees.length || rightCraftsperson.mentees.length) {
+                return rightCraftsperson.mentees.length - leftCraftsperson.mentees.length;
             }
          });
 };
