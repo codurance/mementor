@@ -1,4 +1,4 @@
-export const default_sort = function applyDefaultSortToCraftpeople(data) {
+export const defaultSort = function applyDefaultSortToCraftpeople(data) {
     return data
         .sort((leftCraftsperson, rightCraftsperson) => {
             if (leftCraftsperson.mentees.length === rightCraftsperson.mentees.length) {
