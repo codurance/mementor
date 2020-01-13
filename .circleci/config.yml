@@ -27,12 +27,13 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
+            - front-end/node_modules
           key: v1-dependencies-{{ checksum "pom.xml" }}-{{ checksum "front-end/package.json" }}
 
       - run: mvn package -B
       - run: npm --prefix front-end test
 
-      - run: DOCKER_BUILDKIT=1 docker build .
+      - run: docker build .
 
       - store_test_results:
           path: target/surefire-reports
