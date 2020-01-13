@@ -27,7 +27,7 @@ jobs:
             - v1-dependencies-
 
       - run: mvn dependency:go-offline
-      - run: cd front-end && npm install
+      - run: npm --prefix front-end install
 
       - save_cache:
           paths:
@@ -35,7 +35,7 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}-{{ checksum "front-end/package.json" }}
 
       - run: mvn package
-      - run: cd front-end && npm test
+      - run: npm --prefix front-end test
 
       - store_test_results:
           path: target/surefire-reports
