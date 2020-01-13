@@ -17,7 +17,7 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "pom.xml" }}-{{ checksum "front-end/package.json" }}
+            - v1-dependencies-{{ checksum "pom.xml" }}--{{ checksum "front-end/package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
@@ -28,7 +28,7 @@ jobs:
           paths:
             - ~/.m2
             - front-end/node_modules
-          key: v1-dependencies-{{ checksum "pom.xml" }}-{{ checksum "front-end/package.json" }}
+          key: v1-dependencies-{{ checksum "pom.xml" }}--{{ checksum "front-end/package.json" }}
 
       - run: mvn package -B
       - run: npm --prefix front-end test
