@@ -6,7 +6,7 @@ import SearchBar from "./components/toolbar/SearchBar";
 import {api} from "./util/api";
 import SortableRow from "./components/list/SortableRow";
 import FIXTURE from "./util/fixture.json"
-import {default_sort} from "./util/sorting";
+import { defaultSort } from "./util/sorting";
 import Header from './components/header/Header';
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
     };
 
     const SetAndSortCraftspeople = (data) => {
-        const craftspeople_rows = default_sort(data);
+        const craftspeople_rows = defaultSort(data);
         setCraftsPeople(craftspeople_rows);
         setFiltered(craftspeople_rows);
     };
