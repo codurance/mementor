@@ -29,7 +29,7 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}-{{ checksum "front-end/package.json" }}
 
-      - run: mvn package -o -B
+      - run: mvn package -B
       - run: npm --prefix front-end test
 
       - run: DOCKER_BUILDKIT=1 docker build .
