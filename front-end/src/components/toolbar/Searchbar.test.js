@@ -1,21 +1,19 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import SearchBar from "./SearchBar";
 
 describe("Search Component", () => {
+  it("should have a Button with the 'Clear Search' label", () => {
+    const { getByTestId } = render(<SearchBar />);
 
-    it("should render", () => {
-        const component = shallow(<SearchBar/>);
+    expect(getByTestId("clearSearchButton")).toHaveTextContent("Clear search");
+  });
 
-        expect(component.exists()).toBe(true);
-    });
+  it("should display a <Button /> when is not empty", () => {
+    const { getByTestId } = render(<SearchBar />);
 
-    it("should render with class named 'search-bar'", () => {
-        const component = shallow(<SearchBar/>);
-
-        expect(component.hasClass("search-bar")).toBe(true);
-    });
-
+    expect(getByTestId("clearSearchButton")).not.toHaveClass("is-hidden");
+  });
 });
