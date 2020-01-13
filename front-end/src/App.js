@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import SortableList from './components/list/SortableList';
-import SearchBar from "./components/toolbar/SearchBar";
-import {api} from "./util/api";
-import SortableRow from "./components/list/SortableRow";
-import FIXTURE from "./util/fixture.json"
-import {default_sort} from "./util/sorting";
+import SearchBar from './components/toolbar/SearchBar';
+import {api} from './util/api';
+import SortableRow from './components/list/SortableRow';
+import FIXTURE from './util/fixture.json'
+import {defaultSort} from './util/sorting';
 import Header from './components/header/Header';
 
 function App() {
@@ -14,14 +14,15 @@ function App() {
     const [filtered, setFiltered] = useState(craftspeople);
 
     const filterCraftspeople = (data) => {
-        let filters = craftspeople.filter((craftsperson) => {
-            return `${craftsperson.firstName} ${craftsperson.lastName}`.toLowerCase().indexOf(data.toLowerCase()) !== -1;
-        });
+        let filters = craftspeople.filter((craftsperson) => (
+            `${craftsperson.firstName} ${craftsperson.lastName}`.toLowerCase().indexOf(data.toLowerCase()) !== -1
+            )
+        );
         setFiltered(filters);
     };
 
     const SetAndSortCraftspeople = (data) => {
-        const craftspeople_rows = default_sort(data);
+        const craftspeople_rows = defaultSort(data);
         setCraftsPeople(craftspeople_rows);
         setFiltered(craftspeople_rows);
     };
@@ -37,7 +38,7 @@ function App() {
     }, []);
 
     return (
-        <div className="App">
+        <div className='App'>
             <div>
                 <Header />
                 <SearchBar onEnter={filterCraftspeople}/>
