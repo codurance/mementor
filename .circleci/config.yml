@@ -37,6 +37,8 @@ jobs:
       - run: mvn package
       - run: npm --prefix front-end test
 
+      - run: DOCKER_BUILDKIT=1 docker build .
+
       - store_test_results:
           path: target/surefire-reports
 
