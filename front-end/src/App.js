@@ -3,7 +3,6 @@ import "./App.css";
 import SearchBar from "./components/toolbar/SearchBar";
 import { api } from "./util/api";
 import SortableRow from "./components/list/SortableRow";
-import FIXTURE from "./util/fixture.json";
 import { sortByNumberOfMentees, sortByCraftspeopleWithoutMentor } from "./util/sorting";
 import { filter } from "./util/filtering";
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
@@ -11,25 +10,17 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 
 function App() {
+    const defaultSort = sortByNumberOfMentees
+    
     const [craftspeople, setCraftsPeople] = useState([]);
     const [filteredCrafspeople, setFilteredCrafspeople] = useState(craftspeople);
-    const [sortAlgorithm, setSortAlgorithm] = useState(() => sortByNumberOfMentees);
+    const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
     const [backendFetchError, setBackendFetchError] = useState(null);
-
-    function sortWithCurrentAlgorithm(craftspeople) {
-        craftspeople.sort(sortAlgorithm);
-    }
 
     function filterCraftspeople(searchedValue) {
         const filteredCraftspeople = filter(craftspeople, searchedValue);
-        sortWithCurrentAlgorithm(filteredCraftspeople);
+        craftspeople.sort(sortAlgorithm);
         setFilteredCrafspeople(filteredCraftspeople);
-    };
-
-    function sortAndSetCraftspeople(craftspeople) {
-        sortWithCurrentAlgorithm(craftspeople);
-        setCraftsPeople(craftspeople);
-        setFilteredCrafspeople(craftspeople);
     };
 
     function makeSortOnClickListener (sortAlgorithmToUse) {
@@ -43,14 +34,16 @@ function App() {
 
     useEffect(() => {
         api("craftspeople")
-            .then(data => {
-                sortAndSetCraftspeople(data);
+            .then(fetchedCraftspeople => {
+                fetchedCraftspeople.sort(defaultSort)
+                setCraftsPeople(fetchedCraftspeople);
+                setFilteredCrafspeople(fetchedCraftspeople);
             })
             .catch(error => {
                 console.log(error);
                 setBackendFetchError(error)
             });
-    }, []);
+    }, [defaultSort]);
 
     return (
         <div className='App'>
