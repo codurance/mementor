@@ -39,10 +39,10 @@ function App() {
             });
     }, []);
 
-    const makeSortOnClickListener = (sortAlgorithmLocal) => {
+    const makeSortOnClickListener = (sortAlgorithmToUse) => {
         return () => {
-            setSortAlgorithm(() => sortAlgorithmLocal);
-            const sortedCraftspeople = filteredCrafspeople.sort(sortAlgorithmLocal);
+            setSortAlgorithm(() => sortAlgorithmToUse);
+            const sortedCraftspeople = filteredCrafspeople.sort(sortAlgorithmToUse);
             setFilteredCrafspeople(sortedCraftspeople);
         }
     }
