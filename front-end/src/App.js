@@ -51,7 +51,7 @@ function App() {
     return (
         <div className='App'>
             <div>
-                <Header />
+                <h1>Mementor</h1>
                 <div className="container">
                     <SearchBar onEnter={filterCraftspeople} />
                     <ButtonToolbar>
