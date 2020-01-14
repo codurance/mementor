@@ -15,37 +15,37 @@ function App() {
     const [filteredCrafspeople, setFilteredCrafspeople] = useState(craftspeople);
     const [sortAlgorithm, setSortAlgorithm] = useState(() => sortByNumberOfMentees);
 
-    const filterCraftspeople = searchedValue => {
+    function filterCraftspeople(searchedValue) {
         const filteredCraftspeople = filter(craftspeople, searchedValue);
         filteredCraftspeople.sort(sortAlgorithm);
         setFilteredCrafspeople(filteredCraftspeople);
     };
 
-    const SetAndSortCraftspeople = (craftspeople) => {
+    function sortAndSetCraftspeople(craftspeople) {
         const sortedCraftspeople = craftspeople.sort(sortAlgorithm)
         setCraftsPeople(sortedCraftspeople);
         setFilteredCrafspeople(sortedCraftspeople);
     };
 
-    useEffect(() => {
-        api("craftspeople")
-            .then(data => {
-                SetAndSortCraftspeople(data);
-            })
-            .catch(error => {
-                console.log(error);
-                const fixture_data_for_craftspeople = Array.from(FIXTURE);
-                SetAndSortCraftspeople(fixture_data_for_craftspeople);
-            });
-    }, []);
-
-    const makeSortOnClickListener = (sortAlgorithmToUse) => {
+    function makeSortOnClickListener (sortAlgorithmToUse) {
         return () => {
             setSortAlgorithm(() => sortAlgorithmToUse);
             const sortedCraftspeople = filteredCrafspeople.sort(sortAlgorithmToUse);
             setFilteredCrafspeople(sortedCraftspeople);
         }
-    }
+    };
+
+    useEffect(() => {
+        api("craftspeople")
+            .then(data => {
+                sortAndSetCraftspeople(data);
+            })
+            .catch(error => {
+                console.log(error);
+                const fixture_data_for_craftspeople = Array.from(FIXTURE);
+                sortAndSetCraftspeople(fixture_data_for_craftspeople);
+            });
+    }, []);
 
     return (
         <div className='App'>
