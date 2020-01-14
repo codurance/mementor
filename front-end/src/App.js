@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import SearchBar from "./components/toolbar/SearchBar";
 import { api } from "./util/api";
-import SortableRow from "./components/list/SortableRow";
+import CraftspersonRow from "./components/list/CraftspersonRow";
 import { sortByNumberOfMentees, sortByCraftspeopleWithoutMentor } from "./util/sorting";
 import { filter } from "./util/filtering";
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
@@ -62,7 +62,8 @@ function App() {
                         </ToggleButtonGroup>
                     </ButtonToolbar>
                 </div>
-                {filteredCrafspeople.map(craftsperson => <SortableRow key={craftsperson.id} craftsperson={craftsperson} />)}
+                {filteredCrafspeople.map(craftsperson => 
+                    <CraftspersonRow key={craftsperson.id} craftsperson={craftsperson} />)}
             </div>
         </div>
     );
