@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import SearchBar from "./components/toolbar/SearchBar";
 import { api } from "./util/api";
@@ -39,13 +39,12 @@ function App() {
             });
     }, []);
 
-    useEffect(() => {
-        const sortedCraftspeople = filteredCrafspeople.sort(sortAlgorithm)
-        setFilteredCrafspeople(sortedCraftspeople);
-    }, [sortAlgorithm, filteredCrafspeople]);
-
-    const makeSortOnClickListener = (sortAlgorithm) => {
-        return () => setSortAlgorithm(() => sortAlgorithm)
+    const makeSortOnClickListener = (sortAlgorithmLocal) => {
+        return () => {
+            setSortAlgorithm(() => sortAlgorithmLocal);
+            const sortedCraftspeople = filteredCrafspeople.sort(sortAlgorithmLocal);
+            setFilteredCrafspeople(sortedCraftspeople);
+        }
     }
 
     return (
