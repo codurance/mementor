@@ -9,6 +9,9 @@ import FIXTURE from "./util/fixture.json";
 import { defaultSort } from "./util/sorting";
 import { filter } from "./util/filtering";
 import Header from "./components/header/Header";
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
+import ToggleButton from 'react-bootstrap/ToggleButton';
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 
 function App() {
   const [craftspeople, setCraftsPeople] = useState([]);
@@ -37,19 +40,23 @@ function App() {
       });
   }, []);
 
-  return (
-    <div className="App">
-      <div>
-        <Header />
-        <SearchBar onEnter={filterCraftspeople} />
-        <SortableList
-          craftspeople={filtered.map(craftsperson => (
-            <SortableRow key={craftsperson.id} craftsperson={craftsperson} />
-          ))}
-        />
-      </div>
-    </div>
-  );
+    return (
+        <div className='App'>
+            <div>
+                <Header />
+                <div className="container">
+                    <SearchBar onEnter={filterCraftspeople} />
+                    <ButtonToolbar>
+                        <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
+                            <ToggleButton variant="light" prechecked value={1}>Sort by number of mentees</ToggleButton>
+                            <ToggleButton variant="light" value={2}>Sort by mentor</ToggleButton>
+                        </ToggleButtonGroup>
+                    </ButtonToolbar>
+                </div>
+                {filtered.map(craftsperson => <SortableRow key={craftsperson.id} craftsperson={craftsperson} />)}
+            </div>
+        </div>
+    );
 }
 
 export default App;
