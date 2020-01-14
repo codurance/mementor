@@ -103,9 +103,9 @@ describe('when given an array of objects', () =>  {
 describe('craftspeople without mentor sort', () => {
     it('should put the craftsperson with a mentor last', () => {
         const craftpeople = [
-            {id: 0, mentor: null}, 
-            {id: 1, mentor: {}}, 
-            {id: 2, mentor: null}   
+            {id: 0, firstName:"Arnaud", lastName:"Claudel", mentor: null}, 
+            {id: 1, firstName:"Brnaud", lastName:"Claudel", mentor: {}},
+            {id: 2, firstName:"Drnaud", lastName:"Claudel", mentor: null}, 
         ];
         const sortedCraftpeople = craftpeople.sort(sortByCraftspeopleWithoutMentor)
         expect(sortedCraftpeople[2].id).toBe(1)
@@ -113,11 +113,25 @@ describe('craftspeople without mentor sort', () => {
 
     it('should put the craftsperson without a mentor first', () => {
         const craftpeople = [
-            {id: 0, mentor: {}}, 
-            {id: 1, mentor: null}, 
-            {id: 2, mentor: {}}   
+            {id: 0, firstName:"Arnaud", lastName:"Claudel", mentor: {}}, 
+            {id: 1, firstName:"Brnaud", lastName:"Claudel", mentor: null},
+            {id: 2, firstName:"Drnaud", lastName:"Claudel", mentor: {}}, 
         ];
         const sortedCraftpeople = craftpeople.sort(sortByCraftspeopleWithoutMentor)
         expect(sortedCraftpeople[0].id).toBe(1)
+    })
+
+    it('should also sort alphabetically if equal', () => {
+        const craftpeople = [
+            {id: 0, firstName:"Arnaud", lastName:"Claudel", mentor: null}, 
+            {id: 3, firstName:"Brnaud", lastName:"Claudel", mentor: {}},
+            {id: 1, firstName:"Drnaud", lastName:"Claudel", mentor: {}}, 
+            {id: 2, firstName:"Crnaud", lastName:"Claudel", mentor: null},
+        ];
+        const sortedCraftpeople = craftpeople.sort(sortByCraftspeopleWithoutMentor)
+        expect(sortedCraftpeople[0].id).toBe(0);
+        expect(sortedCraftpeople[1].id).toBe(2);
+        expect(sortedCraftpeople[2].id).toBe(3);
+        expect(sortedCraftpeople[3].id).toBe(1);
     })
 })
