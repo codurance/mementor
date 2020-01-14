@@ -18,6 +18,7 @@ function App() {
 
     const filterCraftspeople = searchedValue => {
         const filteredCraftspeople = filter(craftspeople, searchedValue);
+        filteredCraftspeople.sort(sortAlgorithm);
         setFilteredCrafspeople(filteredCraftspeople);
     };
 
