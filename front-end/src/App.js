@@ -14,6 +14,7 @@ function App() {
     const [craftspeople, setCraftsPeople] = useState([]);
     const [filteredCrafspeople, setFilteredCrafspeople] = useState(craftspeople);
     const [sortAlgorithm, setSortAlgorithm] = useState(() => sortByNumberOfMentees);
+    const [backendFetchError, setBackendFetchError] = useState(null);
 
     function sortWithCurrentAlgorithm(craftspeople) {
         craftspeople.sort(sortAlgorithm);
@@ -47,8 +48,7 @@ function App() {
             })
             .catch(error => {
                 console.log(error);
-                const fixture_data_for_craftspeople = Array.from(FIXTURE);
-                sortAndSetCraftspeople(fixture_data_for_craftspeople);
+                setBackendFetchError(error)
             });
     }, []);
 
@@ -56,6 +56,10 @@ function App() {
         <div className='App'>
             <div>
                 <h1>Mementor</h1>
+                {backendFetchError &&   
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Oh snap!</strong> Looks like there was an error while fetching the data.
+                    </div>}
                 <div className="container">
                     <SearchBar onEnter={filterCraftspeople} />
                     <ButtonToolbar>
