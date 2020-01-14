@@ -1,29 +1,34 @@
 export function sortByNumberOfMentees(leftCraftsperson, rightCraftsperson) {
-    if (leftCraftsperson.mentees.length === rightCraftsperson.mentees.length) {
+    if (bothHaveSameNumberOfMentees(leftCraftsperson, rightCraftsperson)) {
         return sortAlphabetically(leftCraftsperson, rightCraftsperson)
     }
 
     return rightCraftsperson.mentees.length - leftCraftsperson.mentees.length;
 }
 
+function bothHaveSameNumberOfMentees(leftCraftsperson, rightCraftsperson) {
+    return leftCraftsperson.mentees.length === rightCraftsperson.mentees.length
+}
+
 export function sortByCraftspeopleWithoutMentor(leftCraftsperson, rightCraftsperson) {
-    if (leftCraftsperson.mentor == null && rightCraftsperson.mentor == null) {
+    if (noneHaveMentor(leftCraftsperson, rightCraftsperson)
+            || bothHaveMentor(leftCraftsperson, rightCraftsperson)) {
         return sortAlphabetically(leftCraftsperson, rightCraftsperson);
     } 
 
-    if (leftCraftsperson.mentor != null && rightCraftsperson.mentor != null) {
-        return sortAlphabetically(leftCraftsperson, rightCraftsperson);
-    }
-    
     if (leftCraftsperson.mentor == null) {
         return -1;
     }
-    if (rightCraftsperson.mentor == null) {
-        return 1;
-    }
-    
-    return 0;
+    return 1;
 };
+
+function noneHaveMentor(leftCraftsperson, rightCraftsperson) {
+    return (leftCraftsperson.mentor == null && rightCraftsperson.mentor == null)
+}
+
+function bothHaveMentor(leftCraftsperson, rightCraftsperson) {
+    return (leftCraftsperson.mentor != null && rightCraftsperson.mentor != null)
+}
 
 function sortAlphabetically(leftCraftsperson, rightCraftsperson) {
     return (leftCraftsperson.firstName + leftCraftsperson.lastName)
