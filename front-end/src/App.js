@@ -6,7 +6,7 @@ import SearchBar from "./components/toolbar/SearchBar";
 import { api } from "./util/api";
 import SortableRow from "./components/list/SortableRow";
 import FIXTURE from "./util/fixture.json";
-import { defaultSort } from "./util/sorting";
+import { sortByNumberOfMentees } from "./util/sorting";
 import { filter } from "./util/filtering";
 import Header from "./components/header/Header";
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
@@ -22,11 +22,11 @@ function App() {
     setFiltered(filteredCraftspeople);
   };
 
-  const SetAndSortCraftspeople = data => {
-    const craftspeople_rows = defaultSort(data);
-    setCraftsPeople(craftspeople_rows);
-    setFiltered(craftspeople_rows);
-  };
+    const SetAndSortCraftspeople = (craftspeople) => {
+        const craftspeople_rows = craftspeople.sort(sortByNumberOfMentees)
+        setCraftsPeople(craftspeople_rows);
+        setFiltered(craftspeople_rows);
+    };
 
   useEffect(() => {
     api("craftspeople")
