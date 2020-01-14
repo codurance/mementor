@@ -13,18 +13,18 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 
 function App() {
     const [craftspeople, setCraftsPeople] = useState([]);
-    const [filtered, setFiltered] = useState(craftspeople);
+    const [filteredCrafspeople, setFilteredCrafspeople] = useState(craftspeople);
     const [sortAlgorithm, setSortAlgorithm] = useState(() => sortByNumberOfMentees);
-    
+
     const filterCraftspeople = searchedValue => {
         const filteredCraftspeople = filter(craftspeople, searchedValue);
-        setFiltered(filteredCraftspeople);
+        setFilteredCrafspeople(filteredCraftspeople);
     };
 
     const SetAndSortCraftspeople = (craftspeople) => {
-        const craftspeople_rows = craftspeople.sort(sortAlgorithm)
-        setCraftsPeople(craftspeople_rows);
-        setFiltered(craftspeople_rows);
+        const sortedCraftspeople = craftspeople.sort(sortAlgorithm)
+        setCraftsPeople(sortedCraftspeople);
+        setFilteredCrafspeople(sortedCraftspeople);
     };
 
     useEffect(() => {
@@ -37,6 +37,11 @@ function App() {
                 const fixture_data_for_craftspeople = Array.from(FIXTURE);
                 SetAndSortCraftspeople(fixture_data_for_craftspeople);
             });
+    }, []);
+
+    useEffect(() => {
+        const sortedCraftspeople = filteredCrafspeople.sort(sortAlgorithm)
+        setFilteredCrafspeople(sortedCraftspeople);
     }, [sortAlgorithm]);
 
     const makeSortOnClickListener = (sortAlgorithm) => {
@@ -56,7 +61,7 @@ function App() {
                         </ToggleButtonGroup>
                     </ButtonToolbar>
                 </div>
-                {filtered.map(craftsperson => <SortableRow key={craftsperson.id} craftsperson={craftsperson} />)}
+                {filteredCrafspeople.map(craftsperson => <SortableRow key={craftsperson.id} craftsperson={craftsperson} />)}
             </div>
         </div>
     );
