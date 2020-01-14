@@ -6,23 +6,23 @@ import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import './Craftsperson.css'
 
-export default function SortableRow(props) {
+export default function SortableRow({craftsperson}) {
   return (
     <Accordion>
-      <div class='container'>
+      <div className='container'>
         <Card>
           <Card.Header>
             <Accordion.Toggle className='craftsperson-row' as={Button} variant='light' eventKey='0'>
-              <Craftsperson craftsperson={props.craftsperson} />
+              <Craftsperson craftsperson={craftsperson} />
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey='0'>
             <Card.Body>
-              <ListGroup>
-                {props.craftsperson.mentees.map(mentee => {
+              <ListGroup data-testid='menteesList'>
+                {craftsperson.mentees.map(mentee => {
                   return (
-                    <ListGroup.Item>
-                      <h4>{`${mentee.firstName} ${mentee.lastName}`}</h4>
+                    <ListGroup.Item key={mentee.id} >
+                      <h4 className="menteeName">{mentee.firstName} {mentee.lastName}</h4>
                     </ListGroup.Item>
                   );
                 })}
