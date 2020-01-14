@@ -42,7 +42,7 @@ function App() {
     useEffect(() => {
         const sortedCraftspeople = filteredCrafspeople.sort(sortAlgorithm)
         setFilteredCrafspeople(sortedCraftspeople);
-    }, [sortAlgorithm]);
+    }, [sortAlgorithm, filteredCrafspeople]);
 
     const makeSortOnClickListener = (sortAlgorithm) => {
         return () => setSortAlgorithm(() => sortAlgorithm)
