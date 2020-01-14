@@ -12,5 +12,8 @@ export const defaultSort = function applyDefaultSortToCraftpeople(data) {
          });
 };
 
-
-
+export const craftspeopleWithoutMentorSort = (leftCraftsperson, rightCraftsperson) => {
+    if(leftCraftsperson.mentor == null) return -1;
+    if(rightCraftsperson.mentor == null) return 1;
+    return 0
+};

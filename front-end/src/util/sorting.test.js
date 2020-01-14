@@ -1,5 +1,5 @@
 import FIXTURE from './fixture';
-import {defaultSort} from './sorting';
+import { defaultSort, craftspeopleWithoutMentorSort } from './sorting';
 
 const fixtureData = Array.from(FIXTURE);
 
@@ -101,19 +101,13 @@ describe('when given an array of objects', () =>  {
 });
 
 describe('craftspeople without mentor sort', () => {
-    const sortWithoutMentor = (a,b) => {
-        if(a.mentor === null) return -1
-        if(b.mentor === null) return 1
-        return 0
-    };
-
     it('should put the craftsperson with a mentor last', () => {
         const craftpeople = [
             {id: 0, mentor: null}, 
             {id: 1, mentor: {}}, 
             {id: 2, mentor: null}   
         ];
-        const sortedCraftpeople = craftpeople.sort(sortWithoutMentor)
+        const sortedCraftpeople = craftpeople.sort(craftspeopleWithoutMentorSort)
         expect(sortedCraftpeople[2].id).toBe(1)
     })
 
@@ -123,7 +117,7 @@ describe('craftspeople without mentor sort', () => {
             {id: 1, mentor: null}, 
             {id: 2, mentor: {}}   
         ];
-        const sortedCraftpeople = craftpeople.sort(sortWithoutMentor)
+        const sortedCraftpeople = craftpeople.sort(craftspeopleWithoutMentorSort)
         expect(sortedCraftpeople[0].id).toBe(1)
     })
-}) 
+})
