@@ -19,7 +19,6 @@ function App() {
 
     function filterCraftspeople(searchedValue) {
         const filteredCraftspeople = filter(craftspeople, searchedValue);
-        craftspeople.sort(sortAlgorithm);
         setFilteredCrafspeople(filteredCraftspeople);
     };
 
@@ -27,6 +26,7 @@ function App() {
         return () => {
             setSortAlgorithm(() => sortAlgorithmToUse);
             // here we don't use the current algorithm because it's outdated 
+            craftspeople.sort(sortAlgorithm);
             filteredCrafspeople.sort(sortAlgorithmToUse);
             setFilteredCrafspeople(filteredCrafspeople);
         }
