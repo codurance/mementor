@@ -15,23 +15,28 @@ function App() {
     const [filteredCrafspeople, setFilteredCrafspeople] = useState(craftspeople);
     const [sortAlgorithm, setSortAlgorithm] = useState(() => sortByNumberOfMentees);
 
+    function sortWithCurrentAlgorithm(craftspeople) {
+        craftspeople.sort(sortAlgorithm);
+    }
+
     function filterCraftspeople(searchedValue) {
         const filteredCraftspeople = filter(craftspeople, searchedValue);
-        filteredCraftspeople.sort(sortAlgorithm);
+        sortWithCurrentAlgorithm(filteredCraftspeople);
         setFilteredCrafspeople(filteredCraftspeople);
     };
 
     function sortAndSetCraftspeople(craftspeople) {
-        const sortedCraftspeople = craftspeople.sort(sortAlgorithm)
-        setCraftsPeople(sortedCraftspeople);
-        setFilteredCrafspeople(sortedCraftspeople);
+        sortWithCurrentAlgorithm(craftspeople);
+        setCraftsPeople(craftspeople);
+        setFilteredCrafspeople(craftspeople);
     };
 
     function makeSortOnClickListener (sortAlgorithmToUse) {
         return () => {
             setSortAlgorithm(() => sortAlgorithmToUse);
-            const sortedCraftspeople = filteredCrafspeople.sort(sortAlgorithmToUse);
-            setFilteredCrafspeople(sortedCraftspeople);
+            // here we don't use the current algorithm because it's outdated 
+            filteredCrafspeople.sort(sortAlgorithmToUse);
+            setFilteredCrafspeople(filteredCrafspeople);
         }
     };
 
