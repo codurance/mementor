@@ -9,6 +9,8 @@ export const defaultSort = function applyDefaultSortToCraftpeople(data) {
             if (leftCraftsperson.mentees.length || rightCraftsperson.mentees.length) {
                 return rightCraftsperson.mentees.length - leftCraftsperson.mentees.length;
             }
+
+            throw new Error("unhandled case")
          });
 };
 
