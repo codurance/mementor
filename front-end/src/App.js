@@ -1,55 +1,69 @@
 import React, { useState, useEffect } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import SortableList from "./components/list/SortableList";
 import SearchBar from "./components/toolbar/SearchBar";
 import { api } from "./util/api";
 import SortableRow from "./components/list/SortableRow";
 import FIXTURE from "./util/fixture.json";
-import { defaultSort } from "./util/sorting";
+import { sortByNumberOfMentees, sortByCraftspeopleWithoutMentor } from "./util/sorting";
 import { filter } from "./util/filtering";
 import Header from "./components/header/Header";
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
+import ToggleButton from 'react-bootstrap/ToggleButton';
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 
 function App() {
-  const [craftspeople, setCraftsPeople] = useState([]);
-  const [filtered, setFiltered] = useState(craftspeople);
+    const [craftspeople, setCraftsPeople] = useState([]);
+    const [filteredCrafspeople, setFilteredCrafspeople] = useState(craftspeople);
+    const [sortAlgorithm, setSortAlgorithm] = useState(() => sortByNumberOfMentees);
 
-  const filterCraftspeople = searchedValue => {
-    const filteredCraftspeople = filter(craftspeople, searchedValue);
-    setFiltered(filteredCraftspeople);
-  };
+    const filterCraftspeople = searchedValue => {
+        const filteredCraftspeople = filter(craftspeople, searchedValue);
+        setFilteredCrafspeople(filteredCraftspeople);
+    };
 
-  const SetAndSortCraftspeople = data => {
-    const craftspeople_rows = defaultSort(data);
-    setCraftsPeople(craftspeople_rows);
-    setFiltered(craftspeople_rows);
-  };
+    const SetAndSortCraftspeople = (craftspeople) => {
+        const sortedCraftspeople = craftspeople.sort(sortAlgorithm)
+        setCraftsPeople(sortedCraftspeople);
+        setFilteredCrafspeople(sortedCraftspeople);
+    };
 
-  useEffect(() => {
-    api("craftspeople")
-      .then(data => {
-        SetAndSortCraftspeople(data);
-      })
-      .catch(error => {
-        console.log(error);
-        const fixture_data_for_craftspeople = Array.from(FIXTURE);
-        SetAndSortCraftspeople(fixture_data_for_craftspeople);
-      });
-  }, []);
+    useEffect(() => {
+        api("craftspeople")
+            .then(data => {
+                SetAndSortCraftspeople(data);
+            })
+            .catch(error => {
+                console.log(error);
+                const fixture_data_for_craftspeople = Array.from(FIXTURE);
+                SetAndSortCraftspeople(fixture_data_for_craftspeople);
+            });
+    }, []);
 
-  return (
-    <div className="App">
-      <div>
-        <Header />
-        <SearchBar onEnter={filterCraftspeople} />
-        <SortableList
-          craftspeople={filtered.map(craftsperson => (
-            <SortableRow key={craftsperson.id} craftsperson={craftsperson} />
-          ))}
-        />
-      </div>
-    </div>
-  );
+    const makeSortOnClickListener = (sortAlgorithmToUse) => {
+        return () => {
+            setSortAlgorithm(() => sortAlgorithmToUse);
+            const sortedCraftspeople = filteredCrafspeople.sort(sortAlgorithmToUse);
+            setFilteredCrafspeople(sortedCraftspeople);
+        }
+    }
+
+    return (
+        <div className='App'>
+            <div>
+                <Header />
+                <div className="container">
+                    <SearchBar onEnter={filterCraftspeople} />
+                    <ButtonToolbar>
+                        <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
+                            <ToggleButton variant="light" onClick={makeSortOnClickListener(sortByNumberOfMentees)} prechecked value={1}>Sort by number of mentees</ToggleButton>
+                            <ToggleButton variant="light" onClick={makeSortOnClickListener(sortByCraftspeopleWithoutMentor)} value={2}>Sort by mentor</ToggleButton>
+                        </ToggleButtonGroup>
+                    </ButtonToolbar>
+                </div>
+                {filteredCrafspeople.map(craftsperson => <SortableRow key={craftsperson.id} craftsperson={craftsperson} />)}
+            </div>
+        </div>
+    );
 }
 
 export default App;
