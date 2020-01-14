@@ -6,7 +6,6 @@ import SortableRow from "./components/list/SortableRow";
 import FIXTURE from "./util/fixture.json";
 import { sortByNumberOfMentees, sortByCraftspeopleWithoutMentor } from "./util/sorting";
 import { filter } from "./util/filtering";
-import Header from "./components/header/Header";
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
