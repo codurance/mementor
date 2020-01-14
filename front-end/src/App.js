@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import SortableList from "./components/list/SortableList";
 import SearchBar from "./components/toolbar/SearchBar";
 import { api } from "./util/api";
 import SortableRow from "./components/list/SortableRow";
