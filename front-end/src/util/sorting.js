@@ -18,6 +18,11 @@ export function sortByCraftspeopleWithoutMentor(leftCraftsperson, rightCraftsper
     return 1;
 };
 
+export function sortAlphabetically(leftCraftsperson, rightCraftsperson) {
+    return (leftCraftsperson.firstName + leftCraftsperson.lastName)
+        .localeCompare(rightCraftsperson.firstName + rightCraftsperson.lastName);
+}
+
 function bothHaveSameNumberOfMentees(leftCraftsperson, rightCraftsperson) {
     return leftCraftsperson.mentees.length === rightCraftsperson.mentees.length
 }
@@ -28,9 +33,4 @@ function noneHaveMentor(leftCraftsperson, rightCraftsperson) {
 
 function bothHaveMentor(leftCraftsperson, rightCraftsperson) {
     return (leftCraftsperson.mentor != null && rightCraftsperson.mentor != null)
-}
-
-function sortAlphabetically(leftCraftsperson, rightCraftsperson) {
-    return (leftCraftsperson.firstName + leftCraftsperson.lastName)
-        .localeCompare(rightCraftsperson.firstName + rightCraftsperson.lastName);
 }

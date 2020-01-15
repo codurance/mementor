@@ -14,8 +14,8 @@ describe("CraftspersonRow Component", () => {
         const getMenteeName = (index) => getByTestId('menteesList').children[index].getElementsByClassName('menteeName')[0].textContent
 
         expect(getByTestId('menteesList').children.length).toBe(3)
-        expect(getMenteeName(0)).toBe('Etienne Mustow')
-        expect(getMenteeName(1)).toBe('Arnaud Claudel')
+        expect(getMenteeName(0)).toBe('Arnaud Claudel')
+        expect(getMenteeName(1)).toBe('Etienne Mustow')
         expect(getMenteeName(2)).toBe('Naruto Uzumaki')
     });
 });
