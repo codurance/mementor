@@ -5,18 +5,12 @@ import { sortAlphabetically } from "../../util/sorting"
 
 export default function CraftspersonList(props) {
   return (
-    <ListGroup variant="flush">
+    <ListGroup variant="flush" data-testid="craftspersonList">
       {props.craftspeople.sort(sortAlphabetically).map(craftsperson => (
-        <ListGroup.Item action href="#1">
+        <ListGroup.Item data-testid="craftspersonRowItem" action onClick={() => props.click(craftsperson.id)} eventKey={craftsperson.id}>
           {craftsperson.firstName} {craftsperson.lastName}
         </ListGroup.Item>
       ))}
-
-      {/* {craftspeople.craftspeople.map(craftsperson => (
-        <ListGroup.Item action href="#1">
-            {craftsperson}
-        </ListGroup.Item>
-      ))}; */}
     </ListGroup>
   );
 }

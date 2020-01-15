@@ -11,8 +11,7 @@ import { filter } from "./util/filtering";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
-import Button from "react-bootstrap/Button";
-import AdminButton from "./components/admin/AdminButton";
+import ManageCraftsperson from "./components/admin/ManageCraftsperson";
 
 function App() {
   const defaultSort = sortByNumberOfMentees;
@@ -21,6 +20,11 @@ function App() {
   const [filteredCraftspeople, setFilteredCraftspeople] = useState(craftspeople);
   const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
   const [backendFetchError, setBackendFetchError] = useState(null);
+  const [shouldRender, setShouldRender] = useState(false);
+
+  function rerender() {
+      setShouldRender(!shouldRender);
+  }
 
   function filterCraftspeople(searchedValue) {
     const filteredCraftspeople = filter(craftspeople, searchedValue);
@@ -48,7 +52,7 @@ function App() {
         console.log(error);
         setBackendFetchError(error);
       });
-  }, [defaultSort]);
+  }, [defaultSort, shouldRender]);
 
   return (
     <div className="App">
@@ -61,7 +65,7 @@ function App() {
           </div>
         )}
         <div className="container">
-        <AdminButton craftspeople={craftspeople} />
+        <ManageCraftsperson craftspeople={craftspeople} rerender={rerender} />
         </div>
         <div className="container">
           <SearchBar onEnter={filterCraftspeople} />

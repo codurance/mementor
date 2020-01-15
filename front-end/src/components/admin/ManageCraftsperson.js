@@ -5,13 +5,29 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import CraftspersonList from "./CraftspersonList";
-import "./AdminButton.css";
+import "./ManageCraftsperson.css";
+import { api } from "../../util/api";
 
-export default function AdminButton(props) {
+export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [idToDelete, setIdToDelete] = useState(null);
+
+  function getSelectedId(id) {
+    return setIdToDelete(id);
+  }
+
+  function deleteCraftsperson() {
+      api(`craftspeople/${idToDelete}`, {
+      method: "DELETE"
+    }).then(() => {
+      props.rerender()
+    }).catch(error => {
+      console.log(error);
+    })
+  }
 
   return (
     <div className="row admin-button">
@@ -37,13 +53,17 @@ export default function AdminButton(props) {
           </Container>
         </Modal.Header>
         <Modal.Body>
-          <CraftspersonList craftspeople={props.craftspeople}/>
+          <CraftspersonList
+            data-testid="CraftspersonList"
+            craftspeople={props.craftspeople}
+            click={getSelectedId}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="light" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="danger" onClick={handleClose}>
+          <Button data-testid="removeCraftspersonButton" variant="danger" onClick={() => deleteCraftsperson()}>
             Remove
           </Button>
         </Modal.Footer>
