@@ -49,7 +49,9 @@ function App() {
     return (
         <div className='App'>
             <div>
-                <img src={logo} alt="Mementor Logo" />
+                <div className="container">
+                    <img src={logo} className="main-logo" alt="Mementor Logo" />
+                </div>
                 {backendFetchError &&   
                     <div class="alert alert-danger" role="alert">
                         <strong>Oh snap!</strong> Looks like there was an error while fetching the data.
