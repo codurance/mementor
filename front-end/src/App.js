@@ -8,6 +8,7 @@ import { filter } from "./util/filtering";
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
+import logo from "./mementor_logo.png"
 
 function App() {
     const defaultSort = sortByNumberOfMentees
@@ -48,7 +49,7 @@ function App() {
     return (
         <div className='App'>
             <div>
-                <h1>Mementor</h1>
+                <img src={logo} alt="Mementor Logo" />
                 {backendFetchError &&   
                     <div class="alert alert-danger" role="alert">
                         <strong>Oh snap!</strong> Looks like there was an error while fetching the data.
