@@ -26,7 +26,7 @@ function App() {
         return () => {
             setSortAlgorithm(() => sortAlgorithmToUse);
             // here we don't use the current algorithm because it's outdated 
-            craftspeople.sort(sortAlgorithm);
+            craftspeople.sort(sortAlgorithmToUse);
             filteredCrafspeople.sort(sortAlgorithmToUse);
             setFilteredCrafspeople(filteredCrafspeople);
         }
