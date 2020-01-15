@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
+import {sortAlphabetically} from '../../util/sorting';
 import './Craftsperson.css'
 
 export default function CraftspersonRow({craftsperson}) {
@@ -19,7 +20,9 @@ export default function CraftspersonRow({craftsperson}) {
           <Accordion.Collapse eventKey='0'>
             <Card.Body>
               <ListGroup data-testid='menteesList'>
-                {craftsperson.mentees.map(mentee => {
+                {craftsperson.mentees
+                  .sort(sortAlphabetically)
+                  .map(mentee => {
                   return (
                     <ListGroup.Item key={mentee.id} >
                       <h4 className="menteeName">{mentee.firstName} {mentee.lastName}</h4>
