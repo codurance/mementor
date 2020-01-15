@@ -30,7 +30,7 @@ function bothHaveMentor(leftCraftsperson, rightCraftsperson) {
     return (leftCraftsperson.mentor != null && rightCraftsperson.mentor != null)
 }
 
-function sortAlphabetically(leftCraftsperson, rightCraftsperson) {
+export function sortAlphabetically(leftCraftsperson, rightCraftsperson) {
     return (leftCraftsperson.firstName + leftCraftsperson.lastName)
         .localeCompare(rightCraftsperson.firstName + rightCraftsperson.lastName);
 }

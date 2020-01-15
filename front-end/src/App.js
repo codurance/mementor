@@ -18,13 +18,13 @@ function App() {
   const defaultSort = sortByNumberOfMentees;
 
   const [craftspeople, setCraftsPeople] = useState([]);
-  const [filteredCrafspeople, setFilteredCrafspeople] = useState(craftspeople);
+  const [filteredCraftspeople, setFilteredCraftspeople] = useState(craftspeople);
   const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
   const [backendFetchError, setBackendFetchError] = useState(null);
 
   function filterCraftspeople(searchedValue) {
     const filteredCraftspeople = filter(craftspeople, searchedValue);
-    setFilteredCrafspeople(filteredCraftspeople);
+    setFilteredCraftspeople(filteredCraftspeople);
   }
 
   function makeSortOnClickListener(sortAlgorithmToUse) {
@@ -32,8 +32,8 @@ function App() {
       setSortAlgorithm(() => sortAlgorithmToUse);
       // here we don't use the current algorithm because it's outdated
       craftspeople.sort(sortAlgorithmToUse);
-      filteredCrafspeople.sort(sortAlgorithmToUse);
-      setFilteredCrafspeople(filteredCrafspeople);
+      filteredCraftspeople.sort(sortAlgorithmToUse);
+      setFilteredCraftspeople(filteredCraftspeople);
     };
   }
 
@@ -42,7 +42,7 @@ function App() {
       .then(fetchedCraftspeople => {
         fetchedCraftspeople.sort(defaultSort);
         setCraftsPeople(fetchedCraftspeople);
-        setFilteredCrafspeople(fetchedCraftspeople);
+        setFilteredCraftspeople(fetchedCraftspeople);
       })
       .catch(error => {
         console.log(error);
@@ -55,13 +55,13 @@ function App() {
       <div>
         <h1>Mementor</h1>
         {backendFetchError && (
-          <div class="alert alert-danger" role="alert">
+          <div className="alert alert-danger" role="alert">
             <strong>Oh snap!</strong> Looks like there was an error while
             fetching the data.
           </div>
         )}
         <div className="container">
-        <AdminButton />
+        <AdminButton craftspeople={craftspeople} />
         </div>
         <div className="container">
           <SearchBar onEnter={filterCraftspeople} />
@@ -87,7 +87,7 @@ function App() {
             </ToggleButtonGroup>
           </ButtonToolbar>
         </div>
-        {filteredCrafspeople.map(craftsperson => (
+        {filteredCraftspeople.map(craftsperson => (
           <CraftspersonRow key={craftsperson.id} craftsperson={craftsperson} />
         ))}
       </div>

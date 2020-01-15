@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row";
 import CraftspersonList from "./CraftspersonList";
 import "./AdminButton.css";
 
-export default function AdminButton() {
+export default function AdminButton(props) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -37,7 +37,7 @@ export default function AdminButton() {
           </Container>
         </Modal.Header>
         <Modal.Body>
-          <CraftspersonList />
+          <CraftspersonList craftspeople={props.craftspeople}/>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="light" onClick={handleClose}>
