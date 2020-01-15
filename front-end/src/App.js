@@ -2,56 +2,57 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import SearchBar from "./components/toolbar/SearchBar";
 import { api } from "./util/api";
-import SortableRow from "./components/list/SortableRow";
-import FIXTURE from "./util/fixture.json";
+import CraftspersonRow from "./components/list/CraftspersonRow";
 import { sortByNumberOfMentees, sortByCraftspeopleWithoutMentor } from "./util/sorting";
 import { filter } from "./util/filtering";
-import Header from "./components/header/Header";
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 
 function App() {
+    const defaultSort = sortByNumberOfMentees
+    
     const [craftspeople, setCraftsPeople] = useState([]);
     const [filteredCrafspeople, setFilteredCrafspeople] = useState(craftspeople);
-    const [sortAlgorithm, setSortAlgorithm] = useState(() => sortByNumberOfMentees);
+    const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
+    const [backendFetchError, setBackendFetchError] = useState(null);
 
-    const filterCraftspeople = searchedValue => {
+    function filterCraftspeople(searchedValue) {
         const filteredCraftspeople = filter(craftspeople, searchedValue);
-        filteredCraftspeople.sort(sortAlgorithm);
         setFilteredCrafspeople(filteredCraftspeople);
     };
 
-    const SetAndSortCraftspeople = (craftspeople) => {
-        const sortedCraftspeople = craftspeople.sort(sortAlgorithm)
-        setCraftsPeople(sortedCraftspeople);
-        setFilteredCrafspeople(sortedCraftspeople);
+    function makeSortOnClickListener (sortAlgorithmToUse) {
+        return () => {
+            setSortAlgorithm(() => sortAlgorithmToUse);
+            // here we don't use the current algorithm because it's outdated 
+            craftspeople.sort(sortAlgorithmToUse);
+            filteredCrafspeople.sort(sortAlgorithmToUse);
+            setFilteredCrafspeople(filteredCrafspeople);
+        }
     };
 
     useEffect(() => {
         api("craftspeople")
-            .then(data => {
-                SetAndSortCraftspeople(data);
+            .then(fetchedCraftspeople => {
+                fetchedCraftspeople.sort(defaultSort)
+                setCraftsPeople(fetchedCraftspeople);
+                setFilteredCrafspeople(fetchedCraftspeople);
             })
             .catch(error => {
                 console.log(error);
-                const fixture_data_for_craftspeople = Array.from(FIXTURE);
-                SetAndSortCraftspeople(fixture_data_for_craftspeople);
+                setBackendFetchError(error)
             });
-    }, []);
-
-    const makeSortOnClickListener = (sortAlgorithmToUse) => {
-        return () => {
-            setSortAlgorithm(() => sortAlgorithmToUse);
-            const sortedCraftspeople = filteredCrafspeople.sort(sortAlgorithmToUse);
-            setFilteredCrafspeople(sortedCraftspeople);
-        }
-    }
+    }, [defaultSort]);
 
     return (
         <div className='App'>
             <div>
-                <Header />
+                <h1>Mementor</h1>
+                {backendFetchError &&   
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Oh snap!</strong> Looks like there was an error while fetching the data.
+                    </div>}
                 <div className="container">
                     <SearchBar onEnter={filterCraftspeople} />
                     <ButtonToolbar>
@@ -61,7 +62,8 @@ function App() {
                         </ToggleButtonGroup>
                     </ButtonToolbar>
                 </div>
-                {filteredCrafspeople.map(craftsperson => <SortableRow key={craftsperson.id} craftsperson={craftsperson} />)}
+                {filteredCrafspeople.map(craftsperson => 
+                    <CraftspersonRow key={craftsperson.id} craftsperson={craftsperson} />)}
             </div>
         </div>
     );

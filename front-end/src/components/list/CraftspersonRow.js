@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import './Craftsperson.css'
 
-export default function SortableRow({craftsperson}) {
+export default function CraftspersonRow({craftsperson}) {
   return (
     <Accordion>
       <div className='container'>
