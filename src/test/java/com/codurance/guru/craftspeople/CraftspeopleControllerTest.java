@@ -85,9 +85,9 @@ public class CraftspeopleControllerTest {
     public void delete_a_craftsperson() {
         given_two_craftspeople();
 
-        when_a_craftsperson_is_deleted(savedCraftsperson);
+        when_a_craftsperson_is_deleted(craftsperson1);
 
-        RestAssured.get("craftspeople/{craftspersonId}", savedCraftsperson.getId())
+        RestAssured.get("craftspeople/{craftspersonId}", craftsperson1.getId())
                 .then().assertThat()
                 .statusCode(404);
     }
@@ -161,6 +161,10 @@ public class CraftspeopleControllerTest {
             .stream()
             .map(Craftsperson::getId)
             .anyMatch(actualMenteeId -> craftsperson2.getId().equals(actualMenteeId)));
+    }
+
+    private void when_a_craftsperson_is_deleted(Craftsperson craftsperson) {
+        craftspeopleRepository.deleteById(craftsperson.getId());
     }
 
     private void given_two_craftspeople() {
