@@ -18,7 +18,7 @@ export default function CraftspersonRow({craftsperson, craftspeople}) {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({mentorId: 1, menteeId: 2})
+        body: JSON.stringify({mentorId: selectedCraftspeople[0].id, menteeId: craftsperson.id})
       }
     )
   }
