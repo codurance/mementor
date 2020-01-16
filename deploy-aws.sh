@@ -4,7 +4,7 @@ set -e
 
 if [ $# -lt 1 ] ; then
     echo "USAGE: $0 environment-name"
-    echo "  environment-name: prod | dev"
+    echo "  environment-name: prod | integ"
     echo $@
     exit 1
 fi
