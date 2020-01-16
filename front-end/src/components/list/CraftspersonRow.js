@@ -11,6 +11,8 @@ import {Typeahead} from 'react-bootstrap-typeahead';
 
 export default function CraftspersonRow({craftsperson, craftspeople, rerender}) {
   
+  let mentorSelect = React.createRef();
+
   function addMentorCallBack(selectedCraftspeople) {
     if(selectedCraftspeople.length === 0) {
       // nothing to do
@@ -25,6 +27,7 @@ export default function CraftspersonRow({craftsperson, craftspeople, rerender}) 
         body: JSON.stringify({mentorId: selectedCraftspeople[0].id, menteeId: craftsperson.id})
       }
     );
+    mentorSelect.current.clear();
     rerender();
   }
   
@@ -39,6 +42,7 @@ export default function CraftspersonRow({craftsperson, craftspeople, rerender}) 
             <div className="container">
               <div className="row justify-content-center">
               <Typeahead
+                ref={mentorSelect}
                 inputProps={{'data-testid': 'add-mentor-select'}}
                 labelKey={(option) => `${option.firstName} ${option.lastName}`}
                 options={craftspeople}
