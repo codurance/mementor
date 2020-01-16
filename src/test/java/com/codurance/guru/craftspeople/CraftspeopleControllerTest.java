@@ -82,6 +82,17 @@ public class CraftspeopleControllerTest {
     }
 
     @Test
+    public void delete_a_craftsperson() {
+        given_two_craftspeople();
+
+        when_a_craftsperson_is_deleted(savedCraftsperson);
+
+        RestAssured.get("craftspeople/{craftspersonId}", savedCraftsperson.getId())
+                .then().assertThat()
+                .statusCode(404);
+    }
+
+    @Test
     public void add_mentee() {
         given_two_craftspeople();
 

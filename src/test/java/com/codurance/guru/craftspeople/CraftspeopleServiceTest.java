@@ -25,9 +25,9 @@ public class CraftspeopleServiceTest {
 
     @Test
     public void retrieve_a_craftsperson_when_asked_for_one() {
-        Craftsperson craftsperson = new Craftsperson("John", "Doe");
-        when(craftspeopleRepository.findById(1)).thenReturn(Optional.of(craftsperson));
+        Optional<Craftsperson> craftsperson = Optional.of(new Craftsperson("John", "Doe"));
+        when(craftspeopleRepository.findById(1)).thenReturn(craftsperson);
 
-        assertEquals(craftsperson, craftspeopleService.retrieveCraftsperson(1).get());
+        assertEquals(craftsperson, craftspeopleService.retrieveCraftsperson(1));
     }
 }
