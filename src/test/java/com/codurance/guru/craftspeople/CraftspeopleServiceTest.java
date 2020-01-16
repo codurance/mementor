@@ -15,7 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = GuruApplication.class)
+@SpringBootTest(
+        classes = GuruApplication.class,
+        webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class CraftspeopleServiceTest {
 
     @Autowired
