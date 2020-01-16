@@ -12,7 +12,7 @@ describe ('when rendering a craftsperson', () => {
     describe('with his mentees', () => {
         it('should show the label', () => {
             const {getByTestId} = render(<Craftsperson craftsperson={{mentees: null}} />)
-            expect(getByTestId('craftspersonMenteeLabel')).toHaveTextContent('Mentees:')
+            expect(getByTestId('craftspersonMenteeLabel')).toHaveTextContent('Mentees')
         })
         it('should show the number mentees', () => {
             const listOfMentees = [
