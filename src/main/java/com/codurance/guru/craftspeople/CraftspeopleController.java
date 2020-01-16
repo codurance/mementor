@@ -1,12 +1,12 @@
 package com.codurance.guru.craftspeople;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CraftspeopleController {
@@ -15,8 +15,11 @@ public class CraftspeopleController {
     private CraftspeopleService craftspeopleService;
 
     @GetMapping("/craftspeople/{craftspersonId}")
-    public Craftsperson retrieveCraftsperson(@PathVariable Integer craftspersonId) {
-        return craftspeopleService.retrieveCraftsperson(craftspersonId);
+    public ResponseEntity<Craftsperson> retrieveCraftsperson(@PathVariable Integer craftspersonId) {
+        Optional<Craftsperson> retrievedCraftsperson = craftspeopleService.retrieveCraftsperson(craftspersonId);
+        return retrievedCraftsperson.isPresent()
+                ? new ResponseEntity(retrievedCraftsperson.get(), HttpStatus.OK)
+                : new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/craftspeople")
