@@ -2,14 +2,21 @@ package com.codurance.guru.craftspeople;
 
 import com.codurance.guru.GuruApplication;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -22,6 +29,7 @@ public class CraftspeopleControllerTest {
 
     private Craftsperson savedCraftsperson;
     private Craftsperson mentor;
+    private List<Craftsperson> craftspeople = new ArrayList<>();
 
     @Test
     public void retrieve_a_craftsperson() {
@@ -67,10 +75,57 @@ public class CraftspeopleControllerTest {
                 .body("$", hasSize((int) craftspeopleCount));
     }
 
-    private void given_two_craftspeople() {
-        craftspeopleRepository.save(new Craftsperson("Jose", "Wenzel"));
-        craftspeopleRepository.save(new Craftsperson("Ed", "Rixon"));
+    @Test
+    public void add_mentee() {
+        given_two_craftspeople();
+
+        String payload = "{\n" +
+                "  \"mentorId\": \"" +
+                craftspeople.get(0).getId() +
+                "\",\n" +
+                "  \"menteeId\": \"" +
+                craftspeople.get(1).getId() +
+                "\"\n" +
+                "}";
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(payload)
+                .put("/craftspeople/addmentee")
+                .then()
+                .statusCode(200)
+                .extract()
+                .response();
+
+
+        int testMenteeId = craftspeople.get(1).getId();
+        Optional<Craftsperson> dbMentee = craftspeopleRepository.findById(testMenteeId);
+
+        assertEquals(craftspeople.get(0).getId(), dbMentee.get().getMentor().get().getId());
     }
+
+    @Test
+    public void remove_mentee() {
+        given_a_craftsperson_with_a_mentor();
+
+        given()
+                .contentType(ContentType.JSON)
+                .post("craftspeople/mentee/remove/" + savedCraftsperson.getId())
+                .then()
+                .statusCode(200)
+                .extract()
+                .response();
+
+        assertEquals(Optional.empty(),craftspeopleRepository.findById(savedCraftsperson.getId()).get().getMentor());
+    }
+
+    private void given_two_craftspeople() {
+        Craftsperson craftpersonOne = craftspeopleRepository.save(new Craftsperson("Jose", "Wenzel"));
+        Craftsperson craftpersonTwo = craftspeopleRepository.save(new Craftsperson("Ed", "Rixon"));
+        craftspeople.add(craftpersonOne);
+        craftspeople.add(craftpersonTwo);
+    }
+
 
     private void given_a_craftsperson_with_a_mentor() {
         mentor = craftspeopleRepository.save(new Craftsperson("Jose", "Wenzel"));
