@@ -5,7 +5,7 @@ import { sortAlphabetically } from "../../util/sorting";
 
 export default function CraftspersonList(props) {
   return (
-    <ListGroup variant="flush" data-testid="craftspersonList">
+    <ListGroup className="craftsperson-list" variant="flush" data-testid="craftspersonList">
       {props.craftspeople
         .slice()
         .sort(sortAlphabetically)

@@ -3,10 +3,7 @@ import "./App.css";
 import SearchBar from "./components/toolbar/SearchBar";
 import { api } from "./util/api";
 import CraftspersonRow from "./components/list/CraftspersonRow";
-import {
-  sortByNumberOfMentees,
-  sortByCraftspeopleWithoutMentor
-} from "./util/sorting";
+import { sortByNumberOfMentees, sortByCraftspeopleWithoutMentor } from "./util/sorting";
 import { filter } from "./util/filtering";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 import ToggleButton from "react-bootstrap/ToggleButton";
@@ -98,7 +95,7 @@ function App() {
           </div>
         )}
         {filteredCraftspeople.map(craftsperson => (
-          <CraftspersonRow key={craftsperson.id} craftsperson={craftsperson} />
+          <CraftspersonRow key={craftsperson.id} craftsperson={craftsperson} craftspeople={craftspeople} rerender={rerender}/>
         ))}
       </div>
     </div>

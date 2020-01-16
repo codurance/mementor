@@ -20,11 +20,37 @@ public class CraftspeopleService {
         return repository.findAll();
     }
 
+    public void setMentee(int mentorId, int menteeId) {
+        Craftsperson mentor = repository.findById(mentorId).get();
+        Craftsperson mentee = repository.findById(menteeId).get();
+
+        mentee.setMentor(mentor);
+
+        repository.save(mentee);
+    }
+
+    public void removeMentee(int menteeId){
+        Craftsperson mentee = repository.findById(menteeId).get();
+
+        mentee.setMentor(null);
+
+        repository.save(mentee);
+    }
+
+    public void addMentor(int mentorId, int menteeId) {
+        Craftsperson mentor = repository.findById(mentorId).get();
+        Craftsperson mentee = repository.findById(menteeId).get();
+
+        mentee.setMentor(mentor);
+        repository.save(mentee);
+    }
+
     public void deleteCraftsperson(Integer craftspersonId) {
         Craftsperson craftspersonToRemove = repository.findById(craftspersonId).get();
 
         for (Craftsperson mentee: craftspersonToRemove.getMentees()) {
             mentee.setMentor(null);
+            repository.save(mentee);
         }
 
         repository.deleteById(craftspersonId);

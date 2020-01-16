@@ -1,11 +1,15 @@
 package com.codurance.guru.craftspeople;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -25,6 +29,20 @@ public class CraftspeopleController {
         return craftspeopleService.retrieveAllCraftsperson();
     }
 
+    @PutMapping("craftspeople/addmentee")
+    String setMentee(@RequestBody Map<String, String> mentorAndMenteesIds) {
+        craftspeopleService.setMentee(Integer.valueOf(mentorAndMenteesIds.get("mentorId")),
+                Integer.valueOf(mentorAndMenteesIds.get("menteeId")));
+        return "OK";
+    }
+
+    @PutMapping("craftspeople/mentee/remove/{menteeId}")
+    String removeMentee(@PathVariable int menteeId){
+        craftspeopleService.removeMentee(menteeId);
+        return "OK";
+    }
+
+
     @DeleteMapping("/craftspeople/{craftspersonId}")
     public void deleteCraftsperson(@PathVariable Integer craftspersonId){
         craftspeopleService.deleteCraftsperson(craftspersonId);
@@ -36,6 +54,11 @@ public class CraftspeopleController {
         return responseEntity;
     }
 
+    @PostMapping("/craftspeople/mentor/add")
+    public ResponseEntity<Void> addMentor(@RequestBody AddMentorRequest request) {
+        craftspeopleService.addMentor(request.getMentorId(), request.getMenteeId());
+        return ResponseEntity.noContent().build();
+    }
 
     private static class AddCraftsperson {
         String firstName;
@@ -64,5 +87,27 @@ public class CraftspeopleController {
         public void setLastName(String lastName) {
             this.lastName = lastName;
         }
+    }
+
+}
+
+class AddMentorRequest {
+    private int mentorId;
+    private int menteeId;
+
+    public int getMentorId() {
+        return mentorId;
+    }
+
+    public void setMentorId(int mentorId) {
+        this.mentorId = mentorId;
+    }
+
+    public int getMenteeId() {
+        return menteeId;
+    }
+
+    public void setMenteeId(int menteeId) {
+        this.menteeId = menteeId;
     }
 }
