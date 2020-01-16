@@ -8,6 +8,8 @@ import InputGroup from "react-bootstrap/InputGroup";
 import CraftspersonList from "./CraftspersonList";
 import "./ManageCraftsperson.css";
 import { api } from "../../util/api";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCog } from '@fortawesome/free-solid-svg-icons'
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
@@ -75,7 +77,7 @@ export default function ManageCraftsperson(props) {
         data-testid="adminPopupButton"
         onClick={handleShow}
       >
-        <strong>+/-</strong> Craftspeople
+        <FontAwesomeIcon icon={faCog} /> Craftspeople
       </Button>
 
       <Modal show={show} onHide={handleClose}>
