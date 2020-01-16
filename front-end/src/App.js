@@ -44,7 +44,7 @@ function App() {
   useEffect(() => {
     api("craftspeople")
       .then(fetchedCraftspeople => {
-        fetchedCraftspeople.sort(defaultSort);
+        fetchedCraftspeople.sort(sortAlgorithm);
         setCraftsPeople(fetchedCraftspeople);
         setFilteredCraftspeople(fetchedCraftspeople);
       })
