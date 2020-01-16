@@ -20,7 +20,7 @@ public class Craftsperson {
     private String lastName;
     @ManyToOne
     private Craftsperson mentor;
-    @OneToMany(mappedBy = "mentor")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "mentor")
     private List<Craftsperson> mentees;
 
     public Craftsperson() { }

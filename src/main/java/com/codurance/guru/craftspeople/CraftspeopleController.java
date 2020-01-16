@@ -1,10 +1,8 @@
 package com.codurance.guru.craftspeople;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -30,4 +28,31 @@ public class CraftspeopleController {
     }
 
 
+    @PostMapping("/craftspeople/mentor/add")
+    public ResponseEntity<Void> addMentor(@RequestBody AddMentorRequest request) {
+        craftspeopleService.addMentor(request.getMentorId(), request.getMenteeId());
+        return ResponseEntity.noContent().build();
+    }
+
+}
+
+class AddMentorRequest {
+    private int mentorId;
+    private int menteeId;
+
+    public int getMentorId() {
+        return mentorId;
+    }
+
+    public void setMentorId(int mentorId) {
+        this.mentorId = mentorId;
+    }
+
+    public int getMenteeId() {
+        return menteeId;
+    }
+
+    public void setMenteeId(int menteeId) {
+        this.menteeId = menteeId;
+    }
 }

@@ -19,6 +19,14 @@ public class CraftspeopleService {
         return repository.findAll();
     }
 
+    public void addMentor(int mentorId, int menteeId) {
+        Craftsperson mentor = repository.findById(mentorId).get();
+        Craftsperson mentee = repository.findById(menteeId).get();
+
+        mentee.setMentor(mentor);
+        repository.save(mentee);
+    }
+
     public void deleteCraftsperson(Integer craftspersonId) {
         repository.deleteById(craftspersonId);
     }
