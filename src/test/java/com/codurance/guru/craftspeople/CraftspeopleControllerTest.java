@@ -67,16 +67,16 @@ public class CraftspeopleControllerTest {
                 .body("$", hasSize((int) craftspeopleCount));
     }
 
-//    @Test
-//    public void delete_a_craftsperson() {
-//        given_two_craftspeople();
-//
-//        when_a_craftsperson_is_deleted(savedCraftsperson);
-//
-//        RestAssured.get("craftspeople/{craftspersonId}", savedCraftsperson.getId())
-//                .then().assertThat()
-//                .statusCode(404);
-//    }
+    @Test
+    public void delete_a_craftsperson() {
+        given_two_craftspeople();
+
+        when_a_craftsperson_is_deleted(savedCraftsperson);
+
+        RestAssured.get("craftspeople/{craftspersonId}", savedCraftsperson.getId())
+                .then().assertThat()
+                .statusCode(404);
+    }
 
     private void when_a_craftsperson_is_deleted(Craftsperson craftsperson) {
         craftspeopleRepository.deleteById(craftsperson.getId());

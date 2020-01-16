@@ -20,7 +20,7 @@ public class Craftsperson {
     private String lastName;
     @ManyToOne
     private Craftsperson mentor;
-    @OneToMany(mappedBy = "mentor")
+    @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Craftsperson> mentees;
 
     public Craftsperson() { }

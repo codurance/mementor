@@ -15,11 +15,9 @@ public class CraftspeopleController {
     private CraftspeopleService craftspeopleService;
 
     @GetMapping("/craftspeople/{craftspersonId}")
-    public ResponseEntity<Craftsperson> retrieveCraftsperson(@PathVariable Integer craftspersonId) {
+    public ResponseEntity retrieveCraftsperson(@PathVariable Integer craftspersonId) {
         Optional<Craftsperson> retrievedCraftsperson = craftspeopleService.retrieveCraftsperson(craftspersonId);
-        return retrievedCraftsperson.isPresent()
-                ? new ResponseEntity(retrievedCraftsperson.get(), HttpStatus.OK)
-                : new ResponseEntity(HttpStatus.NOT_FOUND);
+        return retrievedCraftsperson.map(craftsperson -> new ResponseEntity(craftsperson, HttpStatus.OK)).orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/craftspeople")
