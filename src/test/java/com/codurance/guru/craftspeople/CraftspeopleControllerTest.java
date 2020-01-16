@@ -3,6 +3,8 @@ package com.codurance.guru.craftspeople;
 import com.codurance.guru.GuruApplication;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -29,6 +33,8 @@ public class CraftspeopleControllerTest {
 
     private Craftsperson savedCraftsperson;
     private Craftsperson mentor;
+    private Craftsperson craftsperson1;
+    private Craftsperson craftsperson2;
     private List<Craftsperson> craftspeople = new ArrayList<>();
 
     @Test
@@ -76,6 +82,17 @@ public class CraftspeopleControllerTest {
     }
 
     @Test
+    public void delete_a_craftsperson() {
+        given_two_craftspeople();
+
+        when_a_craftsperson_is_deleted(craftsperson1);
+
+        RestAssured.get("craftspeople/{craftspersonId}", craftsperson1.getId())
+                .then().assertThat()
+                .statusCode(404);
+    }
+
+    @Test
     public void add_mentee() {
         given_two_craftspeople();
 
@@ -119,13 +136,45 @@ public class CraftspeopleControllerTest {
         assertEquals(Optional.empty(),craftspeopleRepository.findById(savedCraftsperson.getId()).get().getMentor());
     }
 
+    @Test
+    public void add_mentor() throws JSONException {
+        given_two_craftspeople();
+
+        JSONObject request = new JSONObject();
+        request.put("mentorId", craftsperson1.getId());
+        request.put("menteeId", craftsperson2.getId());
+
+        RestAssured.given()
+                    .contentType("application/json")
+                    .body(request.toString())
+                    .post("craftspeople/mentor/add")
+                .then()
+                    .statusCode(204);
+
+        craftspeopleRepository.flush();
+
+        Craftsperson updatedMentor = craftspeopleRepository.findById(craftsperson1.getId()).get();
+        Craftsperson updatedMentee = craftspeopleRepository.findById(craftsperson2.getId()).get();
+
+        assertEquals("mentor not found on mentee entity", craftsperson1.getId(), updatedMentee.getMentor().get().getId());
+        assertTrue("mentee not found in the mentor's mentees list", updatedMentor.getMentees()
+            .stream()
+            .map(Craftsperson::getId)
+            .anyMatch(actualMenteeId -> craftsperson2.getId().equals(actualMenteeId)));
+    }
+
+    private void when_a_craftsperson_is_deleted(Craftsperson craftsperson) {
+        craftspeopleRepository.deleteById(craftsperson.getId());
+    }
+
     private void given_two_craftspeople() {
         Craftsperson craftpersonOne = craftspeopleRepository.save(new Craftsperson("Jose", "Wenzel"));
         Craftsperson craftpersonTwo = craftspeopleRepository.save(new Craftsperson("Ed", "Rixon"));
         craftspeople.add(craftpersonOne);
         craftspeople.add(craftpersonTwo);
+        craftsperson1 = craftspeopleRepository.save(new Craftsperson("Jose", "Wenzel"));
+        craftsperson2 = craftspeopleRepository.save(new Craftsperson("Ed", "Rixon"));
     }
-
 
     private void given_a_craftsperson_with_a_mentor() {
         mentor = craftspeopleRepository.save(new Craftsperson("Jose", "Wenzel"));

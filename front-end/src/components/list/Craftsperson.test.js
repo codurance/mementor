@@ -9,22 +9,6 @@ describe ('when rendering a craftsperson', () => {
         expect(getByTestId('craftspersonName')).toHaveTextContent('Arnaud Claudel')
     })
 
-    describe('with his mentor', () => {
-        it('should show the label', () => {
-            const {getByTestId} = render(<Craftsperson craftsperson={{mentor: null}} />)
-            expect(getByTestId('craftspersonMentorLabel')).toHaveTextContent('Mentored by:')
-        })
-        it('should show the mentor name', () => {
-            const {getByTestId} = render(<Craftsperson craftsperson={{mentor: {firstName: "Etienne", lastName: "Mustow"}}} />)
-            expect(getByTestId('craftspersonMentorLabel')).toHaveTextContent('Mentored by:')
-            expect(getByTestId('craftspersonMentorValue')).toHaveTextContent('Etienne Mustow')
-        })
-        it('should show a dash if there is no mentor', () => {
-            const {getByTestId} = render(<Craftsperson craftsperson={{mentor: null}}/>)
-            expect(getByTestId('craftspersonMentorValue')).toHaveTextContent('-')
-        })
-    })
-
     describe('with his mentees', () => {
         it('should show the label', () => {
             const {getByTestId} = render(<Craftsperson craftsperson={{mentees: null}} />)

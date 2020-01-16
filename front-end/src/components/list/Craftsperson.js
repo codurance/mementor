@@ -9,12 +9,7 @@ export default function Craftsperson({ craftsperson }) {
         </h2>
       </div>
       <div className='col-lg-4'>
-        <h5><span className='mentorLabel' data-testid='craftspersonMentorLabel'>Mentored by:</span><br />
-        <span className='mentor' data-testid='craftspersonMentorValue'>
-          {craftsperson.mentor
-            ? `${craftsperson.mentor.firstName} ${craftsperson.mentor.lastName}`
-            : '-'}
-        </span></h5>
+        <h5><span className='mentorLabel' data-testid='craftspersonMentorLabel'>Mentored by:</span></h5>
       </div>
       <div className='col-lg-4'>
         <span className='menteeLabel' data-testid='craftspersonMenteeLabel'>Mentees: </span>
