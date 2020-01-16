@@ -26,8 +26,14 @@ export default function CraftspersonRow({craftsperson, craftspeople, rerender}) 
         body: JSON.stringify({mentorId: selectedCraftspeople[0].id, menteeId: craftsperson.id})
       }
     );
-    mentorSelect.current.clear();
     rerender();
+  }
+
+  function getCraftspersonMentorNameOrNull() {
+    if(craftsperson.mentor === null) {
+      return ''
+    }
+    return craftsperson.mentor.firstName + ' ' + craftsperson.mentor.lastName;
   }
 
   return (
@@ -41,6 +47,7 @@ export default function CraftspersonRow({craftsperson, craftspeople, rerender}) 
             <div className="container">
               <div className="row justify-content-center">
               <Typeahead
+                defaultInputValue={getCraftspersonMentorNameOrNull()}
                 ref={mentorSelect}
                 inputProps={{'data-testid': 'add-mentor-select'}}
                 labelKey={(option) => `${option.firstName} ${option.lastName}`}
