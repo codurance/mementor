@@ -3,6 +3,8 @@ import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import ReactDOM from "react-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 export default function SearchBar(props) {
   const [searchValue, setSearchValue] = useState(null);
@@ -17,7 +19,9 @@ export default function SearchBar(props) {
   return (
     <InputGroup className="search-bar mb-3">
       <InputGroup.Prepend>
-        <InputGroup.Text id="inputGroup-sizing-sm">Search</InputGroup.Text>
+        <InputGroup.Text id="inputGroup-sizing-sm">
+          <span><FontAwesomeIcon icon={faSearch} /> Search</span>
+        </InputGroup.Text>
       </InputGroup.Prepend>
       <FormControl
         ref={searchInputElement => (searchInput = searchInputElement)}

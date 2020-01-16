@@ -5,6 +5,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {api} from './../../util/api';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 
 export default function Mentee({mentee, rerender}) {
@@ -24,7 +26,7 @@ export default function Mentee({mentee, rerender}) {
                     </Col>
                     <Col>
                         <Button variant="danger" data-testid="removementeebutton" onClick={e => removeMentee(e)}>
-                            <strong>X</strong>
+                        <FontAwesomeIcon icon={faTimes} size='lg' />
                         </Button>
                     </Col>
             </Row>
