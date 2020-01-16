@@ -12,18 +12,21 @@ import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ManageCraftsperson from "./components/admin/ManageCraftsperson";
+import logo from "./mementor_logo.png";
 
 function App() {
   const defaultSort = sortByNumberOfMentees;
 
   const [craftspeople, setCraftsPeople] = useState([]);
-  const [filteredCraftspeople, setFilteredCraftspeople] = useState(craftspeople);
+  const [filteredCraftspeople, setFilteredCraftspeople] = useState(
+    craftspeople
+  );
   const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
   const [backendFetchError, setBackendFetchError] = useState(null);
   const [shouldRender, setShouldRender] = useState(false);
 
   function rerender() {
-      setShouldRender(!shouldRender);
+    setShouldRender(!shouldRender);
   }
 
   function filterCraftspeople(searchedValue) {
@@ -57,7 +60,9 @@ function App() {
   return (
     <div className="App">
       <div>
-        <h1>Mementor</h1>
+        <div className="container">
+          <img src={logo} className="main-logo" alt="Mementor Logo" />
+        </div>
         {backendFetchError && (
           <div className="alert alert-danger" role="alert">
             <strong>Oh snap!</strong> Looks like there was an error while
@@ -65,7 +70,7 @@ function App() {
           </div>
         )}
         <div className="container">
-        <ManageCraftsperson craftspeople={craftspeople} rerender={rerender} />
+          <ManageCraftsperson craftspeople={craftspeople} rerender={rerender} />
         </div>
         <div className="container">
           <SearchBar onEnter={filterCraftspeople} />

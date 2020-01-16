@@ -25,5 +25,9 @@ public class CraftspeopleController {
     }
 
     @DeleteMapping("/craftspeople/{craftspersonId}")
+    public void deleteCraftsperson(@PathVariable Integer craftspersonId){
+        craftspeopleService.deleteCraftsperson(craftspersonId);
+    }
+
 
 }

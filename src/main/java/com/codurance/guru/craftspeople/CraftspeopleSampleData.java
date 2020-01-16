@@ -13,7 +13,10 @@ public class CraftspeopleSampleData {
 
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
-
+        if(repository.count() > 0) {
+            System.out.println("repository not empty, skipping initial data population ..");
+            return;
+        }
         Craftsperson mashB = repository.save(new Craftsperson("Mashooq", "Badar"));
         Craftsperson sandroM = repository.save(new Craftsperson("Sandro", "Mancuso"));
         Craftsperson steveL = repository.save(new Craftsperson("Steve", "Lydford"));

@@ -18,4 +18,8 @@ public class CraftspeopleService {
     public List<Craftsperson> retrieveAllCraftsperson() {
         return repository.findAll();
     }
+
+    public void deleteCraftsperson(Integer craftspersonId) {
+        repository.deleteById(craftspersonId);
+    }
 }

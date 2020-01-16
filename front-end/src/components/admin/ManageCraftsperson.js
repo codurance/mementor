@@ -42,7 +42,7 @@ export default function ManageCraftsperson(props) {
         data-testid="adminPopupButton"
         onClick={handleShow}
       >
-        AdminSomething
+        <strong>+/-</strong> Craftspeople
       </Button>
 
       <Modal show={show} onHide={handleClose}>

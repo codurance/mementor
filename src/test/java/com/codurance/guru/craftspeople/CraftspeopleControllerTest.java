@@ -67,9 +67,24 @@ public class CraftspeopleControllerTest {
                 .body("$", hasSize((int) craftspeopleCount));
     }
 
+//    @Test
+//    public void delete_a_craftsperson() {
+//        given_two_craftspeople();
+//
+//        when_a_craftsperson_is_deleted(savedCraftsperson);
+//
+//        RestAssured.get("craftspeople/{craftspersonId}", savedCraftsperson.getId())
+//                .then().assertThat()
+//                .statusCode(404);
+//    }
+
+    private void when_a_craftsperson_is_deleted(Craftsperson craftsperson) {
+        craftspeopleRepository.deleteById(craftsperson.getId());
+    }
+
     private void given_two_craftspeople() {
         craftspeopleRepository.save(new Craftsperson("Jose", "Wenzel"));
-        craftspeopleRepository.save(new Craftsperson("Ed", "Rixon"));
+        savedCraftsperson = craftspeopleRepository.save(new Craftsperson("Ed", "Rixon"));
     }
 
     private void given_a_craftsperson_with_a_mentor() {
@@ -78,7 +93,7 @@ public class CraftspeopleControllerTest {
     }
 
     private void given_a_craftsperson_in_the_repository() {
-        savedCraftsperson = craftspeopleRepository.save(new Craftsperson("Arnaud","CLAUDEL"));
+        savedCraftsperson = craftspeopleRepository.save(new Craftsperson("Arnaud", "CLAUDEL"));
     }
 
 }
