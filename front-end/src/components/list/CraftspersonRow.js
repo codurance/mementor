@@ -1,13 +1,13 @@
 import React from 'react';
 import Craftsperson from './Craftsperson';
+import Mentees from './Mentees'
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
-import ListGroup from 'react-bootstrap/ListGroup';
-import {sortAlphabetically} from '../../util/sorting';
 import './Craftsperson.css'
 
-export default function CraftspersonRow({craftsperson}) {
+
+export default function CraftspersonRow({craftsperson, craftspeople, rerender}) {
   return (
     <Accordion>
       <div className='container'>
@@ -19,17 +19,7 @@ export default function CraftspersonRow({craftsperson}) {
           </Card.Header>
           <Accordion.Collapse eventKey='0'>
             <Card.Body>
-              <ListGroup data-testid='menteesList'>
-                {craftsperson.mentees
-                  .sort(sortAlphabetically)
-                  .map(mentee => {
-                  return (
-                    <ListGroup.Item key={mentee.id} >
-                      <h4 className="menteeName">{mentee.firstName} {mentee.lastName}</h4>
-                    </ListGroup.Item>
-                  );
-                })}
-              </ListGroup>
+            <Mentees rerender={rerender} craftsperson={craftsperson} mentees={craftsperson.mentees} craftspeople={craftspeople}/>
             </Card.Body>
           </Accordion.Collapse>
         </Card>

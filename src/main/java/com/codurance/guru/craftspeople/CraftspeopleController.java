@@ -29,7 +29,7 @@ public class CraftspeopleController {
         return "OK";
     }
 
-    @PostMapping("craftspeople/mentee/remove/{menteeId}")
+    @PutMapping("craftspeople/mentee/remove/{menteeId}")
     String removeMentee(@PathVariable int menteeId){
         craftspeopleService.removeMentee(menteeId);
         return "OK";

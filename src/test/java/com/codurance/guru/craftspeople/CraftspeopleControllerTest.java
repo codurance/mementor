@@ -110,7 +110,7 @@ public class CraftspeopleControllerTest {
 
         given()
                 .contentType(ContentType.JSON)
-                .post("craftspeople/mentee/remove/" + savedCraftsperson.getId())
+                .put("craftspeople/mentee/remove/" + savedCraftsperson.getId())
                 .then()
                 .statusCode(200)
                 .extract()
