@@ -5,12 +5,12 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.json.JSONException;
 import org.json.JSONObject;
+import io.restassured.response.Response;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +36,7 @@ public class CraftspeopleControllerTest {
     private Craftsperson craftsperson1;
     private Craftsperson craftsperson2;
     private List<Craftsperson> craftspeople = new ArrayList<>();
+    private Response response;
 
     @Test
     public void retrieve_a_craftsperson() {
@@ -85,17 +86,48 @@ public class CraftspeopleControllerTest {
     public void delete_a_craftsperson() {
         given_two_craftspeople();
 
-        when_a_craftsperson_is_deleted(craftsperson1);
+        when_a_craftsperson_is_deleted(savedCraftsperson);
 
-        RestAssured.get("craftspeople/{craftspersonId}", craftsperson1.getId())
+        RestAssured.get("craftspeople/{craftspersonId}", savedCraftsperson.getId())
                 .then().assertThat()
                 .statusCode(404);
+    }
+
+    @Test
+    public void add_a_craftsperson() throws JSONException {
+        given_an_api_call_with_a_first_name_and_a_last_name();
+
+        then_the_craftsperson_has_to_be_saved_in_the_repository();
+    }
+
+    private void then_the_craftsperson_has_to_be_saved_in_the_repository(){
+
+        Integer newId = Integer.parseInt(response.asString());
+
+        RestAssured.get("craftspeople/{craftspersonId}", newId)
+                .then().assertThat()
+                .body("firstName", equalTo("Arnaldo"))
+                .body("lastName", equalTo("ARNAUD"))
+                .statusCode(200);
+    }
+
+    private void given_an_api_call_with_a_first_name_and_a_last_name() throws JSONException {
+        JSONObject requestBody = new JSONObject();
+
+        requestBody.put("firstName", "Arnaldo");
+        requestBody.put("lastName", "ARNAUD");
+
+        response = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .body(requestBody.toString())
+                .post("craftspeople/add");
     }
 
     @Test
     public void add_mentee() {
         given_two_craftspeople();
 
+        //TODO:fix this shit, like just above
         String payload = "{\n" +
                 "  \"mentorId\": \"" +
                 craftspeople.get(0).getId() +
@@ -174,6 +206,7 @@ public class CraftspeopleControllerTest {
         craftspeople.add(craftpersonTwo);
         craftsperson1 = craftspeopleRepository.save(new Craftsperson("Jose", "Wenzel"));
         craftsperson2 = craftspeopleRepository.save(new Craftsperson("Ed", "Rixon"));
+        savedCraftsperson = craftsperson1;
     }
 
     private void given_a_craftsperson_with_a_mentor() {
@@ -182,7 +215,7 @@ public class CraftspeopleControllerTest {
     }
 
     private void given_a_craftsperson_in_the_repository() {
-        savedCraftsperson = craftspeopleRepository.save(new Craftsperson("Arnaud","CLAUDEL"));
+        savedCraftsperson = craftspeopleRepository.save(new Craftsperson("Arnaud", "CLAUDEL"));
     }
 
 }

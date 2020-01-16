@@ -3,6 +3,8 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import FormControl from "react-bootstrap/FormControl";
+import InputGroup from "react-bootstrap/InputGroup";
 import CraftspersonList from "./CraftspersonList";
 import "./ManageCraftsperson.css";
 import { api } from "../../util/api";
@@ -11,28 +13,59 @@ export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const [idToDelete, setIdToDelete] = useState(null);
-  
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+
   const handleClose = () => {
     setIdToDelete(null);
     setShow(false);
   };
-  
+
   function getSelectedId(id) {
     return setIdToDelete(id);
   }
-  
-  function deleteCraftsperson(id) {
-    if (id){
-    api(`craftspeople/${id}`, {
-      method: "DELETE"
-    })
-      .then(() => {
-        props.rerender();
+
+  function addCraftsperson() {
+    if (firstName && lastName) {
+      api(`craftspeople/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName
+        })
       })
-      .catch(error => {
-        console.log(error);
-      });
-    }      
+        .then(() => {
+          props.rerender();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }
+
+  const handleFirstName = event => {
+    setFirstName(event.target.value);
+  }
+  
+  const handleLastName = event => {
+    setLastName(event.target.value);
+  }
+
+  function deleteCraftsperson(id) {
+    if (id) {
+      api(`craftspeople/${id}`, {
+        method: "DELETE"
+      })
+        .then(() => {
+          props.rerender();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   }
 
   return (
@@ -51,18 +84,24 @@ export default function ManageCraftsperson(props) {
             <Row>
               <Modal.Title>Add or Remove Craftsperson</Modal.Title>
             </Row>
-            <Row className="add-button-container">
-              <Button
-                className="add-button"
-                variant="primary"
-                onClick={handleClose}
-              >
-                <strong>+</strong> Add
-              </Button>
-            </Row>
           </Container>
         </Modal.Header>
         <Modal.Body>
+          <InputGroup className="mb-3">
+            <FormControl
+              required
+              onChange={handleFirstName}
+              placeholder="First Name..."
+              />
+            <FormControl
+              required
+              onChange={handleLastName}
+              placeholder="Last Name..."
+            />
+            <InputGroup.Append>
+              <Button onClick={() => addCraftsperson()}>Add</Button>
+            </InputGroup.Append>
+          </InputGroup>
           <CraftspersonList
             craftspeople={props.craftspeople}
             click={getSelectedId}
