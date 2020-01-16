@@ -107,9 +107,9 @@ describe('craftspeople without mentor sort', () => {
             {id: 1, firstName:"Brnaud", lastName:"Claudel", mentor: {}},
             {id: 2, firstName:"Drnaud", lastName:"Claudel", mentor: null}, 
         ];
-        const sortedCraftpeople = craftpeople.sort(sortByCraftspeopleWithoutMentor)
+        const sortedCraftpeople = craftpeople.sort(sortByCraftspeopleWithoutMentor);
         expect(sortedCraftpeople[2].id).toBe(1)
-    })
+    });
 
     it('should put the craftsperson without a mentor first', () => {
         const craftpeople = [
@@ -117,9 +117,9 @@ describe('craftspeople without mentor sort', () => {
             {id: 1, firstName:"Brnaud", lastName:"Claudel", mentor: null},
             {id: 2, firstName:"Drnaud", lastName:"Claudel", mentor: {}}, 
         ];
-        const sortedCraftpeople = craftpeople.sort(sortByCraftspeopleWithoutMentor)
+        const sortedCraftpeople = craftpeople.sort(sortByCraftspeopleWithoutMentor);
         expect(sortedCraftpeople[0].id).toBe(1)
-    })
+    });
 
     it('should also sort alphabetically if equal', () => {
         const craftpeople = [
@@ -128,13 +128,13 @@ describe('craftspeople without mentor sort', () => {
             {id: 1, firstName:"Drnaud", lastName:"Claudel", mentor: {}}, 
             {id: 2, firstName:"Crnaud", lastName:"Claudel", mentor: null},
         ];
-        const sortedCraftpeople = craftpeople.sort(sortByCraftspeopleWithoutMentor)
+        const sortedCraftpeople = craftpeople.sort(sortByCraftspeopleWithoutMentor);
         expect(sortedCraftpeople[0].id).toBe(0);
         expect(sortedCraftpeople[1].id).toBe(2);
         expect(sortedCraftpeople[2].id).toBe(3);
         expect(sortedCraftpeople[3].id).toBe(1);
     })
-})
+});
 
 describe('Alphabetical sort', () => {
     it('should sort alphabetically craftspeople', () => {
@@ -143,9 +143,9 @@ describe('Alphabetical sort', () => {
             {id: 1, firstName: "Arnaud", lastName: "Claudel"}, 
             {id: 2, firstName: "Naruto", lastName: "Uzumaki"}];
 
-        craftpeople.sort(sortAlphabetically)
+        craftpeople.sort(sortAlphabetically);
         expect(craftpeople[0].id).toBe(1);
         expect(craftpeople[1].id).toBe(0);
         expect(craftpeople[2].id).toBe(2);
     })
-})
+});

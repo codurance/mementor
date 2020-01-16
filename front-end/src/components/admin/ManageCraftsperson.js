@@ -50,11 +50,11 @@ export default function ManageCraftsperson(props) {
 
   const handleFirstName = event => {
     setFirstName(event.target.value);
-  }
+  };
   
   const handleLastName = event => {
     setLastName(event.target.value);
-  }
+  };
 
   function deleteCraftsperson(id) {
     if (id) {

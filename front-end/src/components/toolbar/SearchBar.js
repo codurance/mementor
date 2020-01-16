@@ -8,7 +8,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 export default function SearchBar(props) {
   const [searchValue, setSearchValue] = useState(null);
-  var searchInput = null;
+  let searchInput = null;
 
   const clearSearch = () => {
     setSearchValue("");

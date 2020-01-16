@@ -16,7 +16,7 @@ export function sortByCraftspeopleWithoutMentor(leftCraftsperson, rightCraftsper
         return -1;
     }
     return 1;
-};
+}
 
 export function sortAlphabetically(leftCraftsperson, rightCraftsperson) {
     return (leftCraftsperson.firstName + leftCraftsperson.lastName)

@@ -11,7 +11,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 export default function Mentee({mentee, rerender}) {
 
-    function removeMentee(e) {
+    function removeMentee() {
         api(`craftspeople/mentee/remove/${mentee.id}`, {method:"PUT"});
         rerender();
     }
@@ -25,7 +25,7 @@ export default function Mentee({mentee, rerender}) {
                         <h4 className='menteeName'>{mentee.firstName} {mentee.lastName}</h4>
                     </Col>
                     <Col>
-                        <Button variant="danger" data-testid="removementeebutton" onClick={e => removeMentee(e)}>
+                        <Button variant="danger" data-testid="removementeebutton" onClick={() => removeMentee()}>
                         <FontAwesomeIcon icon={faTimes} size='lg' />
                         </Button>
                     </Col>

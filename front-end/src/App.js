@@ -63,9 +63,6 @@ function App() {
           <img src={logo} className="main-logo" alt="Mementor Logo" />
         </div>
         <div className="container">
-
-        </div>
-        <div className="container">
           <SearchBar onEnter={filterCraftspeople} />
           <Row>
             <Col>

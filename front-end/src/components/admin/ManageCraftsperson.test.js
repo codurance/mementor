@@ -1,8 +1,5 @@
 import React from "react";
 import "@testing-library/jest-dom/extend-expect";
-import { render } from "@testing-library/react";
-import ManageCraftsperson from "./ManageCraftsperson";
-import userEvent from "@testing-library/user-event";
 
 describe("Manager Craftsperson", () => {
   describe("Selects a craftsperson to delete", () => {
