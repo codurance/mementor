@@ -63,16 +63,11 @@ function App() {
         <div className="container">
           <img src={logo} className="main-logo" alt="Mementor Logo" />
         </div>
-        {backendFetchError && (
-          <div className="alert alert-danger" role="alert">
-            <strong>Oh snap!</strong> Looks like there was an error while
-            fetching the data.
-          </div>
-        )}
         <div className="container">
           <ManageCraftsperson craftspeople={craftspeople} rerender={rerender} />
         </div>
         <div className="container">
+          
           <SearchBar onEnter={filterCraftspeople} />
           <ButtonToolbar>
             <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
@@ -96,6 +91,12 @@ function App() {
             </ToggleButtonGroup>
           </ButtonToolbar>
         </div>
+        {backendFetchError && (
+          <div className="alert alert-danger container" role="alert">
+            <strong>Oh snap!</strong> Looks like there was an error while
+            fetching the data.
+          </div>
+        )}
         {filteredCraftspeople.map(craftsperson => (
           <CraftspersonRow key={craftsperson.id} craftsperson={craftsperson} />
         ))}
