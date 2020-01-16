@@ -2,9 +2,14 @@ package com.codurance.guru.craftspeople;
 
 import com.codurance.guru.GuruApplication;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.gson.GsonBuilderCustomizer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -22,6 +27,7 @@ public class CraftspeopleControllerTest {
 
     private Craftsperson savedCraftsperson;
     private Craftsperson mentor;
+    private Response response;
 
     @Test
     public void retrieve_a_craftsperson() {
@@ -76,6 +82,29 @@ public class CraftspeopleControllerTest {
         RestAssured.get("craftspeople/{craftspersonId}", savedCraftsperson.getId())
                 .then().assertThat()
                 .statusCode(404);
+    }
+
+    @Test
+    public void add_a_craftsperson() throws JSONException {
+        given_an_api_call_with_a_first_name_and_a_last_name();
+
+        then_the_craftsperson_has_to_be_saved_in_the_repository();
+    }
+
+    private void then_the_craftsperson_has_to_be_saved_in_the_repository() {
+        craftspeopleRepository.findById()
+    }
+
+    private void given_an_api_call_with_a_first_name_and_a_last_name() throws JSONException {
+        JSONObject requestBody = new JSONObject();
+
+        requestBody.put("firstName", "Arnaldo");
+        requestBody.put("lastName", "ARNAUD");
+
+        response = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .body(requestBody)
+                .post("craftspeople/add");
     }
 
     private void when_a_craftsperson_is_deleted(Craftsperson craftsperson) {

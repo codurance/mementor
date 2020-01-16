@@ -30,5 +30,36 @@ public class CraftspeopleController {
         craftspeopleService.deleteCraftsperson(craftspersonId);
     }
 
+    @PostMapping("/craftsperson/add")
+    public ResponseEntity addNewCraftsperson(@RequestBody AddCraftsperson addCraftsperson) {
+        ResponseEntity responseEntity = new ResponseEntity(craftspeopleService.addCraftsperson(addCraftsperson.firstName, addCraftsperson.lastName).getId(), HttpStatus.OK);
+        return responseEntity;
+    }
 
+
+    private class AddCraftsperson {
+        String firstName;
+        String lastName;
+
+        public AddCraftsperson(String firstName, String lastName) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+    }
 }

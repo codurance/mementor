@@ -29,4 +29,8 @@ public class CraftspeopleService {
 
         repository.deleteById(craftspersonId);
     }
+
+    public Craftsperson addCraftsperson(String firstName, String lastName) {
+        return repository.save(new Craftsperson(firstName, lastName));
+    }
 }
