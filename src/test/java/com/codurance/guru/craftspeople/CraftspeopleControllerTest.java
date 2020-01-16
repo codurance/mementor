@@ -206,6 +206,7 @@ public class CraftspeopleControllerTest {
         craftspeople.add(craftpersonTwo);
         craftsperson1 = craftspeopleRepository.save(new Craftsperson("Jose", "Wenzel"));
         craftsperson2 = craftspeopleRepository.save(new Craftsperson("Ed", "Rixon"));
+        savedCraftsperson = craftsperson1;
     }
 
     private void given_a_craftsperson_with_a_mentor() {
