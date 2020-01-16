@@ -30,16 +30,19 @@ public class CraftspeopleController {
         craftspeopleService.deleteCraftsperson(craftspersonId);
     }
 
-    @PostMapping("/craftsperson/add")
+    @PostMapping("/craftspeople/add")
     public ResponseEntity addNewCraftsperson(@RequestBody AddCraftsperson addCraftsperson) {
         ResponseEntity responseEntity = new ResponseEntity(craftspeopleService.addCraftsperson(addCraftsperson.firstName, addCraftsperson.lastName).getId(), HttpStatus.OK);
         return responseEntity;
     }
 
 
-    private class AddCraftsperson {
+    private static class AddCraftsperson {
         String firstName;
         String lastName;
+
+        public AddCraftsperson() {
+        }
 
         public AddCraftsperson(String firstName, String lastName) {
             this.firstName = firstName;

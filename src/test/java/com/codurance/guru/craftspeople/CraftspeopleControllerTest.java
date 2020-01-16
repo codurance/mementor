@@ -91,8 +91,15 @@ public class CraftspeopleControllerTest {
         then_the_craftsperson_has_to_be_saved_in_the_repository();
     }
 
-    private void then_the_craftsperson_has_to_be_saved_in_the_repository() {
-        craftspeopleRepository.findById()
+    private void then_the_craftsperson_has_to_be_saved_in_the_repository(){
+
+        Integer newId = Integer.parseInt(response.asString());
+
+        RestAssured.get("craftspeople/{craftspersonId}", newId)
+                .then().assertThat()
+                .body("firstName", equalTo("Arnaldo"))
+                .body("lastName", equalTo("ARNAUD"))
+                .statusCode(200);
     }
 
     private void given_an_api_call_with_a_first_name_and_a_last_name() throws JSONException {
@@ -103,7 +110,7 @@ public class CraftspeopleControllerTest {
 
         response = RestAssured.given()
                 .contentType(ContentType.JSON)
-                .body(requestBody)
+                .body(requestBody.toString())
                 .post("craftspeople/add");
     }
 

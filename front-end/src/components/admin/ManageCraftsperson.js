@@ -29,6 +29,9 @@ export default function ManageCraftsperson(props) {
     if (firstName && lastName) {
       api(`craftspeople/add`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({
           firstName: firstName,
           lastName: lastName
