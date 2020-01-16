@@ -50,6 +50,7 @@ public class CraftspeopleService {
 
         for (Craftsperson mentee: craftspersonToRemove.getMentees()) {
             mentee.setMentor(null);
+            repository.save(mentee);
         }
 
         repository.deleteById(craftspersonId);
