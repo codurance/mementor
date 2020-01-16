@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class CraftspeopleService {
@@ -11,8 +12,8 @@ public class CraftspeopleService {
     @Autowired
     private CraftspeopleRepository repository;
 
-    public Craftsperson retrieveCraftsperson(Integer craftspersonId) {
-        return repository.findById(craftspersonId).orElse(new Craftsperson());
+    public Optional<Craftsperson> retrieveCraftsperson(Integer craftspersonId) {
+        return repository.findById(craftspersonId);
     }
 
     public List<Craftsperson> retrieveAllCraftsperson() {
@@ -34,5 +35,17 @@ public class CraftspeopleService {
         mentee.setMentor(null);
 
         repository.save(mentee);
+    }
+
+    public void addMentor(int mentorId, int menteeId) {
+        Craftsperson mentor = repository.findById(mentorId).get();
+        Craftsperson mentee = repository.findById(menteeId).get();
+
+        mentee.setMentor(mentor);
+        repository.save(mentee);
+    }
+
+    public void deleteCraftsperson(Integer craftspersonId) {
+        repository.deleteById(craftspersonId);
     }
 }

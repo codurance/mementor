@@ -28,6 +28,6 @@ public class CraftspeopleServiceTest {
         Craftsperson craftsperson = new Craftsperson("John", "Doe");
         when(craftspeopleRepository.findById(1)).thenReturn(Optional.of(craftsperson));
 
-        assertEquals(craftspeopleService.retrieveCraftsperson(1), craftsperson);
+        assertEquals(craftsperson, craftspeopleService.retrieveCraftsperson(1).get());
     }
 }
