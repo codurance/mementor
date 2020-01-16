@@ -9,9 +9,13 @@ import './Craftsperson.css'
 import {Typeahead} from 'react-bootstrap-typeahead';
 
 
-export default function CraftspersonRow({craftsperson, craftspeople}) {
+export default function CraftspersonRow({craftsperson, craftspeople, rerender}) {
   
   function addMentorCallBack(selectedCraftspeople) {
+    if(selectedCraftspeople.length === 0) {
+      // nothing to do
+      return;
+    }
     fetch('/craftspeople/mentor/add', 
       {
         method: 'POST',
@@ -20,7 +24,8 @@ export default function CraftspersonRow({craftsperson, craftspeople}) {
         },
         body: JSON.stringify({mentorId: selectedCraftspeople[0].id, menteeId: craftsperson.id})
       }
-    )
+    );
+    rerender();
   }
   
   return (
