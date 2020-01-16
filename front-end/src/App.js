@@ -97,7 +97,7 @@ function App() {
           </ButtonToolbar>
         </div>
         {filteredCraftspeople.map(craftsperson => (
-          <CraftspersonRow key={craftsperson.id} craftsperson={craftsperson} />
+          <CraftspersonRow key={craftsperson.id} craftsperson={craftsperson} craftspeople={craftspeople}/>
         ))}
       </div>
     </div>
