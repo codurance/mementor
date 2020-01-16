@@ -17,6 +17,11 @@ function App() {
     const [filteredCrafspeople, setFilteredCrafspeople] = useState(craftspeople);
     const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
     const [backendFetchError, setBackendFetchError] = useState(null);
+    const [shouldRender, setShouldRender] = useState(false);
+
+    function rerender() {
+        setShouldRender(!shouldRender);
+    }
 
     function filterCraftspeople(searchedValue) {
         const filteredCraftspeople = filter(craftspeople, searchedValue);
@@ -44,7 +49,7 @@ function App() {
                 console.log(error);
                 setBackendFetchError(error)
             });
-    }, [defaultSort]);
+    }, [defaultSort, shouldRender]);
 
     return (
         <div className='App'>
@@ -66,7 +71,7 @@ function App() {
                     </ButtonToolbar>
                 </div>
                 {filteredCrafspeople.map(craftsperson => 
-                    <CraftspersonRow key={craftsperson.id} craftsperson={craftsperson} />)}
+                    <CraftspersonRow key={craftsperson.id} rerender={rerender} craftsperson={craftsperson} craftspeople={craftspeople}/>)}
             </div>
         </div>
     );
