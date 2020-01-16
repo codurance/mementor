@@ -31,14 +31,18 @@ export default function CraftspersonRow({craftsperson, craftspeople}) {
             <Accordion.Toggle className='craftsperson-row' as={Button} variant='light' eventKey='0'>
               <Craftsperson craftsperson={craftsperson} />
             </Accordion.Toggle>
+            <div className="container">
+              <div className="row justify-content-center">
+              <Typeahead
+                inputProps={{'data-testid': 'add-mentor-select'}}
+                labelKey={(option) => `${option.firstName} ${option.lastName}`}
+                options={craftspeople}
+                placeholder="Select a mentor"
+                onChange={addMentorCallBack}
+              />
+              </div>
+            </div>
           </Card.Header>
-          <Typeahead
-            inputProps={{'data-testid': 'add-mentor-select'}}
-            labelKey={(option) => `${option.firstName} ${option.lastName}`}
-            options={craftspeople}
-            placeholder="Select a mentor"
-            onChange={addMentorCallBack}
-          />
           <Accordion.Collapse eventKey='0'>
             <Card.Body>
               <ListGroup data-testid='menteesList'>
