@@ -6,16 +6,20 @@ import { sortAlphabetically } from "../../util/sorting";
 export default function CraftspersonList(props) {
   return (
     <ListGroup variant="flush" data-testid="craftspersonList">
-      {props.craftspeople.slice().sort(sortAlphabetically).map(craftsperson => (
-        <ListGroup.Item
-          data-testid="craftspersonRowItem"
-          action
-          onClick={() => props.click(craftsperson.id)}
-          eventKey={craftsperson.id}
-        >
-          {craftsperson.firstName} {craftsperson.lastName}
-        </ListGroup.Item>
-      ))}
+      {props.craftspeople
+        .slice()
+        .sort(sortAlphabetically)
+        .map(craftsperson => (
+          <ListGroup.Item
+            action
+            key={craftsperson.id}
+            data-testid="craftspersonRowItem"
+            onClick={() => props.click(craftsperson.id)}
+            eventKey={craftsperson.id}
+          >
+            {craftsperson.firstName} {craftsperson.lastName}
+          </ListGroup.Item>
+        ))}
     </ListGroup>
   );
 }

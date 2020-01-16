@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -10,28 +9,39 @@ import { api } from "../../util/api";
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [idToDelete, setIdToDelete] = useState(null);
-
+  
+  const handleClose = () => {
+    setIdToDelete(null);
+    setShow(false);
+  };
+  
   function getSelectedId(id) {
     return setIdToDelete(id);
   }
-
-  function deleteCraftsperson() {
-      api(`craftspeople/${idToDelete}`, {
+  
+  function deleteCraftsperson(id) {
+    if (id){
+    api(`craftspeople/${id}`, {
       method: "DELETE"
-    }).then(() => {
-      props.rerender()
-    }).catch(error => {
-      console.log(error);
     })
+      .then(() => {
+        props.rerender();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }      
   }
 
   return (
     <div className="row admin-button">
-      <Button variant="secondary" onClick={handleShow}>
+      <Button
+        variant="secondary"
+        data-testid="adminPopupButton"
+        onClick={handleShow}
+      >
         AdminSomething
       </Button>
 
@@ -54,7 +64,6 @@ export default function ManageCraftsperson(props) {
         </Modal.Header>
         <Modal.Body>
           <CraftspersonList
-            data-testid="CraftspersonList"
             craftspeople={props.craftspeople}
             click={getSelectedId}
           />
@@ -63,7 +72,11 @@ export default function ManageCraftsperson(props) {
           <Button variant="light" onClick={handleClose}>
             Cancel
           </Button>
-          <Button data-testid="removeCraftspersonButton" variant="danger" onClick={() => deleteCraftsperson()}>
+          <Button
+            data-testid="removeCraftspersonButton"
+            variant="danger"
+            onClick={() => deleteCraftsperson(idToDelete)}
+          >
             Remove
           </Button>
         </Modal.Footer>

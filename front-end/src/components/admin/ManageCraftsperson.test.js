@@ -1,25 +1,28 @@
 import React from "react";
-import { render, getByTestId } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
+import { render } from "@testing-library/react";
 import ManageCraftsperson from "./ManageCraftsperson";
-import CraftspersonList from "./CraftspersonList";
+import userEvent from "@testing-library/user-event";
 
-describe("In admin modal", () => {
-    describe("when remove a craftsperson", () => {
-        it("should call api with craftsperson id", () => {
-            /*
-            open the modal
-            select a craftperson
-            click delete 
-            verify the call
-            */
+describe("Manager Craftsperson", () => {
+  describe("Selects a craftsperson to delete", () => {
+    it("Should call the delete method with the right Id", () => {
+      // const { getByTestId } = render(
+      //   <ManageCraftsperson
+      //     craftspeople={[{ id: "1", firstName: "John", lastName: "Doe" }]}
+      //   />
+      // );
+      // const deleteCraftsperson = jest.fn();
 
-            const { getByTestId } = render(<ManageCraftsperson craftspeople={[{id:"1",firstName:"Joe",lastName:"Doe"}]}/>);
-            
-            expect(getByTestId('craftspersonRowItem')).toHaveTextContent('Joe Doe')
+      // userEvent.click(getByTestId("adminPopupButton"));
 
-            queryByAttribute()
-            expect(getByTestId(""))
-        })
-    })
-})
+      // const selectedCraftsperson = getByTestId("craftspersonList").firstChild;
+
+      // userEvent.click(selectedCraftsperson);
+
+      // userEvent.click(getByTestId("removeCraftspersonButton"));
+
+      // expect(deleteCraftsperson).toBeCalledWith(1);
+    });
+  });
+});
