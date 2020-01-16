@@ -18,4 +18,21 @@ public class CraftspeopleService {
     public List<Craftsperson> retrieveAllCraftsperson() {
         return repository.findAll();
     }
+
+    public void setMentee(int mentorId, int menteeId) {
+        Craftsperson mentor = repository.findById(mentorId).get();
+        Craftsperson mentee = repository.findById(menteeId).get();
+
+        mentee.setMentor(mentor);
+
+        repository.save(mentee);
+    }
+
+    public void removeMentee(int menteeId){
+        Craftsperson mentee = repository.findById(menteeId).get();
+
+        mentee.setMentor(null);
+
+        repository.save(mentee);
+    }
 }
