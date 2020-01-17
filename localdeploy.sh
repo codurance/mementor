@@ -6,4 +6,4 @@ mvn package
 
 java -jar target/mementor.jar
 
-npm --prefix front-end start
+npm --prefix ./front-end start
