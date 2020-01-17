@@ -10,13 +10,13 @@ import './Mentees.css';
 
 export default function Mentees(props) {
 
-    function addMentee(mentee) {
+    function addMentee(mentee, mentorId) {
         if (mentee != null) {
             api({
                 endpoint: '/craftspeople/addmentee',
                 type: 'PUT',
                 body: {
-                    'mentorId': props.craftsperson.id,
+                    'mentorId': mentorId,
                     'menteeId': mentee.id
                 }
             });
@@ -43,7 +43,7 @@ export default function Mentees(props) {
                     labelKey={(option) => `${option.firstName} ${option.lastName}`}
                     options={props.craftspeople}
                     placeholder="Select a mentor"
-                    onChange={(selected) => addMentee(selected[0])}
+                    onChange={(selected) => addMentee(selected[0], props.craftsperson.id)}
                 />
             </ListGroupItem>
         </ListGroup>
