@@ -1,5 +1,8 @@
 package com.codurance.guru.craftspeople;
 
+import com.codurance.guru.craftspeople.requests.AddCraftspersonRequest;
+import com.codurance.guru.craftspeople.requests.AddMentorRequest;
+import com.codurance.guru.craftspeople.requests.RemoveMentorRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -50,10 +53,10 @@ public class CraftspeopleController {
 
     @PostMapping("/craftspeople/add")
     public ResponseEntity addNewCraftsperson(@RequestBody AddCraftspersonRequest addCraftspersonRequest) {
-        if (addCraftspersonRequest.firstName == null || addCraftspersonRequest.lastName == null)
+        if (addCraftspersonRequest.getFirstName() == null || addCraftspersonRequest.getLastName() == null)
             return ResponseEntity.badRequest().build();
 
-        Craftsperson craftsperson = craftspeopleService.addCraftsperson(addCraftspersonRequest.firstName, addCraftspersonRequest.lastName);
+        Craftsperson craftsperson = craftspeopleService.addCraftsperson(addCraftspersonRequest.getFirstName(), addCraftspersonRequest.getLastName());
         return ResponseEntity.ok(craftsperson.getId());
     }
 
@@ -68,69 +71,4 @@ public class CraftspeopleController {
         craftspeopleService.removeMentor(request.getMenteeId());
         return ResponseEntity.noContent().build();
     }
-
-
 }
-
-class AddCraftspersonRequest {
-    String firstName;
-    String lastName;
-
-    public AddCraftspersonRequest() {
-    }
-
-    public AddCraftspersonRequest(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-}
-
-class AddMentorRequest {
-    private int mentorId;
-    private int menteeId;
-
-    public int getMentorId() {
-        return mentorId;
-    }
-
-    public void setMentorId(int mentorId) {
-        this.mentorId = mentorId;
-    }
-
-    public int getMenteeId() {
-        return menteeId;
-    }
-
-    public void setMenteeId(int menteeId) {
-        this.menteeId = menteeId;
-    }
-}
-
-class RemoveMentorRequest {
-    private int menteeId;
-
-    public int getMenteeId() {
-        return menteeId;
-    }
-
-    public void setMenteeId(int menteeId) {
-        this.menteeId = menteeId;
-    }
-}
-
