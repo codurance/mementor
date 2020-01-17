@@ -1,17 +1,15 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import "./App.css";
 import SearchBar from "./components/toolbar/SearchBar";
 import {api} from "./util/api";
 import CraftspersonRow from "./components/list/CraftspersonRow";
-import {sortByNumberOfMentees, sortByCraftspeopleWithoutMentor} from "./util/sorting";
+import {sortByCraftspeopleWithoutMentor, sortByNumberOfMentees} from "./util/sorting";
 import {filter} from "./util/filtering";
-import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ToggleButton from "react-bootstrap/ToggleButton";
-import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ManageCraftsperson from "./components/admin/ManageCraftsperson";
 import logo from "./mementor_logo.png";
+import {SortingBar} from "./components/toolbar/SortingBar";
 
 function App() {
     const defaultSort = sortByNumberOfMentees;
@@ -27,8 +25,7 @@ function App() {
     }
 
     function filterCraftspeople(searchedValue) {
-        const filteredCraftspeople = filter(craftspeople, searchedValue);
-        setFilteredCraftspeople(filteredCraftspeople);
+      setFilteredCraftspeople(filter(craftspeople, searchedValue));
     }
 
     function makeSortOnClickListener(sortAlgorithmToUse) {
@@ -56,53 +53,42 @@ function App() {
 
     return (
         <div className="App">
-            <div>
-                <div className="container">
-                    <img src={logo} className="main-logo" alt="Mementor Logo"/>
-                </div>
-                <div className="container">
-                    <SearchBar onEnter={filterCraftspeople}/>
-                    <Row>
-                        <Col>
-                            <ButtonToolbar>
-                                <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
-                                    <ToggleButton
-                                        variant="light"
-                                        onClick={makeSortOnClickListener(sortByNumberOfMentees)}
-                                        prechecked
-                                        value={1}
-                                    >
-                                        Sort by number of mentees
-                                    </ToggleButton>
-                                    <ToggleButton
-                                        variant="light"
-                                        onClick={makeSortOnClickListener(
-                                            sortByCraftspeopleWithoutMentor
-                                        )}
-                                        value={2}
-                                    >
-                                        Sort by mentor
-                                    </ToggleButton>
-                                </ToggleButtonGroup>
-                            </ButtonToolbar>
-                        </Col>
-
-                        <Col>
-                            <ManageCraftsperson craftspeople={craftspeople} rerender={rerender}/>
-                        </Col>
-                    </Row>
-                </div>
-                {backendFetchError && (
-                    <div className="alert alert-danger container" role="alert">
-                        <strong>Oh snap!</strong> Looks like there was an error while
-                        fetching the data.
-                    </div>
-                )}
-                {filteredCraftspeople.map(craftsperson => (
-                    <CraftspersonRow key={craftsperson.id} craftsperson={craftsperson} craftspeople={craftspeople}
-                                     rerender={rerender}/>
-                ))}
+          <div>
+            <div className="container">
+              <img src={logo} className="main-logo" alt="Mementor Logo"/>
             </div>
+            <div className="container">
+              <SearchBar onEnter={filterCraftspeople}/>
+              <Row>
+                <Col>
+                  <SortingBar
+                      onClick={makeSortOnClickListener(sortByNumberOfMentees)}
+                      onClick1={makeSortOnClickListener(sortByCraftspeopleWithoutMentor)}
+                  />
+                </Col>
+
+                <Col>
+                  <ManageCraftsperson
+                      craftspeople={craftspeople}
+                      rerender={rerender}
+                  />
+                </Col>
+              </Row>
+            </div>
+            {backendFetchError && (
+                <div className="alert alert-danger container" role="alert">
+                  <strong>Oh snap!</strong> Looks like there was an error while fetching the data.
+                </div>
+            )}
+            {filteredCraftspeople.map(craftsperson => (
+                <CraftspersonRow
+                    key={craftsperson.id}
+                    craftsperson={craftsperson}
+                    craftspeople={craftspeople}
+                    rerender={rerender}
+                />
+            ))}
+          </div>
         </div>
     );
 }

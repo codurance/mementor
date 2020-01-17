@@ -60,8 +60,12 @@ export default function CraftspersonRow({craftsperson, craftspeople, rerender}) 
                     </Card.Header>
                     <Accordion.Collapse eventKey='0'>
                         <Card.Body>
-                            <Mentees rerender={rerender} craftsperson={craftsperson} mentees={craftsperson.mentees}
-                                     craftspeople={craftspeople}/>
+                            <Mentees
+                                rerender={rerender}
+                                craftsperson={craftsperson}
+                                mentees={craftsperson.mentees}
+                                craftspeople={craftspeople}
+                            />
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>

@@ -25,7 +25,11 @@ export default function Mentee({mentee, rerender}) {
                         <h4 className='menteeName'>{mentee.firstName} {mentee.lastName}</h4>
                     </Col>
                     <Col>
-                        <Button variant="danger" data-testid="removementeebutton" onClick={() => removeMentee()}>
+                        <Button
+                            variant="danger"
+                            data-testid="removementeebutton"
+                            onClick={() => removeMentee()}
+                        >
                             <FontAwesomeIcon icon={faTimes} size='lg'/>
                         </Button>
                     </Col>
