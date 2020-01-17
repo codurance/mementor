@@ -30,7 +30,7 @@ import static org.junit.Assert.assertTrue;
 public class CraftspeopleControllerTest {
 
     @Autowired
-    CraftspeopleRepository craftspeopleRepository;
+    private CraftspeopleRepository craftspeopleRepository;
 
     private Craftsperson savedCraftsperson;
     private Craftsperson mentor;
@@ -41,7 +41,7 @@ public class CraftspeopleControllerTest {
     private JSONObject requestBody;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         requestBody = new JSONObject();
         craftspeople = new ArrayList<>();
     }
@@ -324,7 +324,10 @@ public class CraftspeopleControllerTest {
         }
 
     private void when_a_craftsperson_is_deleted(Craftsperson craftsperson) {
-        craftspeopleRepository.deleteById(craftsperson.getId());
+        RestAssured.given()
+                .delete("craftspeople/{craftspersonId}", craftsperson.getId())
+                .then()
+                .statusCode(200);
     }
 
     private void given_two_craftspeople_in_the_repository() {

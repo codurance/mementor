@@ -18,7 +18,9 @@ public class CraftspeopleController {
     @GetMapping("/craftspeople/{craftspersonId}")
     public ResponseEntity retrieveCraftsperson(@PathVariable Integer craftspersonId) {
         Optional<Craftsperson> retrievedCraftsperson = craftspeopleService.retrieveCraftsperson(craftspersonId);
-        return retrievedCraftsperson.map(craftsperson -> new ResponseEntity(craftsperson, HttpStatus.OK)).orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
+        return retrievedCraftsperson
+                .map(craftsperson -> new ResponseEntity<>(craftsperson, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/craftspeople")
@@ -27,22 +29,23 @@ public class CraftspeopleController {
     }
 
     @PutMapping("craftspeople/mentee/add")
-    String setMentee(@RequestBody Map<String, String> mentorAndMenteesIds) {
-        craftspeopleService.setMentee(Integer.valueOf(mentorAndMenteesIds.get("mentorId")),
-                Integer.valueOf(mentorAndMenteesIds.get("menteeId")));
-        return "OK";
+    public ResponseEntity setMentee(@RequestBody Map<String, String> mentorAndMenteesIds) {
+        craftspeopleService.setMentee(Integer.parseInt(mentorAndMenteesIds.get("mentorId")),
+                Integer.parseInt(mentorAndMenteesIds.get("menteeId")));
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("craftspeople/mentee/remove/{menteeId}")
-    String removeMentee(@PathVariable int menteeId){
+    public ResponseEntity removeMentee(@PathVariable int menteeId) {
         craftspeopleService.removeMentor(menteeId);
-        return "OK";
+        return ResponseEntity.ok().build();
     }
 
 
     @DeleteMapping("/craftspeople/{craftspersonId}")
-    public void deleteCraftsperson(@PathVariable Integer craftspersonId){
+    public ResponseEntity deleteCraftsperson(@PathVariable Integer craftspersonId) {
         craftspeopleService.deleteCraftsperson(craftspersonId);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/craftspeople/add")
@@ -50,8 +53,8 @@ public class CraftspeopleController {
         if (addCraftspersonRequest.firstName == null || addCraftspersonRequest.lastName == null)
             return ResponseEntity.badRequest().build();
 
-        ResponseEntity responseEntity = new ResponseEntity(craftspeopleService.addCraftsperson(addCraftspersonRequest.firstName, addCraftspersonRequest.lastName).getId(), HttpStatus.OK);
-        return responseEntity;
+        Craftsperson craftsperson = craftspeopleService.addCraftsperson(addCraftspersonRequest.firstName, addCraftspersonRequest.lastName);
+        return ResponseEntity.ok(craftsperson.getId());
     }
 
     @PostMapping("/craftspeople/mentor/add")
@@ -60,41 +63,42 @@ public class CraftspeopleController {
         return ResponseEntity.noContent().build();
     }
 
-     @PostMapping("/craftspeople/mentor/remove")
-        public ResponseEntity<Void> removeMentor(@RequestBody RemoveMentorRequest request) {
-            craftspeopleService.removeMentor(request.getMenteeId());
-            return ResponseEntity.noContent().build();
-     }
-
-    private static class AddCraftspersonRequest {
-        String firstName;
-        String lastName;
-
-        public AddCraftspersonRequest() {
-        }
-
-        public AddCraftspersonRequest(String firstName, String lastName) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-        }
-
-        public String getFirstName() {
-            return firstName;
-        }
-
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
-
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
+    @PostMapping("/craftspeople/mentor/remove")
+    public ResponseEntity<Void> removeMentor(@RequestBody RemoveMentorRequest request) {
+        craftspeopleService.removeMentor(request.getMenteeId());
+        return ResponseEntity.noContent().build();
     }
 
+
+}
+
+class AddCraftspersonRequest {
+    String firstName;
+    String lastName;
+
+    public AddCraftspersonRequest() {
+    }
+
+    public AddCraftspersonRequest(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }
 
 class AddMentorRequest {
