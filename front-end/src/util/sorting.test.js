@@ -1,9 +1,9 @@
 import FIXTURE from './fixture';
-import { sortByNumberOfMentees, sortByCraftspeopleWithoutMentor, sortAlphabetically } from './sorting';
+import {sortByNumberOfMentees, sortByCraftspeopleWithoutMentor, sortAlphabetically} from './sorting';
 
 const fixtureData = Array.from(FIXTURE);
 
-describe('when given an array of objects', () =>  {
+describe('when given an array of objects', () => {
     describe('only with craftpeople with mentees', () => {
         it('should sort by number of mentees', () => {
             expect(fixtureData.slice(1, 4).sort(sortByNumberOfMentees)).toEqual(
@@ -51,7 +51,7 @@ describe('when given an array of objects', () =>  {
             );
         });
     });
-    
+
     describe('with craftspeople with mentees and without', () => {
         it('should sort by number of mentees and then alphabetically', function () {
             expect(fixtureData.sort(sortByNumberOfMentees)).toEqual(
@@ -103,9 +103,9 @@ describe('when given an array of objects', () =>  {
 describe('craftspeople without mentor sort', () => {
     it('should put the craftsperson with a mentor last', () => {
         const craftpeople = [
-            {id: 0, firstName:"Arnaud", lastName:"Claudel", mentor: null}, 
-            {id: 1, firstName:"Brnaud", lastName:"Claudel", mentor: {}},
-            {id: 2, firstName:"Drnaud", lastName:"Claudel", mentor: null}, 
+            {id: 0, firstName: "Arnaud", lastName: "Claudel", mentor: null},
+            {id: 1, firstName: "Brnaud", lastName: "Claudel", mentor: {}},
+            {id: 2, firstName: "Drnaud", lastName: "Claudel", mentor: null},
         ];
         const sortedCraftpeople = craftpeople.sort(sortByCraftspeopleWithoutMentor);
         expect(sortedCraftpeople[2].id).toBe(1)
@@ -113,9 +113,9 @@ describe('craftspeople without mentor sort', () => {
 
     it('should put the craftsperson without a mentor first', () => {
         const craftpeople = [
-            {id: 0, firstName:"Arnaud", lastName:"Claudel", mentor: {}}, 
-            {id: 1, firstName:"Brnaud", lastName:"Claudel", mentor: null},
-            {id: 2, firstName:"Drnaud", lastName:"Claudel", mentor: {}}, 
+            {id: 0, firstName: "Arnaud", lastName: "Claudel", mentor: {}},
+            {id: 1, firstName: "Brnaud", lastName: "Claudel", mentor: null},
+            {id: 2, firstName: "Drnaud", lastName: "Claudel", mentor: {}},
         ];
         const sortedCraftpeople = craftpeople.sort(sortByCraftspeopleWithoutMentor);
         expect(sortedCraftpeople[0].id).toBe(1)
@@ -123,10 +123,10 @@ describe('craftspeople without mentor sort', () => {
 
     it('should also sort alphabetically if equal', () => {
         const craftpeople = [
-            {id: 0, firstName:"Arnaud", lastName:"Claudel", mentor: null}, 
-            {id: 3, firstName:"Brnaud", lastName:"Claudel", mentor: {}},
-            {id: 1, firstName:"Drnaud", lastName:"Claudel", mentor: {}}, 
-            {id: 2, firstName:"Crnaud", lastName:"Claudel", mentor: null},
+            {id: 0, firstName: "Arnaud", lastName: "Claudel", mentor: null},
+            {id: 3, firstName: "Brnaud", lastName: "Claudel", mentor: {}},
+            {id: 1, firstName: "Drnaud", lastName: "Claudel", mentor: {}},
+            {id: 2, firstName: "Crnaud", lastName: "Claudel", mentor: null},
         ];
         const sortedCraftpeople = craftpeople.sort(sortByCraftspeopleWithoutMentor);
         expect(sortedCraftpeople[0].id).toBe(0);
@@ -139,8 +139,8 @@ describe('craftspeople without mentor sort', () => {
 describe('Alphabetical sort', () => {
     it('should sort alphabetically craftspeople', () => {
         const craftpeople = [
-            {id: 0, firstName: "Etienne", lastName: "Mustow"}, 
-            {id: 1, firstName: "Arnaud", lastName: "Claudel"}, 
+            {id: 0, firstName: "Etienne", lastName: "Mustow"},
+            {id: 1, firstName: "Arnaud", lastName: "Claudel"},
             {id: 2, firstName: "Naruto", lastName: "Uzumaki"}];
 
         craftpeople.sort(sortAlphabetically);
