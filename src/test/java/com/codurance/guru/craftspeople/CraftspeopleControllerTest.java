@@ -188,12 +188,39 @@ public class CraftspeopleControllerTest {
         Craftsperson updatedMentor = craftspeopleRepository.findById(craftsperson1.getId()).get();
         Craftsperson updatedMentee = craftspeopleRepository.findById(craftsperson2.getId()).get();
 
-        assertEquals("mentor not found on mentee entity", craftsperson1.getId(), updatedMentee.getMentor().get().getId());
+        assertTrue("mentor not added", updatedMentee.getMentor().isPresent());
+        assertEquals("wrong mentor added", craftsperson1.getId(), updatedMentee.getMentor().get().getId());
         assertTrue("mentee not found in the mentor's mentees list", updatedMentor.getMentees()
             .stream()
             .map(Craftsperson::getId)
-            .anyMatch(actualMenteeId -> craftsperson2.getId().equals(actualMenteeId)));
+            .anyMatch(craftsperson2.getId()::equals));
     }
+
+    @Test
+        public void remove_mentor() throws JSONException {
+            given_a_craftsperson_with_a_mentor();
+
+            JSONObject request = new JSONObject();
+            request.put("menteeId", savedCraftsperson.getId());
+
+            RestAssured.given()
+                    .contentType("application/json")
+                    .body(request.toString())
+                    .post("craftspeople/mentor/remove")
+                    .then()
+                    .statusCode(204);
+
+            craftspeopleRepository.flush();
+
+            Craftsperson updatedMentor = craftspeopleRepository.findById(mentor.getId()).get();
+            Craftsperson updatedMentee = craftspeopleRepository.findById(savedCraftsperson.getId()).get();
+
+            assertTrue("mentor was not removed", updatedMentee.getMentor().isEmpty());
+            assertTrue("mentee is still in the mentor's mentees list", updatedMentor.getMentees()
+                    .stream()
+                    .map(Craftsperson::getId)
+                    .noneMatch(savedCraftsperson.getId()::equals));
+        }
 
     private void when_a_craftsperson_is_deleted(Craftsperson craftsperson) {
         craftspeopleRepository.deleteById(craftsperson.getId());

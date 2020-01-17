@@ -35,7 +35,7 @@ public class CraftspeopleController {
 
     @PutMapping("craftspeople/mentee/remove/{menteeId}")
     String removeMentee(@PathVariable int menteeId){
-        craftspeopleService.removeMentee(menteeId);
+        craftspeopleService.removeMentor(menteeId);
         return "OK";
     }
 
@@ -56,6 +56,12 @@ public class CraftspeopleController {
         craftspeopleService.addMentor(request.getMentorId(), request.getMenteeId());
         return ResponseEntity.noContent().build();
     }
+
+     @PostMapping("/craftspeople/mentor/remove")
+        public ResponseEntity<Void> removeMentor(@RequestBody RemoveMentorRequest request) {
+            craftspeopleService.removeMentor(request.getMenteeId());
+            return ResponseEntity.noContent().build();
+     }
 
     private static class AddCraftsperson {
         String firstName;
@@ -108,3 +114,16 @@ class AddMentorRequest {
         this.menteeId = menteeId;
     }
 }
+
+class RemoveMentorRequest {
+    private int menteeId;
+
+    public int getMenteeId() {
+        return menteeId;
+    }
+
+    public void setMenteeId(int menteeId) {
+        this.menteeId = menteeId;
+    }
+}
+

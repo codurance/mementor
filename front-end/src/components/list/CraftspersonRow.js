@@ -6,6 +6,8 @@ import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import './Craftsperson.css'
 import {Typeahead} from 'react-bootstrap-typeahead';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTimes} from "@fortawesome/free-solid-svg-icons";
 
 
 export default function CraftspersonRow({craftsperson, craftspeople, rerender}) {
@@ -29,6 +31,20 @@ export default function CraftspersonRow({craftsperson, craftspeople, rerender}) 
         rerender();
     }
 
+    function removeMentorCallback() {
+        fetch('/craftspeople/mentor/remove',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({menteeId: craftsperson.id})
+            }
+        );
+        mentorSelect.current.clear();
+        rerender();
+    }
+
     function getCraftspersonMentorNameOrNull() {
         if (craftsperson.mentor === null) {
             return ''
@@ -47,6 +63,7 @@ export default function CraftspersonRow({craftsperson, craftspeople, rerender}) 
                         <div className="container">
                             <div className="row justify-content-center">
                                 <Typeahead
+                                    id={'remove-mentor-' + craftsperson.id}
                                     defaultInputValue={getCraftspersonMentorNameOrNull()}
                                     ref={mentorSelect}
                                     inputProps={{'data-testid': 'add-mentor-select'}}
@@ -55,6 +72,15 @@ export default function CraftspersonRow({craftsperson, craftspeople, rerender}) 
                                     placeholder="Select a mentor"
                                     onChange={addMentorCallBack}
                                 />
+                                {craftsperson.mentor &&
+                                <Button
+                                    variant="danger"
+                                    data-testid="removementeebutton"
+                                    onClick={removeMentorCallback}
+                                >
+                                    <FontAwesomeIcon icon={faTimes} size='lg' />
+                                </Button>
+                                }
                             </div>
                         </div>
                     </Card.Header>
