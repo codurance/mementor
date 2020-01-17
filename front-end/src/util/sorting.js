@@ -8,15 +8,15 @@ export function sortByNumberOfMentees(leftCraftsperson, rightCraftsperson) {
 
 export function sortByCraftspeopleWithoutMentor(leftCraftsperson, rightCraftsperson) {
     if (noneHaveMentor(leftCraftsperson, rightCraftsperson)
-            || bothHaveMentor(leftCraftsperson, rightCraftsperson)) {
+        || bothHaveMentor(leftCraftsperson, rightCraftsperson)) {
         return sortAlphabetically(leftCraftsperson, rightCraftsperson);
-    } 
+    }
 
     if (leftCraftsperson.mentor == null) {
         return -1;
     }
     return 1;
-};
+}
 
 export function sortAlphabetically(leftCraftsperson, rightCraftsperson) {
     return (leftCraftsperson.firstName + leftCraftsperson.lastName)

@@ -259,6 +259,32 @@ public class CraftspeopleControllerTest {
         requestBody.put("lastName", "ARNAUD");
     }
 
+    @Test
+        public void remove_mentor() throws JSONException {
+            given_a_craftsperson_with_a_mentor();
+
+            JSONObject request = new JSONObject();
+            request.put("menteeId", savedCraftsperson.getId());
+
+            RestAssured.given()
+                    .contentType("application/json")
+                    .body(request.toString())
+                    .post("craftspeople/mentor/remove")
+                    .then()
+                    .statusCode(204);
+
+            craftspeopleRepository.flush();
+
+            Craftsperson updatedMentor = craftspeopleRepository.findById(mentor.getId()).get();
+            Craftsperson updatedMentee = craftspeopleRepository.findById(savedCraftsperson.getId()).get();
+
+            assertTrue("mentor was not removed", updatedMentee.getMentor().isEmpty());
+            assertTrue("mentee is still in the mentor's mentees list", updatedMentor.getMentees()
+                    .stream()
+                    .map(Craftsperson::getId)
+                    .noneMatch(savedCraftsperson.getId()::equals));
+        }
+
     private void when_a_craftsperson_is_deleted(Craftsperson craftsperson) {
         craftspeopleRepository.deleteById(craftsperson.getId());
     }
