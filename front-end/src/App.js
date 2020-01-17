@@ -39,7 +39,8 @@ function App() {
     }
 
     useEffect(() => {
-        api("craftspeople")
+
+        api({endpoint: '/craftspeople'})
             .then(fetchedCraftspeople => {
                 fetchedCraftspeople.sort(sortAlgorithm);
                 setCraftsPeople(fetchedCraftspeople);

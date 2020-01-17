@@ -29,15 +29,13 @@ export default function ManageCraftsperson(props) {
 
     function addCraftsperson() {
         if (firstName && lastName) {
-            api(`craftspeople/add`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    firstName: firstName,
-                    lastName: lastName
-                })
+            api({
+                endpoint: '/craftspeople/add',
+                type: 'POST',
+                body: {
+                    firstName,
+                    lastName
+                }
             })
                 .then(() => {
                     props.rerender();
@@ -58,8 +56,9 @@ export default function ManageCraftsperson(props) {
 
     function deleteCraftsperson(id) {
         if (id) {
-            api(`craftspeople/${id}`, {
-                method: "DELETE"
+            api({
+                endpoint: `/craftspeople/${id}`,
+                type: 'DELETE'
             })
                 .then(() => {
                     props.rerender();

@@ -8,6 +8,7 @@ import './Craftsperson.css'
 import {Typeahead} from 'react-bootstrap-typeahead';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import {api} from "../../util/api";
 
 
 export default function CraftspersonRow({craftsperson, craftspeople, rerender}) {
@@ -19,28 +20,25 @@ export default function CraftspersonRow({craftsperson, craftspeople, rerender}) 
             // nothing to do
             return;
         }
-        fetch('/craftspeople/mentor/add',
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({mentorId: selectedCraftspeople[0].id, menteeId: craftsperson.id})
+        api({
+            endpoint: '/craftspeople/mentor/add',
+            type: 'POST',
+            body: {
+                mentorId: selectedCraftspeople[0].id,
+                menteeId: craftsperson.id
             }
-        );
+        });
         rerender();
     }
 
     function removeMentorCallback() {
-        fetch('/craftspeople/mentor/remove',
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({menteeId: craftsperson.id})
+        api({
+            endpoint: '/craftspeople/mentor/remove',
+            type: 'POST',
+            body: {
+                menteeId: craftsperson.id
             }
-        );
+        });
         mentorSelect.current.clear();
         rerender();
     }
