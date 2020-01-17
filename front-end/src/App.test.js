@@ -1,25 +1,25 @@
 import React from 'react'
 import "@testing-library/jest-dom/extend-expect";
 
-const api = (path, options={}) => {
-  return fetch(`http://localhost:8080/${path}`, options).then(
-      res => res.json()
-  )
+const api = (path, options = {}) => {
+    return fetch(`http://localhost:8080/${path}`, options).then(
+        res => res.json()
+    )
 };
 
 describe("Testing API integration", () => {
-  beforeEach(() => {
-    fetch.resetMocks()
-  });
-
-  it("calls the back-end and returns data", () => {
-    fetch.mockResponseOnce(JSON.stringify({data: '12345'}));
-
-    api("restApiTest").then(res => {
-      expect(res.data).toEqual('12345')
+    beforeEach(() => {
+        fetch.resetMocks()
     });
 
-    expect(fetch.mock.calls.length).toEqual(1);
-    expect(fetch.mock.calls[0][0]).toEqual("http://localhost:8080/restApiTest")
-  })
+    it("calls the back-end and returns data", () => {
+        fetch.mockResponseOnce(JSON.stringify({data: '12345'}));
+
+        api("restApiTest").then(res => {
+            expect(res.data).toEqual('12345')
+        });
+
+        expect(fetch.mock.calls.length).toEqual(1);
+        expect(fetch.mock.calls[0][0]).toEqual("http://localhost:8080/restApiTest")
+    })
 });
