@@ -23,7 +23,7 @@ Infrastructure:
 
 ## Build
 
-To build the project in your localhost, you need to go to first of all
+To build the project in your localhost, you need to 
 build the `front-end` application to package it. After this we package 
 our `back-end`, and then run our `.jar` file.
 
@@ -49,4 +49,4 @@ In order to deploy to AWS from your local machine, you need to run `aws configur
 be found on BitWarden.  
 Then you can run the deploy script:
 
-`./deploy-aws.sh dev`
+`./deploy-aws.sh integ`
