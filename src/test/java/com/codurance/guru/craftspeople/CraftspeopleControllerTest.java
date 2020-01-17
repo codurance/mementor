@@ -300,6 +300,7 @@ public class CraftspeopleControllerTest {
         requestBody.put("firstName", "Arnaldo");
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void remove_mentor() throws JSONException {
         given_a_craftsperson_with_a_mentor();

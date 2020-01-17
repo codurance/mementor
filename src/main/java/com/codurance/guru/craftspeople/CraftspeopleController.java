@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -32,7 +33,7 @@ public class CraftspeopleController {
     }
 
     @PutMapping("craftspeople/mentee/add")
-    public ResponseEntity setMentee(@RequestBody AddMentorRequest request) {
+    public ResponseEntity setMentee(@Valid @RequestBody AddMentorRequest request) {
         craftspeopleService.setMentee(
                 request.getMentorId(),
                 request.getMenteeId());
@@ -53,22 +54,19 @@ public class CraftspeopleController {
     }
 
     @PostMapping("/craftspeople/add")
-    public ResponseEntity addNewCraftsperson(@RequestBody AddCraftspersonRequest addCraftspersonRequest) {
-        if (addCraftspersonRequest.getFirstName() == null || addCraftspersonRequest.getLastName() == null)
-            return ResponseEntity.badRequest().build();
-
-        Craftsperson craftsperson = craftspeopleService.addCraftsperson(addCraftspersonRequest.getFirstName(), addCraftspersonRequest.getLastName());
+    public ResponseEntity addNewCraftsperson(@Valid @RequestBody AddCraftspersonRequest request) {
+        Craftsperson craftsperson = craftspeopleService.addCraftsperson(request.getFirstName(), request.getLastName());
         return ResponseEntity.ok(craftsperson.getId());
     }
 
     @PostMapping("/craftspeople/mentor/add")
-    public ResponseEntity<Void> addMentor(@RequestBody AddMentorRequest request) {
+    public ResponseEntity<Void> addMentor(@Valid @RequestBody AddMentorRequest request) {
         craftspeopleService.addMentor(request.getMentorId(), request.getMenteeId());
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/craftspeople/mentor/remove")
-    public ResponseEntity<Void> removeMentor(@RequestBody RemoveMentorRequest request) {
+    public ResponseEntity<Void> removeMentor(@Valid @RequestBody RemoveMentorRequest request) {
         craftspeopleService.removeMentor(request.getMenteeId());
         return ResponseEntity.noContent().build();
     }

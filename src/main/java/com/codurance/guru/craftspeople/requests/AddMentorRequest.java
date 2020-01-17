@@ -1,7 +1,12 @@
 package com.codurance.guru.craftspeople.requests;
 
+import javax.validation.constraints.NotNull;
+
 public class AddMentorRequest {
+
+    @NotNull(message = "Mentor Id must have a value")
     private int mentorId;
+    @NotNull(message = "Mentee Id must have a value")
     private int menteeId;
 
     public int getMentorId() {
