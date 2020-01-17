@@ -29,7 +29,7 @@ public class CraftspeopleService {
         repository.save(mentee);
     }
 
-    public void removeMentee(int menteeId){
+    public void removeMentor(int menteeId){
         Craftsperson mentee = repository.findById(menteeId).get();
 
         mentee.setMentor(null);
