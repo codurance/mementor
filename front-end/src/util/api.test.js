@@ -8,8 +8,9 @@ describe("Testing the API", () => {
     it("should call the endpoint once", () => {
         fetch.mockResponseOnce();
 
-        api("restApiTest").then(_ => {
-        });
+        api({
+            endpoint: '/restApiTest'
+        }).then(_ => {});
 
         expect(fetch.mock.calls.length).toEqual(1);
     });
@@ -18,7 +19,9 @@ describe("Testing the API", () => {
         // should the answer be wrapped in a "data" key?
         fetch.mockResponseOnce(JSON.stringify([{id: 1}, {id: 2}]));
 
-        api("restApiTest").then(res => {
+        api({
+            endpoint: '/restApiTest'
+        }).then(res => {
             expect(res.value).toBeInstanceOf(Array);
             expect(res.value).not.toBeEmpty();
         })

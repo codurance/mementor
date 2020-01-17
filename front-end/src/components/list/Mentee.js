@@ -12,7 +12,10 @@ import {faTimes} from '@fortawesome/free-solid-svg-icons'
 export default function Mentee({mentee, rerender}) {
 
     function removeMentee() {
-        api(`craftspeople/mentee/remove/${mentee.id}`, {method: "PUT"});
+        api({
+           endpoint: `/craftspeople/mentee/remove/${mentee.id}`,
+           type: 'PUT'
+        });
         rerender();
     }
 

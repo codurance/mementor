@@ -12,16 +12,16 @@ export default function Mentees(props) {
 
     function addMentee(mentee) {
         if (mentee != null) {
-            api('craftspeople/addmentee', {
-                method: 'PUT',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
+            api({
+                endpoint: '/craftspeople/addmentee',
+                type: 'PUT',
+                body: {
                     'mentorId': props.craftsperson.id,
                     'menteeId': mentee.id
-                })
+                }
             });
+            props.rerender();
         }
-        props.rerender();
     }
 
     return (
