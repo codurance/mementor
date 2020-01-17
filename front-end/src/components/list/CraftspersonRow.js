@@ -41,6 +41,7 @@ export default function CraftspersonRow({craftsperson, craftspeople, rerender}) 
         body: JSON.stringify({menteeId: craftsperson.id})
       }
     );
+    mentorSelect.current.clear();
     rerender();
   }
 
@@ -62,6 +63,7 @@ export default function CraftspersonRow({craftsperson, craftspeople, rerender}) 
             <div className="container">
               <div className="row justify-content-center">
               <Typeahead
+                id={'remove-mentor-' + craftsperson.id}
                 defaultInputValue={getCraftspersonMentorNameOrNull()}
                 ref={mentorSelect}
                 inputProps={{'data-testid': 'add-mentor-select'}}
