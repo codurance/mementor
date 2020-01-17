@@ -32,9 +32,10 @@ public class CraftspeopleController {
     }
 
     @PutMapping("craftspeople/mentee/add")
-    public ResponseEntity setMentee(@RequestBody Map<String, String> mentorAndMenteesIds) {
-        craftspeopleService.setMentee(Integer.parseInt(mentorAndMenteesIds.get("mentorId")),
-                Integer.parseInt(mentorAndMenteesIds.get("menteeId")));
+    public ResponseEntity setMentee(@RequestBody AddMentorRequest request) {
+        craftspeopleService.setMentee(
+                request.getMentorId(),
+                request.getMenteeId());
         return ResponseEntity.ok().build();
     }
 
