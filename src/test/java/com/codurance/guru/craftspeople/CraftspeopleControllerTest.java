@@ -6,6 +6,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,15 @@ public class CraftspeopleControllerTest {
     private Craftsperson mentor;
     private Craftsperson craftpersonOne;
     private Craftsperson craftpersonTwo;
-    private List<Craftsperson> craftspeople = new ArrayList<>();
+    private List<Craftsperson> craftspeople;
     private Response response;
-    private JSONObject requestBody = new JSONObject();
+    private JSONObject requestBody;
+
+    @Before
+    public void setUp() throws Exception {
+        requestBody = new JSONObject();
+        craftspeople = new ArrayList<>();
+    }
 
     @Test
     public void retrieve_a_craftsperson() {
