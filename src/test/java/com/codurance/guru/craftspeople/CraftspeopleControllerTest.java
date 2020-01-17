@@ -87,7 +87,7 @@ public class CraftspeopleControllerTest {
         when_a_craftsperson_is_deleted(savedCraftsperson);
         when_the_get_method_on_the_api_is_called_for_getting_the_deleted_craftsperson();
 
-        then_the_craftsperson_should_not_exist();
+        then_the_response_should_be_not_found();
     }
 
     @Test
@@ -129,6 +129,36 @@ public class CraftspeopleControllerTest {
         Craftsperson updatedMentee = craftspeopleRepository.findById(craftpersonTwo.getId()).get();
 
         then_the_relationship_between_mentor_and_mentee_is_lost(updatedMentor, updatedMentee);
+    }
+
+    @Test
+    public void cant_add_a_craftsperson_with_no_first_name() throws JSONException {
+        given_a_json_with_no_first_name_and_a_last_name_for_a_new_craftsperson();
+
+        when_the_post_method_on_the_api_is_called_for_adding_a_craftsperson();
+
+        then_the_response_should_be_bad_request();
+    }
+
+    @Test
+    public void cant_add_a_craftsperson_with_no_last_name() throws JSONException {
+        given_a_json_with_a_first_name_and_no_last_name_for_a_new_craftsperson();
+
+        when_the_post_method_on_the_api_is_called_for_adding_a_craftsperson();
+
+        then_the_response_should_be_bad_request();
+    }
+
+    @Test
+    public void cant_add_a_craftsperson_with_no_name() {
+        when_the_post_method_on_the_api_is_called_for_adding_a_craftsperson();
+
+        then_the_response_should_be_bad_request();
+    }
+
+    private void then_the_response_should_be_bad_request() {
+        response.then().assertThat()
+                .statusCode(400);
     }
 
     private void then_the_relationship_between_mentor_and_mentee_is_lost(Craftsperson updatedMentor, Craftsperson updatedMentee) {
@@ -174,7 +204,7 @@ public class CraftspeopleControllerTest {
         response = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .body(requestBody.toString())
-                .put("craftspeople/addmentee")
+                .put("craftspeople/mentee/add")
                 .then()
                 .statusCode(200)
                 .extract()
@@ -193,7 +223,7 @@ public class CraftspeopleControllerTest {
                 .post("craftspeople/add");
     }
 
-    private void then_the_craftsperson_should_not_exist() {
+    private void then_the_response_should_be_not_found() {
         response.then().assertThat()
                 .statusCode(404);
     }
@@ -257,6 +287,14 @@ public class CraftspeopleControllerTest {
     private void given_a_json_with_a_first_name_and_a_last_name_for_a_new_craftsperson() throws JSONException {
         requestBody.put("firstName", "Arnaldo");
         requestBody.put("lastName", "ARNAUD");
+    }
+
+    private void given_a_json_with_no_first_name_and_a_last_name_for_a_new_craftsperson() throws JSONException {
+        requestBody.put("lastName", "ARNAUD");
+    }
+
+    private void given_a_json_with_a_first_name_and_no_last_name_for_a_new_craftsperson() throws JSONException {
+        requestBody.put("firstName", "Arnaldo");
     }
 
     @Test

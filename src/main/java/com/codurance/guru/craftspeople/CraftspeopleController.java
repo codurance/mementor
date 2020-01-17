@@ -26,7 +26,7 @@ public class CraftspeopleController {
         return craftspeopleService.retrieveAllCraftsperson();
     }
 
-    @PutMapping("craftspeople/addmentee")
+    @PutMapping("craftspeople/mentee/add")
     String setMentee(@RequestBody Map<String, String> mentorAndMenteesIds) {
         craftspeopleService.setMentee(Integer.valueOf(mentorAndMenteesIds.get("mentorId")),
                 Integer.valueOf(mentorAndMenteesIds.get("menteeId")));
@@ -46,8 +46,11 @@ public class CraftspeopleController {
     }
 
     @PostMapping("/craftspeople/add")
-    public ResponseEntity addNewCraftsperson(@RequestBody AddCraftsperson addCraftsperson) {
-        ResponseEntity responseEntity = new ResponseEntity(craftspeopleService.addCraftsperson(addCraftsperson.firstName, addCraftsperson.lastName).getId(), HttpStatus.OK);
+    public ResponseEntity addNewCraftsperson(@RequestBody AddCraftspersonRequest addCraftspersonRequest) {
+        if (addCraftspersonRequest.firstName == null || addCraftspersonRequest.lastName == null)
+            return ResponseEntity.badRequest().build();
+
+        ResponseEntity responseEntity = new ResponseEntity(craftspeopleService.addCraftsperson(addCraftspersonRequest.firstName, addCraftspersonRequest.lastName).getId(), HttpStatus.OK);
         return responseEntity;
     }
 
@@ -63,14 +66,14 @@ public class CraftspeopleController {
             return ResponseEntity.noContent().build();
      }
 
-    private static class AddCraftsperson {
+    private static class AddCraftspersonRequest {
         String firstName;
         String lastName;
 
-        public AddCraftsperson() {
+        public AddCraftspersonRequest() {
         }
 
-        public AddCraftsperson(String firstName, String lastName) {
+        public AddCraftspersonRequest(String firstName, String lastName) {
             this.firstName = firstName;
             this.lastName = lastName;
         }
