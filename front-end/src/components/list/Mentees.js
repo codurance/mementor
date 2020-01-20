@@ -47,8 +47,8 @@ export default function Mentees(props) {
                 <Typeahead
                     id={'add-mentee-' + props.craftsperson.id}
                     labelKey={(option) => `${option.firstName} ${option.lastName}`}
+                    placeholder="Select a mentee"
                     options={filterCraftspeopleMenteeList(props.craftspeople)}
-                    placeholder="Select a mentor"
                     onChange={(selected) => addMentee(selected[0], props.craftsperson.id)}
                 />
             </ListGroupItem>

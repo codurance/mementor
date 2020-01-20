@@ -13,9 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.Instant;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.request;
@@ -270,9 +271,11 @@ public class CraftspeopleControllerTest {
 
     private void then_the_craftsperson_retrieved_has_a_mentor() {
         response.then().assertThat()
+                .body("id", equalTo(savedCraftsperson.getId()))
                 .body("mentor.firstName", equalTo(mentor.getFirstName()))
                 .body("mentor.lastName", equalTo(mentor.getLastName()))
-                .body("mentor.id", equalTo(mentor.getId()));
+                .body("mentor.id", equalTo(mentor.getId()))
+                .body("lastMeeting", equalTo((int)savedCraftsperson.getLastMeeting().get().getEpochSecond()));
     }
 
     private void when_the_get_method_on_the_api_is_called_with_the_craftsperson_id() {
@@ -360,7 +363,7 @@ public class CraftspeopleControllerTest {
 
     private void given_a_craftsperson_with_a_mentor() {
         mentor = craftspeopleRepository.save(new Craftsperson("Jose", "Wenzel"));
-        savedCraftsperson = craftspeopleRepository.save(new Craftsperson("Arnaud", "CLAUDEL", mentor));
+        savedCraftsperson = craftspeopleRepository.save(new Craftsperson("Arnaud", "CLAUDEL", mentor, Instant.now()));
     }
 
     private void given_a_craftsperson_in_the_repository() {
