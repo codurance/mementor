@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.request;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
@@ -155,6 +156,16 @@ public class CraftspeopleControllerTest {
         when_the_post_method_on_the_api_is_called_for_adding_a_craftsperson();
 
         then_the_response_should_be_bad_request();
+    }
+
+    @Test
+    public void cant_be_mentee_of_oneself() throws JSONException{
+        given_a_json_with_a_mentor_and_a_mentee_with_the_same_id();
+
+        when_the_post_method_on_the_api_is_called_to_add_a_mentee_to_a_craftsperson();
+
+        response.then().assertThat()
+            .statusCode(400);
     }
 
     private void then_the_response_should_be_bad_request() {
@@ -298,6 +309,11 @@ public class CraftspeopleControllerTest {
 
     private void given_a_json_with_a_first_name_and_no_last_name_for_a_new_craftsperson() throws JSONException {
         requestBody.put("firstName", "Arnaldo");
+    }
+
+    private void given_a_json_with_a_mentor_and_a_mentee_with_the_same_id() throws JSONException {
+        requestBody.put("mentorId", "1");
+        requestBody.put("menteeId", "1");
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
