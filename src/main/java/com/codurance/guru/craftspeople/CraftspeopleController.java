@@ -11,8 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.http.ResponseEntity.notFound;
-import static org.springframework.http.ResponseEntity.ok;
+import static org.springframework.http.ResponseEntity.*;
 
 @RestController
 public class CraftspeopleController {
@@ -36,6 +35,13 @@ public class CraftspeopleController {
 
     @PutMapping("craftspeople/mentee/add")
     public ResponseEntity setMentee(@Valid @RequestBody AddMentorRequest request) {
+        if (!craftspeopleService.canAddMentee(
+            request.getMentorId(),
+            request.getMenteeId()
+        )){
+            return badRequest().build();
+        }
+
         craftspeopleService.setMentee(
                 request.getMentorId(),
                 request.getMenteeId());

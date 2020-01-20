@@ -3,6 +3,7 @@ package com.codurance.guru.craftspeople;
 import com.codurance.guru.GuruApplication;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.internal.RestAssuredResponseImpl;
 import io.restassured.response.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -163,10 +164,9 @@ public class CraftspeopleControllerTest {
     public void cant_be_mentee_of_oneself() throws JSONException{
         given_a_json_with_a_mentor_and_a_mentee_with_the_same_id();
 
-        when_the_post_method_on_the_api_is_called_to_add_a_mentee_to_a_craftsperson();
+        when_the_post_method_on_the_api_is_called_to_add_a_mentee_to_a_craftsperson_with_an_invalid_request_body();
 
-        response.then().assertThat()
-            .statusCode(400);
+        then_the_response_should_be_bad_request();
     }
 
     private void then_the_response_should_be_bad_request() {
@@ -224,6 +224,17 @@ public class CraftspeopleControllerTest {
                 .statusCode(200)
                 .extract()
                 .response();
+    }
+
+    private void when_the_post_method_on_the_api_is_called_to_add_a_mentee_to_a_craftsperson_with_an_invalid_request_body() {
+        response = RestAssured.given()
+            .contentType(ContentType.JSON)
+            .body(requestBody.toString())
+            .put("craftspeople/mentee/add")
+            .then()
+            .statusCode(400)
+            .extract()
+            .response();
     }
 
     private void given_a_json_with_a_mentor_id_and_a_mentee_id() throws JSONException {
