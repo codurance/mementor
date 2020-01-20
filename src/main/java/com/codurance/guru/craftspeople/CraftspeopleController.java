@@ -4,6 +4,7 @@ import com.codurance.guru.craftspeople.requests.AddCraftspersonRequest;
 import com.codurance.guru.craftspeople.requests.AddMentorRequest;
 import com.codurance.guru.craftspeople.requests.RemoveMentorRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,6 +59,9 @@ public class CraftspeopleController {
     @PostMapping("/craftspeople/add")
     public ResponseEntity addNewCraftsperson(@Valid @RequestBody AddCraftspersonRequest request) {
         Craftsperson craftsperson = craftspeopleService.addCraftsperson(request.getFirstName(), request.getLastName());
+        if (craftsperson == null) {
+            return ResponseEntity.status(409).build();
+        }
         return ok(craftsperson.getId());
     }
 

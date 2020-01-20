@@ -57,6 +57,13 @@ public class CraftspeopleService {
     }
 
     public Craftsperson addCraftsperson(String firstName, String lastName) {
-        return repository.save(new Craftsperson(firstName, lastName));
+        if(craftspersonDoesNotExist(firstName, lastName)) {
+            return repository.save(new Craftsperson(firstName, lastName));
+        }
+        return null;
+    }
+
+    private boolean craftspersonDoesNotExist(String firstName, String lastName) {
+        return repository.findByFirstNameAndLastName(firstName,lastName).size() == 0;
     }
 }

@@ -6,6 +6,7 @@ public class AddCraftspersonRequest {
 
     @NotBlank(message = "First name must have a value")
     private String firstName;
+
     @NotBlank(message = "Last name must have a value")
     private String lastName;
 
