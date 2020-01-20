@@ -34,21 +34,24 @@ public class CraftspeopleController {
     }
 
     @PutMapping("craftspeople/mentee/remove/{menteeId}")
-    String removeMentee(@PathVariable int menteeId){
+    String removeMentee(@PathVariable int menteeId) {
         craftspeopleService.removeMentor(menteeId);
         return "OK";
     }
 
 
     @DeleteMapping("/craftspeople/{craftspersonId}")
-    public void deleteCraftsperson(@PathVariable Integer craftspersonId){
+    public void deleteCraftsperson(@PathVariable Integer craftspersonId) {
         craftspeopleService.deleteCraftsperson(craftspersonId);
     }
 
     @PostMapping("/craftspeople/add")
     public ResponseEntity addNewCraftsperson(@RequestBody AddCraftsperson addCraftsperson) {
-        ResponseEntity responseEntity = new ResponseEntity(craftspeopleService.addCraftsperson(addCraftsperson.firstName, addCraftsperson.lastName).getId(), HttpStatus.OK);
-        return responseEntity;
+        Craftsperson craftspersonToBeSaved = craftspeopleService.addCraftsperson(addCraftsperson.firstName, addCraftsperson.lastName);
+        if (craftspersonToBeSaved == null) {
+            return new ResponseEntity(null, HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity(craftspersonToBeSaved.getId(), HttpStatus.OK);
     }
 
     @PostMapping("/craftspeople/mentor/add")
@@ -57,11 +60,11 @@ public class CraftspeopleController {
         return ResponseEntity.noContent().build();
     }
 
-     @PostMapping("/craftspeople/mentor/remove")
-        public ResponseEntity<Void> removeMentor(@RequestBody RemoveMentorRequest request) {
-            craftspeopleService.removeMentor(request.getMenteeId());
-            return ResponseEntity.noContent().build();
-     }
+    @PostMapping("/craftspeople/mentor/remove")
+    public ResponseEntity<Void> removeMentor(@RequestBody RemoveMentorRequest request) {
+        craftspeopleService.removeMentor(request.getMenteeId());
+        return ResponseEntity.noContent().build();
+    }
 
     private static class AddCraftsperson {
         String firstName;

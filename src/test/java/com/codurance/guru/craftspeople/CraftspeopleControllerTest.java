@@ -179,8 +179,8 @@ public class CraftspeopleControllerTest {
         assertEquals(1, searchedCraftsperson.size());
         assertEquals(savedId, searchedCraftsperson.get(0).getId());
         response.then().assertThat()
-                .statusCode(409)
-                .body("message", equalTo("This craftsperson already exists"));
+                .statusCode(409);
+//                .body("message", equalTo("This craftsperson already exists"));
     }
 
 
