@@ -24,6 +24,12 @@ export default function Mentees(props) {
         }
     }
 
+    function filterCraftspeopleMenteeList(){
+        return props.craftspeople.filter(
+            craftsperson => ![props.craftsperson.id, ...props.mentees.map(_ => _.id)].includes(craftsperson.id)
+        );
+    }
+
     return (
         <ListGroup data-testid="list">
             {props.mentees
@@ -41,8 +47,7 @@ export default function Mentees(props) {
                 <Typeahead
                     id={'add-mentee-' + props.craftsperson.id}
                     labelKey={(option) => `${option.firstName} ${option.lastName}`}
-                    data-testid='craftspeople-mentee-list'
-                    options={props.craftspeople}
+                    options={filterCraftspeopleMenteeList(props.craftspeople)}
                     placeholder="Select a mentor"
                     onChange={(selected) => addMentee(selected[0], props.craftsperson.id)}
                 />
