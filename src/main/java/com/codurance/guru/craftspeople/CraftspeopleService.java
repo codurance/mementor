@@ -60,6 +60,17 @@ public class CraftspeopleService {
         return mentorId != menteeId;
     }
 
+    public boolean existingMentee(int mentorId, int menteeId) {
+        Craftsperson mentor = repository.findById(mentorId).get();
+        Craftsperson mentee = repository.findById(menteeId).get();
+
+        return mentor.getMentees().contains(mentee);
+    }
+
+    public boolean isMentorable(int mentorId, int menteeId) {
+        return canAddMentee(mentorId, menteeId) && !existingMentee(mentorId, menteeId);
+    }
+
     public Craftsperson addCraftsperson(String firstName, String lastName) {
         return repository.save(new Craftsperson(firstName, lastName));
     }

@@ -35,9 +35,8 @@ public class CraftspeopleController {
 
     @PutMapping("craftspeople/mentee/add")
     public ResponseEntity setMentee(@Valid @RequestBody AddMentorRequest request) {
-        if (!craftspeopleService.canAddMentee(
-            request.getMentorId(),
-            request.getMenteeId()
+        if (craftspeopleService.isMentorable(
+            request.getMentorId(), request.getMenteeId()
         )){
             return badRequest().build();
         }

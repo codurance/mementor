@@ -167,6 +167,16 @@ public class CraftspeopleControllerTest {
         then_the_response_should_be_bad_request();
     }
 
+    @Test
+    public void cant_have_duplicate_mentees_as_a_mentor() throws JSONException{
+        given_a_craftsperson_with_a_mentor();
+        given_a_json_with_a_mentor_id_and_a_mentee_id(mentor.getId(), savedCraftsperson.getId());
+
+        when_the_post_method_on_the_api_is_called_to_add_a_mentee_to_a_craftsperson_with_an_invalid_request_body();
+
+        then_the_response_should_be_bad_request();
+    }
+
     private void then_the_response_should_be_bad_request() {
         response.then().assertThat()
                 .statusCode(400);
@@ -238,6 +248,11 @@ public class CraftspeopleControllerTest {
     private void given_a_json_with_a_mentor_id_and_a_mentee_id() throws JSONException {
         requestBody.put("mentorId", craftspeople.get(0).getId());
         requestBody.put("menteeId", craftspeople.get(1).getId());
+    }
+
+    private void given_a_json_with_a_mentor_id_and_a_mentee_id(int mentorId, int menteeId) throws JSONException {
+        requestBody.put("mentorId", mentorId);
+        requestBody.put("menteeId", menteeId);
     }
 
     private void when_the_post_method_on_the_api_is_called_for_adding_a_craftsperson() {
