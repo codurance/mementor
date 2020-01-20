@@ -260,6 +260,7 @@ public class CraftspeopleControllerTest {
 
     private void then_the_craftsperson_retrieved_has_a_mentor() {
         response.then().assertThat()
+                .body("id", equalTo(savedCraftsperson.getId()))
                 .body("mentor.firstName", equalTo(mentor.getFirstName()))
                 .body("mentor.lastName", equalTo(mentor.getLastName()))
                 .body("mentor.id", equalTo(mentor.getId()))
