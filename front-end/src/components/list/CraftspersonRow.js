@@ -13,7 +13,7 @@ import { api } from "../../util/api";
 export default function CraftspersonRow({
   craftsperson,
   craftspeople,
-  rerender,
+  rerender
 }) {
   let mentorSelect = React.createRef();
 
@@ -27,8 +27,8 @@ export default function CraftspersonRow({
       type: "POST",
       body: {
         mentorId: selectedCraftspeople[0].id,
-        menteeId: craftsperson.id,
-      },
+        menteeId: craftsperson.id
+      }
     });
     rerender();
   }
@@ -38,8 +38,8 @@ export default function CraftspersonRow({
       endpoint: "/craftspeople/mentor/remove",
       type: "POST",
       body: {
-        menteeId: craftsperson.id,
-      },
+        menteeId: craftsperson.id
+      }
     });
     mentorSelect.current.clear();
     rerender();
@@ -63,7 +63,7 @@ export default function CraftspersonRow({
               variant="light"
               eventKey="0"
             >
-              <Craftsperson craftsperson={craftsperson} />
+              <Craftsperson craftsperson={craftsperson} rerender={rerender} />
             </Accordion.Toggle>
             <div className="container">
               <div className="row justify-content-center">
@@ -79,7 +79,6 @@ export default function CraftspersonRow({
                 />
                 {craftsperson.mentor && (
                   <Button
-                    className="remove-button"
                     variant="danger"
                     data-testid="removementeebutton"
                     onClick={removeMentorCallback}

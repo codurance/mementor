@@ -1,8 +1,21 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { api } from "../../util/api";
 
-export default function Craftsperson({ craftsperson }) {
+export default function Craftsperson({ craftsperson, rerender }) {
+  function setLastMeeting(date) {
+    api({
+      endpoint: "/craftspeople/lastmeeting",
+      type: "PUT",
+      body: {
+        id: craftsperson.id,
+        lastMeeting: date.getTime() / 1000
+      }
+    });
+    rerender();
+  }
+
   return (
     <div className="row">
       <div className="col-lg-3">
@@ -21,23 +34,23 @@ export default function Craftsperson({ craftsperson }) {
         <h5>
           <span className="meetingLabel">Last Meeting:</span>
           <br />
-          {craftsperson.mentor ?
-            (<DatePicker data-testid="lastMeetingValue"
-            selected={craftsperson.lastMeeting ? new Date(craftsperson.lastMeeting * 1000) : null}
-            placeholderText="Select date..."
-            dateFormat="dd MMMM yyyy"
-            customInput={<input data-testid="lastMeetingValue" type="text" />}
-            onChange={date =>
-              alert(
-                date.toLocaleDateString(undefined, {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric"
-                })
-              )
-            }
-          />)
-          : '-'}
+          {craftsperson.mentor ? (
+            <DatePicker
+              selected={
+                craftsperson.lastMeeting
+                  ? new Date(craftsperson.lastMeeting * 1000)
+                  : null
+              }
+              placeholderText="Select date..."
+              dateFormat="dd MMMM yyyy"
+              customInput={
+                <input data-testid="lastMeetingDatePicker" type="text" />
+              }
+              onChange={setLastMeeting}
+            />
+          ) : (
+            "-"
+          )}
         </h5>
       </div>
       <div className="col-lg-3">
