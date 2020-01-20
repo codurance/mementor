@@ -201,7 +201,7 @@ public class CraftspeopleControllerTest {
     }
 
     private void when_the_get_method_is_called_to_query_the_added_craftsperson(){
-        craftspeople = craftspeopleRepository.findAllByFirstAndLastName(craftspersonOne.getFirstName(), craftspersonOne.getLastName());
+        craftspeople = craftspeopleRepository.findByFirstNameAndLastName(craftspersonOne.getFirstName(), craftspersonOne.getLastName());
     }
 
     private void then_there_will_be_only_one_person() {
