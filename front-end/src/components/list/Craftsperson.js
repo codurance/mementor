@@ -21,7 +21,7 @@ export default function Craftsperson({ craftsperson }) {
           <span className="meetingLabel">Last Meeting:</span>
           <br />
           <span className="lastMeeting" data-testid="lastMeetingValue">
-            {formatDate(craftsperson.lastMeeting)}
+            <i>{formatDate(craftsperson.lastMeeting)}</i>
           </span>
         </h5>
       </div>
