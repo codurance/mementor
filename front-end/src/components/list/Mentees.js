@@ -41,6 +41,7 @@ export default function Mentees(props) {
                 <Typeahead
                     id={'add-mentee-' + props.craftsperson.id}
                     labelKey={(option) => `${option.firstName} ${option.lastName}`}
+                    data-testid='craftspeople-mentee-list'
                     options={props.craftspeople}
                     placeholder="Select a mentor"
                     onChange={(selected) => addMentee(selected[0], props.craftsperson.id)}
