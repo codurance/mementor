@@ -9,7 +9,7 @@ export default function Craftsperson({ craftsperson, rerender }) {
       endpoint: "/craftspeople/lastmeeting",
       type: "PUT",
       body: {
-        id: craftsperson.id,
+        craftspersonId: craftsperson.id,
         lastMeeting: date.getTime() / 1000
       }
     });
