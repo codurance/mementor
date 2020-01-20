@@ -42,7 +42,7 @@ export default function Mentees(props) {
                     id={'add-mentee-' + props.craftsperson.id}
                     labelKey={(option) => `${option.firstName} ${option.lastName}`}
                     options={props.craftspeople}
-                    placeholder="Select a mentor"
+                    placeholder="Select a mentee"
                     onChange={(selected) => addMentee(selected[0], props.craftsperson.id)}
                 />
             </ListGroupItem>
