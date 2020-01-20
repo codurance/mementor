@@ -1,5 +1,6 @@
 import React from "react";
-import { formatDate } from "../../util/date";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function Craftsperson({ craftsperson }) {
   return (
@@ -20,9 +21,23 @@ export default function Craftsperson({ craftsperson }) {
         <h5>
           <span className="meetingLabel">Last Meeting:</span>
           <br />
-          <span className="lastMeeting" data-testid="lastMeetingValue">
-            <i>{formatDate(craftsperson.lastMeeting)}</i>
-          </span>
+          <DatePicker data-testid="lastMeetingValue"
+            selected={craftsperson.lastMeeting ? new Date(craftsperson.lastMeeting * 1000) : null}
+            placeholderText="Select date..."
+            dateFormat="dd MMMM yyyy"
+            customInput={<input data-testid="lastMeetingValue" type="text" />}
+
+
+            onChange={date =>
+              alert(
+                date.toLocaleDateString(undefined, {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric"
+                })
+              )
+            }
+          />
         </h5>
       </div>
       <div className="col-lg-3">
