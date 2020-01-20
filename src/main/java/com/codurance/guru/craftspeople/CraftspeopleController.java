@@ -4,14 +4,15 @@ import com.codurance.guru.craftspeople.requests.AddCraftspersonRequest;
 import com.codurance.guru.craftspeople.requests.AddMentorRequest;
 import com.codurance.guru.craftspeople.requests.RemoveMentorRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+
+import static org.springframework.http.ResponseEntity.notFound;
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 public class CraftspeopleController {
@@ -23,8 +24,9 @@ public class CraftspeopleController {
     public ResponseEntity retrieveCraftsperson(@PathVariable Integer craftspersonId) {
         Optional<Craftsperson> retrievedCraftsperson = craftspeopleService.retrieveCraftsperson(craftspersonId);
         return retrievedCraftsperson
-                .map(craftsperson -> new ResponseEntity<>(craftsperson, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> notFound().build());
+
     }
 
     @GetMapping("/craftspeople")
@@ -37,26 +39,26 @@ public class CraftspeopleController {
         craftspeopleService.setMentee(
                 request.getMentorId(),
                 request.getMenteeId());
-        return ResponseEntity.ok().build();
+        return ok().build();
     }
 
     @PutMapping("craftspeople/mentee/remove/{menteeId}")
     public ResponseEntity removeMentee(@PathVariable int menteeId) {
         craftspeopleService.removeMentor(menteeId);
-        return ResponseEntity.ok().build();
+        return ok().build();
     }
 
 
     @DeleteMapping("/craftspeople/{craftspersonId}")
     public ResponseEntity deleteCraftsperson(@PathVariable Integer craftspersonId) {
         craftspeopleService.deleteCraftsperson(craftspersonId);
-        return ResponseEntity.ok().build();
+        return ok().build();
     }
 
     @PostMapping("/craftspeople/add")
     public ResponseEntity addNewCraftsperson(@Valid @RequestBody AddCraftspersonRequest request) {
         Craftsperson craftsperson = craftspeopleService.addCraftsperson(request.getFirstName(), request.getLastName());
-        return ResponseEntity.ok(craftsperson.getId());
+        return ok(craftsperson.getId());
     }
 
     @PostMapping("/craftspeople/mentor/add")
