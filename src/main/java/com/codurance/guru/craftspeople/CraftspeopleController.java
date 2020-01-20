@@ -1,9 +1,11 @@
 package com.codurance.guru.craftspeople;
 
+import com.codurance.guru.craftspeople.exceptions.InvalidLastMeetingDateException;
 import com.codurance.guru.craftspeople.requests.AddCraftspersonRequest;
 import com.codurance.guru.craftspeople.requests.AddMentorRequest;
 import com.codurance.guru.craftspeople.requests.RemoveMentorRequest;
 import com.codurance.guru.craftspeople.requests.UpdateLastMeetingRequest;
+import com.codurance.guru.craftspeople.responses.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -78,8 +80,14 @@ public class CraftspeopleController {
     }
 
     @PutMapping("/craftspeople/lastmeeting")
-    public ResponseEntity<Void> setLastMeeting(@Valid @RequestBody UpdateLastMeetingRequest request) {
-        craftspeopleService.setLastMeeting(request.getCraftspersonId(), request.getLastMeeting());
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ErrorResponse> setLastMeeting(@Valid @RequestBody UpdateLastMeetingRequest request) {
+        try {
+            craftspeopleService.setLastMeeting(request.getCraftspersonId(), request.getLastMeeting());
+            return ResponseEntity.noContent().build();
+        }
+        catch (InvalidLastMeetingDateException ex){
+            return ResponseEntity.badRequest()
+                    .body(new ErrorResponse("The last meeting date is too far in the future"));
+        }
     }
 }

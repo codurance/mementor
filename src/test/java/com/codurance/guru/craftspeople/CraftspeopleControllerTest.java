@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.Instant;
 
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -196,7 +197,39 @@ public class CraftspeopleControllerTest {
 
         when_the_last_meeting_is_set();
 
+        then_the_response_should_be_no_content();
         then_the_last_meeting_is_updated();
+    }
+
+    private void then_the_response_should_be_no_content() {
+        response.then().assertThat()
+                .statusCode(204);
+    }
+
+    @Test
+    public void cant_update_a_craftsperson_last_meeting_with_a_date_in_future() throws JSONException {
+        given_a_craftsperson_with_a_mentor();
+        given_the_request_body_has_a_last_meeting_set_in_the_future();
+
+        when_the_last_meeting_is_set();
+
+        then_the_response_should_be_bad_request();
+        then_the_response_should_contain_the_last_meeting_error();
+    }
+
+    private void then_the_response_should_contain_the_last_meeting_error() {
+        response.then().assertThat()
+                .body("message", equalTo("The last meeting date is too far in the future"));
+    }
+
+    private void given_the_request_body_has_a_last_meeting_set_in_the_future() throws JSONException {
+        requestBody.put("craftspersonId", savedCraftsperson.getId());
+        requestBody.put("lastMeeting", Instant.now().plus(2, ChronoUnit.DAYS).getEpochSecond());
+    }
+
+    private void given_the_request_body_has_a_last_meeting_set() throws JSONException {
+        requestBody.put("craftspersonId", savedCraftsperson.getId());
+        requestBody.put("lastMeeting", lastMeetingEpoch);
     }
 
     private void then_the_last_meeting_is_updated() {
@@ -205,18 +238,11 @@ public class CraftspeopleControllerTest {
         assertEquals(Instant.ofEpochSecond(lastMeetingEpoch), lastMeeting.get());
     }
 
-    private void given_the_request_body_has_a_last_meeting_set() throws JSONException {
-        requestBody.put("craftspersonId", savedCraftsperson.getId());
-        requestBody.put("lastMeeting", lastMeetingEpoch);
-    }
-
     private void when_the_last_meeting_is_set() {
-        given()
+        response = given()
                 .contentType("application/json")
                 .body(requestBody.toString())
-                .put("craftspeople/lastmeeting")
-                .then()
-                .statusCode(204);
+                .put("craftspeople/lastmeeting");
     }
 
     @Test
