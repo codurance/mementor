@@ -3,7 +3,6 @@ package com.codurance.guru.craftspeople;
 import com.codurance.guru.GuruApplication;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.internal.RestAssuredResponseImpl;
 import io.restassured.response.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.request;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
