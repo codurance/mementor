@@ -3,6 +3,7 @@ package com.codurance.guru.craftspeople;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,12 +23,19 @@ public class Craftsperson {
     private Craftsperson mentor;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "mentor")
     private List<Craftsperson> mentees;
+    @Column(name = "last_meeting")
+    private Instant lastMeeting;
 
     public Craftsperson() { }
 
     public Craftsperson(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Craftsperson(String firstName, String lastName, Craftsperson mentor, Instant lastMeeting) {
+        this(firstName, lastName, mentor);
+        this.lastMeeting = lastMeeting;
     }
 
     public Craftsperson(String firstName, String lastName, Craftsperson mentor) {
@@ -73,5 +81,14 @@ public class Craftsperson {
 
     public void setMentor(Craftsperson mentor) {
         this.mentor = mentor;
+    }
+
+
+    public Optional<Instant> getLastMeeting() {
+        return Optional.ofNullable(lastMeeting);
+    }
+
+    public void setLastMeeting(Instant lastMeeting){
+        this.lastMeeting = lastMeeting;
     }
 }

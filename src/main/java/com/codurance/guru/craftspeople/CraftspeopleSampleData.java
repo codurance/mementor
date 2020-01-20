@@ -5,6 +5,10 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 @Component
 public class CraftspeopleSampleData {
 
@@ -20,9 +24,9 @@ public class CraftspeopleSampleData {
         Craftsperson mashB = repository.save(new Craftsperson("Mashooq", "Badar"));
         Craftsperson sandroM = repository.save(new Craftsperson("Sandro", "Mancuso"));
         Craftsperson steveL = repository.save(new Craftsperson("Steve", "Lydford"));
-        Craftsperson chrisE = repository.save(new Craftsperson("Christopher", "Eyre", steveL));
-        Craftsperson liamG = repository.save(new Craftsperson("Liam", "Griffin-Jowett", chrisE));
-        Craftsperson chrisB = repository.save(new Craftsperson("Chris", "Bimson", sandroM));
+        Craftsperson chrisE = repository.save(new Craftsperson("Christopher", "Eyre", steveL, makeLastMeeting(2020, 1, 1)));
+        Craftsperson liamG = repository.save(new Craftsperson("Liam", "Griffin-Jowett", chrisE, makeLastMeeting(2019, 12, 19)));
+        Craftsperson chrisB = repository.save(new Craftsperson("Chris", "Bimson", sandroM, makeLastMeeting(2019, 9, 1)));
         Craftsperson neilK = repository.save(new Craftsperson("Neil", "Kidd", chrisB));
         Craftsperson richW = repository.save(new Craftsperson("Richard", "Wild", steveL));
         Craftsperson jorgeG = repository.save(new Craftsperson("Jorge", "Gueorguiev", mashB));
@@ -97,5 +101,11 @@ public class CraftspeopleSampleData {
         repository.save(new Craftsperson("David", "Welch"));
         repository.save(new Craftsperson("Nichole", "Mellekas"));
 
+    }
+
+    private Instant makeLastMeeting(int year, int month, int day) {
+        return Instant.ofEpochSecond(
+                LocalDateTime.of(year, month, day, 1, 0)
+                        .toEpochSecond(ZoneOffset.UTC));
     }
 }

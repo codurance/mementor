@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,11 @@ public class CraftspersonSerializer extends StdSerializer<Craftsperson> {
                 .map(Person::new)
                 .collect(Collectors.toList());
 
-        gen.writeObject(new SerializableCraftsperson(craftsperson, mentor, mentees));
+        Long lastMeeting = craftsperson.getLastMeeting()
+                .map(Instant::getEpochSecond)
+                .orElse(null);
+
+        gen.writeObject(new SerializableCraftsperson(craftsperson, mentor, mentees, lastMeeting));
     }
 }
 
@@ -71,11 +76,13 @@ class Person {
 class SerializableCraftsperson extends Person {
     private Person mentor;
     private List<Person> mentees;
+    private Long lastMeeting;
 
-    public SerializableCraftsperson(Craftsperson craftsperson, Person mentor, List<Person> mentees) {
+    public SerializableCraftsperson(Craftsperson craftsperson, Person mentor, List<Person> mentees, Long lastMeeting) {
         super(craftsperson);
         this.mentor = mentor;
         this.mentees = mentees;
+        this.lastMeeting = lastMeeting;
     }
 
     public Person getMentor() {
@@ -92,5 +99,13 @@ class SerializableCraftsperson extends Person {
 
     public void setMentees(List<Person> mentees) {
         this.mentees = mentees;
+    }
+
+    public Long getLastMeeting() {
+        return lastMeeting;
+    }
+
+    public void setLastMeeting(Long lastMeeting) {
+        this.lastMeeting = lastMeeting;
     }
 }
