@@ -21,13 +21,12 @@ export default function Craftsperson({ craftsperson }) {
         <h5>
           <span className="meetingLabel">Last Meeting:</span>
           <br />
-          <DatePicker data-testid="lastMeetingValue"
+          {craftsperson.mentor ?
+            (<DatePicker data-testid="lastMeetingValue"
             selected={craftsperson.lastMeeting ? new Date(craftsperson.lastMeeting * 1000) : null}
             placeholderText="Select date..."
             dateFormat="dd MMMM yyyy"
             customInput={<input data-testid="lastMeetingValue" type="text" />}
-
-
             onChange={date =>
               alert(
                 date.toLocaleDateString(undefined, {
@@ -37,7 +36,8 @@ export default function Craftsperson({ craftsperson }) {
                 })
               )
             }
-          />
+          />)
+          : '-'}
         </h5>
       </div>
       <div className="col-lg-3">
