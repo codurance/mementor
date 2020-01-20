@@ -46,17 +46,17 @@ export default function ManageCraftsperson(props) {
       return;
     }
     api({
-        endpoint: '/craftspeople/add',
-        type: 'POST',
-        body: {
-            firstName,
-            lastName
-        }
+      endpoint: '/craftspeople/add',
+      type: 'POST',
+      body: {
+        firstName,
+        lastName
+      }
     })
-    .then(() => {
+      .then(() => {
         props.rerender();
-    });
-    }
+      });
+  }
 
   const handleFirstName = event => {
     setFirstName(event.target.value);
@@ -66,17 +66,17 @@ export default function ManageCraftsperson(props) {
     setLastName(event.target.value);
   };
 
-function deleteCraftsperson(id) {
-     if (id) {
-         api({
-             endpoint: `/craftspeople/${id}`,
-             type: 'DELETE'
-         })
-         .then(() => {
-             props.rerender();
-         })
-     }
- }
+  function deleteCraftsperson(id) {
+    if (id) {
+      api({
+        endpoint: `/craftspeople/${id}`,
+        type: 'DELETE'
+      })
+        .then(() => {
+          props.rerender();
+        })
+    }
+  }
 
   return (
     <div className="row admin-button">
