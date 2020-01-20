@@ -13,7 +13,7 @@ export default function Mentees(props) {
     function addMentee(mentee, mentorId) {
         if (mentee != null) {
             api({
-                endpoint: '/craftspeople/addmentee',
+                endpoint: '/craftspeople/mentee/add',
                 type: 'PUT',
                 body: {
                     'mentorId': mentorId,
