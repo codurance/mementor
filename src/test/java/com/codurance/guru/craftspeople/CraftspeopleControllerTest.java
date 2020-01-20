@@ -30,7 +30,7 @@ import static org.junit.Assert.assertTrue;
 public class CraftspeopleControllerTest {
 
     @Autowired
-    CraftspeopleRepository craftspeopleRepository;
+    private CraftspeopleRepository craftspeopleRepository;
 
     private Craftsperson savedCraftsperson;
     private Craftsperson mentor;
@@ -41,7 +41,7 @@ public class CraftspeopleControllerTest {
     private JSONObject requestBody;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         requestBody = new JSONObject();
         craftspeople = new ArrayList<>();
     }
@@ -87,7 +87,7 @@ public class CraftspeopleControllerTest {
         when_a_craftsperson_is_deleted(savedCraftsperson);
         when_the_get_method_on_the_api_is_called_for_getting_the_deleted_craftsperson();
 
-        then_the_craftsperson_should_not_exist();
+        then_the_response_should_be_not_found();
     }
 
     @Test
@@ -115,9 +115,10 @@ public class CraftspeopleControllerTest {
 
         when_you_remove_the_mentor_from_the_craftsperson();
 
-        then_the_craftsperson_should_be_empty();
+        then_the_craftsperson_should_not_have_a_mentor();
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void add_mentor() throws JSONException {
         given_two_craftspeople_in_the_repository();
@@ -131,8 +132,39 @@ public class CraftspeopleControllerTest {
         then_the_relationship_between_mentor_and_mentee_is_lost(updatedMentor, updatedMentee);
     }
 
+    @Test
+    public void cant_add_a_craftsperson_with_no_first_name() throws JSONException {
+        given_a_json_with_no_first_name_and_a_last_name_for_a_new_craftsperson();
+
+        when_the_post_method_on_the_api_is_called_for_adding_a_craftsperson();
+
+        then_the_response_should_be_bad_request();
+    }
+
+    @Test
+    public void cant_add_a_craftsperson_with_no_last_name() throws JSONException {
+        given_a_json_with_a_first_name_and_no_last_name_for_a_new_craftsperson();
+
+        when_the_post_method_on_the_api_is_called_for_adding_a_craftsperson();
+
+        then_the_response_should_be_bad_request();
+    }
+
+    @Test
+    public void cant_add_a_craftsperson_with_no_name() {
+        when_the_post_method_on_the_api_is_called_for_adding_a_craftsperson();
+
+        then_the_response_should_be_bad_request();
+    }
+
+    private void then_the_response_should_be_bad_request() {
+        response.then().assertThat()
+                .statusCode(400);
+    }
+
     private void then_the_relationship_between_mentor_and_mentee_is_lost(Craftsperson updatedMentor, Craftsperson updatedMentee) {
-        assertEquals("mentor not found on mentee entity", craftpersonOne.getId(), updatedMentee.getMentor().get().getId());
+        assertTrue(updatedMentee.getMentor().isPresent());
+        assertEquals(craftpersonOne.getId(), updatedMentee.getMentor().get().getId());
         assertTrue("mentee not found in the mentor's mentees list", updatedMentor.getMentees()
                 .stream()
                 .map(Craftsperson::getId)
@@ -150,8 +182,9 @@ public class CraftspeopleControllerTest {
         craftspeopleRepository.flush();
     }
 
-    private void then_the_craftsperson_should_be_empty() {
-        assertEquals(Optional.empty(), craftspeopleRepository.findById(savedCraftsperson.getId()).get().getMentor());
+    private void then_the_craftsperson_should_not_have_a_mentor() {
+        //noinspection OptionalGetWithoutIsPresent
+        assertTrue(craftspeopleRepository.findById(savedCraftsperson.getId()).get().getMentor().isEmpty());
     }
 
     private void when_you_remove_the_mentor_from_the_craftsperson() {
@@ -174,7 +207,7 @@ public class CraftspeopleControllerTest {
         response = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .body(requestBody.toString())
-                .put("craftspeople/addmentee")
+                .put("craftspeople/mentee/add")
                 .then()
                 .statusCode(200)
                 .extract()
@@ -193,7 +226,7 @@ public class CraftspeopleControllerTest {
                 .post("craftspeople/add");
     }
 
-    private void then_the_craftsperson_should_not_exist() {
+    private void then_the_response_should_be_not_found() {
         response.then().assertThat()
                 .statusCode(404);
     }
@@ -259,34 +292,46 @@ public class CraftspeopleControllerTest {
         requestBody.put("lastName", "ARNAUD");
     }
 
+    private void given_a_json_with_no_first_name_and_a_last_name_for_a_new_craftsperson() throws JSONException {
+        requestBody.put("lastName", "ARNAUD");
+    }
+
+    private void given_a_json_with_a_first_name_and_no_last_name_for_a_new_craftsperson() throws JSONException {
+        requestBody.put("firstName", "Arnaldo");
+    }
+
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-        public void remove_mentor() throws JSONException {
-            given_a_craftsperson_with_a_mentor();
+    public void remove_mentor() throws JSONException {
+        given_a_craftsperson_with_a_mentor();
 
-            JSONObject request = new JSONObject();
-            request.put("menteeId", savedCraftsperson.getId());
+        JSONObject request = new JSONObject();
+        request.put("menteeId", savedCraftsperson.getId());
 
-            RestAssured.given()
-                    .contentType("application/json")
-                    .body(request.toString())
-                    .post("craftspeople/mentor/remove")
-                    .then()
-                    .statusCode(204);
+        RestAssured.given()
+                .contentType("application/json")
+                .body(request.toString())
+                .post("craftspeople/mentor/remove")
+                .then()
+                .statusCode(204);
 
-            craftspeopleRepository.flush();
+        craftspeopleRepository.flush();
 
-            Craftsperson updatedMentor = craftspeopleRepository.findById(mentor.getId()).get();
-            Craftsperson updatedMentee = craftspeopleRepository.findById(savedCraftsperson.getId()).get();
+        Craftsperson updatedMentor = craftspeopleRepository.findById(mentor.getId()).get();
+        Craftsperson updatedMentee = craftspeopleRepository.findById(savedCraftsperson.getId()).get();
 
-            assertTrue("mentor was not removed", updatedMentee.getMentor().isEmpty());
-            assertTrue("mentee is still in the mentor's mentees list", updatedMentor.getMentees()
-                    .stream()
-                    .map(Craftsperson::getId)
-                    .noneMatch(savedCraftsperson.getId()::equals));
-        }
+        assertTrue("mentor was not removed", updatedMentee.getMentor().isEmpty());
+        assertTrue("mentee is still in the mentor's mentees list", updatedMentor.getMentees()
+                .stream()
+                .map(Craftsperson::getId)
+                .noneMatch(savedCraftsperson.getId()::equals));
+    }
 
     private void when_a_craftsperson_is_deleted(Craftsperson craftsperson) {
-        craftspeopleRepository.deleteById(craftsperson.getId());
+        RestAssured.given()
+                .delete("craftspeople/{craftspersonId}", craftsperson.getId())
+                .then()
+                .statusCode(200);
     }
 
     private void given_two_craftspeople_in_the_repository() {

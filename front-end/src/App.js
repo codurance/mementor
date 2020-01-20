@@ -10,6 +10,10 @@ import Col from "react-bootstrap/Col";
 import ManageCraftsperson from "./components/admin/ManageCraftsperson";
 import logo from "./mementor_logo.png";
 import {SortingBar} from "./components/toolbar/SortingBar";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
 
 function App() {
     const defaultSort = sortByNumberOfMentees;
