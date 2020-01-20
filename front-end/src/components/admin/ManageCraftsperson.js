@@ -10,6 +10,8 @@ import "./ManageCraftsperson.css";
 import { api } from "../../util/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
+import { validateInputString } from "../../util/validate";
+import { toast } from "react-toastify";
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
@@ -27,20 +29,33 @@ export default function ManageCraftsperson(props) {
     return setIdToDelete(id);
   }
 
-    function addCraftsperson() {
-        if (firstName && lastName) {
-            api({
-                endpoint: '/craftspeople/add',
-                type: 'POST',
-                body: {
-                    firstName,
-                    lastName
-                }
-            })
-            .then(() => {
-                props.rerender();
-            });
+  function addCraftsperson() {
+    const firstNameValid = validateInputString(firstName);
+    const lastNameValid = validateInputString(lastName);
+
+    if (!firstNameValid && !lastNameValid) {
+      toast.error("You must enter a first and last name!");
+      return;
+    }
+    if (!firstNameValid) {
+      toast.error("You must enter a first name!");
+      return;
+    }
+    if (!lastNameValid) {
+      toast.error("You must enter a last name!");
+      return;
+    }
+    api({
+        endpoint: '/craftspeople/add',
+        type: 'POST',
+        body: {
+            firstName,
+            lastName
         }
+    })
+    .then(() => {
+        props.rerender();
+    });
     }
 
   const handleFirstName = event => {
