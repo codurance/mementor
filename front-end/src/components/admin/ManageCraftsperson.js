@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -7,9 +7,9 @@ import FormControl from "react-bootstrap/FormControl";
 import InputGroup from "react-bootstrap/InputGroup";
 import CraftspersonList from "./CraftspersonList";
 import "./ManageCraftsperson.css";
-import {api} from "../../util/api";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faCog} from '@fortawesome/free-solid-svg-icons'
+import { api } from "../../util/api";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCog } from '@fortawesome/free-solid-svg-icons'
 
 export default function ManageCraftsperson(props) {
     const [show, setShow] = useState(false);
@@ -41,7 +41,9 @@ export default function ManageCraftsperson(props) {
                     props.rerender();
                 })
                 .catch(error => {
-                    console.log(error);
+                    if (error.status == 409) {
+                        console.log("Hello World!")
+                    }
                 });
         }
     }
@@ -76,7 +78,7 @@ export default function ManageCraftsperson(props) {
                 data-testid="adminPopupButton"
                 onClick={handleShow}
             >
-                <FontAwesomeIcon icon={faCog}/> Craftspeople
+                <FontAwesomeIcon icon={faCog} /> Craftspeople
             </Button>
 
             <Modal show={show} onHide={handleClose}>
