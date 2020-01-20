@@ -18,8 +18,6 @@ import java.time.Instant;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -43,12 +41,14 @@ public class CraftspeopleControllerTest {
     private List<Craftsperson> craftspeople;
     private Response response;
     private JSONObject requestBody;
+    private int lastMeetingEpoch;
     private Integer savedId;
 
     @Before
     public void setUp() {
         requestBody = new JSONObject();
         craftspeople = new ArrayList<>();
+        lastMeetingEpoch = 1500000000;
     }
 
     @Test
@@ -160,6 +160,63 @@ public class CraftspeopleControllerTest {
         when_the_post_method_on_the_api_is_called_for_adding_a_craftsperson();
 
         then_the_response_should_be_bad_request();
+    }
+
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @Test
+    public void remove_mentor() throws JSONException {
+        given_a_craftsperson_with_a_mentor();
+
+        JSONObject request = new JSONObject();
+        request.put("menteeId", savedCraftsperson.getId());
+
+        RestAssured.given()
+                .contentType("application/json")
+                .body(request.toString())
+                .post("craftspeople/mentor/remove")
+                .then()
+                .statusCode(204);
+
+        craftspeopleRepository.flush();
+
+        Craftsperson updatedMentor = craftspeopleRepository.findById(mentor.getId()).get();
+        Craftsperson updatedMentee = craftspeopleRepository.findById(savedCraftsperson.getId()).get();
+
+        assertTrue("mentor was not removed", updatedMentee.getMentor().isEmpty());
+        assertTrue("mentee is still in the mentor's mentees list", updatedMentor.getMentees()
+                .stream()
+                .map(Craftsperson::getId)
+                .noneMatch(savedCraftsperson.getId()::equals));
+    }
+
+    @Test
+    public void can_update_a_craftsperson_last_meeting() throws JSONException {
+        given_a_craftsperson_with_a_mentor();
+        given_the_request_body_has_a_last_meeting_set();
+
+        when_the_last_meeting_is_set();
+
+        then_the_last_meeting_is_updated();
+    }
+
+    private void then_the_last_meeting_is_updated() {
+        Optional<Instant> lastMeeting = craftspeopleRepository.findById(savedCraftsperson.getId()).get().getLastMeeting();
+        assertTrue(lastMeeting.isPresent());
+        assertEquals(Instant.ofEpochSecond(lastMeetingEpoch), lastMeeting.get());
+    }
+
+    private void given_the_request_body_has_a_last_meeting_set() throws JSONException {
+        requestBody.put("craftspersonId", savedCraftsperson.getId());
+        requestBody.put("lastMeeting", lastMeetingEpoch);
+    }
+
+    private void when_the_last_meeting_is_set() {
+        given()
+                .contentType("application/json")
+                .body(requestBody.toString())
+                .put("craftspeople/lastmeeting")
+                .then()
+                .statusCode(204);
     }
 
     @Test
@@ -357,33 +414,6 @@ public class CraftspeopleControllerTest {
         requestBody.put("firstName", "Arnaldo");
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
-    @Test
-    public void remove_mentor() throws JSONException {
-        given_a_craftsperson_with_a_mentor();
-
-        JSONObject request = new JSONObject();
-        request.put("menteeId", savedCraftsperson.getId());
-
-        RestAssured.given()
-                .contentType("application/json")
-                .body(request.toString())
-                .post("craftspeople/mentor/remove")
-                .then()
-                .statusCode(204);
-
-        craftspeopleRepository.flush();
-
-        Craftsperson updatedMentor = craftspeopleRepository.findById(mentor.getId()).get();
-        Craftsperson updatedMentee = craftspeopleRepository.findById(savedCraftsperson.getId()).get();
-
-        assertTrue("mentor was not removed", updatedMentee.getMentor().isEmpty());
-        assertTrue("mentee is still in the mentor's mentees list", updatedMentor.getMentees()
-                .stream()
-                .map(Craftsperson::getId)
-                .noneMatch(savedCraftsperson.getId()::equals));
-    }
-
     private void when_a_craftsperson_is_deleted(Craftsperson craftsperson) {
         RestAssured.given()
                 .delete("craftspeople/{craftspersonId}", craftsperson.getId())
@@ -409,13 +439,3 @@ public class CraftspeopleControllerTest {
     }
 
 }
-
-
-
-
-
-
-
-
-
-

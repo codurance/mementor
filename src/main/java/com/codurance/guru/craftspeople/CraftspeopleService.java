@@ -3,6 +3,7 @@ package com.codurance.guru.craftspeople;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,5 +66,11 @@ public class CraftspeopleService {
 
     private boolean craftspersonDoesNotExist(String firstName, String lastName) {
         return repository.findByFirstNameAndLastName(firstName,lastName).size() == 0;
+    }
+
+    public void setLastMeeting(int craftspersonId, int lastMeeting) {
+        Craftsperson craftsperson = repository.findById(craftspersonId).get();
+        craftsperson.setLastMeeting(Instant.ofEpochSecond(lastMeeting));
+        repository.save(craftsperson);
     }
 }

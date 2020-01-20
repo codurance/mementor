@@ -3,6 +3,7 @@ package com.codurance.guru.craftspeople;
 import com.codurance.guru.craftspeople.requests.AddCraftspersonRequest;
 import com.codurance.guru.craftspeople.requests.AddMentorRequest;
 import com.codurance.guru.craftspeople.requests.RemoveMentorRequest;
+import com.codurance.guru.craftspeople.requests.UpdateLastMeetingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +50,6 @@ public class CraftspeopleController {
         return ok().build();
     }
 
-
     @DeleteMapping("/craftspeople/{craftspersonId}")
     public ResponseEntity deleteCraftsperson(@PathVariable Integer craftspersonId) {
         craftspeopleService.deleteCraftsperson(craftspersonId);
@@ -74,6 +74,12 @@ public class CraftspeopleController {
     @PostMapping("/craftspeople/mentor/remove")
     public ResponseEntity<Void> removeMentor(@Valid @RequestBody RemoveMentorRequest request) {
         craftspeopleService.removeMentor(request.getMenteeId());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/craftspeople/lastmeeting")
+    public ResponseEntity<Void> setLastMeeting(@Valid @RequestBody UpdateLastMeetingRequest request) {
+        craftspeopleService.setLastMeeting(request.getCraftspersonId(), request.getLastMeeting());
         return ResponseEntity.noContent().build();
     }
 }
