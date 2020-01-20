@@ -29,6 +29,7 @@ export default function Mentee({mentee, rerender}) {
                     </Col>
                     <Col>
                         <Button
+                            className="remove-button"
                             variant="danger"
                             data-testid="removementeebutton"
                             onClick={() => removeMentee()}
