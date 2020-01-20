@@ -8,5 +8,11 @@ describe("when converting number of seconds", () => {
     });
     it("should return - when given null", () => {
         expect(formatDate(null)).toBe("-");
-    })
+    });
+    it("should return - when given nothing", () => {
+        expect(formatDate()).toBe("-");
+    });
+    it("should return - when given undefined", () => {
+        expect(formatDate(undefined)).toBe("-");
+    });
 });
