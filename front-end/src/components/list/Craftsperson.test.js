@@ -8,7 +8,7 @@ describe("when rendering a craftsperson", () => {
     const { getByTestId } = render(
       <Craftsperson
         craftsperson={{ firstName: "Arnaud", lastName: "Claudel" }}
-      />
+      />,
     );
     expect(getByTestId("craftspersonName")).toHaveTextContent("Arnaud Claudel");
   });
@@ -16,10 +16,10 @@ describe("when rendering a craftsperson", () => {
   describe("with his mentees", () => {
     it("should show the label", () => {
       const { getByTestId } = render(
-        <Craftsperson craftsperson={{ mentees: null }} />
+        <Craftsperson craftsperson={{ mentees: null }} />,
       );
       expect(getByTestId("craftspersonMenteeLabel")).toHaveTextContent(
-        "Mentees"
+        "Mentees",
       );
     });
 
@@ -27,17 +27,17 @@ describe("when rendering a craftsperson", () => {
       const listOfMentees = [
         { firstName: "Etienne", lastName: "Mustow" },
         { firstName: "Arnaud", lastName: "Claudel" },
-        { firstName: "Naruto", lastName: "Uzumaki" }
+        { firstName: "Naruto", lastName: "Uzumaki" },
       ];
       const { getByTestId } = render(
-        <Craftsperson craftsperson={{ mentees: listOfMentees }} />
+        <Craftsperson craftsperson={{ mentees: listOfMentees }} />,
       );
       expect(getByTestId("craftspersonMenteeValue")).toHaveTextContent("3");
     });
 
     it("should show 0 if the list is null", () => {
       const { getByTestId } = render(
-        <Craftsperson craftsperson={{ mentees: null }} />
+        <Craftsperson craftsperson={{ mentees: null }} />,
       );
       expect(getByTestId("craftspersonMenteeValue")).toHaveTextContent("0");
     });
@@ -45,7 +45,7 @@ describe("when rendering a craftsperson", () => {
 
   it("should show last meeting", () => {
     const { getByTestId } = render(
-      <Craftsperson craftsperson={{ lastMeeting: 1500000000 }} />
+      <Craftsperson craftsperson={{ lastMeeting: 1500000000 }} />,
     );
     expect(getByTestId("lastMeetingValue")).toHaveTextContent("July 2017");
   });

@@ -1,13 +1,12 @@
 .admin-button {
-    justify-content: flex-end;
-    margin: 10px 0;
+  justify-content: flex-end;
+  margin: 10px 0;
 }
 
-.add-button-container{
-    display: flex;
+.add-button-container {
+  display: flex;
 }
 
-.add-button{
-    justify-content: flex-end;
+.add-button {
+  justify-content: flex-end;
 }
-

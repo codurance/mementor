@@ -1,5 +1,5 @@
 import React from "react";
-import { formatDate } from "../../util/date"
+import { formatDate } from "../../util/date";
 
 export default function Craftsperson({ craftsperson }) {
   return (
