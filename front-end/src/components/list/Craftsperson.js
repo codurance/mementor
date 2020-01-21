@@ -2,11 +2,11 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { api } from "../../util/api";
-import { toast } from "react-toastify";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Button from "react-bootstrap/Button";
+import {handleSuccess, handleBackendError, handleUnexpectedBackendError} from '../../util/apiHandler';
 
 export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
   function setLastMeeting(date) {
@@ -19,15 +19,12 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
       },
     }).then(response => {
       if (response.ok) {
-        toast.success("Last meeting date updated");
-        rerender();
-        return;
+        return handleSuccess('Last meeting updated', rerender);
       }
       if (response.status === 400) {
-        response.json().then(body => toast.error(body.message));
-        return;
+        return handleBackendError(response);
       }
-      toast.error("Unexpected error");
+      return handleUnexpectedBackendError(response);
     });
   }
 
