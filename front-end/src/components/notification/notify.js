@@ -1,15 +1,14 @@
 import { toast } from "react-toastify";
 
-export function handleSuccess(message, rerenderCallback) {
+export function notifySuccess(message) {
   toast.success(message);
-  rerenderCallback();
 }
 
-export function handleBackendError(response) {
+export function notifyBackendError(response) {
   response.json().then(body => toast.warn(body.message));
 }
 
-export function handleUnexpectedBackendError(response) {
+export function notifyUnexpectedBackendError(response) {
   console.log(response);
   toast.error("An unexpected error occured");
 }
