@@ -13,25 +13,28 @@ export default function CraftspersonRow({
   craftspeople,
   rerender,
 }) {
-
   return (
     <Accordion>
       <div className="container">
         <Card>
           <Card.Header>
-              <div className="justify-content-center">
-                <Craftsperson craftsperson={craftsperson} craftspeople={craftspeople} rerender={rerender} />
-              </div>
-              <div className="row">
-                <Accordion.Toggle
-                  className="mentees-toggle"
-                  as={Button}
-                  variant="light"
-                  eventKey="0"
-                >
-                  <FontAwesomeIcon icon={faChevronDown}/>
-                </Accordion.Toggle>
-              </div>
+            <div className="justify-content-center">
+              <Craftsperson
+                craftsperson={craftsperson}
+                craftspeople={craftspeople}
+                rerender={rerender}
+              />
+            </div>
+            <div className="row">
+              <Accordion.Toggle
+                className="mentees-toggle"
+                as={Button}
+                variant="light"
+                eventKey="0"
+              >
+                <FontAwesomeIcon icon={faChevronDown} />
+              </Accordion.Toggle>
+            </div>
           </Card.Header>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
