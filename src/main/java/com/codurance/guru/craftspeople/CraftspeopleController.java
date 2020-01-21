@@ -1,8 +1,11 @@
 package com.codurance.guru.craftspeople;
 
+import com.codurance.guru.craftspeople.exceptions.DuplicateMenteeException;
+import com.codurance.guru.craftspeople.exceptions.InvalidMentorRelationshipException;
 import com.codurance.guru.craftspeople.requests.AddCraftspersonRequest;
 import com.codurance.guru.craftspeople.requests.AddMentorRequest;
 import com.codurance.guru.craftspeople.requests.RemoveMentorRequest;
+import com.codurance.guru.craftspeople.responses.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,15 +38,17 @@ public class CraftspeopleController {
     }
 
     @PutMapping("craftspeople/mentee/add")
-    public ResponseEntity setMentee(@Valid @RequestBody AddMentorRequest request) {
-        if (!craftspeopleService.isMentorable(request.getMentorId(), request.getMenteeId())){
-            return badRequest().build();
+    public ResponseEntity setMentee(@Valid @RequestBody AddMentorRequest request){
+        try {
+            craftspeopleService.setMentee(
+                    request.getMentorId(),
+                    request.getMenteeId());
+            return ok().build();
+        } catch (InvalidMentorRelationshipException ex) {
+            return badRequest().body(new ErrorResponse("Cant add a craftsperson as their own mentor"));
+        } catch (DuplicateMenteeException ex) {
+            return badRequest().body(new ErrorResponse("Mentee already exists"));
         }
-
-        craftspeopleService.setMentee(
-                request.getMentorId(),
-                request.getMenteeId());
-        return ok().build();
     }
 
     @PutMapping("craftspeople/mentee/remove/{menteeId}")

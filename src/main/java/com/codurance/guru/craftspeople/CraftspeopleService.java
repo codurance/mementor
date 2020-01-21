@@ -1,5 +1,7 @@
 package com.codurance.guru.craftspeople;
 
+import com.codurance.guru.craftspeople.exceptions.DuplicateMenteeException;
+import com.codurance.guru.craftspeople.exceptions.InvalidMentorRelationshipException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +14,15 @@ public class CraftspeopleService {
     @Autowired
     private CraftspeopleRepository repository;
 
+    @Autowired
+    private CraftspeopleValidator craftspeopleValidator;
+
+    public CraftspeopleService(CraftspeopleRepository repository, CraftspeopleValidator validator) {
+
+        this.repository = repository;
+        this.craftspeopleValidator = validator;
+    }
+
     public Optional<Craftsperson> retrieveCraftsperson(Integer craftspersonId) {
         return repository.findById(craftspersonId);
     }
@@ -20,7 +31,9 @@ public class CraftspeopleService {
         return repository.findAll();
     }
 
-    public void setMentee(int mentorId, int menteeId) {
+    public void setMentee(int mentorId, int menteeId) throws DuplicateMenteeException, InvalidMentorRelationshipException {
+        craftspeopleValidator.validateSetMentee(mentorId, menteeId);
+
         Craftsperson mentor = repository.findById(mentorId).get();
         Craftsperson mentee = repository.findById(menteeId).get();
 
@@ -54,21 +67,6 @@ public class CraftspeopleService {
         }
 
         repository.deleteById(craftspersonId);
-    }
-
-    public boolean canAddMentee(int mentorId, int menteeId) {
-        return mentorId != menteeId;
-    }
-
-    public boolean existingMentee(int mentorId, int menteeId) {
-        Craftsperson mentor = repository.findById(mentorId).get();
-        Craftsperson mentee = repository.findById(menteeId).get();
-
-        return mentor.getMentees().contains(mentee);
-    }
-
-    public boolean isMentorable(int mentorId, int menteeId) {
-        return canAddMentee(mentorId, menteeId) && !existingMentee(mentorId, menteeId);
     }
 
     public Craftsperson addCraftsperson(String firstName, String lastName) {
