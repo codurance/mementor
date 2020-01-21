@@ -16,10 +16,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.Instant;
 
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -43,12 +44,14 @@ public class CraftspeopleControllerTest {
     private List<Craftsperson> craftspeople;
     private Response response;
     private JSONObject requestBody;
+    private int lastMeetingEpoch;
     private Integer savedId;
 
     @Before
     public void setUp() {
         requestBody = new JSONObject();
         craftspeople = new ArrayList<>();
+        lastMeetingEpoch = 1500000000;
     }
 
     @Test
@@ -160,6 +163,88 @@ public class CraftspeopleControllerTest {
         when_the_post_method_on_the_api_is_called_for_adding_a_craftsperson();
 
         then_the_response_should_be_bad_request();
+    }
+
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @Test
+    public void remove_mentor() throws JSONException {
+        given_a_craftsperson_with_a_mentor();
+
+        JSONObject request = new JSONObject();
+        request.put("menteeId", savedCraftsperson.getId());
+
+        RestAssured.given()
+                .contentType("application/json")
+                .body(request.toString())
+                .post("craftspeople/mentor/remove")
+                .then()
+                .statusCode(204);
+
+        craftspeopleRepository.flush();
+
+        Craftsperson updatedMentor = craftspeopleRepository.findById(mentor.getId()).get();
+        Craftsperson updatedMentee = craftspeopleRepository.findById(savedCraftsperson.getId()).get();
+
+        assertTrue("mentor was not removed", updatedMentee.getMentor().isEmpty());
+        assertTrue("mentee is still in the mentor's mentees list", updatedMentor.getMentees()
+                .stream()
+                .map(Craftsperson::getId)
+                .noneMatch(savedCraftsperson.getId()::equals));
+    }
+
+    @Test
+    public void can_update_a_craftsperson_last_meeting() throws JSONException {
+        given_a_craftsperson_with_a_mentor();
+        given_the_request_body_has_a_last_meeting_set();
+
+        when_the_last_meeting_is_set();
+
+        then_the_response_should_be_no_content();
+        then_the_last_meeting_is_updated();
+    }
+
+    private void then_the_response_should_be_no_content() {
+        response.then().assertThat()
+                .statusCode(204);
+    }
+
+    @Test
+    public void cant_update_a_craftsperson_last_meeting_with_a_date_in_future() throws JSONException {
+        given_a_craftsperson_with_a_mentor();
+        given_the_request_body_has_a_last_meeting_set_in_the_future();
+
+        when_the_last_meeting_is_set();
+
+        then_the_response_should_be_bad_request();
+        then_the_response_should_contain_the_last_meeting_error();
+    }
+
+    private void then_the_response_should_contain_the_last_meeting_error() {
+        response.then().assertThat()
+                .body("message", equalTo("The last meeting date is too far in the future"));
+    }
+
+    private void given_the_request_body_has_a_last_meeting_set_in_the_future() throws JSONException {
+        requestBody.put("craftspersonId", savedCraftsperson.getId());
+        requestBody.put("lastMeeting", Instant.now().plus(2, ChronoUnit.DAYS).getEpochSecond());
+    }
+
+    private void given_the_request_body_has_a_last_meeting_set() throws JSONException {
+        requestBody.put("craftspersonId", savedCraftsperson.getId());
+        requestBody.put("lastMeeting", lastMeetingEpoch);
+    }
+
+    private void then_the_last_meeting_is_updated() {
+        Optional<Instant> lastMeeting = craftspeopleRepository.findById(savedCraftsperson.getId()).get().getLastMeeting();
+        assertTrue(lastMeeting.isPresent());
+        assertEquals(Instant.ofEpochSecond(lastMeetingEpoch), lastMeeting.get());
+    }
+
+    private void when_the_last_meeting_is_set() {
+        response = given()
+                .contentType("application/json")
+                .body(requestBody.toString())
+                .put("craftspeople/lastmeeting");
     }
 
     @Test
@@ -357,33 +442,6 @@ public class CraftspeopleControllerTest {
         requestBody.put("firstName", "Arnaldo");
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
-    @Test
-    public void remove_mentor() throws JSONException {
-        given_a_craftsperson_with_a_mentor();
-
-        JSONObject request = new JSONObject();
-        request.put("menteeId", savedCraftsperson.getId());
-
-        RestAssured.given()
-                .contentType("application/json")
-                .body(request.toString())
-                .post("craftspeople/mentor/remove")
-                .then()
-                .statusCode(204);
-
-        craftspeopleRepository.flush();
-
-        Craftsperson updatedMentor = craftspeopleRepository.findById(mentor.getId()).get();
-        Craftsperson updatedMentee = craftspeopleRepository.findById(savedCraftsperson.getId()).get();
-
-        assertTrue("mentor was not removed", updatedMentee.getMentor().isEmpty());
-        assertTrue("mentee is still in the mentor's mentees list", updatedMentor.getMentees()
-                .stream()
-                .map(Craftsperson::getId)
-                .noneMatch(savedCraftsperson.getId()::equals));
-    }
-
     private void when_a_craftsperson_is_deleted(Craftsperson craftsperson) {
         RestAssured.given()
                 .delete("craftspeople/{craftspersonId}", craftsperson.getId())
@@ -409,13 +467,3 @@ public class CraftspeopleControllerTest {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
