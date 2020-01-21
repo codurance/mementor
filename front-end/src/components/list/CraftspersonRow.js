@@ -17,7 +17,7 @@ export default function CraftspersonRow({
   const [isColapsed, setIsColapsed] = useState(false);
 
   return (
-    <Accordion>
+    <Accordion className="accordion-container">
       <div className="container">
         <Card>
           <Card.Header className="craftsperson-card">
