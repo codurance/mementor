@@ -1,7 +1,21 @@
 import React from "react";
-import { formatDate } from "../../util/date";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { api } from "../../util/api";
 
-export default function Craftsperson({ craftsperson }) {
+export default function Craftsperson({ craftsperson, rerender }) {
+  function setLastMeeting(date) {
+    api({
+      endpoint: "/craftspeople/lastmeeting",
+      type: "PUT",
+      body: {
+        craftspersonId: craftsperson.id,
+        lastMeeting: date.getTime() / 1000,
+      },
+    });
+    rerender();
+  }
+
   return (
     <div className="row">
       <div className="col-lg-3">
@@ -20,9 +34,23 @@ export default function Craftsperson({ craftsperson }) {
         <h5>
           <span className="meetingLabel">Last Meeting:</span>
           <br />
-          <span className="lastMeeting" data-testid="lastMeetingValue">
-            <i>{formatDate(craftsperson.lastMeeting)}</i>
-          </span>
+          {craftsperson.mentor ? (
+            <DatePicker
+              selected={
+                craftsperson.lastMeeting
+                  ? new Date(craftsperson.lastMeeting * 1000)
+                  : null
+              }
+              placeholderText="Select date..."
+              dateFormat="dd MMMM yyyy"
+              customInput={
+                <input data-testid="lastMeetingDatePicker" type="text" />
+              }
+              onChange={setLastMeeting}
+            />
+          ) : (
+            "-"
+          )}
         </h5>
       </div>
       <div className="col-lg-3">

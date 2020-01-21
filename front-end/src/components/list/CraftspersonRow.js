@@ -63,7 +63,7 @@ export default function CraftspersonRow({
               variant="light"
               eventKey="0"
             >
-              <Craftsperson craftsperson={craftsperson} />
+              <Craftsperson craftsperson={craftsperson} rerender={rerender} />
             </Accordion.Toggle>
             <div className="container">
               <div className="row justify-content-center">
@@ -79,7 +79,6 @@ export default function CraftspersonRow({
                 />
                 {craftsperson.mentor && (
                   <Button
-                    className="remove-button"
                     variant="danger"
                     data-testid="removementeebutton"
                     onClick={removeMentorCallback}

@@ -14,13 +14,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(
         classes = GuruApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class CraftspeopleServiceTest {
+public class CraftspeopleServiceIntegrationTest {
 
     @Autowired
     CraftspeopleService craftspeopleService;
 
     @Autowired
     CraftspeopleRepository craftspeopleRepository;
+
+
 
     private Craftsperson mentor;
     private Craftsperson mentee;
