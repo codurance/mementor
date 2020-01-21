@@ -9,6 +9,7 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { api } from "../../util/api";
+import { filterCraftspeople } from "../../util/filtering";
 
 export default function CraftspersonRow({
   craftsperson,
@@ -73,7 +74,7 @@ export default function CraftspersonRow({
                   ref={mentorSelect}
                   inputProps={{ "data-testid": "add-mentor-select" }}
                   labelKey={option => `${option.firstName} ${option.lastName}`}
-                  options={craftspeople}
+                  options={filterCraftspeople(craftspeople, craftsperson)}
                   placeholder="Select a mentor"
                   onChange={addMentorCallBack}
                 />
