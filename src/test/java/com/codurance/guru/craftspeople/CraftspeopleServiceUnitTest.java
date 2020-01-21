@@ -17,10 +17,11 @@ public class CraftspeopleServiceUnitTest {
     private CraftspeopleRepository repository;
 
     private CraftspeopleService service;
+    private CraftspeopleValidator validator;
 
     @Before
     public void setUp(){
-        service = new CraftspeopleService(repository);
+        service = new CraftspeopleService(repository, validator);
     }
 
     @Test(expected = InvalidLastMeetingDateException.class)

@@ -1,15 +1,14 @@
 package com.codurance.guru.craftspeople;
 
 import com.codurance.guru.craftspeople.exceptions.DuplicateMenteeException;
-import com.codurance.guru.craftspeople.exceptions.InvalidMentorRelationshipException;
 import com.codurance.guru.craftspeople.exceptions.InvalidLastMeetingDateException;
+import com.codurance.guru.craftspeople.exceptions.InvalidMentorRelationshipException;
 import com.codurance.guru.craftspeople.requests.AddCraftspersonRequest;
 import com.codurance.guru.craftspeople.requests.AddMentorRequest;
 import com.codurance.guru.craftspeople.requests.RemoveMentorRequest;
-import com.codurance.guru.craftspeople.responses.ErrorResponse;
 import com.codurance.guru.craftspeople.requests.UpdateLastMeetingRequest;
+import com.codurance.guru.craftspeople.responses.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

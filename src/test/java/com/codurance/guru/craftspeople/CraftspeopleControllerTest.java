@@ -4,7 +4,6 @@ import com.codurance.guru.GuruApplication;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.hibernate.id.GUIDGenerator;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -202,11 +201,6 @@ public class CraftspeopleControllerTest {
         then_the_last_meeting_is_updated();
     }
 
-    private void then_the_response_should_be_no_content() {
-        response.then().assertThat()
-                .statusCode(204);
-    }
-
     @Test
     public void cant_update_a_craftsperson_last_meeting_with_a_date_in_future() throws JSONException {
         given_a_craftsperson_with_a_mentor();
@@ -216,34 +210,6 @@ public class CraftspeopleControllerTest {
 
         then_the_response_should_be_bad_request();
         then_the_response_should_contain_the_last_meeting_error();
-    }
-
-    private void then_the_response_should_contain_the_last_meeting_error() {
-        response.then().assertThat()
-                .body("message", equalTo("The last meeting date is too far in the future"));
-    }
-
-    private void given_the_request_body_has_a_last_meeting_set_in_the_future() throws JSONException {
-        requestBody.put("craftspersonId", savedCraftsperson.getId());
-        requestBody.put("lastMeeting", Instant.now().plus(2, ChronoUnit.DAYS).getEpochSecond());
-    }
-
-    private void given_the_request_body_has_a_last_meeting_set() throws JSONException {
-        requestBody.put("craftspersonId", savedCraftsperson.getId());
-        requestBody.put("lastMeeting", lastMeetingEpoch);
-    }
-
-    private void then_the_last_meeting_is_updated() {
-        Optional<Instant> lastMeeting = craftspeopleRepository.findById(savedCraftsperson.getId()).get().getLastMeeting();
-        assertTrue(lastMeeting.isPresent());
-        assertEquals(Instant.ofEpochSecond(lastMeetingEpoch), lastMeeting.get());
-    }
-
-    private void when_the_last_meeting_is_set() {
-        response = given()
-                .contentType("application/json")
-                .body(requestBody.toString())
-                .put("craftspeople/lastmeeting");
     }
 
     @Test
@@ -275,6 +241,39 @@ public class CraftspeopleControllerTest {
         when_the_post_method_on_the_api_is_called_to_add_a_mentee_to_a_craftsperson_with_an_invalid_request_body();
 
         then_the_response_should_be_bad_request();
+    }
+
+    private void then_the_response_should_be_no_content() {
+        response.then().assertThat()
+                .statusCode(204);
+    }
+
+    private void then_the_response_should_contain_the_last_meeting_error() {
+        response.then().assertThat()
+                .body("message", equalTo("The last meeting date is too far in the future"));
+    }
+
+    private void given_the_request_body_has_a_last_meeting_set_in_the_future() throws JSONException {
+        requestBody.put("craftspersonId", savedCraftsperson.getId());
+        requestBody.put("lastMeeting", Instant.now().plus(2, ChronoUnit.DAYS).getEpochSecond());
+    }
+
+    private void given_the_request_body_has_a_last_meeting_set() throws JSONException {
+        requestBody.put("craftspersonId", savedCraftsperson.getId());
+        requestBody.put("lastMeeting", lastMeetingEpoch);
+    }
+
+    private void then_the_last_meeting_is_updated() {
+        Optional<Instant> lastMeeting = craftspeopleRepository.findById(savedCraftsperson.getId()).get().getLastMeeting();
+        assertTrue(lastMeeting.isPresent());
+        assertEquals(Instant.ofEpochSecond(lastMeetingEpoch), lastMeeting.get());
+    }
+
+    private void when_the_last_meeting_is_set() {
+        response = given()
+                .contentType("application/json")
+                .body(requestBody.toString())
+                .put("craftspeople/lastmeeting");
     }
 
     private void when_the_post_method_on_the_api_is_called_for_adding_both__identical_craftspeople() throws JSONException {
