@@ -49,6 +49,7 @@ public class CraftspeopleService {
         Craftsperson mentee = repository.findById(menteeId).get();
 
         mentee.setMentor(null);
+        mentee.setLastMeeting(null);
 
         repository.save(mentee);
     }
