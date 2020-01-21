@@ -4,7 +4,7 @@ import Mentees from "./Mentees";
 import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
 import Button from "react-bootstrap/Button";
-import "./Craftsperson.css";
+import "./CraftspersonRow.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
@@ -24,7 +24,7 @@ export default function CraftspersonRow({
               </div>
               <div className="row">
                 <Accordion.Toggle
-                  className="craftsperson-row"
+                  className="mentees-toggle"
                   as={Button}
                   variant="light"
                   eventKey="0"
