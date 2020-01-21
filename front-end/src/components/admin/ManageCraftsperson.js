@@ -46,16 +46,15 @@ export default function ManageCraftsperson(props) {
       return;
     }
     api({
-      endpoint: '/craftspeople/add',
-      type: 'POST',
+      endpoint: "/craftspeople/add",
+      type: "POST",
       body: {
         firstName,
-        lastName
-      }
-    })
-      .then(() => {
-        props.rerender();
-      });
+        lastName,
+      },
+    }).then(() => {
+      props.rerender();
+    });
   }
 
   const handleFirstName = event => {
@@ -70,11 +69,10 @@ export default function ManageCraftsperson(props) {
     if (id) {
       api({
         endpoint: `/craftspeople/${id}`,
-        type: 'DELETE'
-      })
-        .then(() => {
-          props.rerender();
-        })
+        type: "DELETE",
+      }).then(() => {
+        props.rerender();
+      });
     }
   }
 
