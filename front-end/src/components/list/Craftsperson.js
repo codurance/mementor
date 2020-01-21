@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { filterCraftspeople } from '../../util/filtering';
+import { filterCraftspeople } from "../../util/filtering";
 import Button from "react-bootstrap/Button";
 
 export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
