@@ -15,12 +15,12 @@ import logo from "./mementor_logo.png";
 import { SortingBar } from "./components/toolbar/SortingBar";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import GoogleLogin from "react-google-login";
+import { GoogleLogout } from "react-google-login";
 
 toast.configure();
-
 function App() {
   const defaultSort = sortByNumberOfMentees;
-
   const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
   const [backendFetchError, setBackendFetchError] = useState(null);
   const [shouldRender, setShouldRender] = useState(false);
@@ -28,15 +28,26 @@ function App() {
   const [filteredCraftspeople, setFilteredCraftspeople] = useState(
     craftspeople,
   );
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  function login() {
+    setIsLoggedIn(true);
+    rerender();
+  }
+
+  function logout() {
+    setIsLoggedIn(false);
+    rerender();
+  }
+  function responseGoogle(response) {
+    console.log(response);
+  }
   function rerender() {
     setShouldRender(!shouldRender);
   }
-
   function filterCraftspeople(searchedValue) {
     setFilteredCraftspeople(filter(craftspeople, searchedValue));
   }
-
   function makeSortOnClickListener(sortAlgorithmToUse) {
     return () => {
       setSortAlgorithm(() => sortAlgorithmToUse);
@@ -46,7 +57,6 @@ function App() {
       setFilteredCraftspeople(filteredCraftspeople);
     };
   }
-
   useEffect(() => {
     api({ endpoint: "/craftspeople" })
       .then(response => response.json())
@@ -63,47 +73,73 @@ function App() {
 
   return (
     <div className="App">
-      <div>
-        <div className="container">
-          <img src={logo} className="main-logo" alt="Mementor Logo" />
+      {isLoggedIn && (
+        <div>
+          <div className="container">
+            <img src={logo} className="main-logo" alt="Mementor Logo" />
+            <GoogleLogout
+              className="logout-button"
+              clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+              buttonText="Logout"
+              onLogoutSuccess={logout}
+            ></GoogleLogout>
+          </div>
+          <div className="container">
+            <SearchBar onEnter={filterCraftspeople} />
+            <Row>
+              <Col>
+                <SortingBar
+                  onClick={makeSortOnClickListener(sortByNumberOfMentees)}
+                  onClick1={makeSortOnClickListener(
+                    sortByCraftspeopleWithoutMentor,
+                  )}
+                />
+              </Col>
+              <Col>
+                <ManageCraftsperson
+                  craftspeople={craftspeople}
+                  rerender={rerender}
+                />
+              </Col>
+            </Row>
+          </div>
+          {backendFetchError && (
+            <div className="alert alert-danger container" role="alert">
+              <strong>Oh snap!</strong> Looks like there was an error while
+              fetching the data.
+            </div>
+          )}
+          {filteredCraftspeople.map(craftsperson => (
+            <CraftspersonRow
+              key={craftsperson.id}
+              craftsperson={craftsperson}
+              craftspeople={craftspeople}
+              rerender={rerender}
+            />
+          ))}
         </div>
+      )}
+      {!isLoggedIn && (
         <div className="container">
-          <SearchBar onEnter={filterCraftspeople} />
           <Row>
-            <Col>
-              <SortingBar
-                onClick={makeSortOnClickListener(sortByNumberOfMentees)}
-                onClick1={makeSortOnClickListener(
-                  sortByCraftspeopleWithoutMentor,
-                )}
-              />
-            </Col>
-
-            <Col>
-              <ManageCraftsperson
-                craftspeople={craftspeople}
-                rerender={rerender}
-              />
-            </Col>
+            <img src={logo} className="main-logo-login" alt="Mementor Logo" />
+          </Row>
+          <Row>
+            <GoogleLogin
+              className="google-login"
+              clientId="677831756912-90mpqndj2c96nac10mgjciibcdoiinra.apps.googleusercontent.com"
+              buttonText="Login"
+              onSuccess={login}
+              onFailure={responseGoogle}
+              cookiePolicy={"single_host_origin"}
+            />
+          </Row>
+          <Row>
+            <p className="love">With love by the 2019/2020 apprentices</p>
           </Row>
         </div>
-        {backendFetchError && (
-          <div className="alert alert-danger container" role="alert">
-            <strong>Oh snap!</strong> Looks like there was an error while
-            fetching the data.
-          </div>
-        )}
-        {filteredCraftspeople.map(craftsperson => (
-          <CraftspersonRow
-            key={craftsperson.id}
-            craftsperson={craftsperson}
-            craftspeople={craftspeople}
-            rerender={rerender}
-          />
-        ))}
-      </div>
+      )}
     </div>
   );
 }
-
 export default App;
