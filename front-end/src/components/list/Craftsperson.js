@@ -94,6 +94,7 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
           />
           {craftsperson.mentor && (
             <Button
+              className="remove-button"
               variant="danger"
               data-testid="removementeebutton"
               onClick={removeMentorCallback}
