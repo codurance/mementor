@@ -6,6 +6,7 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import { sortAlphabetically } from "../../util/sorting";
 import { api } from "../../util/api";
 import "./Mentees.css";
+import { filterCraftspeople } from "../../util/filtering";
 
 export default function Mentees(props) {
   function addMentee(mentee, mentorId) {
@@ -22,15 +23,6 @@ export default function Mentees(props) {
     }
   }
 
-  function filterCraftspeopleMenteeList() {
-    return props.craftspeople.filter(
-      craftsperson =>
-        ![props.craftsperson.id, ...props.mentees.map(_ => _.id)].includes(
-          craftsperson.id,
-        ),
-    );
-  }
-
   return (
     <ListGroup data-testid="list">
       {props.mentees.sort(sortAlphabetically).map(mentee => (
@@ -42,7 +34,7 @@ export default function Mentees(props) {
           id={"add-mentee-" + props.craftsperson.id}
           labelKey={option => `${option.firstName} ${option.lastName}`}
           placeholder="Select a mentee"
-          options={filterCraftspeopleMenteeList(props.craftspeople)}
+          options={filterCraftspeople(props.craftspeople, props.craftsperson)}
           onChange={selected => addMentee(selected[0], props.craftsperson.id)}
         />
       </ListGroupItem>
