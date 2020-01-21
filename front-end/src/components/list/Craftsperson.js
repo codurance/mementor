@@ -62,7 +62,7 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
   }
 
   function getCraftspersonMentorNameOrNull() {
-    if (craftsperson.mentor === null) {
+    if (!craftsperson.mentor) {
       return "";
     }
     return craftsperson.mentor.firstName + " " + craftsperson.mentor.lastName;
