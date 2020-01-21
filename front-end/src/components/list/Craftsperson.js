@@ -10,8 +10,8 @@ export default function Craftsperson({ craftsperson, rerender }) {
       type: "PUT",
       body: {
         craftspersonId: craftsperson.id,
-        lastMeeting: date.getTime() / 1000
-      }
+        lastMeeting: date.getTime() / 1000,
+      },
     });
     rerender();
   }

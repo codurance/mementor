@@ -45,7 +45,7 @@ describe("when rendering a craftsperson", () => {
 
   it("should show last meeting", () => {
     const { getByTestId } = render(
-      <Craftsperson craftsperson={{ mentor:{}, lastMeeting: 1500000000 }} />,
+      <Craftsperson craftsperson={{ mentor: {}, lastMeeting: 1500000000 }} />,
     );
     expect(getByTestId("lastMeetingDatePicker").value).toBe("14 July 2017");
   });
@@ -53,8 +53,13 @@ describe("when rendering a craftsperson", () => {
     const { queryByTestId } = render(<Craftsperson craftsperson={{}} />);
     expect(queryByTestId("lastMeetingDatePicker")).toBe(null);
   });
-  if("should be empty when no last meeting", () => {
-    const { getByTestId } = render(<Craftsperson craftsperson={{mentor: {}}} />);
-    expect(getByTestId("lastMeetingDatePicker").value).toBe("");
-  });
+  if (
+    ("should be empty when no last meeting",
+    () => {
+      const { getByTestId } = render(
+        <Craftsperson craftsperson={{ mentor: {} }} />,
+      );
+      expect(getByTestId("lastMeetingDatePicker").value).toBe("");
+    })
+  );
 });

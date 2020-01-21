@@ -13,7 +13,7 @@ import { api } from "../../util/api";
 export default function CraftspersonRow({
   craftsperson,
   craftspeople,
-  rerender
+  rerender,
 }) {
   let mentorSelect = React.createRef();
 
@@ -27,8 +27,8 @@ export default function CraftspersonRow({
       type: "POST",
       body: {
         mentorId: selectedCraftspeople[0].id,
-        menteeId: craftsperson.id
-      }
+        menteeId: craftsperson.id,
+      },
     });
     rerender();
   }
@@ -38,8 +38,8 @@ export default function CraftspersonRow({
       endpoint: "/craftspeople/mentor/remove",
       type: "POST",
       body: {
-        menteeId: craftsperson.id
-      }
+        menteeId: craftsperson.id,
+      },
     });
     mentorSelect.current.clear();
     rerender();
