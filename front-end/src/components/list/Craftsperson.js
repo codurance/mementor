@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { filterCraftspeople } from '../../util/filtering';
 import Button from "react-bootstrap/Button";
 
 export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
@@ -88,7 +89,7 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
             ref={mentorSelect}
             inputProps={{ "data-testid": "add-mentor-select" }}
             labelKey={option => `${option.firstName} ${option.lastName}`}
-            options={craftspeople}
+            options={filterCraftspeople(craftspeople, craftsperson)}
             placeholder="Select a mentor"
             onChange={addMentorCallBack}
           />
