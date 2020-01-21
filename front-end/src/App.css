@@ -10,6 +10,27 @@
   margin: 20px 0;
 }
 
+.main-logo-login {
+  height: 5vmin;
+  margin: 5vmin auto;
+}
+
+.google-login {
+  margin: 20px auto;
+}
+
+.love {
+  font-size: 80%;
+  color: #bbbbbb;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.logout-button {
+  float: right;
+  margin-top: 20px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
