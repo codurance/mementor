@@ -35,7 +35,7 @@ export default function Mentee({ mentee, rerender }) {
               data-testid="removementeebutton"
               onClick={() => removeMentee()}
             >
-              <FontAwesomeIcon icon={faTimes} size="sm" />
+              <FontAwesomeIcon className="times-icon" icon={faTimes} size="sm" />
             </Button>
           </Col>
         </Row>
