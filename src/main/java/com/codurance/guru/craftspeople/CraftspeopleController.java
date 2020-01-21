@@ -1,13 +1,14 @@
 package com.codurance.guru.craftspeople;
 
+import com.codurance.guru.craftspeople.exceptions.DuplicateMenteeException;
 import com.codurance.guru.craftspeople.exceptions.InvalidLastMeetingDateException;
+import com.codurance.guru.craftspeople.exceptions.InvalidMentorRelationshipException;
 import com.codurance.guru.craftspeople.requests.AddCraftspersonRequest;
 import com.codurance.guru.craftspeople.requests.AddMentorRequest;
 import com.codurance.guru.craftspeople.requests.RemoveMentorRequest;
 import com.codurance.guru.craftspeople.requests.UpdateLastMeetingRequest;
 import com.codurance.guru.craftspeople.responses.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.http.ResponseEntity.notFound;
-import static org.springframework.http.ResponseEntity.ok;
+import static org.springframework.http.ResponseEntity.*;
 
 @RestController
 public class CraftspeopleController {
@@ -39,11 +39,17 @@ public class CraftspeopleController {
     }
 
     @PutMapping("craftspeople/mentee/add")
-    public ResponseEntity setMentee(@Valid @RequestBody AddMentorRequest request) {
-        craftspeopleService.setMentee(
-                request.getMentorId(),
-                request.getMenteeId());
-        return ok().build();
+    public ResponseEntity setMentee(@Valid @RequestBody AddMentorRequest request){
+        try {
+            craftspeopleService.setMentee(
+                    request.getMentorId(),
+                    request.getMenteeId());
+            return ok().build();
+        } catch (InvalidMentorRelationshipException ex) {
+            return badRequest().body(new ErrorResponse("Cant add a craftsperson as their own mentor"));
+        } catch (DuplicateMenteeException ex) {
+            return badRequest().body(new ErrorResponse("Mentee already exists"));
+        }
     }
 
     @PutMapping("craftspeople/mentee/remove/{menteeId}")

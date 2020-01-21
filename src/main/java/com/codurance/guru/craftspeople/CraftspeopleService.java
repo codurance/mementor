@@ -1,6 +1,8 @@
 package com.codurance.guru.craftspeople;
 
 import com.codurance.guru.craftspeople.exceptions.InvalidLastMeetingDateException;
+import com.codurance.guru.craftspeople.exceptions.DuplicateMenteeException;
+import com.codurance.guru.craftspeople.exceptions.InvalidMentorRelationshipException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +17,13 @@ public class CraftspeopleService {
     @Autowired
     private CraftspeopleRepository repository;
 
-    public CraftspeopleService(CraftspeopleRepository repository) {
+    @Autowired
+    private CraftspeopleValidator craftspeopleValidator;
+
+    public CraftspeopleService(CraftspeopleRepository repository, CraftspeopleValidator validator) {
+
         this.repository = repository;
+        this.craftspeopleValidator = validator;
     }
 
     public Optional<Craftsperson> retrieveCraftsperson(Integer craftspersonId) {
@@ -27,7 +34,9 @@ public class CraftspeopleService {
         return repository.findAll();
     }
 
-    public void setMentee(int mentorId, int menteeId) {
+    public void setMentee(int mentorId, int menteeId) throws DuplicateMenteeException, InvalidMentorRelationshipException {
+        craftspeopleValidator.validateSetMentee(mentorId, menteeId);
+
         Craftsperson mentor = repository.findById(mentorId).get();
         Craftsperson mentee = repository.findById(menteeId).get();
 
@@ -70,10 +79,6 @@ public class CraftspeopleService {
         return null;
     }
 
-    private boolean craftspersonDoesNotExist(String firstName, String lastName) {
-        return repository.findByFirstNameAndLastName(firstName,lastName).size() == 0;
-    }
-
     public void setLastMeeting(int craftspersonId, int lastMeeting) {
         Instant lastMeetingInstant = Instant.ofEpochSecond(lastMeeting);
 
@@ -84,5 +89,9 @@ public class CraftspeopleService {
         Craftsperson craftsperson = repository.findById(craftspersonId).get();
         craftsperson.setLastMeeting(lastMeetingInstant);
         repository.save(craftsperson);
+    }
+
+    private boolean craftspersonDoesNotExist(String firstName, String lastName) {
+        return repository.findByFirstNameAndLastName(firstName,lastName).size() == 0;
     }
 }

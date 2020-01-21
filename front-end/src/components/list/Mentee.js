@@ -18,7 +18,7 @@ export default function Mentee({ mentee, rerender }) {
   }
 
   return (
-    <ListGroupItem>
+    <ListGroupItem data-testid={`mentee-${mentee.id}`}>
       <Container>
         <Row>
           <Col />
