@@ -20,7 +20,7 @@ export default function CraftspersonRow({
     <Accordion>
       <div className="container">
         <Card>
-          <Card.Header>
+          <Card.Header className="craftsperson-card">
             <div className="justify-content-center">
               <Craftsperson
                 craftsperson={craftsperson}
@@ -32,7 +32,7 @@ export default function CraftspersonRow({
               <Accordion.Toggle
                 className="mentees-toggle"
                 as={Button}
-                variant="light"
+                variant="link"
                 eventKey="0"
                 onClick={() => setIsColapsed(!isColapsed)}
               >
