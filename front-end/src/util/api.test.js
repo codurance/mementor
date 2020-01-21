@@ -14,16 +14,4 @@ describe("Testing the API", () => {
 
     expect(fetch.mock.calls.length).toEqual(1);
   });
-
-  it("should return a non empty array", () => {
-    // should the answer be wrapped in a "data" key?
-    fetch.mockResponseOnce(JSON.stringify([{ id: 1 }, { id: 2 }]));
-
-    api({
-      endpoint: "/restApiTest",
-    }).then(res => {
-      expect(res.value).toBeInstanceOf(Array);
-      expect(res.value).not.toBeEmpty();
-    });
-  });
 });

@@ -52,8 +52,19 @@ export default function ManageCraftsperson(props) {
         firstName,
         lastName,
       },
-    }).then(() => {
-      props.rerender();
+    }).then(response => {
+      if (response.ok) {
+        toast.success("Craftsperson added");
+        props.rerender();
+        return;
+      }
+
+      if (response.status === 409) {
+        toast.error("The craftsperson already exists");
+        return;
+      }
+
+      toast.error("Unexpected error");
     });
   }
 
@@ -70,11 +81,18 @@ export default function ManageCraftsperson(props) {
       api({
         endpoint: `/craftspeople/${id}`,
         type: "DELETE",
-      }).then(() => {
-        props.rerender();
+      }).then(response => {
+        if (response.ok) {
+          toast.warn("Craftsperson removed");
+          props.rerender();
+          return;
+        }
+        toast.error("Unexpected error");
       });
     }
   }
+
+  function handleResponse(status) {}
 
   return (
     <div className="row admin-button">

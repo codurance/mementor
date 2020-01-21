@@ -49,6 +49,7 @@ function App() {
 
   useEffect(() => {
     api({ endpoint: "/craftspeople" })
+      .then(response => response.json())
       .then(fetchedCraftspeople => {
         fetchedCraftspeople.sort(sortAlgorithm);
         setCraftsPeople(fetchedCraftspeople);
