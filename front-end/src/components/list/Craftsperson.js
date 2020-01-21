@@ -2,6 +2,7 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { api } from "../../util/api";
+import {toast} from 'react-toastify';
 
 export default function Craftsperson({ craftsperson, rerender }) {
   function setLastMeeting(date) {
@@ -12,8 +13,20 @@ export default function Craftsperson({ craftsperson, rerender }) {
         craftspersonId: craftsperson.id,
         lastMeeting: date.getTime() / 1000,
       },
+    }).then(response => {
+      if(response.ok) {
+        toast.success('Last meeting date updated')
+        rerender();
+        return;
+      }
+      if(response.status === 400) {
+        response.json().then(body => 
+          toast.error(body.message));
+        return;
+      }
+      toast.error('Unexpected error');
     });
-    rerender();
+    
   }
 
   return (

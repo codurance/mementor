@@ -92,8 +92,6 @@ export default function ManageCraftsperson(props) {
     }
   }
 
-  function handleResponse(status) {}
-
   return (
     <div className="row admin-button">
       <Button
