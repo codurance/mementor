@@ -2,9 +2,13 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { api } from "../../util/api";
-import {toast} from 'react-toastify';
+import { toast } from "react-toastify";
+import { Typeahead } from "react-bootstrap-typeahead";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import Button from "react-bootstrap/Button";
 
-export default function Craftsperson({ craftsperson, rerender }) {
+export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
   function setLastMeeting(date) {
     api({
       endpoint: "/craftspeople/lastmeeting",
@@ -14,19 +18,54 @@ export default function Craftsperson({ craftsperson, rerender }) {
         lastMeeting: date.getTime() / 1000,
       },
     }).then(response => {
-      if(response.ok) {
-        toast.success('Last meeting date updated')
+      if (response.ok) {
+        toast.success("Last meeting date updated");
         rerender();
         return;
       }
-      if(response.status === 400) {
-        response.json().then(body => 
-          toast.error(body.message));
+      if (response.status === 400) {
+        response.json().then(body => toast.error(body.message));
         return;
       }
-      toast.error('Unexpected error');
+      toast.error("Unexpected error");
     });
-    
+  }
+
+  let mentorSelect = React.createRef();
+
+  function addMentorCallBack(selectedCraftspeople) {
+    if (selectedCraftspeople.length === 0) {
+      // nothing to do
+      return;
+    }
+    api({
+      endpoint: "/craftspeople/mentor/add",
+      type: "POST",
+      body: {
+        mentorId: selectedCraftspeople[0].id,
+        menteeId: craftsperson.id,
+      },
+    });
+    rerender();
+  }
+
+  function removeMentorCallback() {
+    api({
+      endpoint: "/craftspeople/mentor/remove",
+      type: "POST",
+      body: {
+        menteeId: craftsperson.id,
+      },
+    });
+    mentorSelect.current.clear();
+    rerender();
+  }
+
+  function getCraftspersonMentorNameOrNull() {
+    if (craftsperson.mentor === null) {
+      return "";
+    }
+    return craftsperson.mentor.firstName + " " + craftsperson.mentor.lastName;
   }
 
   return (
@@ -42,6 +81,27 @@ export default function Craftsperson({ craftsperson, rerender }) {
             Mentored by:
           </span>
         </h5>
+        <div className="row">
+          <Typeahead
+            id={"remove-mentor-" + craftsperson.id}
+            defaultInputValue={getCraftspersonMentorNameOrNull()}
+            ref={mentorSelect}
+            inputProps={{ "data-testid": "add-mentor-select" }}
+            labelKey={option => `${option.firstName} ${option.lastName}`}
+            options={craftspeople}
+            placeholder="Select a mentor"
+            onChange={addMentorCallBack}
+          />
+          {craftsperson.mentor && (
+            <Button
+              variant="danger"
+              data-testid="removementeebutton"
+              onClick={removeMentorCallback}
+            >
+              <FontAwesomeIcon icon={faTimes} size="lg" />
+            </Button>
+          )}
+        </div>
       </div>
       <div className="col-lg-3">
         <h5>
