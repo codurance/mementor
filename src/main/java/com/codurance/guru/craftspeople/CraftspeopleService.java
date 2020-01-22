@@ -27,32 +27,11 @@ public class CraftspeopleService {
         this.craftspeopleValidator = validator;
     }
 
-    public Optional<Craftsperson> retrieveCraftsperson(Integer craftspersonId) {
-        return repository.findById(craftspersonId);
-    }
-
-    public List<Craftsperson> retrieveAllCraftsperson() {
-        return repository.findAll();
-    }
-
-    public void setMentee(int mentorId, int menteeId) throws DuplicateMenteeException, InvalidMentorRelationshipException {
-        craftspeopleValidator.validateSetMentee(mentorId, menteeId);
-
-        Craftsperson mentor = repository.findById(mentorId).get();
-        Craftsperson mentee = repository.findById(menteeId).get();
-
-        mentee.setMentor(mentor);
-
-        repository.save(mentee);
-    }
-
-    public void removeMentor(int menteeId){
-        Craftsperson mentee = repository.findById(menteeId).get();
-
-        mentee.setMentor(null);
-        mentee.setLastMeeting(null);
-
-        repository.save(mentee);
+    public Craftsperson addCraftsperson(String firstName, String lastName) {
+        if(craftspersonDoesNotExist(firstName, lastName)) {
+            return repository.save(new Craftsperson(firstName, lastName));
+        }
+        throw new ExistingCraftspersonException();
     }
 
     public void addMentor(int mentorId, int menteeId) throws DuplicateMenteeException, InvalidMentorRelationshipException {
@@ -76,11 +55,21 @@ public class CraftspeopleService {
         repository.deleteById(craftspersonId);
     }
 
-    public Craftsperson addCraftsperson(String firstName, String lastName) {
-        if(craftspersonDoesNotExist(firstName, lastName)) {
-            return repository.save(new Craftsperson(firstName, lastName));
-        }
-        throw new ExistingCraftspersonException();
+    public void removeMentor(int menteeId){
+        Craftsperson mentee = repository.findById(menteeId).get();
+
+        mentee.setMentor(null);
+        mentee.setLastMeeting(null);
+
+        repository.save(mentee);
+    }
+
+    public List<Craftsperson> retrieveAllCraftsperson() {
+        return repository.findAll();
+    }
+
+    public Optional<Craftsperson> retrieveCraftsperson(Integer craftspersonId) {
+        return repository.findById(craftspersonId);
     }
 
     public void setLastMeeting(int craftspersonId, int lastMeeting) {
@@ -93,6 +82,17 @@ public class CraftspeopleService {
         Craftsperson craftsperson = repository.findById(craftspersonId).get();
         craftsperson.setLastMeeting(lastMeetingInstant);
         repository.save(craftsperson);
+    }
+
+    public void setMentee(int mentorId, int menteeId) throws DuplicateMenteeException, InvalidMentorRelationshipException {
+        craftspeopleValidator.validateSetMentee(mentorId, menteeId);
+
+        Craftsperson mentor = repository.findById(mentorId).get();
+        Craftsperson mentee = repository.findById(menteeId).get();
+
+        mentee.setMentor(mentor);
+
+        repository.save(mentee);
     }
 
     private boolean craftspersonDoesNotExist(String firstName, String lastName) {

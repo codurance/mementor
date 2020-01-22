@@ -26,9 +26,16 @@ public class CraftspeopleController {
     private CraftspeopleService craftspeopleService;
 
     @PostMapping("/craftspeople/mentor/add")
-    public ResponseEntity<Void> addMentor(@Valid @RequestBody AddMentorRequest request) {
-        craftspeopleService.addMentor(request.getMentorId(), request.getMenteeId());
-        return ResponseEntity.noContent().build();
+    public ResponseEntity addMentor(@Valid @RequestBody AddMentorRequest request) {
+        try{
+            craftspeopleService.addMentor(request.getMentorId(), request.getMenteeId());
+            return ResponseEntity.noContent().build();
+
+        }catch(DuplicateMenteeException ex){
+            return ResponseEntity.status(400).body(new ErrorResponse("The craftsperson is already mentoring that mentee."));
+        }catch(InvalidMentorRelationshipException ex){
+            return ResponseEntity.status(400).body(new ErrorResponse("The craftsperson can't mentor itself."));
+        }
     }
 
     @PostMapping("/craftspeople/add")
