@@ -1,4 +1,4 @@
-.last-meeting-container{
+.last-meeting-container {
   padding-top: 15px;
 }
 
@@ -13,10 +13,10 @@
   padding: 0 15px;
 }
 
-.date-picker{
+.date-picker {
   padding: 0 1em;
   font-size: 1em;
-  height: calc(1.5em + .75rem + 2px);
+  height: calc(1.5em + 0.75rem + 2px);
   border-radius: 4px;
-  border:1px solid #cccccc
+  border: 1px solid #cccccc;
 }

@@ -41,7 +41,7 @@ export default function lastMeeting({ craftsperson, craftspeople, rerender }) {
                 <input data-testid="lastMeetingDatePicker" type="text" />
               }
               onChange={setLastMeeting}
-            /> 
+            />
           )}
         </span>
       </Row>
