@@ -1,19 +1,35 @@
+export function sortByLastMetDate(leftCraftsperson, rightCraftsperson) {
+  function bothHaveLastMetDate() {
+    return leftCraftsperson.lastMeeting !== null && rightCraftsperson.lastMeeting !== null;
+  }
+
+  if (bothHaveLastMetDate(leftCraftsperson, rightCraftsperson)) {
+    return sortAlphabetically(leftCraftsperson, rightCraftsperson);
+  }
+}
+
 export function sortByNumberOfMentees(leftCraftsperson, rightCraftsperson) {
-  if (bothHaveSameNumberOfMentees(leftCraftsperson, rightCraftsperson)) {
+  function bothHaveSameNumberOfMentees() {
+    return leftCraftsperson.mentees.length === rightCraftsperson.mentees.length;
+  }
+
+  if (bothHaveSameNumberOfMentees()) {
     return sortAlphabetically(leftCraftsperson, rightCraftsperson);
   }
 
   return rightCraftsperson.mentees.length - leftCraftsperson.mentees.length;
 }
 
-export function sortByCraftspeopleWithoutMentor(
-  leftCraftsperson,
-  rightCraftsperson,
-) {
-  if (
-    noneHaveMentor(leftCraftsperson, rightCraftsperson) ||
-    bothHaveMentor(leftCraftsperson, rightCraftsperson)
-  ) {
+export function sortByCraftspeopleWithoutMentor(leftCraftsperson, rightCraftsperson) {
+  function noneHaveMentor() {
+    return leftCraftsperson.mentor == null && rightCraftsperson.mentor == null;
+  }
+
+  function bothHaveMentor() {
+    return leftCraftsperson.mentor != null && rightCraftsperson.mentor != null;
+  }
+
+  if (noneHaveMentor() || bothHaveMentor()) {
     return sortAlphabetically(leftCraftsperson, rightCraftsperson);
   }
 
@@ -27,16 +43,4 @@ export function sortAlphabetically(leftCraftsperson, rightCraftsperson) {
   return (leftCraftsperson.firstName + leftCraftsperson.lastName).localeCompare(
     rightCraftsperson.firstName + rightCraftsperson.lastName,
   );
-}
-
-function bothHaveSameNumberOfMentees(leftCraftsperson, rightCraftsperson) {
-  return leftCraftsperson.mentees.length === rightCraftsperson.mentees.length;
-}
-
-function noneHaveMentor(leftCraftsperson, rightCraftsperson) {
-  return leftCraftsperson.mentor == null && rightCraftsperson.mentor == null;
-}
-
-function bothHaveMentor(leftCraftsperson, rightCraftsperson) {
-  return leftCraftsperson.mentor != null && rightCraftsperson.mentor != null;
 }
