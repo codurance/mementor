@@ -2,6 +2,7 @@
   import { render } from "@testing-library/react";
   import "@testing-library/jest-dom/extend-expect";
   import LastMeeting from "./LastMeeting";
+  import {dateToLastMeeting} from '../../util/date';
 
 describe("last meeting component", () => {
   it("should show last meeting", () => {
@@ -32,12 +33,31 @@ describe("last meeting component", () => {
     expect(getByTestId("lastMeetingDatePicker").value).toBe("");
   });
 
-  it("should show last meeting alert if there is a last meeting", () => {
+  it("shouldnt show last meeting alert if it is less than 2 months ago", () => {
+    const lastMeetingDate = new Date();
+    lastMeetingDate.setMonth(lastMeetingDate.getMonth() - 1);
+    
     const { queryByTestId } = render(
       <LastMeeting
         craftsperson={{
           mentor: { firstName: "", lastName: "" },
-          lastMeeting: 1500000000,
+          lastMeeting: dateToLastMeeting(lastMeetingDate),
+        }}
+        craftspeople={[]}
+      />,
+    );
+    expect(queryByTestId("last-meeting-alert")).toBeNull();
+  })
+
+  it("should show last meeting alert if it is at least 2 months ago", () => {
+    const lastMeetingDate = new Date();
+    lastMeetingDate.setMonth(lastMeetingDate.getMonth() - 3);
+    
+    const { queryByTestId } = render(
+      <LastMeeting
+        craftsperson={{
+          mentor: { firstName: "", lastName: "" },
+          lastMeeting: dateToLastMeeting(lastMeetingDate),
         }}
         craftspeople={[]}
       />,
