@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { validateInputString } from "../../util/validate";
 import { toast } from "react-toastify";
-import {notifySuccess, notifyBackendError, notifyUnexpectedBackendError, notifyFormValidationError} from '../notification/notify';
+import {notifySuccess, notifyBackendError, notifyUnexpectedBackendError, notifyFormValidationError, handleResponse} from '../notification/notify';
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
@@ -54,18 +54,7 @@ export default function ManageCraftsperson(props) {
         lastName,
       },
     }).then(response => {
-      if (response.ok) {
-        notifySuccess("Craftsperson added");
-        props.rerender();
-        return;
-      }
-
-      if (response.status === 409) {
-        notifyBackendError(response);
-        return;
-      }
-
-      notifyUnexpectedBackendError(response);
+      handleResponse(response, 'Craftsperson added', props.rerender);
     });
   }
 
@@ -83,12 +72,7 @@ export default function ManageCraftsperson(props) {
         endpoint: `/craftspeople/${id}`,
         type: "DELETE",
       }).then(response => {
-        if (response.ok) {
-          notifySuccess("Craftsperson removed");
-          props.rerender();
-          return;
-        }
-        toast.error("Unexpected error");
+        handleResponse(response, "Craftsperson removed", props.rerender);
       });
     }
   }
