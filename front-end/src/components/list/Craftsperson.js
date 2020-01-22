@@ -48,7 +48,13 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
       },
     }).then(response => {
       if (response.ok) {
-        notifyMentorAdded(selectedCraftspeople[0].firstName, craftsperson.firstName);
+        const mentorFirstname = selectedCraftspeople[0].firstName;
+        const menteeFirstname = craftsperson.firstName;
+        notifySuccess((
+          <p>
+            <strong>{mentorFirstname}</strong> is now mentoring <strong>{menteeFirstname}</strong>
+          </p>
+        ));
         rerender();
         return;
       }
@@ -63,9 +69,20 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
       body: {
         menteeId: craftsperson.id,
       },
+    }).then(response => {
+      if (response.ok) {
+        const menteeFirstname = craftsperson.firstName;
+        notifySuccess((
+          <p>
+            <strong>{menteeFirstname}</strong> is no longer mentored
+          </p>
+        ));
+        mentorSelect.current.clear();
+        rerender();
+        return;
+      }
+      return notifyUnexpectedBackendError(response);
     });
-    mentorSelect.current.clear();
-    rerender();
   }
 
   function getCraftspersonMentorNameOrNull() {
