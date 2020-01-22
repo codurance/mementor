@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import Mentee from "./Mentee";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
@@ -10,12 +10,18 @@ import "./Mentees.css";
 import { filterCraftspeople } from "../../util/filtering";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { handleResponse, mentorAddedMessage } from "../notification/notify";
+import { handleResponse, mentorAddedMessage, notifyFormValidationError } from "../notification/notify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function Mentees(props) {
+
+  const [menteeToAdd, setMenteeToAdd] = useState(null);
+
   function addMentee(mentee, mentor) {
+    if (mentee == null) {
+      notifyFormValidationError("You need to select a mentee");
+    }
     if (mentee != null) {
       api({
         endpoint: "/craftspeople/mentee/add",
@@ -48,13 +54,14 @@ export default function Mentees(props) {
             <Col sm={1}>
               <Button
                 className="add-button"
-                variant="success"
+                variant="danger"
                 data-testid="removementeebutton"
               >
                 <FontAwesomeIcon
                   className="plus-icon"
                   icon={faPlus}
-                  size="sm"
+                  size="lg"
+                  onClick={() => addMentee(menteeToAdd, props.craftsperson)}
                 />
               </Button>
             </Col>
@@ -68,7 +75,7 @@ export default function Mentees(props) {
                   props.craftsperson,
                 )}
                 onChange={selected =>
-                  addMentee(selected[0], props.craftsperson)
+                  setMenteeToAdd(selected[0])
                 }
               />
             </Col>
