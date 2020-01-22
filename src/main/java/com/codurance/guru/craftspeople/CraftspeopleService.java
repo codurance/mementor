@@ -1,5 +1,6 @@
 package com.codurance.guru.craftspeople;
 
+import com.codurance.guru.craftspeople.exceptions.ExistingCraftspersonException;
 import com.codurance.guru.craftspeople.exceptions.InvalidLastMeetingDateException;
 import com.codurance.guru.craftspeople.exceptions.DuplicateMenteeException;
 import com.codurance.guru.craftspeople.exceptions.InvalidMentorRelationshipException;
@@ -79,7 +80,7 @@ public class CraftspeopleService {
         if(craftspersonDoesNotExist(firstName, lastName)) {
             return repository.save(new Craftsperson(firstName, lastName));
         }
-        return null;
+        throw new ExistingCraftspersonException();
     }
 
     public void setLastMeeting(int craftspersonId, int lastMeeting) {
