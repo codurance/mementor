@@ -38,14 +38,14 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
         menteeId: craftsperson.id,
       },
     }).then(response => {
-      if (response.ok) {
         const mentorFirstname = selectedCraftspeople[0].firstName;
         const menteeFirstname = craftsperson.firstName;
-        notifyMentorAdded(mentorFirstname, menteeFirstname);
-        rerender();
-        return;
-      }
-      return notifyUnexpectedBackendError(response);
+        const successMessage = (
+          <p>
+            <strong>{mentorFirstname}</strong> is now mentoring <strong>{menteeFirstname}</strong>
+          </p>
+        );
+      handleResponse(response, successMessage, rerender);
     });
   }
 
