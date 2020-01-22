@@ -23,15 +23,16 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
         craftspeople={craftspeople}
         rerender={rerender}
       />
-      <Col lg>
-        <span className="mentee-count">
-          <h2 data-testid="craftspersonMenteeValue">
-            {craftsperson.mentees ? craftsperson.mentees.length : "0"}
-          </h2>
-        </span>
-        <span className="menteeLabel" data-testid="craftspersonMenteeLabel">
-          <i>Mentees</i>
-        </span>
+      <Col lg className="mentees-count-container">
+        <h5
+          className="mentees-count-label"
+          data-testid="craftspersonMenteeLabel"
+        >
+          Mentees
+        </h5>
+        <h2 className="mentee-count" data-testid="craftspersonMenteeValue">
+          {craftsperson.mentees ? craftsperson.mentees.length : "0"}
+        </h2>
       </Col>
     </Row>
   );

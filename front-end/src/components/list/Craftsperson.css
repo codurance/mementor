@@ -6,3 +6,13 @@
 .craftsperson-name {
     color: rgb(54, 54, 54);
 }
+
+.mentees-count-container {
+    padding-top: 15px;
+}
+
+.mentees-count-label {
+    margin-left: none;
+    font-size: 100%;
+    color: rgb(117, 116, 116);
+  }

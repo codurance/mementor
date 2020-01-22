@@ -23,7 +23,7 @@ export default function lastMeeting({ craftsperson, craftspeople, rerender }) {
 
   return (
     <Col lg className="last-meeting-container">
-      <h5 className="last-meeting-label">Last Meeting:</h5>
+      <h5 className="last-meeting-label">Last Meeting</h5>
       <Row className="last-meeting-picker-container">
         <span data-testid="date-picker-container">
           {!craftsperson.mentor && "-"}
