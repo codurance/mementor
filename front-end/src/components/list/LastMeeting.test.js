@@ -51,7 +51,7 @@ describe("last meeting component", () => {
 
   it("should show last meeting alert if it is at least 2 months ago", () => {
     const lastMeetingDate = new Date();
-    lastMeetingDate.setMonth(lastMeetingDate.getMonth() - 3);
+    lastMeetingDate.setMonth(lastMeetingDate.getMonth() - 2);
     
     const { queryByTestId } = render(
       <LastMeeting
