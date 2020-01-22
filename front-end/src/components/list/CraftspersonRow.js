@@ -14,6 +14,7 @@ export default function CraftspersonRow({
   craftsperson,
   craftspeople,
   rerender,
+  idToken
 }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -27,6 +28,7 @@ export default function CraftspersonRow({
                 craftsperson={craftsperson}
                 craftspeople={craftspeople}
                 rerender={rerender}
+                idToken={idToken}
               />
             </div>
             <Row>
@@ -50,6 +52,7 @@ export default function CraftspersonRow({
                 craftsperson={craftsperson}
                 mentees={craftsperson.mentees}
                 craftspeople={craftspeople}
+                idToken={idToken}
               />
             </Card.Body>
           </Accordion.Collapse>

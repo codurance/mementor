@@ -13,7 +13,7 @@ describe("when rendering", () => {
             craftsperson={[]}
             mentees={[]}
             craftspeople={[]}
-          />,
+          />
         );
         expect(getByTestId("add-mentee-row")).toBeInTheDocument();
       });
@@ -28,11 +28,11 @@ describe("when rendering", () => {
               {
                 id: 1,
                 firstName: "Giulio",
-                lastName: "Perrone",
-              },
+                lastName: "Perrone"
+              }
             ]}
             craftspeople={[]}
-          />,
+          />
         );
         expect(getByTestId("mentee-1")).toBeInTheDocument();
         expect(getByTestId("add-mentee-row")).toBeInTheDocument();

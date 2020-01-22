@@ -29,12 +29,16 @@ function App() {
   const [shouldRender, setShouldRender] = useState(false);
   const [craftspeople, setCraftsPeople] = useState([]);
   const [filteredCraftspeople, setFilteredCraftspeople] = useState(
-    craftspeople,
+    craftspeople
   );
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [idToken, setIdToken] = useState(null);
 
-  function login() {
+  function login(googleUser) {
     setIsLoggedIn(true);
+    setBackendFetchError(null);
+    const id_token = googleUser.getAuthResponse().id_token;
+    setIdToken(id_token);
     rerender();
   }
 
@@ -66,7 +70,7 @@ function App() {
   }
 
   useEffect(() => {
-    api({ endpoint: "/craftspeople" })
+    api({ endpoint: "/craftspeople", token: idToken })
       .then(response => response.json())
       .then(fetchedCraftspeople => {
         fetchedCraftspeople.sort(sortAlgorithm);
@@ -106,6 +110,7 @@ function App() {
                 <ManageCraftsperson
                   craftspeople={craftspeople}
                   rerender={rerender}
+                  idToken={idToken}
                 />
               </Col>
             </Row>
@@ -122,6 +127,7 @@ function App() {
               craftsperson={craftsperson}
               craftspeople={craftspeople}
               rerender={rerender}
+              idToken={idToken}
             />
           ))}
         </div>

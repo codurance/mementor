@@ -27,24 +27,24 @@ public class CraftspeopleController {
 
     @PostMapping("/craftspeople/mentor/add")
     public ResponseEntity addMentor(@Valid @RequestBody AddMentorRequest request) {
-        try{
+        try {
             craftspeopleService.addMentor(request.getMentorId(), request.getMenteeId());
             return ResponseEntity.noContent().build();
 
-        }catch(DuplicateMenteeException ex){
-            return ResponseEntity.status(400).body(new ErrorResponse("The craftsperson is already mentoring that mentee."));
-        }catch(InvalidMentorRelationshipException ex){
-            return ResponseEntity.status(400).body(new ErrorResponse("The craftsperson can't mentor itself."));
+        } catch (DuplicateMenteeException ex) {
+            return badRequest().body(new ErrorResponse("The craftsperson is already mentoring that mentee."));
+        } catch (InvalidMentorRelationshipException ex) {
+            return badRequest().body(new ErrorResponse("The craftsperson can't mentor itself."));
         }
     }
 
     @PostMapping("/craftspeople/add")
     public ResponseEntity addNewCraftsperson(@Valid @RequestBody AddCraftspersonRequest request) {
-        try{
+        try {
             Craftsperson craftsperson = craftspeopleService.addCraftsperson(request.getFirstName(), request.getLastName());
             return ok(craftsperson.getId());
-        } catch(ExistingCraftspersonException ex){
-            return ResponseEntity.status(400).body(new ErrorResponse("Craftsperson already exists."));
+        } catch (ExistingCraftspersonException ex) {
+            return badRequest().body(new ErrorResponse("Craftsperson already exists."));
         }
     }
 
@@ -77,23 +77,20 @@ public class CraftspeopleController {
         return retrievedCraftsperson
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> notFound().build());
-
     }
 
     @PutMapping("/craftspeople/lastmeeting")
     public ResponseEntity<ErrorResponse> setLastMeeting(@Valid @RequestBody UpdateLastMeetingRequest request) {
         try {
             craftspeopleService.setLastMeeting(request.getCraftspersonId(), request.getLastMeeting());
-            return ResponseEntity.noContent().build();
-        }
-        catch (InvalidLastMeetingDateException ex){
-            return ResponseEntity.badRequest()
-                    .body(new ErrorResponse("The last meeting date is too far in the future"));
+            return noContent().build();
+        } catch (InvalidLastMeetingDateException ex) {
+            return badRequest().body(new ErrorResponse("The last meeting date is too far in the future"));
         }
     }
 
     @PutMapping("craftspeople/mentee/add")
-    public ResponseEntity setMentee(@Valid @RequestBody AddMentorRequest request){
+    public ResponseEntity setMentee(@Valid @RequestBody AddMentorRequest request) {
         try {
             craftspeopleService.setMentee(
                     request.getMentorId(),

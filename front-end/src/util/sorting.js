@@ -41,6 +41,6 @@ export function sortByCraftspeopleWithoutMentor(leftCraftsperson, rightCraftsper
 
 export function sortAlphabetically(leftCraftsperson, rightCraftsperson) {
   return (leftCraftsperson.firstName + leftCraftsperson.lastName).localeCompare(
-    rightCraftsperson.firstName + rightCraftsperson.lastName,
+    rightCraftsperson.firstName + rightCraftsperson.lastName
   );
 }
