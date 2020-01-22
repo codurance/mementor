@@ -28,12 +28,12 @@ export function mentorAddedMessage(mentorFirstname, menteeFirstname) {
   );
 }
 
-export function notifyMentorRemoved(menteeFirstname) {
-  notifySuccess((
+export function mentorRemovedMessage(menteeFirstname) {
+  return(
     <p>
       <strong>{menteeFirstname}</strong> is no longer mentored
     </p>
-  ));
+  );
 }
 
 export function handleResponse (response, successMessage, successCallback = () => {}) {

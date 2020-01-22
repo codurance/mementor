@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { filterCraftspeople } from "../../util/filtering";
 import Button from "react-bootstrap/Button";
-import {mentorAddedMessage, notifyUnexpectedBackendError, notifyMentorRemoved, handleResponse} from '../notification/notify';
+import {mentorAddedMessage, handleResponse, mentorRemovedMessage} from '../notification/notify';
 
 export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
   function setLastMeeting(date) {
@@ -52,13 +52,10 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
         menteeId: craftsperson.id,
       },
     }).then(response => {
-      if (response.ok) {
-        notifyMentorRemoved(craftsperson.firstName)
+      handleResponse(response, mentorRemovedMessage(craftsperson.firstName), () => {
         mentorSelect.current.clear();
         rerender();
-        return;
-      }
-      return notifyUnexpectedBackendError(response);
+      });
     });
   }
 
