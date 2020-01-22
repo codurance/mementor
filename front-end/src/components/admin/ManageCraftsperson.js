@@ -7,11 +7,11 @@ import FormControl from "react-bootstrap/FormControl";
 import InputGroup from "react-bootstrap/InputGroup";
 import CraftspersonList from "./CraftspersonList";
 import "./ManageCraftsperson.css";
-import {api} from "../../util/api";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCog} from "@fortawesome/free-solid-svg-icons";
-import {validateName} from "../../util/validate";
-import {handleResponse, notifyFormValidationError} from '../notification/notify';
+import { api } from "../../util/api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
+import { validateName } from "../../util/validate";
+import { handleResponse, notifyFormValidationError } from '../notification/notify';
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
@@ -77,7 +77,7 @@ export default function ManageCraftsperson(props) {
   }
 
   return (
-    <div className="row admin-button">
+    <Row className="admin-button">
       <Button
         variant="secondary"
         data-testid="adminPopupButton"
@@ -128,6 +128,6 @@ export default function ManageCraftsperson(props) {
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </Row>
   );
 }
