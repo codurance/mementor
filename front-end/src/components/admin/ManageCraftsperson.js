@@ -75,7 +75,10 @@ export default function ManageCraftsperson(props) {
         token: props.idToken,
         type: "DELETE"
       }).then(response => {
-        handleResponse(response, "Craftsperson removed", props.rerender);
+        handleResponse(response, "Craftsperson removed", () => {
+          setIdToDelete(null);
+          props.rerender();
+        });
       });
     }
   }

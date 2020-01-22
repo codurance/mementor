@@ -90,7 +90,7 @@ export default function Mentor({
         />
         {craftsperson.mentor && (
           <Button
-            className="remove-button"
+            className="remove-button remove-mentor"
             variant="danger"
             data-testid="removementeebutton"
             onClick={removeMentorCallback}

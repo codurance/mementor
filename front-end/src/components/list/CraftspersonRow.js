@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Craftsperson from "./Craftsperson";
 import Mentees from "./Mentees";
 import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row"
+import Container from "react-bootstrap/Container"
 import Accordion from "react-bootstrap/Accordion";
 import Button from "react-bootstrap/Button";
 import "./CraftspersonRow.css";
@@ -18,7 +20,7 @@ export default function CraftspersonRow({
 
   return (
     <Accordion className="accordion-container">
-      <div className="container">
+      <Container>
         <Card>
           <Card.Header className="craftsperson-card">
             <div className="justify-content-center">
@@ -29,7 +31,7 @@ export default function CraftspersonRow({
                 idToken={idToken}
               />
             </div>
-            <div className="row">
+            <Row>
               <Accordion.Toggle
                 className="mentees-toggle"
                 as={Button}
@@ -41,10 +43,10 @@ export default function CraftspersonRow({
                   icon={isCollapsed ? faChevronUp : faChevronDown}
                 />
               </Accordion.Toggle>
-            </div>
+            </Row>
           </Card.Header>
           <Accordion.Collapse eventKey="0">
-            <Card.Body>
+            <Card.Body class="mentees-container">
               <Mentees
                 rerender={rerender}
                 craftsperson={craftsperson}
@@ -55,7 +57,7 @@ export default function CraftspersonRow({
             </Card.Body>
           </Accordion.Collapse>
         </Card>
-      </div>
+      </Container>
     </Accordion>
   );
 }

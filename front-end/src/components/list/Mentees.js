@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import Mentee from "./Mentee";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { sortAlphabetically } from "../../util/sorting";
 import { api } from "../../util/api";
@@ -9,10 +11,21 @@ import "./Mentees.css";
 import { filterCraftspeople } from "../../util/filtering";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { handleResponse, mentorAddedMessage } from "../notification/notify";
+import {
+  handleResponse,
+  mentorAddedMessage,
+  notifyFormValidationError,
+} from "../notification/notify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function Mentees(props) {
+  const [menteeToAdd, setMenteeToAdd] = useState(null);
+
   function addMentee(mentee, mentor, idToken) {
+    if (mentee == null) {
+      notifyFormValidationError("You need to select a mentee");
+    }
     if (mentee != null) {
       api({
         endpoint: "/craftspeople/mentee/add",
@@ -34,7 +47,6 @@ export default function Mentees(props) {
 
   return (
     <div>
-      <h3 className="mentees-title">Mentees</h3>
       <ListGroup data-testid="list">
         {props.mentees.sort(sortAlphabetically).map(mentee => (
           <Mentee
@@ -44,15 +56,28 @@ export default function Mentees(props) {
             idToken={props.idToken}
           />
         ))}
+
         <ListGroupItem
           className="mentees-list-item"
           data-testid="add-mentee-row"
         >
+          <Container>
           <Row>
-            <Col sm={4}>
-              <h4 className="add-mentee">Add mentee</h4>
+            <Col sm={1}>
+              <Button
+                className="add-button"
+                variant="success"
+                data-testid="addMenteebutton"
+              >
+                <FontAwesomeIcon
+                  className="plus-icon"
+                  icon={faPlus}
+                  size="sm"
+                  onClick={() => addMentee(menteeToAdd, props.craftsperson, props.idToken)}
+                />
+              </Button>
             </Col>
-            <Col sm={8}>
+            <Col sm={11}>
               <Typeahead
                 id={"add-mentee-" + props.craftsperson.id}
                 labelKey={option => `${option.firstName} ${option.lastName}`}
@@ -61,12 +86,11 @@ export default function Mentees(props) {
                   props.craftspeople,
                   props.craftsperson
                 )}
-                onChange={selected =>
-                  addMentee(selected[0], props.craftsperson, props.idToken)
-                }
+                onChange={selected => setMenteeToAdd(selected[0])}
               />
             </Col>
           </Row>
+          </Container>
         </ListGroupItem>
       </ListGroup>
     </div>
