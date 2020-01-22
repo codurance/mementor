@@ -2,7 +2,7 @@ import React from "react";
 import Mentor from "./Mentor";
 import LastMeeting from "./LastMeeting";
 
-export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
+export default function Craftsperson({ craftsperson, craftspeople, rerender, idToken }) {
   return (
     <div className="row">
       <div className="col-lg-3">
@@ -14,11 +14,13 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
         craftsperson={craftsperson}
         craftspeople={craftspeople}
         rerender={rerender}
+        idToken={idToken}
       />
       <LastMeeting
         craftsperson={craftsperson}
         craftspeople={craftspeople}
         rerender={rerender}
+        idToken={idToken}
       />
       <div className="col-lg-3">
         <span className="mentee-count">

@@ -12,10 +12,12 @@ import Col from "react-bootstrap/Col";
 import { handleResponse, mentorAddedMessage } from "../notification/notify";
 
 export default function Mentees(props) {
-  function addMentee(mentee, mentor) {
+    
+  function addMentee(mentee, mentor, idToken) {
     if (mentee != null) {
       api({
         endpoint: "/craftspeople/mentee/add",
+        token: idToken,
         type: "PUT",
         body: {
           mentorId: mentor.id,
@@ -36,7 +38,7 @@ export default function Mentees(props) {
       <h3 className="mentees-title">Mentees</h3>
       <ListGroup data-testid="list">
         {props.mentees.sort(sortAlphabetically).map(mentee => (
-          <Mentee key={mentee.id} rerender={props.rerender} mentee={mentee} />
+          <Mentee key={mentee.id} rerender={props.rerender} mentee={mentee} idToken={props.idToken} />
         ))}
         <ListGroupItem
           className="mentees-list-item"
@@ -56,7 +58,7 @@ export default function Mentees(props) {
                   props.craftsperson,
                 )}
                 onChange={selected =>
-                  addMentee(selected[0], props.craftsperson)
+                  addMentee(selected[0], props.craftsperson, props.idToken)
                 }
               />
             </Col>

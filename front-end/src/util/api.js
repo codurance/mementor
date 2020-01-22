@@ -2,8 +2,10 @@ import { toast } from "react-toastify";
 
 export function api({
   endpoint,
+  token,
   type = "GET",
-  headers = { "Content-Type": "application/json" },
+  headers = { "Content-Type": "application/json",
+              "Authorization": `${token}` },
   body,
 } = {}) {
   let payload = { method: type, headers: headers };

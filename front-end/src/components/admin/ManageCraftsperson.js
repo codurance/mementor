@@ -54,6 +54,7 @@ export default function ManageCraftsperson(props) {
     }
     api({
       endpoint: "/craftspeople/add",
+      token: props.idToken,
       type: "POST",
       body: {
         firstName,
@@ -76,6 +77,7 @@ export default function ManageCraftsperson(props) {
     if (id) {
       api({
         endpoint: `/craftspeople/${id}`,
+        token: props.idToken,
         type: "DELETE",
       }).then(response => {
         handleResponse(response, "Craftsperson removed", props.rerender);

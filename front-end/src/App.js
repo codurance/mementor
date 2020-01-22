@@ -31,29 +31,13 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [idToken, setIdToken] = useState(null);
 
-  // function login() {
-  //   setIsLoggedIn(true);
-  //   rerender();
-  // }
-
   function login(googleUser) {
     setIsLoggedIn(true);
-
+    setBackendFetchError(null);
     const id_token = googleUser.getAuthResponse().id_token;
-    console.log(googleUser);
-    console.log(id_token);
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://localhost:8080/tokensignin');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function() {
-      console.log('Signed in as: ' + xhr.responseText);
-    };
-    xhr.send('idtoken=' + id_token);
     setIdToken(id_token);
     rerender();
   }
-
 
   function logout() {
     setIsLoggedIn(false);
@@ -78,7 +62,7 @@ function App() {
     };
   }
   useEffect(() => {
-    api({ endpoint: "/craftspeople"})
+    api({ endpoint: "/craftspeople", token: idToken })
       .then(response => response.json())
       .then(fetchedCraftspeople => {
         fetchedCraftspeople.sort(sortAlgorithm);
@@ -119,6 +103,7 @@ function App() {
                 <ManageCraftsperson
                   craftspeople={craftspeople}
                   rerender={rerender}
+                  idToken={idToken}
                 />
               </Col>
             </Row>
@@ -135,6 +120,7 @@ function App() {
               craftsperson={craftsperson}
               craftspeople={craftspeople}
               rerender={rerender}
+              idToken={idToken}
             />
           ))}
         </div>

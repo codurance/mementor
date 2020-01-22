@@ -11,7 +11,7 @@ import {
   mentorRemovedMessage,
 } from "../notification/notify";
 
-export default function Mentor({ craftsperson, craftspeople, rerender }) {
+export default function Mentor({ craftsperson, craftspeople, rerender, idToken }) {
   let mentorSelect = React.createRef();
 
   function addMentorCallBack(selectedCraftspeople) {
@@ -21,6 +21,7 @@ export default function Mentor({ craftsperson, craftspeople, rerender }) {
     }
     api({
       endpoint: "/craftspeople/mentor/add",
+      token: idToken,
       type: "POST",
       body: {
         mentorId: selectedCraftspeople[0].id,
@@ -40,6 +41,7 @@ export default function Mentor({ craftsperson, craftspeople, rerender }) {
   function removeMentorCallback() {
     api({
       endpoint: "/craftspeople/mentor/remove",
+      token: idToken,
       type: "POST",
       body: {
         menteeId: craftsperson.id,

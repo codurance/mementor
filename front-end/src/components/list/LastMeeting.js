@@ -4,10 +4,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import { api } from "../../util/api";
 import { handleResponse } from "../notification/notify";
 
-export default function lastMeeting({ craftsperson, craftspeople, rerender }) {
+export default function lastMeeting({ craftsperson, craftspeople, rerender, idToken }) {
   function setLastMeeting(date) {
     api({
       endpoint: "/craftspeople/lastmeeting",
+      token: idToken,
       type: "PUT",
       body: {
         craftspersonId: craftsperson.id,
