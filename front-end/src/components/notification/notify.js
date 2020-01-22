@@ -45,7 +45,7 @@ export function mentorRemovedMessage(menteeFirstname) {
 export function handleResponse(
   response,
   successMessage,
-  successCallback = () => {},
+  successCallback = () => {}
 ) {
   if (response.ok) {
     notifySuccess(successMessage);

@@ -5,7 +5,12 @@ import Mentor from "./Mentor";
 import LastMeeting from "./LastMeeting";
 import "./Craftsperson.css";
 
-export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
+export default function Craftsperson({
+  craftsperson,
+  craftspeople,
+  rerender,
+  idToken
+}) {
   return (
     <Row>
       <Col lg className="craftsperson-name-container">
@@ -17,11 +22,13 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
         craftsperson={craftsperson}
         craftspeople={craftspeople}
         rerender={rerender}
+        idToken={idToken}
       />
       <LastMeeting
         craftsperson={craftsperson}
         craftspeople={craftspeople}
         rerender={rerender}
+        idToken={idToken}
       />
       <Col lg className="mentees-count-container">
         <h5

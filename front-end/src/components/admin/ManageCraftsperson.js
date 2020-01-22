@@ -11,7 +11,10 @@ import { api } from "../../util/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { validateName } from "../../util/validate";
-import { handleResponse, notifyFormValidationError } from '../notification/notify';
+import {
+  handleResponse,
+  notifyFormValidationError
+} from "../notification/notify";
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
@@ -30,8 +33,7 @@ export default function ManageCraftsperson(props) {
   }
 
   function addCraftsperson() {
-
-    const {firstNameValid, lastNameValid} = validateName(firstName, lastName);
+    const { firstNameValid, lastNameValid } = validateName(firstName, lastName);
 
     if (!firstNameValid && !lastNameValid) {
       notifyFormValidationError("You must enter a first and last name!");
@@ -47,11 +49,12 @@ export default function ManageCraftsperson(props) {
     }
     api({
       endpoint: "/craftspeople/add",
+      token: props.idToken,
       type: "POST",
       body: {
         firstName,
-        lastName,
-      },
+        lastName
+      }
     }).then(response => {
       handleResponse(response, "Craftsperson added", props.rerender);
     });
@@ -69,7 +72,8 @@ export default function ManageCraftsperson(props) {
     if (id) {
       api({
         endpoint: `/craftspeople/${id}`,
-        type: "DELETE",
+        token: props.idToken,
+        type: "DELETE"
       }).then(response => {
         handleResponse(response, "Craftsperson removed", () => {
           setIdToDelete(null);

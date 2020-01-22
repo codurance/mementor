@@ -5,7 +5,7 @@ import { api } from "./util/api";
 import { filter } from "./util/filtering";
 import {
   sortByCraftspeopleWithoutMentor,
-  sortByNumberOfMentees,
+  sortByNumberOfMentees
 } from "./util/sorting";
 import SearchBar from "./components/toolbar/SearchBar";
 import { SortingBar } from "./components/toolbar/SortingBar";
@@ -28,12 +28,16 @@ function App() {
   const [shouldRender, setShouldRender] = useState(false);
   const [craftspeople, setCraftsPeople] = useState([]);
   const [filteredCraftspeople, setFilteredCraftspeople] = useState(
-    craftspeople,
+    craftspeople
   );
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [idToken, setIdToken] = useState(null);
 
-  function login() {
+  function login(googleUser) {
     setIsLoggedIn(true);
+    setBackendFetchError(null);
+    const id_token = googleUser.getAuthResponse().id_token;
+    setIdToken(id_token);
     rerender();
   }
 
@@ -65,7 +69,7 @@ function App() {
   }
 
   useEffect(() => {
-    api({ endpoint: "/craftspeople" })
+    api({ endpoint: "/craftspeople", token: idToken })
       .then(response => response.json())
       .then(fetchedCraftspeople => {
         fetchedCraftspeople.sort(sortAlgorithm);
@@ -98,7 +102,7 @@ function App() {
                 <SortingBar
                   onClick={makeSortOnClickListener(sortByNumberOfMentees)}
                   onClick1={makeSortOnClickListener(
-                    sortByCraftspeopleWithoutMentor,
+                    sortByCraftspeopleWithoutMentor
                   )}
                 />
               </Col>
@@ -106,6 +110,7 @@ function App() {
                 <ManageCraftsperson
                   craftspeople={craftspeople}
                   rerender={rerender}
+                  idToken={idToken}
                 />
               </Col>
             </Row>
@@ -122,6 +127,7 @@ function App() {
               craftsperson={craftsperson}
               craftspeople={craftspeople}
               rerender={rerender}
+              idToken={idToken}
             />
           ))}
         </div>
