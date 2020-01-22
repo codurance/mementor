@@ -33,6 +33,7 @@ function App() {
   );
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [idToken, setIdToken] = useState(null);
+  const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
 
   function login(googleUser) {
     setIsLoggedIn(true);
