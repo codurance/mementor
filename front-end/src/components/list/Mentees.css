@@ -1,3 +1,9 @@
+.mentees-title {
+  font-size: 150%;
+  text-align: left;
+  margin-left: 10px;
+}
+
 .mentees-list-item:last-child {
-  background: #eee;
+  background: #f8f9fb;
 }

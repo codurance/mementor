@@ -100,7 +100,7 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
               data-testid="removementeebutton"
               onClick={removeMentorCallback}
             >
-              <FontAwesomeIcon icon={faTimes} size="lg" />
+              <FontAwesomeIcon className="times-icon" icon={faTimes} size="sm" />
             </Button>
           )}
         </div>

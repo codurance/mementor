@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import { api } from "./../../util/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import "./Mentee.css"
 
 export default function Mentee({ mentee, rerender }) {
   function removeMentee() {
@@ -23,7 +24,7 @@ export default function Mentee({ mentee, rerender }) {
         <Row>
           <Col />
           <Col>
-            <h4 className="menteeName">
+            <h4 className="mentee-name menteeName">
               {mentee.firstName} {mentee.lastName}
             </h4>
           </Col>
@@ -34,7 +35,7 @@ export default function Mentee({ mentee, rerender }) {
               data-testid="removementeebutton"
               onClick={() => removeMentee()}
             >
-              <FontAwesomeIcon icon={faTimes} size="lg" />
+              <FontAwesomeIcon className="times-icon" icon={faTimes} size="sm" />
             </Button>
           </Col>
         </Row>
