@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -23,11 +23,7 @@ export default function ManageCraftsperson(props) {
   const [idToDelete, setIdToDelete] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
-  const [
-    lastMeetingThresholdsInWeeks,
-    setLastMeetingThresholdsInWeeks
-  ] = useState(null);
-
+  
   const handleClose = () => {
     setIdToDelete(null);
     setShow(false);
