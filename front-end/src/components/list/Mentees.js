@@ -9,19 +9,26 @@ import "./Mentees.css";
 import { filterCraftspeople } from "../../util/filtering";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import {notifySuccess, notifyMentorAdded, notifyUnexpectedBackendError} from '../notification/notify';
 
 export default function Mentees(props) {
-  function addMentee(mentee, mentorId) {
+  function addMentee(mentee, mentor) {
     if (mentee != null) {
       api({
         endpoint: "/craftspeople/mentee/add",
         type: "PUT",
         body: {
-          mentorId: mentorId,
+          mentorId: mentor.id,
           menteeId: mentee.id,
         },
+      }).then(response => {
+        if (response.ok) {
+          notifyMentorAdded(mentor.firstName, mentee.firstName);
+          props.rerender();
+          return;
+        }
+        return notifyUnexpectedBackendError(response);
       });
-      props.rerender();
     }
   }
 
@@ -40,7 +47,7 @@ export default function Mentees(props) {
           labelKey={option => `${option.firstName} ${option.lastName}`}
           placeholder="Select a mentee"
           options={filterCraftspeople(props.craftspeople, props.craftsperson)}
-          onChange={selected => addMentee(selected[0], props.craftsperson.id)}
+          onChange={selected => addMentee(selected[0], props.craftsperson)}
         /></Col>
         </Row>
       </ListGroupItem>

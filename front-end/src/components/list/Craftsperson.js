@@ -50,11 +50,7 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
       if (response.ok) {
         const mentorFirstname = selectedCraftspeople[0].firstName;
         const menteeFirstname = craftsperson.firstName;
-        notifySuccess((
-          <p>
-            <strong>{mentorFirstname}</strong> is now mentoring <strong>{menteeFirstname}</strong>
-          </p>
-        ));
+        notifyMentorAdded(mentorFirstname, menteeFirstname);
         rerender();
         return;
       }
