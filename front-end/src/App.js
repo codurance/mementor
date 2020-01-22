@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
-import SearchBar from "./components/toolbar/SearchBar";
+import { toast } from "react-toastify";
+import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { api } from "./util/api";
-import CraftspersonRow from "./components/list/CraftspersonRow";
+import { filter } from "./util/filtering";
 import {
   sortByCraftspeopleWithoutMentor,
   sortByNumberOfMentees,
 } from "./util/sorting";
-import { filter } from "./util/filtering";
+import SearchBar from "./components/toolbar/SearchBar";
+import { SortingBar } from "./components/toolbar/SortingBar";
+import CraftspersonRow from "./components/list/CraftspersonRow";
+import ManageCraftsperson from "./components/admin/ManageCraftsperson";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ManageCraftsperson from "./components/admin/ManageCraftsperson";
+import Image from "react-bootstrap/Image";
+import Container from "react-bootstrap/Container";
+import "./App.css";
 import logo from "./mementor_logo.png";
-import { SortingBar } from "./components/toolbar/SortingBar";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import GoogleLogin from "react-google-login";
-import { GoogleLogout } from "react-google-login";
 
 toast.configure();
+
 function App() {
   const defaultSort = sortByNumberOfMentees;
   const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
@@ -43,15 +45,19 @@ function App() {
     setIsLoggedIn(false);
     rerender();
   }
+
   function responseGoogle(response) {
     console.log(response);
   }
+
   function rerender() {
     setShouldRender(!shouldRender);
   }
+
   function filterCraftspeople(searchedValue) {
     setFilteredCraftspeople(filter(craftspeople, searchedValue));
   }
+
   function makeSortOnClickListener(sortAlgorithmToUse) {
     return () => {
       setSortAlgorithm(() => sortAlgorithmToUse);
@@ -61,6 +67,7 @@ function App() {
       setFilteredCraftspeople(filteredCraftspeople);
     };
   }
+
   useEffect(() => {
     api({ endpoint: "/craftspeople", token: idToken })
       .then(response => response.json())
@@ -79,16 +86,16 @@ function App() {
     <div className="App">
       {isLoggedIn && (
         <div>
-          <div className="container">
-            <img src={logo} className="main-logo" alt="Mementor Logo" />
+          <Container>
+            <Image className="main-logo" src={logo} />
             <GoogleLogout
               className="logout-button"
               clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
               buttonText="Logout"
               onLogoutSuccess={logout}
             ></GoogleLogout>
-          </div>
-          <div className="container">
+          </Container>
+          <Container>
             <SearchBar onEnter={filterCraftspeople} />
             <Row>
               <Col>
@@ -107,12 +114,12 @@ function App() {
                 />
               </Col>
             </Row>
-          </div>
+          </Container>
           {backendFetchError && (
-            <div className="alert alert-danger container" role="alert">
+            <Container className="alert alert-danger" role="alert">
               <strong>Oh snap!</strong> Looks like there was an error while
               fetching the data.
-            </div>
+            </Container>
           )}
           {filteredCraftspeople.map(craftsperson => (
             <CraftspersonRow
@@ -126,9 +133,9 @@ function App() {
         </div>
       )}
       {!isLoggedIn && (
-        <div className="container">
+        <Container>
           <Row>
-            <img src={logo} className="main-logo-login" alt="Mementor Logo" />
+            <Image className="main-logo-login" src={logo} />
           </Row>
           <Row>
             <GoogleLogin
@@ -143,7 +150,7 @@ function App() {
           <Row>
             <p className="love">With love by the 2019/2020 apprentices</p>
           </Row>
-        </div>
+        </Container>
       )}
     </div>
   );

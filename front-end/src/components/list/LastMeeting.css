@@ -1,0 +1,22 @@
+.last-meeting-container {
+  padding-top: 15px;
+}
+
+.last-meeting-label {
+  margin-left: none;
+  font-size: 100%;
+  text-align: left;
+  color: rgb(117, 116, 116);
+}
+
+.last-meeting-picker-container {
+  padding: 0 15px;
+}
+
+.date-picker {
+  padding: 0 1em;
+  font-size: 1em;
+  height: calc(1.5em + 0.75rem + 2px);
+  border-radius: 4px;
+  border: 1px solid #cccccc;
+}
