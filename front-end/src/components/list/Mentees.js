@@ -9,7 +9,7 @@ import "./Mentees.css";
 import { filterCraftspeople } from "../../util/filtering";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {notifySuccess, notifyMentorAdded, notifyUnexpectedBackendError} from '../notification/notify';
+import {handleResponse, mentorAddedMessage} from '../notification/notify';
 
 export default function Mentees(props) {
   function addMentee(mentee, mentor) {
@@ -22,12 +22,7 @@ export default function Mentees(props) {
           menteeId: mentee.id,
         },
       }).then(response => {
-        if (response.ok) {
-          notifyMentorAdded(mentor.firstName, mentee.firstName);
-          props.rerender();
-          return;
-        }
-        return notifyUnexpectedBackendError(response);
+        handleResponse(response, mentorAddedMessage(mentor.firstName, mentee.firstName), props.rerender);
       });
     }
   }

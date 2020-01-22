@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { filterCraftspeople } from "../../util/filtering";
 import Button from "react-bootstrap/Button";
-import {notifySuccess, notifyMentorAdded, notifyBackendError, notifyUnexpectedBackendError, notifyMentorRemoved, handleResponse} from '../notification/notify';
+import {mentorAddedMessage, notifyUnexpectedBackendError, notifyMentorRemoved, handleResponse} from '../notification/notify';
 
 export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
   function setLastMeeting(date) {
@@ -40,12 +40,7 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
     }).then(response => {
         const mentorFirstname = selectedCraftspeople[0].firstName;
         const menteeFirstname = craftsperson.firstName;
-        const successMessage = (
-          <p>
-            <strong>{mentorFirstname}</strong> is now mentoring <strong>{menteeFirstname}</strong>
-          </p>
-        );
-      handleResponse(response, successMessage, rerender);
+        handleResponse(response, mentorAddedMessage(mentorFirstname, menteeFirstname), rerender);
     });
   }
 

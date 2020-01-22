@@ -20,12 +20,12 @@ export function notifyFormValidationError(message) {
   toast.warn(message);
 }
 
-export function notifyMentorAdded(mentorFirstname, menteeFirstname) {
-  notifySuccess((
+export function mentorAddedMessage(mentorFirstname, menteeFirstname) {
+  return (
     <p>
       <strong>{mentorFirstname}</strong> is now mentoring <strong>{menteeFirstname}</strong>
     </p>
-  ));
+  );
 }
 
 export function notifyMentorRemoved(menteeFirstname) {
