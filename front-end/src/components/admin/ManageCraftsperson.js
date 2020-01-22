@@ -15,6 +15,7 @@ import {
   handleResponse,
   notifyFormValidationError
 } from "../notification/notify";
+import LastMeetingThreshold from "./LastMeetingThreshold";
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
@@ -22,7 +23,10 @@ export default function ManageCraftsperson(props) {
   const [idToDelete, setIdToDelete] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
-  const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
+  const [
+    lastMeetingThresholdsInWeeks,
+    setLastMeetingThresholdsInWeeks
+  ] = useState(null);
 
   const handleClose = () => {
     setIdToDelete(null);
@@ -84,27 +88,6 @@ export default function ManageCraftsperson(props) {
     }
   }
 
-  useEffect(() => {
-    api({endpoint: `/config`})
-    .then(response => response.json())
-    .then(body => setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks));
-  }, []);
-
-  function updateLastMeetingThresholdsInWeeks() {
-    api({
-      endpoint: `/config`,
-      type: "PUT",
-      body: {
-        'lastMeetingThresholdsInWeeks': lastMeetingThresholdsInWeeks
-      }
-    }).then(response => {
-      handleResponse(response, "Craftsperson removed", () => {
-        setIdToDelete(null);
-        props.rerender();
-      });
-    });
-  }
-
   return (
     <Row className="admin-button">
       <Button
@@ -124,18 +107,13 @@ export default function ManageCraftsperson(props) {
           </Container>
         </Modal.Header>
         <Modal.Body>
-          <Row>
-            <InputGroup className="mb-3">
-              <FormControl
-                required
-                onChange={(e) => setLastMeetingThresholdsInWeeks(e.target.value)}
-                value={lastMeetingThresholdsInWeeks}
-              />
-              <InputGroup.Append>
-                <Button onClick={updateLastMeetingThresholdsInWeeks}>Update</Button>
-              </InputGroup.Append>
-            </InputGroup>
-          </Row>
+          <LastMeetingThreshold
+            lastMeetingThresholdDefaultValue={
+              props.lastMeetingThresholdDefaultValue
+            }
+            idToken={props.idToken}
+            rerender={props.rerender}
+          />
           <InputGroup className="mb-3">
             <FormControl
               required
