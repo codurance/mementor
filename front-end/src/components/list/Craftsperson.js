@@ -8,7 +8,7 @@ import "./Craftsperson.css";
 export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
   return (
     <Row>
-      <Col className="craftsperson-name-container">
+      <Col lg className="craftsperson-name-container">
         <h2 className="craftsperson-name" data-testid="craftspersonName">
           {craftsperson.firstName} {craftsperson.lastName}
         </h2>
@@ -23,7 +23,7 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
         craftspeople={craftspeople}
         rerender={rerender}
       />
-      <Col>
+      <Col lg>
         <span className="mentee-count">
           <h2 data-testid="craftspersonMenteeValue">
             {craftsperson.mentees ? craftsperson.mentees.length : "0"}

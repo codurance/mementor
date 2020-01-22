@@ -65,9 +65,9 @@ export default function Mentor({ craftsperson, craftspeople, rerender }) {
     }
     return craftsperson.mentor.firstName + " " + craftsperson.mentor.lastName;
   }
-  
+
   return (
-    <Col className="mentor-container">
+    <Col lg className="mentor-container">
       <h5 className="mentor-label">Mentored by</h5>
       <Row className="mentor-dropdown-container">
         <Typeahead
