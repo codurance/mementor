@@ -1,5 +1,8 @@
 import "@testing-library/jest-dom/extend-expect";
-import { validateLastMeetingThresoldWithCustomDate } from "./date";
+import {
+  validateLastMeetingThresoldWithCustomDate,
+  validateLastMeetingThresoldWithCustomDateAndThreshold,
+} from "./date";
 
 describe("last meeting thresold function", () => {
   describe("with custom init date", () => {
@@ -18,6 +21,23 @@ describe("last meeting thresold function", () => {
       doTest(new Date(2019, 11, 0), new Date(2019, 10, 0), true);
       doTest(new Date(2019, 11, 0), new Date(2019, 9, 3), true);
       doTest(new Date(2019, 11, 0), new Date(2020, 0, 3), true);
+    });
+  });
+
+  describe("with custom threshold", () => {
+    function doTest(initDate, dateToCheck, threshold, expectedResult) {
+      expect(
+        validateLastMeetingThresoldWithCustomDateAndThreshold(
+          initDate,
+          dateToCheck,
+          threshold,
+        ),
+      ).toBe(expectedResult);
+    }
+    it("should accept a threshold in weeks", () => {
+      doTest(new Date(2019, 11, 8), new Date(2019, 11, 0), 1, false);
+      doTest(new Date(2019, 11, 6), new Date(2019, 11, 0), 1, true);
+      doTest(new Date(2019, 11, 8), new Date(2019, 11, 0), 2, true);
     });
   });
 });
