@@ -7,3 +7,7 @@
 .mentees-list-item:last-child {
   background: #f8f9fb;
 }
+
+.add-button {
+  border-radius: 200px;
+}

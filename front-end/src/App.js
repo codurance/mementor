@@ -30,7 +30,7 @@ function App() {
   const [filteredCraftspeople, setFilteredCraftspeople] = useState(
     craftspeople,
   );
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   function login() {
     setIsLoggedIn(true);

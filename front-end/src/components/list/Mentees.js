@@ -2,6 +2,7 @@ import React from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import Mentee from "./Mentee";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
+import Button from "react-bootstrap/Button";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { sortAlphabetically } from "../../util/sorting";
 import { api } from "../../util/api";
@@ -10,6 +11,8 @@ import { filterCraftspeople } from "../../util/filtering";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { handleResponse, mentorAddedMessage } from "../notification/notify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function Mentees(props) {
   function addMentee(mentee, mentor) {
@@ -33,7 +36,6 @@ export default function Mentees(props) {
 
   return (
     <div>
-      <h3 className="mentees-title">Mentees</h3>
       <ListGroup data-testid="list">
         {props.mentees.sort(sortAlphabetically).map(mentee => (
           <Mentee key={mentee.id} rerender={props.rerender} mentee={mentee} />
@@ -43,10 +45,20 @@ export default function Mentees(props) {
           data-testid="add-mentee-row"
         >
           <Row>
-            <Col sm={4}>
-              <h4 className="add-mentee">Add mentee</h4>
+            <Col sm={1}>
+              <Button
+                className="add-button"
+                variant="success"
+                data-testid="removementeebutton"
+              >
+                <FontAwesomeIcon
+                  className="plus-icon"
+                  icon={faPlus}
+                  size="sm"
+                />
+              </Button>
             </Col>
-            <Col sm={8}>
+            <Col sm={11}>
               <Typeahead
                 id={"add-mentee-" + props.craftsperson.id}
                 labelKey={option => `${option.firstName} ${option.lastName}`}
