@@ -88,7 +88,7 @@ function App() {
         setBackendFetchError(error);
       });
 
-    api({endpoint: `/config`})
+    api({endpoint: `/config`, token: idToken})
     .then(response => response.json())
     .then(body => setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks));
   }, [defaultSort, shouldRender]);
@@ -123,6 +123,7 @@ function App() {
                   craftspeople={craftspeople}
                   rerender={rerender}
                   idToken={idToken}
+                  lastMeetingThresholdDefaultValue={lastMeetingThresholdsInWeeks}
                 />
               </Col>
             </Row>

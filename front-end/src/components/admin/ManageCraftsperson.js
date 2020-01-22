@@ -15,6 +15,7 @@ import {
   handleResponse,
   notifyFormValidationError
 } from "../../util/notify";
+import LastMeetingThreshold from "./LastMeetingThreshold";
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
@@ -22,7 +23,10 @@ export default function ManageCraftsperson(props) {
   const [idToDelete, setIdToDelete] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
-  const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
+  const [
+    lastMeetingThresholdsInWeeks,
+    setLastMeetingThresholdsInWeeks
+  ] = useState(null);
 
   const handleClose = () => {
     setIdToDelete(null);
@@ -124,18 +128,13 @@ export default function ManageCraftsperson(props) {
           </Container>
         </Modal.Header>
         <Modal.Body>
-          <Row>
-            <InputGroup className="mb-3">
-              <FormControl
-                required
-                onChange={(e) => setLastMeetingThresholdsInWeeks(e.target.value)}
-                value={lastMeetingThresholdsInWeeks}
-              />
-              <InputGroup.Append>
-                <Button onClick={updateLastMeetingThresholdsInWeeks}>Update</Button>
-              </InputGroup.Append>
-            </InputGroup>
-          </Row>
+          <LastMeetingThreshold
+            lastMeetingThresholdDefaultValue={
+              props.lastMeetingThresholdDefaultValue
+            }
+            idToken={props.idToken}
+            rerender={props.rerender}
+          />
           <InputGroup className="mb-3">
             <FormControl
               required
