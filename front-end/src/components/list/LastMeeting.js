@@ -14,7 +14,8 @@ export default function lastMeeting({
   craftsperson,
   craftspeople,
   rerender,
-  idToken
+  idToken,
+  lastMeetingThresholdsInWeeks
 }) {
   function setLastMeeting(date) {
     api({
@@ -23,8 +24,8 @@ export default function lastMeeting({
       type: "PUT",
       body: {
         craftspersonId: craftsperson.id,
-        lastMeeting: date.getTime() / 1000
-      }
+        lastMeeting: date.getTime() / 1000,
+      },
     }).then(response => {
       handleResponse(response, "Last meeting updated", rerender);
     });
@@ -35,6 +36,7 @@ export default function lastMeeting({
       <h5 className="last-meeting-label">Last Meeting</h5>
       <Row className="last-meeting-picker-container">
         <span data-testid="date-picker-container">
+          {lastMeetingThresholdsInWeeks}
           {!craftsperson.mentor && "-"}
           {craftsperson.mentor && (
             <DatePicker
