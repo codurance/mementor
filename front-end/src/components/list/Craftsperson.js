@@ -2,12 +2,12 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { api } from "../../util/api";
-import { toast } from "react-toastify";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { filterCraftspeople } from "../../util/filtering";
 import Button from "react-bootstrap/Button";
+import {mentorAddedMessage, handleResponse, mentorRemovedMessage} from '../notification/notify';
 
 export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
   function setLastMeeting(date) {
@@ -19,16 +19,7 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
         lastMeeting: date.getTime() / 1000,
       },
     }).then(response => {
-      if (response.ok) {
-        toast.success("Last meeting date updated");
-        rerender();
-        return;
-      }
-      if (response.status === 400) {
-        response.json().then(body => toast.error(body.message));
-        return;
-      }
-      toast.error("Unexpected error");
+      handleResponse(response, 'Last meeting updated', rerender);
     });
   }
 
@@ -37,7 +28,7 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
   function addMentorCallBack(selectedCraftspeople) {
     if (selectedCraftspeople.length === 0) {
       // nothing to do
-      return;
+      return; 
     }
     api({
       endpoint: "/craftspeople/mentor/add",
@@ -46,8 +37,11 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
         mentorId: selectedCraftspeople[0].id,
         menteeId: craftsperson.id,
       },
+    }).then(response => {
+        const mentorFirstname = selectedCraftspeople[0].firstName;
+        const menteeFirstname = craftsperson.firstName;
+        handleResponse(response, mentorAddedMessage(mentorFirstname, menteeFirstname), rerender);
     });
-    rerender();
   }
 
   function removeMentorCallback() {
@@ -57,9 +51,12 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
       body: {
         menteeId: craftsperson.id,
       },
+    }).then(response => {
+      handleResponse(response, mentorRemovedMessage(craftsperson.firstName), () => {
+        mentorSelect.current.clear();
+        rerender();
+      });
     });
-    mentorSelect.current.clear();
-    rerender();
   }
 
   function getCraftspersonMentorNameOrNull() {

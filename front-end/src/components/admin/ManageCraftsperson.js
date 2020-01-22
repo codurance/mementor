@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { validateInputString } from "../../util/validate";
 import { toast } from "react-toastify";
+import {notifySuccess, notifyBackendError, notifyUnexpectedBackendError, notifyFormValidationError, handleResponse} from '../notification/notify';
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
@@ -34,15 +35,15 @@ export default function ManageCraftsperson(props) {
     const lastNameValid = validateInputString(lastName);
 
     if (!firstNameValid && !lastNameValid) {
-      toast.error("You must enter a first and last name!");
+      notifyFormValidationError("You must enter a first and last name!");
       return;
     }
     if (!firstNameValid) {
-      toast.error("You must enter a first name!");
+      notifyFormValidationError("You must enter a first name!");
       return;
     }
     if (!lastNameValid) {
-      toast.error("You must enter a last name!");
+      notifyFormValidationError("You must enter a last name!");
       return;
     }
     api({
@@ -53,18 +54,7 @@ export default function ManageCraftsperson(props) {
         lastName,
       },
     }).then(response => {
-      if (response.ok) {
-        toast.success("Craftsperson added");
-        props.rerender();
-        return;
-      }
-
-      if (response.status === 409) {
-        toast.error("The craftsperson already exists");
-        return;
-      }
-
-      toast.error("Unexpected error");
+      handleResponse(response, 'Craftsperson added', props.rerender);
     });
   }
 
@@ -82,12 +72,7 @@ export default function ManageCraftsperson(props) {
         endpoint: `/craftspeople/${id}`,
         type: "DELETE",
       }).then(response => {
-        if (response.ok) {
-          toast.warn("Craftsperson removed");
-          props.rerender();
-          return;
-        }
-        toast.error("Unexpected error");
+        handleResponse(response, "Craftsperson removed", props.rerender);
       });
     }
   }
