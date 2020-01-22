@@ -3,6 +3,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Mentee from "./Mentee";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { sortAlphabetically } from "../../util/sorting";
 import { api } from "../../util/api";
@@ -10,12 +11,15 @@ import "./Mentees.css";
 import { filterCraftspeople } from "../../util/filtering";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { handleResponse, mentorAddedMessage, notifyFormValidationError } from "../notification/notify";
+import {
+  handleResponse,
+  mentorAddedMessage,
+  notifyFormValidationError,
+} from "../notification/notify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function Mentees(props) {
-
   const [menteeToAdd, setMenteeToAdd] = useState(null);
 
   function addMentee(mentee, mentor) {
@@ -50,12 +54,13 @@ export default function Mentees(props) {
           className="mentees-list-item"
           data-testid="add-mentee-row"
         >
+          <Container>
           <Row>
             <Col sm={1}>
               <Button
                 className="add-button"
                 variant="success"
-                data-testid="removementeebutton"
+                data-testid="addMenteebutton"
               >
                 <FontAwesomeIcon
                   className="plus-icon"
@@ -74,12 +79,11 @@ export default function Mentees(props) {
                   props.craftspeople,
                   props.craftsperson,
                 )}
-                onChange={selected =>
-                  setMenteeToAdd(selected[0])
-                }
+                onChange={selected => setMenteeToAdd(selected[0])}
               />
             </Col>
           </Row>
+          </Container>
         </ListGroupItem>
       </ListGroup>
     </div>

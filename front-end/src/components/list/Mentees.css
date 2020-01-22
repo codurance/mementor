@@ -9,6 +9,8 @@
 }
 
 .add-button {
-  border-radius: 200px;
+  height: 40px;
+  width: 40px;
   border: none;
+  border-radius: 100px;
 }

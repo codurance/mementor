@@ -28,13 +28,7 @@ export default function Mentee({ mentee, rerender }) {
     <ListGroupItem data-testid={`mentee-${mentee.id}`}>
       <Container>
         <Row>
-          <Col />
-          <Col>
-            <h4 className="mentee-name menteeName">
-              {mentee.firstName} {mentee.lastName}
-            </h4>
-          </Col>
-          <Col>
+          <Col sm={1}>
             <Button
               className="remove-button"
               variant="danger"
@@ -47,6 +41,11 @@ export default function Mentee({ mentee, rerender }) {
                 size="sm"
               />
             </Button>
+          </Col>
+          <Col sm={11}>
+            <h5 className="mentee-name menteeName">
+              {mentee.firstName} {mentee.lastName}
+            </h5>
           </Col>
         </Row>
       </Container>
