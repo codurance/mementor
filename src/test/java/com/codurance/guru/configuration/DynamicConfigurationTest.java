@@ -3,7 +3,10 @@ package com.codurance.guru.configuration;
 import com.codurance.guru.GuruApplication;
 import com.codurance.guru.config.DynamicConfiguration;
 import com.codurance.guru.config.DynamicConfigurationRepository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.restassured.RestAssured;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +47,22 @@ public class DynamicConfigurationTest {
                 .then().assertThat()
                 .statusCode(200)
                 .body("lastMeetingThresholdsInWeeks", equalTo(4));
+    }
+
+
+    @Test
+    public void config_can_be_updated() throws JSONException {
+        repository.save(new DynamicConfiguration(4));
+
+        JSONObject body = new JSONObject();
+        body.put("lastMeetingThresholdsInWeeks", 2);
+
+        RestAssured.
+                given()
+                .contentType("application/json")
+                .body(body.toString())
+                .put("/config")
+                .then().assertThat()
+                .statusCode(204);
     }
 }
