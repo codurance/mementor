@@ -6,6 +6,8 @@ import Row from "react-bootstrap/Row";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./LastMeeting.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 
 export default function lastMeeting({ craftsperson, craftspeople, rerender }) {
   function setLastMeeting(date) {
@@ -43,6 +45,8 @@ export default function lastMeeting({ craftsperson, craftspeople, rerender }) {
               onChange={setLastMeeting}
             />
           )}
+          {craftsperson.lastMeeting &&
+            <FontAwesomeIcon data-testid="last-meeting-alert" icon={faExclamationTriangle} />}
         </span>
       </Row>
     </Col>
