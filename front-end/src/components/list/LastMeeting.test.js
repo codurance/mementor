@@ -33,7 +33,7 @@ describe("last meeting component", () => {
     expect(getByTestId("lastMeetingDatePicker").value).toBe("");
   });
 
-  it("shouldnt show last meeting alert if it is less than 2 months ago", () => {
+  it("shouldnt show last meeting alert if it is after the threshold", () => {
     const lastMeetingDate = new Date();
     lastMeetingDate.setMonth(lastMeetingDate.getMonth() - 1);
 
@@ -44,14 +44,15 @@ describe("last meeting component", () => {
           lastMeeting: dateToLastMeeting(lastMeetingDate),
         }}
         craftspeople={[]}
+        lastMeetingThresholdsInWeeks={6}
       />,
     );
     expect(queryByTestId("last-meeting-alert")).toBeNull();
   });
 
-  it("should show last meeting alert if it is at least 2 months ago", () => {
+  it("should show last meeting alert if it is at before the threshold", () => {
     const lastMeetingDate = new Date();
-    lastMeetingDate.setMonth(lastMeetingDate.getMonth() - 2);
+    lastMeetingDate.setMonth(lastMeetingDate.getMonth() - 1);
 
     const { queryByTestId } = render(
       <LastMeeting
@@ -60,6 +61,7 @@ describe("last meeting component", () => {
           lastMeeting: dateToLastMeeting(lastMeetingDate),
         }}
         craftspeople={[]}
+        lastMeetingThresholdsInWeeks={3}
       />,
     );
     expect(queryByTestId("last-meeting-alert")).not.toBeNull();
