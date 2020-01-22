@@ -12,7 +12,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { validateInputString } from "../../util/validate";
 import { toast } from "react-toastify";
-import {notifySuccess, notifyBackendError, notifyUnexpectedBackendError, notifyFormValidationError, handleResponse} from '../notification/notify';
+import {
+  notifySuccess,
+  notifyBackendError,
+  notifyUnexpectedBackendError,
+  notifyFormValidationError,
+  handleResponse,
+} from "../notification/notify";
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
@@ -54,7 +60,7 @@ export default function ManageCraftsperson(props) {
         lastName,
       },
     }).then(response => {
-      handleResponse(response, 'Craftsperson added', props.rerender);
+      handleResponse(response, "Craftsperson added", props.rerender);
     });
   }
 

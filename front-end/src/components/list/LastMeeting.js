@@ -24,22 +24,22 @@ export default function lastMeeting({ craftsperson, craftspeople, rerender }) {
         <span className="meetingLabel">Last Meeting:</span>
         <br />
         <span data-testid="date-picker-container">
-          {!craftsperson.mentor && '-'}
-        {craftsperson.mentor && (
-          <DatePicker
-            selected={
-              craftsperson.lastMeeting
-                ? new Date(craftsperson.lastMeeting * 1000)
-                : null
-            }
-            placeholderText="Select date..."
-            dateFormat="dd MMMM yyyy"
-            customInput={
-              <input data-testid="lastMeetingDatePicker" type="text" />
-            }
-            onChange={setLastMeeting}
-          />
-        )}
+          {!craftsperson.mentor && "-"}
+          {craftsperson.mentor && (
+            <DatePicker
+              selected={
+                craftsperson.lastMeeting
+                  ? new Date(craftsperson.lastMeeting * 1000)
+                  : null
+              }
+              placeholderText="Select date..."
+              dateFormat="dd MMMM yyyy"
+              customInput={
+                <input data-testid="lastMeetingDatePicker" type="text" />
+              }
+              onChange={setLastMeeting}
+            />
+          )}
         </span>
       </h5>
     </div>
