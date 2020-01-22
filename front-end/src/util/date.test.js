@@ -1,0 +1,21 @@
+import "@testing-library/jest-dom/extend-expect";
+import { validateLastMeetingThresold } from "./date";
+
+describe("last meeting thresold function", () => {
+  function doTest(initDate, dateToCheck, expectedResult) {
+    expect(validateLastMeetingThresold(initDate, dateToCheck)).toBe(
+      expectedResult,
+    );
+  }
+
+  it("should reject date that are 2 months before init date", () => {
+    doTest(new Date(2019, 11, 0), new Date(2019, 8, 0), false);
+    doTest(new Date(2019, 11, 0), new Date(2019, 9, 0), false);
+  });
+
+  it("should accept date that are 2 months before init date", () => {
+    doTest(new Date(2019, 11, 0), new Date(2019, 10, 0), true);
+    doTest(new Date(2019, 11, 0), new Date(2019, 9, 3), true);
+    doTest(new Date(2019, 11, 0), new Date(2020, 0, 3), true);
+  });
+});
