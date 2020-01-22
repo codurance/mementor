@@ -1,5 +1,8 @@
 .mentee-name {
   font-size: 140%;
+  text-align: left;
+  height: 100%;
+  padding: 5px;
 }
 
 .add-mentee {
