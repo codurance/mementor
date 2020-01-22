@@ -43,7 +43,7 @@ export default function Mentee({ mentee, rerender }) {
             </Button>
           </Col>
           <Col sm={11}>
-            <h5 className="mentee-name menteeName">
+            <h5 className="mentee-name">
               {mentee.firstName} {mentee.lastName}
             </h5>
           </Col>

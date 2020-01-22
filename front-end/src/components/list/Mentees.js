@@ -50,6 +50,7 @@ export default function Mentees(props) {
         {props.mentees.sort(sortAlphabetically).map(mentee => (
           <Mentee key={mentee.id} rerender={props.rerender} mentee={mentee} />
         ))}
+        
         <ListGroupItem
           className="mentees-list-item"
           data-testid="add-mentee-row"
