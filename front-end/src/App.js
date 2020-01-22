@@ -29,7 +29,7 @@ function App() {
   const [shouldRender, setShouldRender] = useState(false);
   const [craftspeople, setCraftsPeople] = useState([]);
   const [filteredCraftspeople, setFilteredCraftspeople] = useState(
-    craftspeople
+    craftspeople,
   );
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [idToken, setIdToken] = useState(null);
@@ -81,6 +81,10 @@ function App() {
         console.log(error);
         setBackendFetchError(error);
       });
+
+    api({endpoint: `/config`})
+    .then(response => response.json())
+    .then(body => setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks));
   }, [defaultSort, shouldRender]);
 
   return (
@@ -127,6 +131,7 @@ function App() {
               craftsperson={craftsperson}
               craftspeople={craftspeople}
               rerender={rerender}
+              lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
               idToken={idToken}
             />
           ))}
