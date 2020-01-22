@@ -5,6 +5,7 @@ import { api } from "../../util/api";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { filterCraftspeople } from "../../util/filtering";
 import Button from "react-bootstrap/Button";
 import {handleSuccess, handleBackendError, handleUnexpectedBackendError} from '../../util/apiHandler';
 
@@ -85,7 +86,7 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
             ref={mentorSelect}
             inputProps={{ "data-testid": "add-mentor-select" }}
             labelKey={option => `${option.firstName} ${option.lastName}`}
-            options={craftspeople}
+            options={filterCraftspeople(craftspeople, craftsperson)}
             placeholder="Select a mentor"
             onChange={addMentorCallBack}
           />
@@ -96,7 +97,7 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
               data-testid="removementeebutton"
               onClick={removeMentorCallback}
             >
-              <FontAwesomeIcon icon={faTimes} size="lg" />
+              <FontAwesomeIcon className="times-icon" icon={faTimes} size="sm" />
             </Button>
           )}
         </div>

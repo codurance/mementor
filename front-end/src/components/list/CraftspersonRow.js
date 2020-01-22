@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Craftsperson from "./Craftsperson";
 import Mentees from "./Mentees";
 import Card from "react-bootstrap/Card";
@@ -6,18 +6,21 @@ import Accordion from "react-bootstrap/Accordion";
 import Button from "react-bootstrap/Button";
 import "./CraftspersonRow.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 export default function CraftspersonRow({
   craftsperson,
   craftspeople,
   rerender,
 }) {
+
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
   return (
-    <Accordion>
+    <Accordion className="accordion-container">
       <div className="container">
         <Card>
-          <Card.Header>
+          <Card.Header className="craftsperson-card">
             <div className="justify-content-center">
               <Craftsperson
                 craftsperson={craftsperson}
@@ -29,10 +32,11 @@ export default function CraftspersonRow({
               <Accordion.Toggle
                 className="mentees-toggle"
                 as={Button}
-                variant="light"
+                variant="link"
                 eventKey="0"
+                onClick={() => setIsCollapsed(!isCollapsed)}
               >
-                <FontAwesomeIcon icon={faChevronDown} />
+                <FontAwesomeIcon icon={isCollapsed ? faChevronUp : faChevronDown} />
               </Accordion.Toggle>
             </div>
           </Card.Header>
