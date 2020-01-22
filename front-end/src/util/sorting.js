@@ -3,9 +3,15 @@ export function sortByLastMetDate(leftCraftsperson, rightCraftsperson) {
     return leftCraftsperson.lastMeeting !== null && rightCraftsperson.lastMeeting !== null;
   }
 
-  if (bothHaveLastMetDate(leftCraftsperson, rightCraftsperson)) {
+  function bothHaveSameLastMetDate() {
+    return leftCraftsperson.lastMeeting === rightCraftsperson.lastMeeting;
+  }
+
+  if (!bothHaveLastMetDate() && bothHaveSameLastMetDate()) {
     return sortAlphabetically(leftCraftsperson, rightCraftsperson);
   }
+
+  return leftCraftsperson.lastMeeting - rightCraftsperson.lastMeeting;
 }
 
 export function sortByNumberOfMentees(leftCraftsperson, rightCraftsperson) {

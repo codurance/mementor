@@ -3,6 +3,7 @@ import {
   sortByNumberOfMentees,
   sortByCraftspeopleWithoutMentor,
   sortAlphabetically,
+  sortByLastMetDate,
 } from "./sorting";
 
 const fixtureData = Array.from(FIXTURE);
@@ -144,15 +145,30 @@ describe("craftspeople without mentor sort", () => {
 
 describe("Alphabetical sort", () => {
   it("should sort alphabetically craftspeople", () => {
-    const craftpeople = [
+    const craftspeople = [
       { id: 0, firstName: "Etienne", lastName: "Mustow" },
       { id: 1, firstName: "Arnaud", lastName: "Claudel" },
       { id: 2, firstName: "Naruto", lastName: "Uzumaki" },
     ];
 
-    craftpeople.sort(sortAlphabetically);
-    expect(craftpeople[0].id).toBe(1);
-    expect(craftpeople[1].id).toBe(0);
-    expect(craftpeople[2].id).toBe(2);
+    craftspeople.sort(sortAlphabetically);
+    expect(craftspeople[0].id).toBe(1);
+    expect(craftspeople[1].id).toBe(0);
+    expect(craftspeople[2].id).toBe(2);
+  });
+});
+
+describe("Sort by last met date", () => {
+  it("should sort by oldest meeting date", () => {
+    const craftspeople = [
+      { id: 0, firstName: "Etienne", lastName: "Mustow", lastMeeting: new Date(2020, 1, 15) },
+      { id: 1, firstName: "Arnaud", lastName: "Claudel", lastMeeting: new Date(2020, 1, 14) },
+      { id: 2, firstName: "Naruto", lastName: "Uzumaki", lastMeeting: new Date(2020, 1, 13) },
+    ];
+
+    craftspeople.sort(sortByLastMetDate);
+    expect(craftspeople[0].id).toBe(2);
+    expect(craftspeople[1].id).toBe(1);
+    expect(craftspeople[2].id).toBe(0);
   });
 });
