@@ -1,0 +1,14 @@
+.mentor-container{
+  padding-top: 15px;
+}
+
+.mentor-label {
+  margin-left: none;
+  font-size: 100%;
+  text-align: left;
+  color: rgb(117, 116, 116);
+}
+
+.mentor-dropdown-container {
+  padding: 0 15px;
+}

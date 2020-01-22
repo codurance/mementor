@@ -1,4 +1,8 @@
-.craftperson-name-container {
+.craftsperson-name-container {
     height: 100%;
     padding: 15px;
+}
+
+.craftsperson-name {
+    color: rgb(54, 54, 54);
 }

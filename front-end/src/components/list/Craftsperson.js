@@ -8,7 +8,7 @@ import "./Craftsperson.css";
 export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
   return (
     <Row>
-      <Col className="craftperson-name-container">
+      <Col className="craftsperson-name-container">
         <h2 className="craftsperson-name" data-testid="craftspersonName">
           {craftsperson.firstName} {craftsperson.lastName}
         </h2>

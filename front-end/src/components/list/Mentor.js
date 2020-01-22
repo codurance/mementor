@@ -1,7 +1,7 @@
 import React from "react";
 import { Typeahead } from "react-bootstrap-typeahead";
-import Col from "react-bootstrap/Col"
-import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import {
   mentorAddedMessage,
   handleResponse,
@@ -12,7 +12,7 @@ import { filterCraftspeople } from "../../util/filtering";
 import Button from "react-bootstrap/Button";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./Mentor.css"
+import "./Mentor.css";
 
 export default function Mentor({ craftsperson, craftspeople, rerender }) {
   let mentorSelect = React.createRef();
@@ -65,15 +65,13 @@ export default function Mentor({ craftsperson, craftspeople, rerender }) {
     }
     return craftsperson.mentor.firstName + " " + craftsperson.mentor.lastName;
   }
+  
   return (
-    <Col>
-      <h5>
-        <span className="mentorLabel" data-testid="craftspersonMentorLabel">
-          Mentored by:
-        </span>
-      </h5>
-      <Row>
+    <Col className="mentor-container">
+      <h5 className="mentor-label">Mentored by</h5>
+      <Row className="mentor-dropdown-container">
         <Typeahead
+          className="mentor-dropdown"
           id={"remove-mentor-" + craftsperson.id}
           defaultInputValue={getCraftspersonMentorNameOrNull()}
           ref={mentorSelect}
