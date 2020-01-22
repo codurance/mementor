@@ -35,3 +35,12 @@ export function notifyMentorRemoved(menteeFirstname) {
     </p>
   ));
 }
+
+export function handleResponse (response, successMessage, successCallback = () => {}) {
+  if (response.ok) {
+    notifySuccess(successMessage);
+    successCallback();
+  } else {
+    notifyBackendError(response);
+  }
+}

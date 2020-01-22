@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { filterCraftspeople } from "../../util/filtering";
 import Button from "react-bootstrap/Button";
-import {notifySuccess, notifyMentorAdded, notifyBackendError, notifyUnexpectedBackendError, notifyMentorRemoved} from '../notification/notify';
+import {notifySuccess, notifyMentorAdded, notifyBackendError, notifyUnexpectedBackendError, notifyMentorRemoved, handleResponse} from '../notification/notify';
 
 export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
   function setLastMeeting(date) {
@@ -19,16 +19,7 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
         lastMeeting: date.getTime() / 1000,
       },
     }).then(response => {
-      if (response.ok) {
-        notifySuccess('Last meeting updated');
-        rerender();
-        return;
-      }
-      if (response.status === 400) {
-        notifyBackendError(response);
-        return;
-      }
-      return notifyUnexpectedBackendError(response);
+      handleResponse(response, 'Last meeting updated', rerender);
     });
   }
 
