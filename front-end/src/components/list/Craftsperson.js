@@ -1,15 +1,18 @@
 import React from "react";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import Mentor from "./Mentor";
 import LastMeeting from "./LastMeeting";
+import "./Craftsperson.css";
 
 export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
   return (
-    <div className="row">
-      <div className="col-lg-3">
-        <h2 className="craftspersonName" data-testid="craftspersonName">
+    <Row>
+      <Col className="craftperson-name-container">
+        <h2 className="craftsperson-name" data-testid="craftspersonName">
           {craftsperson.firstName} {craftsperson.lastName}
         </h2>
-      </div>
+      </Col>
       <Mentor
         craftsperson={craftsperson}
         craftspeople={craftspeople}
@@ -20,7 +23,7 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
         craftspeople={craftspeople}
         rerender={rerender}
       />
-      <div className="col-lg-3">
+      <Col>
         <span className="mentee-count">
           <h2 data-testid="craftspersonMenteeValue">
             {craftsperson.mentees ? craftsperson.mentees.length : "0"}
@@ -29,7 +32,7 @@ export default function Craftsperson({ craftsperson, craftspeople, rerender }) {
         <span className="menteeLabel" data-testid="craftspersonMenteeLabel">
           <i>Mentees</i>
         </span>
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 }
