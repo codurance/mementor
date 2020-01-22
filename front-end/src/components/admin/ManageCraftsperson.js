@@ -1,24 +1,20 @@
 import React, { useState } from "react";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import FormControl from "react-bootstrap/FormControl";
-import InputGroup from "react-bootstrap/InputGroup";
-import CraftspersonList from "./CraftspersonList";
-import "./ManageCraftsperson.css";
-import { api } from "../../util/api";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { validateInputString } from "../../util/validate";
-import { toast } from "react-toastify";
 import {
-  notifySuccess,
-  notifyBackendError,
-  notifyUnexpectedBackendError,
   notifyFormValidationError,
   handleResponse,
 } from "../notification/notify";
+import { api } from "../../util/api";
+import Row from "react-bootstrap/Row";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import CraftspersonList from "./CraftspersonList";
+import Container from "react-bootstrap/Container";
+import InputGroup from "react-bootstrap/InputGroup";
+import FormControl from "react-bootstrap/FormControl";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./ManageCraftsperson.css";
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
@@ -84,7 +80,7 @@ export default function ManageCraftsperson(props) {
   }
 
   return (
-    <div className="row admin-button">
+    <Row className="admin-button">
       <Button
         variant="secondary"
         data-testid="adminPopupButton"
@@ -135,6 +131,6 @@ export default function ManageCraftsperson(props) {
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </Row>
   );
 }
