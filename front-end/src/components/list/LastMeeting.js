@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./LastMeeting.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import { validateLastMeetingThresold } from "../../util/date";
+import { validateLastMeetingThresoldWithCustomThreshold } from "../../util/date";
 
 export default function lastMeeting({
   craftsperson,
@@ -36,7 +36,6 @@ export default function lastMeeting({
       <h5 className="last-meeting-label">Last Meeting</h5>
       <Row className="last-meeting-picker-container">
         <span data-testid="date-picker-container">
-          {lastMeetingThresholdsInWeeks}
           {!craftsperson.mentor && "-"}
           {craftsperson.mentor && (
             <DatePicker
@@ -55,7 +54,7 @@ export default function lastMeeting({
             />
           )}
           {craftsperson.lastMeeting &&
-            !validateLastMeetingThresold(craftsperson.lastMeeting) && (
+            !validateLastMeetingThresoldWithCustomThreshold(craftsperson.lastMeeting, lastMeetingThresholdsInWeeks) && (
               <FontAwesomeIcon
                 data-testid="last-meeting-alert"
                 icon={faExclamationTriangle}
