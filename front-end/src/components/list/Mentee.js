@@ -8,14 +8,21 @@ import { api } from "./../../util/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import "./Mentee.css"
+import { notifyMentorRemoved, notifyUnexpectedBackendError } from "../notification/notify";
 
 export default function Mentee({ mentee, rerender }) {
   function removeMentee() {
     api({
       endpoint: `/craftspeople/mentee/remove/${mentee.id}`,
       type: "PUT",
+    }).then(response => {
+      if (response.ok) {
+        notifyMentorRemoved(mentee.firstName);
+        rerender();
+        return;
+      }
+      return notifyUnexpectedBackendError(response);
     });
-    rerender();
   }
 
   return (

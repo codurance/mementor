@@ -21,3 +21,11 @@ export function notifyMentorAdded(mentorFirstname, menteeFirstname) {
     </p>
   ));
 }
+
+export function notifyMentorRemoved(menteeFirstname) {
+  notifySuccess((
+    <p>
+      <strong>{menteeFirstname}</strong> is no longer mentored
+    </p>
+  ));
+}
