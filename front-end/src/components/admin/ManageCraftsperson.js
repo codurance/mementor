@@ -85,7 +85,9 @@ export default function ManageCraftsperson(props) {
   }
 
   useEffect(() => {
-    setLastMeetingThresholdsInWeeks(2);
+    api({endpoint: `/config`})
+    .then(response => response.json())
+    .then(body => setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks));
   }, []);
 
   function updateLastMeetingThresholdsInWeeks() {
@@ -93,7 +95,7 @@ export default function ManageCraftsperson(props) {
       endpoint: `/config`,
       type: "PUT",
       body: {
-        lastMeetingThresholdsInWeeks: updateLastMeetingThresholdsInWeeks
+        'lastMeetingThresholdsInWeeks': lastMeetingThresholdsInWeeks
       }
     }).then(response => {
       handleResponse(response, "Craftsperson removed", () => {
@@ -126,7 +128,7 @@ export default function ManageCraftsperson(props) {
             <InputGroup className="mb-3">
               <FormControl
                 required
-                onChange={setLastMeetingThresholdsInWeeks}
+                onChange={(e) => setLastMeetingThresholdsInWeeks(e.target.value)}
                 value={lastMeetingThresholdsInWeeks}
               />
               <InputGroup.Append>
