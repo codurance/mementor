@@ -3,16 +3,27 @@ package com.codurance.guru.craftspeople;
 import com.codurance.guru.craftspeople.exceptions.DuplicateMenteeException;
 import com.codurance.guru.craftspeople.exceptions.InvalidLastMeetingDateException;
 import com.codurance.guru.craftspeople.exceptions.InvalidMentorRelationshipException;
+import com.codurance.guru.craftspeople.middleware.RequestInterceptor;
 import com.codurance.guru.craftspeople.requests.AddCraftspersonRequest;
 import com.codurance.guru.craftspeople.requests.AddMentorRequest;
 import com.codurance.guru.craftspeople.requests.RemoveMentorRequest;
 import com.codurance.guru.craftspeople.requests.UpdateLastMeetingRequest;
 import com.codurance.guru.craftspeople.responses.ErrorResponse;
+import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +34,26 @@ public class CraftspeopleController {
 
     @Autowired
     private CraftspeopleService craftspeopleService;
+
+    @PostMapping("/tokensignin")
+    public ResponseEntity authenticateClient(@RequestBody String idTokenString) throws GeneralSecurityException, IOException {
+        JacksonFactory jsonFactory = new JacksonFactory();
+        HttpTransport transport = new NetHttpTransport();
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+                // Specify the CLIENT_ID of the app that accesses the backend:
+                .setAudience(Collections.singletonList("677831756912-90mpqndj2c96nac10mgjciibcdoiinra.apps.googleusercontent.com"))
+                // Or, if multiple clients access the backend:
+                //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
+                .build();
+// (Receive idTokenString by HTTPS POST)
+        GoogleIdToken idToken = verifier.verify(idTokenString);
+        if (idToken != null) {
+
+            return ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
 
     @GetMapping("/craftspeople/{craftspersonId}")
     public ResponseEntity retrieveCraftsperson(@PathVariable Integer craftspersonId) {
@@ -35,6 +66,7 @@ public class CraftspeopleController {
 
     @GetMapping("/craftspeople")
     public List<Craftsperson> retrieveAll() {
+
         return craftspeopleService.retrieveAllCraftsperson();
     }
 

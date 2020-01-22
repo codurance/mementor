@@ -29,11 +29,31 @@ function App() {
     craftspeople,
   );
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [idToken, setIdToken] = useState(null);
 
-  function login() {
+  // function login() {
+  //   setIsLoggedIn(true);
+  //   rerender();
+  // }
+
+  function login(googleUser) {
     setIsLoggedIn(true);
+
+    const id_token = googleUser.getAuthResponse().id_token;
+    console.log(googleUser);
+    console.log(id_token);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://localhost:8080/tokensignin');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+      console.log('Signed in as: ' + xhr.responseText);
+    };
+    xhr.send('idtoken=' + id_token);
+    setIdToken(id_token);
     rerender();
   }
+
 
   function logout() {
     setIsLoggedIn(false);
@@ -58,7 +78,7 @@ function App() {
     };
   }
   useEffect(() => {
-    api({ endpoint: "/craftspeople" })
+    api({ endpoint: "/craftspeople"})
       .then(response => response.json())
       .then(fetchedCraftspeople => {
         fetchedCraftspeople.sort(sortAlgorithm);
