@@ -1,9 +1,10 @@
-.mentees-title {
-  font-size: 150%;
-  text-align: left;
-  margin-left: 10px;
-}
-
 .mentees-list-item:last-child {
   background: #f8f9fb;
+}
+
+.add-button {
+  height: 40px;
+  width: 40px;
+  border: none;
+  border-radius: 100px;
 }

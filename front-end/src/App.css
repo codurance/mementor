@@ -49,17 +49,10 @@
 }
 
 .remove-button {
-  margin-top: 3px;
-  height: 2em;
-  width: 2em;
   border: none;
-  background-color: #d73448;
-  margin-left: 2px;
   border-radius: 100px;
-}
-
-.times-icon {
-  margin-bottom: 2px;
+  height: 40px;
+  width: 40px;
 }
 
 .craftsperson-row {
