@@ -9,13 +9,13 @@ export function dateToLastMeeting(date) {
 export function validateLastMeetingThresold(lastMeeting) {
   return validateLastMeetingThresoldWithCustomDate(
     new Date(),
-    lastMeetingToDate(lastMeeting),
+    lastMeetingToDate(lastMeeting)
   );
 }
 
 export function validateLastMeetingThresoldWithCustomDate(
   initDate,
-  dateToCheck,
+  dateToCheck
 ) {
   const dateToCheckCopy = new Date(dateToCheck.getTime());
   dateToCheckCopy.setMonth(dateToCheckCopy.getMonth() + 2);

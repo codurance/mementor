@@ -15,12 +15,12 @@ export default function Mentee({ mentee, rerender, idToken }) {
     api({
       endpoint: `/craftspeople/mentee/remove/${mentee.id}`,
       token: idToken,
-      type: "PUT",
+      type: "PUT"
     }).then(response => {
       handleResponse(
         response,
         mentorRemovedMessage(mentee.firstName),
-        rerender,
+        rerender
       );
     });
   }

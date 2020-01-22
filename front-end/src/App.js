@@ -5,7 +5,7 @@ import { api } from "./util/api";
 import { filter } from "./util/filtering";
 import {
   sortByCraftspeopleWithoutMentor,
-  sortByNumberOfMentees,
+  sortByNumberOfMentees
 } from "./util/sorting";
 import SearchBar from "./components/toolbar/SearchBar";
 import { SortingBar } from "./components/toolbar/SortingBar";
@@ -28,7 +28,7 @@ function App() {
   const [shouldRender, setShouldRender] = useState(false);
   const [craftspeople, setCraftsPeople] = useState([]);
   const [filteredCraftspeople, setFilteredCraftspeople] = useState(
-    craftspeople,
+    craftspeople
   );
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [idToken, setIdToken] = useState(null);
@@ -102,7 +102,7 @@ function App() {
                 <SortingBar
                   onClick={makeSortOnClickListener(sortByNumberOfMentees)}
                   onClick1={makeSortOnClickListener(
-                    sortByCraftspeopleWithoutMentor,
+                    sortByCraftspeopleWithoutMentor
                   )}
                 />
               </Col>

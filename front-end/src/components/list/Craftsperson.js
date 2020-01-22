@@ -5,7 +5,12 @@ import Mentor from "./Mentor";
 import LastMeeting from "./LastMeeting";
 import "./Craftsperson.css";
 
-export default function Craftsperson({ craftsperson, craftspeople, rerender, idToken }) {
+export default function Craftsperson({
+  craftsperson,
+  craftspeople,
+  rerender,
+  idToken
+}) {
   return (
     <Row>
       <Col lg className="craftsperson-name-container">

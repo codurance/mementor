@@ -7,7 +7,7 @@ export const filter = (craftspeople, searchedValue) => {
     craftsperson =>
       deburr(`${craftsperson.firstName} ${craftsperson.lastName}`)
         .toLowerCase()
-        .indexOf(searchedValueDeburred.toLowerCase()) !== -1,
+        .indexOf(searchedValueDeburred.toLowerCase()) !== -1
   );
 };
 
@@ -19,8 +19,8 @@ export const filterCraftspeople = (craftspeople_list, craftsperson) => {
     const set_ids_mentee = new Set(craftsperson.mentees.map(_ => _.id));
     set_ids_craftspeople = new Set(
       [...set_ids_craftspeople].filter(
-        craftsperson => !set_ids_mentee.has(craftsperson),
-      ),
+        craftsperson => !set_ids_mentee.has(craftsperson)
+      )
     );
   }
 
@@ -31,6 +31,6 @@ export const filterCraftspeople = (craftspeople_list, craftsperson) => {
 
   set_ids_craftspeople.delete(id_yourself);
   return craftspeople_list.filter(craftsperson =>
-    set_ids_craftspeople.has(craftsperson.id),
+    set_ids_craftspeople.has(craftsperson.id)
   );
 };

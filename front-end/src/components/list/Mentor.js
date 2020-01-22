@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import {
   mentorAddedMessage,
   handleResponse,
-  mentorRemovedMessage,
+  mentorRemovedMessage
 } from "../notification/notify";
 import { api } from "../../util/api";
 import { filterCraftspeople } from "../../util/filtering";
@@ -14,7 +14,12 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Mentor.css";
 
-export default function Mentor({ craftsperson, craftspeople, rerender, idToken }) {
+export default function Mentor({
+  craftsperson,
+  craftspeople,
+  rerender,
+  idToken
+}) {
   let mentorSelect = React.createRef();
 
   function addMentorCallBack(selectedCraftspeople) {
@@ -28,15 +33,15 @@ export default function Mentor({ craftsperson, craftspeople, rerender, idToken }
       type: "POST",
       body: {
         mentorId: selectedCraftspeople[0].id,
-        menteeId: craftsperson.id,
-      },
+        menteeId: craftsperson.id
+      }
     }).then(response => {
       const mentorFirstname = selectedCraftspeople[0].firstName;
       const menteeFirstname = craftsperson.firstName;
       handleResponse(
         response,
         mentorAddedMessage(mentorFirstname, menteeFirstname),
-        rerender,
+        rerender
       );
     });
   }
@@ -47,8 +52,8 @@ export default function Mentor({ craftsperson, craftspeople, rerender, idToken }
       token: idToken,
       type: "POST",
       body: {
-        menteeId: craftsperson.id,
-      },
+        menteeId: craftsperson.id
+      }
     }).then(response => {
       handleResponse(
         response,
@@ -56,7 +61,7 @@ export default function Mentor({ craftsperson, craftspeople, rerender, idToken }
         () => {
           mentorSelect.current.clear();
           rerender();
-        },
+        }
       );
     });
   }

@@ -10,7 +10,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { validateLastMeetingThresold } from "../../util/date";
 
-export default function lastMeeting({ craftsperson, craftspeople, rerender, idToken }) {
+export default function lastMeeting({
+  craftsperson,
+  craftspeople,
+  rerender,
+  idToken
+}) {
   function setLastMeeting(date) {
     api({
       endpoint: "/craftspeople/lastmeeting",
@@ -18,8 +23,8 @@ export default function lastMeeting({ craftsperson, craftspeople, rerender, idTo
       type: "PUT",
       body: {
         craftspersonId: craftsperson.id,
-        lastMeeting: date.getTime() / 1000,
-      },
+        lastMeeting: date.getTime() / 1000
+      }
     }).then(response => {
       handleResponse(response, "Last meeting updated", rerender);
     });

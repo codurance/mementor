@@ -8,7 +8,7 @@ export function sortByNumberOfMentees(leftCraftsperson, rightCraftsperson) {
 
 export function sortByCraftspeopleWithoutMentor(
   leftCraftsperson,
-  rightCraftsperson,
+  rightCraftsperson
 ) {
   if (
     noneHaveMentor(leftCraftsperson, rightCraftsperson) ||
@@ -25,7 +25,7 @@ export function sortByCraftspeopleWithoutMentor(
 
 export function sortAlphabetically(leftCraftsperson, rightCraftsperson) {
   return (leftCraftsperson.firstName + leftCraftsperson.lastName).localeCompare(
-    rightCraftsperson.firstName + rightCraftsperson.lastName,
+    rightCraftsperson.firstName + rightCraftsperson.lastName
   );
 }
 
