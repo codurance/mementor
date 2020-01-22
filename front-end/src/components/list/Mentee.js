@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import { api } from "./../../util/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import "./Mentee.css"
+import "./Mentee.css";
 import { handleResponse, mentorRemovedMessage } from "../notification/notify";
 
 export default function Mentee({ mentee, rerender }) {
@@ -16,7 +16,11 @@ export default function Mentee({ mentee, rerender }) {
       endpoint: `/craftspeople/mentee/remove/${mentee.id}`,
       type: "PUT",
     }).then(response => {
-      handleResponse(response, mentorRemovedMessage(mentee.firstName), rerender);
+      handleResponse(
+        response,
+        mentorRemovedMessage(mentee.firstName),
+        rerender,
+      );
     });
   }
 
@@ -37,7 +41,11 @@ export default function Mentee({ mentee, rerender }) {
               data-testid="removementeebutton"
               onClick={() => removeMentee()}
             >
-              <FontAwesomeIcon className="times-icon" icon={faTimes} size="sm" />
+              <FontAwesomeIcon
+                className="times-icon"
+                icon={faTimes}
+                size="sm"
+              />
             </Button>
           </Col>
         </Row>

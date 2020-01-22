@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -53,7 +53,7 @@ export default function ManageCraftsperson(props) {
         lastName,
       },
     }).then(response => {
-      handleResponse(response, 'Craftsperson added', props.rerender);
+      handleResponse(response, "Craftsperson added", props.rerender);
     });
   }
 
