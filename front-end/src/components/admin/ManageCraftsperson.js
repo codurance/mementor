@@ -1,20 +1,17 @@
 import React, { useState } from "react";
-import { validateInputString } from "../../util/validate";
-import {
-  notifyFormValidationError,
-  handleResponse,
-} from "../notification/notify";
-import { api } from "../../util/api";
-import Row from "react-bootstrap/Row";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import CraftspersonList from "./CraftspersonList";
 import Container from "react-bootstrap/Container";
-import InputGroup from "react-bootstrap/InputGroup";
+import Row from "react-bootstrap/Row";
 import FormControl from "react-bootstrap/FormControl";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import InputGroup from "react-bootstrap/InputGroup";
+import CraftspersonList from "./CraftspersonList";
 import "./ManageCraftsperson.css";
+import { api } from "../../util/api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
+import { validateName } from "../../util/validate";
+import { handleResponse, notifyFormValidationError } from '../notification/notify';
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
@@ -33,8 +30,8 @@ export default function ManageCraftsperson(props) {
   }
 
   function addCraftsperson() {
-    const firstNameValid = validateInputString(firstName);
-    const lastNameValid = validateInputString(lastName);
+
+    const {firstNameValid, lastNameValid} = validateName(firstName, lastName);
 
     if (!firstNameValid && !lastNameValid) {
       notifyFormValidationError("You must enter a first and last name!");
