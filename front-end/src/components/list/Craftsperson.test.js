@@ -46,32 +46,4 @@ describe("when rendering a craftsperson", () => {
       expect(getByTestId("craftspersonMenteeValue")).toHaveTextContent("0");
     });
   });
-
-  it("should show last meeting", () => {
-    const { getByTestId } = render(
-      <Craftsperson
-        craftsperson={{
-          mentor: { firstName: "", lastName: "" },
-          lastMeeting: 1500000000,
-        }}
-        craftspeople={[]}
-      />,
-    );
-    expect(getByTestId("lastMeetingDatePicker").value).toBe("14 July 2017");
-  });
-  it("shouldnt show date picker when no mentor", () => {
-    const { queryByTestId } = render(
-      <Craftsperson craftsperson={{}} craftspeople={[]} />,
-    );
-    expect(queryByTestId("lastMeetingDatePicker")).toBe(null);
-  });
-  if (
-    ("should be empty when no last meeting",
-    () => {
-      const { getByTestId } = render(
-        <Craftsperson craftsperson={{ mentor: {} }} craftspeople={[]} />,
-      );
-      expect(getByTestId("lastMeetingDatePicker").value).toBe("");
-    })
-  );
 });

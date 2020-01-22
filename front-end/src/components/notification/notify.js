@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { toast } from "react-toastify";
 
 export function notifySuccess(message) {
@@ -6,7 +6,8 @@ export function notifySuccess(message) {
 }
 
 export function notifyBackendError(response) {
-  response.json()
+  response
+    .json()
     .then(body => toast.warn(body.message))
     .catch(notifyUnexpectedBackendError);
 }
@@ -23,20 +24,25 @@ export function notifyFormValidationError(message) {
 export function mentorAddedMessage(mentorFirstname, menteeFirstname) {
   return (
     <p>
-      <strong>{mentorFirstname}</strong> is now mentoring <strong>{menteeFirstname}</strong>
+      <strong>{mentorFirstname}</strong> is now mentoring{" "}
+      <strong>{menteeFirstname}</strong>
     </p>
   );
 }
 
 export function mentorRemovedMessage(menteeFirstname) {
-  return(
+  return (
     <p>
       <strong>{menteeFirstname}</strong> is no longer mentored
     </p>
   );
 }
 
-export function handleResponse (response, successMessage, successCallback = () => {}) {
+export function handleResponse(
+  response,
+  successMessage,
+  successCallback = () => {},
+) {
   if (response.ok) {
     notifySuccess(successMessage);
     successCallback();

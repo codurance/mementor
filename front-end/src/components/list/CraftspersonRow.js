@@ -13,7 +13,6 @@ export default function CraftspersonRow({
   craftspeople,
   rerender,
 }) {
-
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
@@ -36,7 +35,9 @@ export default function CraftspersonRow({
                 eventKey="0"
                 onClick={() => setIsCollapsed(!isCollapsed)}
               >
-                <FontAwesomeIcon icon={isCollapsed ? faChevronUp : faChevronDown} />
+                <FontAwesomeIcon
+                  icon={isCollapsed ? faChevronUp : faChevronDown}
+                />
               </Accordion.Toggle>
             </div>
           </Card.Header>
