@@ -23,7 +23,8 @@ export default function lastMeeting({ craftsperson, craftspeople, rerender }) {
       <h5>
         <span className="meetingLabel">Last Meeting:</span>
         <br />
-        {!craftsperson.mentor && '-'}
+        <span data-testid="date-picker-container">
+          {!craftsperson.mentor && '-'}
         {craftsperson.mentor && (
           <DatePicker
             selected={
@@ -39,6 +40,7 @@ export default function lastMeeting({ craftsperson, craftspeople, rerender }) {
             onChange={setLastMeeting}
           />
         )}
+        </span>
       </h5>
     </div>
   );
