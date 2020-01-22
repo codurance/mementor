@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { validateInputString } from "../../util/validate";
 import { toast } from "react-toastify";
+import {notifySuccess, notifyBackendError, notifyUnexpectedBackendError, notifyFormValidationError} from '../notification/notify';
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
@@ -34,15 +35,15 @@ export default function ManageCraftsperson(props) {
     const lastNameValid = validateInputString(lastName);
 
     if (!firstNameValid && !lastNameValid) {
-      toast.error("You must enter a first and last name!");
+      notifyFormValidationError("You must enter a first and last name!");
       return;
     }
     if (!firstNameValid) {
-      toast.error("You must enter a first name!");
+      notifyFormValidationError("You must enter a first name!");
       return;
     }
     if (!lastNameValid) {
-      toast.error("You must enter a last name!");
+      notifyFormValidationError("You must enter a last name!");
       return;
     }
     api({
@@ -54,17 +55,17 @@ export default function ManageCraftsperson(props) {
       },
     }).then(response => {
       if (response.ok) {
-        toast.success("Craftsperson added");
+        notifySuccess("Craftsperson added");
         props.rerender();
         return;
       }
 
       if (response.status === 409) {
-        toast.error("The craftsperson already exists");
+        notifyBackendError(response);
         return;
       }
 
-      toast.error("Unexpected error");
+      notifyUnexpectedBackendError(response);
     });
   }
 
@@ -83,7 +84,7 @@ export default function ManageCraftsperson(props) {
         type: "DELETE",
       }).then(response => {
         if (response.ok) {
-          toast.warn("Craftsperson removed");
+          notifySuccess("Craftsperson removed");
           props.rerender();
           return;
         }

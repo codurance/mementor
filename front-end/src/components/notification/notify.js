@@ -6,12 +6,18 @@ export function notifySuccess(message) {
 }
 
 export function notifyBackendError(response) {
-  response.json().then(body => toast.warn(body.message));
+  response.json()
+    .then(body => toast.warn(body.message))
+    .catch(notifyUnexpectedBackendError);
 }
 
 export function notifyUnexpectedBackendError(response) {
   console.log(response);
   toast.error("An unexpected error occured");
+}
+
+export function notifyFormValidationError(message) {
+  toast.warn(message);
 }
 
 export function notifyMentorAdded(mentorFirstname, menteeFirstname) {
