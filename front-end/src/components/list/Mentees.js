@@ -14,7 +14,7 @@ import Col from "react-bootstrap/Col";
 import {
   handleResponse,
   mentorAddedMessage,
-  notifyFormValidationError,
+  notifyFormValidationError
 } from "../notification/notify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -62,34 +62,36 @@ export default function Mentees(props) {
           data-testid="add-mentee-row"
         >
           <Container>
-          <Row>
-            <Col sm={1}>
-              <Button
-                className="add-button"
-                variant="success"
-                data-testid="addMenteebutton"
-              >
-                <FontAwesomeIcon
-                  className="plus-icon"
-                  icon={faPlus}
-                  size="sm"
-                  onClick={() => addMentee(menteeToAdd, props.craftsperson, props.idToken)}
+            <Row>
+              <Col sm={1}>
+                <Button
+                  className="add-button"
+                  variant="success"
+                  data-testid="addMenteebutton"
+                >
+                  <FontAwesomeIcon
+                    className="plus-icon"
+                    icon={faPlus}
+                    size="sm"
+                    onClick={() =>
+                      addMentee(menteeToAdd, props.craftsperson, props.idToken)
+                    }
+                  />
+                </Button>
+              </Col>
+              <Col sm={11}>
+                <Typeahead
+                  id={"add-mentee-" + props.craftsperson.id}
+                  labelKey={option => `${option.firstName} ${option.lastName}`}
+                  placeholder="Select a mentee"
+                  options={filterCraftspeople(
+                    props.craftspeople,
+                    props.craftsperson
+                  )}
+                  onChange={selected => setMenteeToAdd(selected[0])}
                 />
-              </Button>
-            </Col>
-            <Col sm={11}>
-              <Typeahead
-                id={"add-mentee-" + props.craftsperson.id}
-                labelKey={option => `${option.firstName} ${option.lastName}`}
-                placeholder="Select a mentee"
-                options={filterCraftspeople(
-                  props.craftspeople,
-                  props.craftsperson
-                )}
-                onChange={selected => setMenteeToAdd(selected[0])}
-              />
-            </Col>
-          </Row>
+              </Col>
+            </Row>
           </Container>
         </ListGroupItem>
       </ListGroup>
