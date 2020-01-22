@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -22,6 +22,7 @@ export default function ManageCraftsperson(props) {
   const [idToDelete, setIdToDelete] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
+  const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
 
   const handleClose = () => {
     setIdToDelete(null);
@@ -83,6 +84,25 @@ export default function ManageCraftsperson(props) {
     }
   }
 
+  useEffect(() => {
+    setLastMeetingThresholdsInWeeks(2);
+  }, []);
+
+  function updateLastMeetingThresholdsInWeeks() {
+    api({
+      endpoint: `/config`,
+      type: "PUT",
+      body: {
+        lastMeetingThresholdsInWeeks: updateLastMeetingThresholdsInWeeks
+      }
+    }).then(response => {
+      handleResponse(response, "Craftsperson removed", () => {
+        setIdToDelete(null);
+        props.rerender();
+      });
+    });
+  }
+
   return (
     <Row className="admin-button">
       <Button
@@ -102,6 +122,18 @@ export default function ManageCraftsperson(props) {
           </Container>
         </Modal.Header>
         <Modal.Body>
+          <Row>
+            <InputGroup className="mb-3">
+              <FormControl
+                required
+                onChange={setLastMeetingThresholdsInWeeks}
+                value={lastMeetingThresholdsInWeeks}
+              />
+              <InputGroup.Append>
+                <Button onClick={updateLastMeetingThresholdsInWeeks}>Update</Button>
+              </InputGroup.Append>
+            </InputGroup>
+          </Row>
           <InputGroup className="mb-3">
             <FormControl
               required
