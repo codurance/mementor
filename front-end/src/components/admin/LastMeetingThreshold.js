@@ -15,9 +15,7 @@ export default function LastMeetingThreshold({
   lastMeetingThresholdDefaultValue,
   idToken
 }) {
-  const [lastMeetingThreshold, setLastMeetingThreshold] = useState(
-    lastMeetingThresholdDefaultValue
-  );
+  const [lastMeetingThreshold, setLastMeetingThreshold] = useState(lastMeetingThresholdDefaultValue);
 
   function updateLastMeetingThresholdsInWeeks() {
     if (!lastMeetingThreshold || lastMeetingThreshold <= 0) {
@@ -44,6 +42,7 @@ export default function LastMeetingThreshold({
           required
           onChange={e => setLastMeetingThreshold(e.target.value)}
           value={lastMeetingThreshold}
+          placeholder="Select a last meeting threshold"
         />
         <InputGroup.Append>
           <Button onClick={updateLastMeetingThresholdsInWeeks}>Update</Button>
