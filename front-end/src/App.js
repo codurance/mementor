@@ -71,6 +71,10 @@ function App() {
   }
 
   useEffect(() => {
+    if (!isLoggedIn) {
+      // the api calls will fail because we're not authorized
+      return;
+    }
     api({ endpoint: "/craftspeople", token: idToken })
       .then(response => response.json())
       .then(fetchedCraftspeople => {
@@ -103,7 +107,9 @@ function App() {
               <Col>
                 <SortingBar
                   onClick={makeSortOnClickListener(sortByNumberOfMentees)}
-                  onClick1={makeSortOnClickListener(sortByCraftspeopleWithoutMentor)}
+                  onClick1={makeSortOnClickListener(
+                    sortByCraftspeopleWithoutMentor
+                  )}
                   onClick2={makeSortOnClickListener(sortByLastMeetingDate)}
                 />
               </Col>
