@@ -64,7 +64,18 @@ public class DynamicConfigurationIntegrationTest {
         given_a_json_config_to_insert(null);
 
         when_the_config_is_updated();
-        then_there_is_an_error_with("Last meeting cannot be null");
+        then_there_is_an_error_with("Last meeting threshold cannot be null");
+    }
+
+    @Test
+    public void zero_or_negative_values_should_be_rejected() throws JSONException {
+        given_a_json_config_to_insert(-1);
+        when_the_config_is_updated();
+        then_there_is_an_error_with("Last meeting threshold must be greater than 0");
+
+        given_a_json_config_to_insert(0);
+        when_the_config_is_updated();
+        then_there_is_an_error_with("Last meeting threshold must be greater than 0");
     }
 
     private void given_a_configuration_with(int threshold) {
