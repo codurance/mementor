@@ -1,17 +1,23 @@
+const LEFT_CRAFTSPERSON_FIRST = -1;
+const RIGHT_CRAFTSPERSON_FIRST = 1;
+
 export function sortByLastMeetingDate(leftCraftsperson, rightCraftsperson) {
-  function bothHaveLastMetDate() {
-    return leftCraftsperson.lastMeeting !== null && rightCraftsperson.lastMeeting !== null;
+  
+  const bothHaveLastMeeting = leftCraftsperson.lastMeeting !== null && rightCraftsperson.lastMeeting !== null;
+  const bothHaveSameLastMeetingDate = leftCraftsperson.lastMeeting === rightCraftsperson.lastMeeting;
+
+  if (bothHaveLastMeeting && !bothHaveSameLastMeetingDate){
+      return leftCraftsperson.lastMeeting - rightCraftsperson.lastMeeting;
   }
 
-  function bothHaveSameLastMetDate() {
-    return leftCraftsperson.lastMeeting === rightCraftsperson.lastMeeting;
+  if (rightCraftsperson.lastMeeting == null && leftCraftsperson.lastMeeting !== null){
+    return LEFT_CRAFTSPERSON_FIRST;
+  }
+  if (leftCraftsperson.lastMeeting == null && rightCraftsperson.lastMeeting !== null){
+    return RIGHT_CRAFTSPERSON_FIRST;
   }
 
-  if (!bothHaveLastMetDate() || bothHaveSameLastMetDate()) {
-    return sortAlphabetically(leftCraftsperson, rightCraftsperson);
-  }
-
-  return leftCraftsperson.lastMeeting - rightCraftsperson.lastMeeting;
+  return sortAlphabetically(leftCraftsperson,rightCraftsperson);
 }
 
 export function sortByNumberOfMentees(leftCraftsperson, rightCraftsperson) {
@@ -40,9 +46,9 @@ export function sortByCraftspeopleWithoutMentor(leftCraftsperson, rightCraftsper
   }
 
   if (leftCraftsperson.mentor == null) {
-    return -1;
+    return LEFT_CRAFTSPERSON_FIRST;
   }
-  return 1;
+  return RIGHT_CRAFTSPERSON_FIRST;
 }
 
 export function sortAlphabetically(leftCraftsperson, rightCraftsperson) {

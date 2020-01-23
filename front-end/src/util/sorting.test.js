@@ -187,4 +187,30 @@ describe("Sort by last met date", () => {
     expect(craftspeople[2].id).toBe(3);
     expect(craftspeople[3].id).toBe(2);
   });
+
+  it("ARNAUD DATA", () => {
+    const craftspeople = [
+      {
+        id: 0,
+        firstName: "Ade",
+        lastName: "Adegboye",
+        mentor: null,
+        mentees: [],
+        lastMeeting: null
+      },
+      {
+        id: 1,
+        firstName: "Alasdair",
+        lastName: "Smith",
+        mentor: { id: 5, firstName: "Liam", lastName: "Griffin-Jowett" },
+        mentees: [],
+        lastMeeting: 1577750400
+      }
+    ];
+
+    craftspeople.sort(sortByLastMeetingDate);
+
+    expect(craftspeople[0].id).toBe(1);
+    expect(craftspeople[1].id).toBe(0);
+  });
 });
