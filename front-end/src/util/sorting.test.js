@@ -3,7 +3,7 @@ import {
   sortByNumberOfMentees,
   sortByCraftspeopleWithoutMentor,
   sortAlphabetically,
-  sortByLastMetDate,
+  sortByLastMeetingDate,
 } from "./sorting";
 
 const fixtureData = Array.from(FIXTURE);
@@ -166,7 +166,7 @@ describe("Sort by last met date", () => {
       { id: 2, firstName: "Naruto", lastName: "Uzumaki", lastMeeting: new Date(2020, 1, 13) },
     ];
 
-    craftspeople.sort(sortByLastMetDate);
+    craftspeople.sort(sortByLastMeetingDate);
     expect(craftspeople[0].id).toBe(2);
     expect(craftspeople[1].id).toBe(1);
     expect(craftspeople[2].id).toBe(0);
@@ -180,7 +180,7 @@ describe("Sort by last met date", () => {
       { id: 3, firstName: "Chuck", lastName: "Norris"}
     ];
 
-    craftspeople.sort(sortByLastMetDate);
+    craftspeople.sort(sortByLastMeetingDate);
 
     expect(craftspeople[0].id).toBe(1);
     expect(craftspeople[1].id).toBe(0);

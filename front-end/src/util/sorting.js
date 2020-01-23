@@ -1,4 +1,4 @@
-export function sortByLastMetDate(leftCraftsperson, rightCraftsperson) {
+export function sortByLastMeetingDate(leftCraftsperson, rightCraftsperson) {
   function bothHaveLastMetDate() {
     return leftCraftsperson.lastMeeting !== null && rightCraftsperson.lastMeeting !== null;
   }

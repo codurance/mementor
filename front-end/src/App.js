@@ -6,7 +6,7 @@ import { filter } from "./util/filtering";
 import {
   sortByCraftspeopleWithoutMentor,
   sortByNumberOfMentees,
-  sortByLastMetDate
+  sortByLastMeetingDate
 } from "./util/sorting";
 import SearchBar from "./components/toolbar/SearchBar";
 import { SortingBar } from "./components/toolbar/SortingBar";
@@ -103,7 +103,7 @@ function App() {
                 <SortingBar
                   onClick={makeSortOnClickListener(sortByNumberOfMentees)}
                   onClick1={makeSortOnClickListener(sortByCraftspeopleWithoutMentor)}
-                  onClick2={makeSortOnClickListener(sortByLastMetDate)}
+                  onClick2={makeSortOnClickListener(sortByLastMeetingDate)}
                 />
               </Col>
               <Col>
