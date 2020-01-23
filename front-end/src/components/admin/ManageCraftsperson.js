@@ -14,7 +14,7 @@ import { validateName } from "../../util/validate";
 import {
   handleResponse,
   notifyFormValidationError
-} from "../notification/notify";
+} from "../../util/notify";
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);

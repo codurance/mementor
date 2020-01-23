@@ -15,7 +15,7 @@ import {
   handleResponse,
   mentorAddedMessage,
   notifyFormValidationError
-} from "../notification/notify";
+} from "../../util/notify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 

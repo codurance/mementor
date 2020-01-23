@@ -6,7 +6,7 @@ import {
   mentorAddedMessage,
   handleResponse,
   mentorRemovedMessage
-} from "../notification/notify";
+} from "../../util/notify";
 import { api } from "../../util/api";
 import { filterCraftspeople } from "../../util/filtering";
 import Button from "react-bootstrap/Button";
