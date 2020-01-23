@@ -1,6 +1,6 @@
 import React from "react";
 import { api } from "../../util/api";
-import { handleResponse } from "../notification/notify";
+import { handleResponse } from "../../util/notify";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import DatePicker from "react-datepicker";
