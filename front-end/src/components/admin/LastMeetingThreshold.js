@@ -8,7 +8,7 @@ import { api } from "../../util/api";
 import {
   handleResponse,
   notifyFormValidationError
-} from "../notification/notify";
+} from "../../util/notify";
 
 export default function LastMeetingThreshold({
   rerender,
