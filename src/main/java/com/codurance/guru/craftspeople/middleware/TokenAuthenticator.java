@@ -31,7 +31,6 @@ public class TokenAuthenticator extends HandlerInterceptorAdapter {
         try {
             return authenticateToken(token);
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false;
         }
