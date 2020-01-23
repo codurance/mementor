@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.Instant;
@@ -32,6 +33,9 @@ import static org.junit.Assert.assertTrue;
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class CraftspeopleControllerTest {
 
+    @LocalServerPort
+    int serverPort;
+
     @Autowired
     private CraftspeopleRepository craftspeopleRepository;
 
@@ -44,6 +48,14 @@ public class CraftspeopleControllerTest {
     private JSONObject requestBody;
     private int lastMeetingEpoch;
     private Integer savedId;
+
+    @Before
+    public void setUp() {
+        requestBody = new JSONObject();
+        craftspeople = new ArrayList<>();
+        lastMeetingEpoch = 1500000000;
+        RestAssured.port = serverPort;
+    }
 
     @Test
     public void add_a_craftsperson() throws JSONException {
@@ -234,13 +246,6 @@ public class CraftspeopleControllerTest {
         when_the_get_method_on_the_api_is_called_for_the_mentor();
 
         then_the_craftsperson_retrieved_has_mentees();
-    }
-
-    @Before
-    public void setUp() {
-        requestBody = new JSONObject();
-        craftspeople = new ArrayList<>();
-        lastMeetingEpoch = 1500000000;
     }
 
     private void given_a_craftsperson_in_the_repository() {

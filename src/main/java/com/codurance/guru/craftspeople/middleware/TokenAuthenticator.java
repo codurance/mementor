@@ -25,21 +25,30 @@ public class TokenAuthenticator extends HandlerInterceptorAdapter {
     public boolean preHandle(
             HttpServletRequest request,
             HttpServletResponse response,
-            Object handler) throws GeneralSecurityException, IOException {
+            Object handler) {
         String token = request.getHeader("Authorization");
-        if ("null".equals(token) || token == null)
+
+        try {
+            return authenticateToken(token);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false;
-        return authenticateToken(token);
+        }
     }
 
     private boolean authenticateToken(String token) throws GeneralSecurityException, IOException {
-        JacksonFactory jsonFactory = new JacksonFactory();
-        HttpTransport transport = new NetHttpTransport();
-        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
-                .setAudience(Collections.singletonList(CLIENT_ID))
-                .build();
+        GoogleIdTokenVerifier verifier = buildGoogleIdTokenVerifier();
 
         GoogleIdToken idToken = verifier.verify(token);
         return idToken != null;
+    }
+
+    private GoogleIdTokenVerifier buildGoogleIdTokenVerifier() {
+        JacksonFactory jsonFactory = new JacksonFactory();
+        HttpTransport transport = new NetHttpTransport();
+        return new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+                .setAudience(Collections.singletonList(CLIENT_ID))
+                .build();
     }
 }
