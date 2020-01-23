@@ -45,6 +45,13 @@ public class CraftspeopleControllerTest {
     private int lastMeetingEpoch;
     private Integer savedId;
 
+    @Before
+    public void setUp() {
+        requestBody = new JSONObject();
+        craftspeople = new ArrayList<>();
+        lastMeetingEpoch = 1500000000;
+    }
+
     @Test
     public void add_a_craftsperson() throws JSONException {
         given_a_json_with_a_first_name_and_a_last_name_for_a_new_craftsperson();
@@ -234,13 +241,6 @@ public class CraftspeopleControllerTest {
         when_the_get_method_on_the_api_is_called_for_the_mentor();
 
         then_the_craftsperson_retrieved_has_mentees();
-    }
-
-    @Before
-    public void setUp() {
-        requestBody = new JSONObject();
-        craftspeople = new ArrayList<>();
-        lastMeetingEpoch = 1500000000;
     }
 
     private void given_a_craftsperson_in_the_repository() {
