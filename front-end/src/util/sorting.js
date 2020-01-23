@@ -2,30 +2,37 @@ const LEFT_CRAFTSPERSON_FIRST = -1;
 const RIGHT_CRAFTSPERSON_FIRST = 1;
 
 export function sortByLastMeetingDate(leftCraftsperson, rightCraftsperson) {
-  
-  const bothHaveLastMeeting = leftCraftsperson.lastMeeting !== null && rightCraftsperson.lastMeeting !== null;
-  const bothHaveSameLastMeetingDate = leftCraftsperson.lastMeeting === rightCraftsperson.lastMeeting;
+  const bothHaveLastMeeting =
+    leftCraftsperson.lastMeeting !== null &&
+    rightCraftsperson.lastMeeting !== null;
 
-  if (bothHaveLastMeeting && !bothHaveSameLastMeetingDate){
-      return leftCraftsperson.lastMeeting - rightCraftsperson.lastMeeting;
+  const bothHaveSameLastMeetingDate =
+    leftCraftsperson.lastMeeting === rightCraftsperson.lastMeeting;
+
+  if (bothHaveLastMeeting && !bothHaveSameLastMeetingDate) {
+    return leftCraftsperson.lastMeeting - rightCraftsperson.lastMeeting;
   }
 
-  if (rightCraftsperson.lastMeeting == null && leftCraftsperson.lastMeeting !== null){
+  if (
+    rightCraftsperson.lastMeeting == null &&
+    leftCraftsperson.lastMeeting !== null
+  ) {
     return LEFT_CRAFTSPERSON_FIRST;
   }
-  if (leftCraftsperson.lastMeeting == null && rightCraftsperson.lastMeeting !== null){
+  if (
+    leftCraftsperson.lastMeeting == null &&
+    rightCraftsperson.lastMeeting !== null
+  ) {
     return RIGHT_CRAFTSPERSON_FIRST;
   }
 
-  return sortAlphabetically(leftCraftsperson,rightCraftsperson);
+  return sortAlphabetically(leftCraftsperson, rightCraftsperson);
 }
 
 export function sortByNumberOfMentees(leftCraftsperson, rightCraftsperson) {
-  function bothHaveSameNumberOfMentees() {
-    return leftCraftsperson.mentees.length === rightCraftsperson.mentees.length;
-  }
+  const bothHaveSameNumberOfMentees = leftCraftsperson.mentees.length === rightCraftsperson.mentees.length;
 
-  if (bothHaveSameNumberOfMentees()) {
+  if (bothHaveSameNumberOfMentees) {
     return sortAlphabetically(leftCraftsperson, rightCraftsperson);
   }
 
@@ -33,15 +40,11 @@ export function sortByNumberOfMentees(leftCraftsperson, rightCraftsperson) {
 }
 
 export function sortByCraftspeopleWithoutMentor(leftCraftsperson, rightCraftsperson) {
-  function noneHaveMentor() {
-    return leftCraftsperson.mentor == null && rightCraftsperson.mentor == null;
-  }
+  
+  const noneHaveMentor = leftCraftsperson.mentor == null && rightCraftsperson.mentor == null;
+  const bothHaveMentor = leftCraftsperson.mentor != null && rightCraftsperson.mentor != null;
 
-  function bothHaveMentor() {
-    return leftCraftsperson.mentor != null && rightCraftsperson.mentor != null;
-  }
-
-  if (noneHaveMentor() || bothHaveMentor()) {
+  if (noneHaveMentor || bothHaveMentor) {
     return sortAlphabetically(leftCraftsperson, rightCraftsperson);
   }
 
