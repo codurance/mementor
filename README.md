@@ -54,3 +54,9 @@ Then you can run the deploy script:
 ## Format Front End VSCode
 
 To format the project and the files acording to the agreed convention, you'll need to download prettier extention. Follow this guide to do it https://github.com/prettier/prettier-vscode#installation, after the extention is downloaded, you'll have to manually save the files to trigger the format `cmd+S`
+
+## OAuth Client ID
+
+The client ID for oauth is located at two different locations:
+- `application.properties`
+- `App.js` - `GoogleLogin` component

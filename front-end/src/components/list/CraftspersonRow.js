@@ -14,6 +14,7 @@ export default function CraftspersonRow({
   craftsperson,
   craftspeople,
   rerender,
+  lastMeetingThresholdsInWeeks,
   idToken
 }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -29,6 +30,7 @@ export default function CraftspersonRow({
                 craftspeople={craftspeople}
                 rerender={rerender}
                 idToken={idToken}
+                lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
               />
             </div>
             <Row>

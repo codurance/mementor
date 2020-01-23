@@ -9,7 +9,8 @@ export default function Craftsperson({
   craftsperson,
   craftspeople,
   rerender,
-  idToken
+  idToken,
+  lastMeetingThresholdsInWeeks
 }) {
   return (
     <Row>
@@ -29,6 +30,7 @@ export default function Craftsperson({
         craftspeople={craftspeople}
         rerender={rerender}
         idToken={idToken}
+        lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
       />
       <Col lg className="mentees-count-container">
         <h5
