@@ -7,10 +7,12 @@ import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -22,11 +24,18 @@ import static org.junit.Assert.assertEquals;
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class DynamicConfigurationTest {
 
-
     @Autowired
     private DynamicConfigurationRepository repository;
     private ValidatableResponse response;
     private JSONObject body;
+
+    @LocalServerPort
+    int serverPort;
+
+    @Before
+    public void setUp() {
+        RestAssured.port = serverPort;
+    }
 
     @Test
     public void get_config() {
