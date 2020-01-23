@@ -19,7 +19,7 @@ import Container from "react-bootstrap/Container";
 import "./App.css";
 import logo from "./mementor_logo.png";
 import "react-toastify/dist/ReactToastify.css";
-import { notifyUnexpectedBackendError } from "./components/notification/notify";
+import { notifyUnexpectedBackendError } from "./util/notify";
 
 toast.configure();
 
@@ -71,7 +71,7 @@ function App() {
   }
 
   useEffect(() => {
-    if(!isLoggedIn) {
+    if (!isLoggedIn) {
       // the api calls will fail because we're not authorized
       return;
     }
@@ -107,7 +107,9 @@ function App() {
               <Col>
                 <SortingBar
                   onClick={makeSortOnClickListener(sortByNumberOfMentees)}
-                  onClick1={makeSortOnClickListener(sortByCraftspeopleWithoutMentor)}
+                  onClick1={makeSortOnClickListener(
+                    sortByCraftspeopleWithoutMentor
+                  )}
                   onClick2={makeSortOnClickListener(sortByLastMeetingDate)}
                 />
               </Col>
