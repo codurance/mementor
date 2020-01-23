@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -82,27 +82,6 @@ export default function ManageCraftsperson(props) {
         });
       });
     }
-  }
-
-  useEffect(() => {
-    api({endpoint: `/config`})
-    .then(response => response.json())
-    .then(body => setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks));
-  }, []);
-
-  function updateLastMeetingThresholdsInWeeks() {
-    api({
-      endpoint: `/config`,
-      type: "PUT",
-      body: {
-        'lastMeetingThresholdsInWeeks': lastMeetingThresholdsInWeeks
-      }
-    }).then(response => {
-      handleResponse(response, "Craftsperson removed", () => {
-        setIdToDelete(null);
-        props.rerender();
-      });
-    });
   }
 
   return (
