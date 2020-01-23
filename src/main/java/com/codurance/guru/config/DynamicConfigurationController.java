@@ -27,7 +27,11 @@ public class DynamicConfigurationController {
     @PutMapping("/config")
     public ResponseEntity<ErrorResponse> update(@RequestBody DynamicConfiguration dynamicConfiguration) {
         if(dynamicConfiguration.getLastMeetingThresholdsInWeeks() == null) {
-            return badRequest().body(new ErrorResponse("Last meeting cannot be null"));
+            return badRequest().body(new ErrorResponse("Last meeting threshold cannot be null"));
+        }
+
+        if(dynamicConfiguration.getLastMeetingThresholdsInWeeks() <= 0) {
+            return badRequest().body(new ErrorResponse("Last meeting threshold must be greater than 0"));
         }
 
         dynamicConfigurationRepository.save(dynamicConfiguration);
