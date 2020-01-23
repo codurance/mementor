@@ -23,14 +23,17 @@ public class CraftspeopleSampleData {
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
         if(dynamicConfigurationRepository.count() > 0) {
-            System.out.println("config repository not empty, skipping initial data population ..");
+            System.out.println("config repository not empty, skipping initial data population");
+        } else {
+            System.out.println("injecting config sample data ..");
             dynamicConfigurationRepository.save(new DynamicConfiguration(8));
         }
 
         if(craftspeopleRepository.count() > 0) {
-            System.out.println("craftspeople repository not empty, skipping initial data population ..");
+            System.out.println("craftspeople repository not empty, skipping initial data population");
             return;
         }
+        System.out.println("injecting craftspeople sample data ..");
         Craftsperson mashB = craftspeopleRepository.save(new Craftsperson("Mashooq", "Badar"));
         Craftsperson sandroM = craftspeopleRepository.save(new Craftsperson("Sandro", "Mancuso"));
         Craftsperson steveL = craftspeopleRepository.save(new Craftsperson("Steve", "Lydford"));
