@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -15,6 +15,7 @@ import {
   handleResponse,
   notifyFormValidationError
 } from "../../util/notify";
+import LastMeetingThreshold from "./LastMeetingThreshold";
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
@@ -22,7 +23,7 @@ export default function ManageCraftsperson(props) {
   const [idToDelete, setIdToDelete] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
-
+  
   const handleClose = () => {
     setIdToDelete(null);
     setShow(false);
@@ -102,6 +103,13 @@ export default function ManageCraftsperson(props) {
           </Container>
         </Modal.Header>
         <Modal.Body>
+          <LastMeetingThreshold
+            lastMeetingThresholdDefaultValue={
+              props.lastMeetingThresholdDefaultValue
+            }
+            idToken={props.idToken}
+            rerender={props.rerender}
+          />
           <InputGroup className="mb-3">
             <FormControl
               required

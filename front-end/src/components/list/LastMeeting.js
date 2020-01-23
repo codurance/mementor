@@ -8,13 +8,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./LastMeeting.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import { validateLastMeetingThresold } from "../../util/date";
+import { validateLastMeetingThresoldWithCustomThreshold } from "../../util/date";
 
 export default function lastMeeting({
   craftsperson,
   craftspeople,
   rerender,
-  idToken
+  idToken,
+  lastMeetingThresholdsInWeeks
 }) {
   function setLastMeeting(date) {
     api({
@@ -23,8 +24,8 @@ export default function lastMeeting({
       type: "PUT",
       body: {
         craftspersonId: craftsperson.id,
-        lastMeeting: date.getTime() / 1000
-      }
+        lastMeeting: date.getTime() / 1000,
+      },
     }).then(response => {
       handleResponse(response, "Last meeting updated", rerender);
     });
@@ -53,7 +54,7 @@ export default function lastMeeting({
             />
           )}
           {craftsperson.lastMeeting &&
-            !validateLastMeetingThresold(craftsperson.lastMeeting) && (
+            !validateLastMeetingThresoldWithCustomThreshold(craftsperson.lastMeeting, lastMeetingThresholdsInWeeks) && (
               <FontAwesomeIcon
                 data-testid="last-meeting-alert"
                 icon={faExclamationTriangle}

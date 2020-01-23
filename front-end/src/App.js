@@ -30,10 +30,11 @@ function App() {
   const [shouldRender, setShouldRender] = useState(false);
   const [craftspeople, setCraftsPeople] = useState([]);
   const [filteredCraftspeople, setFilteredCraftspeople] = useState(
-    craftspeople
+    craftspeople,
   );
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [idToken, setIdToken] = useState(null);
+  const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
 
   function login(googleUser) {
     setIsLoggedIn(true);
@@ -86,6 +87,11 @@ function App() {
         notifyUnexpectedBackendError(error);
         setBackendFetchError(error);
       });
+
+    api({endpoint: `/config`, token: idToken})
+    .then(response => response.json())
+    .then(body => setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks))
+    .catch(notifyUnexpectedBackendError);
   }, [defaultSort, shouldRender]);
 
   return (
@@ -118,6 +124,7 @@ function App() {
                   craftspeople={craftspeople}
                   rerender={rerender}
                   idToken={idToken}
+                  lastMeetingThresholdDefaultValue={lastMeetingThresholdsInWeeks}
                 />
               </Col>
             </Row>
@@ -134,6 +141,7 @@ function App() {
               craftsperson={craftsperson}
               craftspeople={craftspeople}
               rerender={rerender}
+              lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
               idToken={idToken}
             />
           ))}
