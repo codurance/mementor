@@ -19,6 +19,7 @@ import Container from "react-bootstrap/Container";
 import "./App.css";
 import logo from "./mementor_logo.png";
 import "react-toastify/dist/ReactToastify.css";
+import { notifyUnexpectedBackendError } from "./components/notification/notify";
 
 toast.configure();
 
@@ -70,6 +71,10 @@ function App() {
   }
 
   useEffect(() => {
+    if(!isLoggedIn) {
+      // the api calls will fail because we're not authorized
+      return;
+    }
     api({ endpoint: "/craftspeople", token: idToken })
       .then(response => response.json())
       .then(fetchedCraftspeople => {
@@ -78,7 +83,7 @@ function App() {
         setFilteredCraftspeople(fetchedCraftspeople);
       })
       .catch(error => {
-        console.log(error);
+        notifyUnexpectedBackendError(error);
         setBackendFetchError(error);
       });
   }, [defaultSort, shouldRender]);
