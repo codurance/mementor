@@ -91,14 +91,14 @@ export default function ManageCraftsperson(props) {
         data-testid="adminPopupButton"
         onClick={handleShow}
       >
-        <FontAwesomeIcon icon={faCog} /> Craftspeople
+        <FontAwesomeIcon icon={faCog} /> Admin
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Container>
             <Row>
-              <Modal.Title>Add or Remove Craftsperson</Modal.Title>
+              <Modal.Title>Admin</Modal.Title>
             </Row>
           </Container>
         </Modal.Header>
@@ -110,6 +110,7 @@ export default function ManageCraftsperson(props) {
             idToken={props.idToken}
             rerender={props.rerender}
           />
+          <h5 className="admin-label">New craftsperson</h5>
           <InputGroup className="mb-3">
             <FormControl
               required
@@ -125,6 +126,7 @@ export default function ManageCraftsperson(props) {
               <Button onClick={() => addCraftsperson()}>Add</Button>
             </InputGroup.Append>
           </InputGroup>
+          <h5 className="admin-label">Existing craftspeople</h5>
           <CraftspersonList
             craftspeople={props.craftspeople}
             click={getSelectedId}

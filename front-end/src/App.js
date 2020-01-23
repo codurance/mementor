@@ -44,11 +44,6 @@ function App() {
     rerender();
   }
 
-  function logout() {
-    setIsLoggedIn(false);
-    rerender();
-  }
-
   function responseGoogle(response) {
     console.log(response);
   }
@@ -100,12 +95,6 @@ function App() {
         <div>
           <Container>
             <Image className="main-logo" src={logo} />
-            <GoogleLogout
-              className="logout-button"
-              clientId="232062837025-i97turm1tg41ian5hjaq1ujao6q2569i.apps.googleusercontent.com"
-              buttonText="Logout"
-              onLogoutSuccess={logout}
-            ></GoogleLogout>
           </Container>
           <Container>
             <SearchBar onEnter={filterCraftspeople} />
