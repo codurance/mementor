@@ -30,21 +30,17 @@ function App() {
   const [shouldRender, setShouldRender] = useState(false);
   const [craftspeople, setCraftsPeople] = useState([]);
   const [filteredCraftspeople, setFilteredCraftspeople] = useState(
-    craftspeople
+    craftspeople,
   );
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [idToken, setIdToken] = useState(null);
+  const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
 
   function login(googleUser) {
     setIsLoggedIn(true);
     setBackendFetchError(null);
     const id_token = googleUser.getAuthResponse().id_token;
     setIdToken(id_token);
-    rerender();
-  }
-
-  function logout() {
-    setIsLoggedIn(false);
     rerender();
   }
 
@@ -86,6 +82,11 @@ function App() {
         notifyUnexpectedBackendError(error);
         setBackendFetchError(error);
       });
+
+    api({endpoint: `/config`, token: idToken})
+    .then(response => response.json())
+    .then(body => setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks))
+    .catch(notifyUnexpectedBackendError);
   }, [defaultSort, shouldRender]);
 
   return (
@@ -94,12 +95,6 @@ function App() {
         <div>
           <Container>
             <Image className="main-logo" src={logo} />
-            <GoogleLogout
-              className="logout-button"
-              clientId="232062837025-i97turm1tg41ian5hjaq1ujao6q2569i.apps.googleusercontent.com"
-              buttonText="Logout"
-              onLogoutSuccess={logout}
-            ></GoogleLogout>
           </Container>
           <Container>
             <SearchBar onEnter={filterCraftspeople} />
@@ -118,6 +113,7 @@ function App() {
                   craftspeople={craftspeople}
                   rerender={rerender}
                   idToken={idToken}
+                  lastMeetingThresholdDefaultValue={lastMeetingThresholdsInWeeks}
                 />
               </Col>
             </Row>
@@ -134,6 +130,7 @@ function App() {
               craftsperson={craftsperson}
               craftspeople={craftspeople}
               rerender={rerender}
+              lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
               idToken={idToken}
             />
           ))}

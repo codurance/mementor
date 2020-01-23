@@ -3,17 +3,18 @@ import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import ReactDOM from "react-dom";
+import faSearch from "@fortawesome/free-solid-svg-icons/faSearch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export default function SearchBar(props) {
-  const [searchValue, setSearchValue] = useState(null);
-  let searchInput = null;
+  let searchInputRef = null;
 
-  const clearSearch = () => {
-    setSearchValue("");
+  const [searchedValue, setSearchedValue] = useState(null);
+
+  const clearSearchInput = () => {
+    setSearchedValue("");
     props.onEnter("");
-    ReactDOM.findDOMNode(searchInput).value = "";
+    ReactDOM.findDOMNode(searchInputRef).value = "";
   };
 
   return (
@@ -26,7 +27,7 @@ export default function SearchBar(props) {
         </InputGroup.Text>
       </InputGroup.Prepend>
       <FormControl
-        ref={searchInputElement => (searchInput = searchInputElement)}
+        ref={searchedInputElement => (searchInputRef = searchedInputElement)}
         className="searchBarInput"
         data-testid="SearchBarInput"
         aria-label="Craftsperson searchbar"
@@ -34,13 +35,13 @@ export default function SearchBar(props) {
         placeholder="Find Craftsperson..."
         onChange={e => {
           props.onEnter(e.target.value);
-          setSearchValue(e.target.value);
+          setSearchedValue(e.target.value);
         }}
       />
-      {searchValue && (
+      {searchedValue && (
         <Button
           className="clear-search"
-          onClick={clearSearch}
+          onClick={clearSearchInput}
           data-testid="clearSearchButton"
           variant="Light"
         >
