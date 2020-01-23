@@ -10,3 +10,8 @@
 .add-button {
   justify-content: flex-end;
 }
+
+.admin-label {
+  font-size: 100%;
+  color: rgb(129, 129, 129);
+}

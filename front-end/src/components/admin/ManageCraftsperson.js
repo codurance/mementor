@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -15,6 +15,7 @@ import {
   handleResponse,
   notifyFormValidationError
 } from "../../util/notify";
+import LastMeetingThreshold from "./LastMeetingThreshold";
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
@@ -22,7 +23,7 @@ export default function ManageCraftsperson(props) {
   const [idToDelete, setIdToDelete] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
-
+  
   const handleClose = () => {
     setIdToDelete(null);
     setShow(false);
@@ -90,18 +91,26 @@ export default function ManageCraftsperson(props) {
         data-testid="adminPopupButton"
         onClick={handleShow}
       >
-        <FontAwesomeIcon icon={faCog} /> Craftspeople
+        <FontAwesomeIcon icon={faCog} /> Admin
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Container>
             <Row>
-              <Modal.Title>Add or Remove Craftsperson</Modal.Title>
+              <Modal.Title>Admin</Modal.Title>
             </Row>
           </Container>
         </Modal.Header>
         <Modal.Body>
+          <LastMeetingThreshold
+            lastMeetingThresholdDefaultValue={
+              props.lastMeetingThresholdDefaultValue
+            }
+            idToken={props.idToken}
+            rerender={props.rerender}
+          />
+          <h5 className="admin-label">New craftsperson</h5>
           <InputGroup className="mb-3">
             <FormControl
               required
@@ -117,6 +126,7 @@ export default function ManageCraftsperson(props) {
               <Button onClick={() => addCraftsperson()}>Add</Button>
             </InputGroup.Append>
           </InputGroup>
+          <h5 className="admin-label">Existing craftspeople</h5>
           <CraftspersonList
             craftspeople={props.craftspeople}
             click={getSelectedId}
