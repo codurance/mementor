@@ -23,13 +23,13 @@ export function SortingBar(props) {
                 prechecked
                 value={1}
               >
-                number of mentees
+                Number of mentees
               </ToggleButton>
               <ToggleButton variant="light" onClick={props.onClick1} value={2}>
-                unmentored craftsperson
+                Unmentored craftsperson
               </ToggleButton>
               <ToggleButton variant="light" onClick={props.onClick2} value={3}>
-                oldest last meeting
+                Last meeting
               </ToggleButton>
             </ToggleButtonGroup>
           </ButtonToolbar>
