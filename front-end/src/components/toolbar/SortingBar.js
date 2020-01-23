@@ -29,7 +29,7 @@ export function SortingBar(props) {
                 unmentored craftsperson
               </ToggleButton>
               <ToggleButton variant="light" onClick={props.onClick2} value={3}>
-                last meeting date
+                oldest last meeting
               </ToggleButton>
             </ToggleButtonGroup>
           </ButtonToolbar>
