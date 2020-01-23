@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.Instant;
@@ -32,6 +33,9 @@ import static org.junit.Assert.assertTrue;
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class CraftspeopleControllerTest {
 
+    @LocalServerPort
+    int serverPort;
+
     @Autowired
     private CraftspeopleRepository craftspeopleRepository;
 
@@ -50,6 +54,7 @@ public class CraftspeopleControllerTest {
         requestBody = new JSONObject();
         craftspeople = new ArrayList<>();
         lastMeetingEpoch = 1500000000;
+        RestAssured.port = serverPort;
     }
 
     @Test
