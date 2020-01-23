@@ -22,10 +22,18 @@ public class CraftspeopleSampleData {
 
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
+        if(dynamicConfigurationRepository.count() > 0) {
+            System.out.println("config repository not empty, skipping initial data population");
+        } else {
+            System.out.println("injecting config sample data ..");
+            dynamicConfigurationRepository.save(new DynamicConfiguration(8));
+        }
+
         if(craftspeopleRepository.count() > 0) {
-            System.out.println("repository not empty, skipping initial data population ..");
+            System.out.println("craftspeople repository not empty, skipping initial data population");
             return;
         }
+        System.out.println("injecting craftspeople sample data ..");
         Craftsperson mashB = craftspeopleRepository.save(new Craftsperson("Mashooq", "Badar"));
         Craftsperson sandroM = craftspeopleRepository.save(new Craftsperson("Sandro", "Mancuso"));
         Craftsperson steveL = craftspeopleRepository.save(new Craftsperson("Steve", "Lydford"));
@@ -105,8 +113,6 @@ public class CraftspeopleSampleData {
         craftspeopleRepository.save(new Craftsperson("Zabih", "Safdari"));
         craftspeopleRepository.save(new Craftsperson("David", "Welch"));
         craftspeopleRepository.save(new Craftsperson("Nichole", "Mellekas"));
-
-        dynamicConfigurationRepository.save(new DynamicConfiguration(8));
     }
 
     private Instant makeLastMeeting(int year, int month, int day) {
