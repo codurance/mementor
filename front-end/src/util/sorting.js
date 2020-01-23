@@ -7,7 +7,7 @@ export function sortByLastMetDate(leftCraftsperson, rightCraftsperson) {
     return leftCraftsperson.lastMeeting === rightCraftsperson.lastMeeting;
   }
 
-  if (!bothHaveLastMetDate() && bothHaveSameLastMetDate()) {
+  if (!bothHaveLastMetDate() || bothHaveSameLastMetDate()) {
     return sortAlphabetically(leftCraftsperson, rightCraftsperson);
   }
 
