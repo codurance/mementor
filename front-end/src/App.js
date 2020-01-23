@@ -96,7 +96,7 @@ function App() {
             <Image className="main-logo" src={logo} />
             <GoogleLogout
               className="logout-button"
-              clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+              clientId="232062837025-i97turm1tg41ian5hjaq1ujao6q2569i.apps.googleusercontent.com"
               buttonText="Logout"
               onLogoutSuccess={logout}
             ></GoogleLogout>
@@ -147,7 +147,7 @@ function App() {
           <Row>
             <GoogleLogin
               className="google-login"
-              clientId="677831756912-90mpqndj2c96nac10mgjciibcdoiinra.apps.googleusercontent.com"
+              clientId="232062837025-i97turm1tg41ian5hjaq1ujao6q2569i.apps.googleusercontent.com"
               buttonText="Login"
               onSuccess={login}
               onFailure={responseGoogle}
