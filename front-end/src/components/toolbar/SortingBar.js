@@ -14,7 +14,7 @@ export function SortingBar(props) {
           Sort by mentor
         </ToggleButton>
         <ToggleButton variant="light" onClick={props.onClick2} value={3}>
-          Sort by last meeting late
+          Sort by last meeting date
         </ToggleButton>
       </ToggleButtonGroup>
     </ButtonToolbar>
