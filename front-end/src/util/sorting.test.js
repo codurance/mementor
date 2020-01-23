@@ -3,6 +3,7 @@ import {
   sortByNumberOfMentees,
   sortByCraftspeopleWithoutMentor,
   sortAlphabetically,
+  sortByLastMeetingDate,
 } from "./sorting";
 
 const fixtureData = Array.from(FIXTURE);
@@ -144,15 +145,46 @@ describe("craftspeople without mentor sort", () => {
 
 describe("Alphabetical sort", () => {
   it("should sort alphabetically craftspeople", () => {
-    const craftpeople = [
+    const craftspeople = [
       { id: 0, firstName: "Etienne", lastName: "Mustow" },
       { id: 1, firstName: "Arnaud", lastName: "Claudel" },
       { id: 2, firstName: "Naruto", lastName: "Uzumaki" },
     ];
 
-    craftpeople.sort(sortAlphabetically);
-    expect(craftpeople[0].id).toBe(1);
-    expect(craftpeople[1].id).toBe(0);
-    expect(craftpeople[2].id).toBe(2);
+    craftspeople.sort(sortAlphabetically);
+    expect(craftspeople[0].id).toBe(1);
+    expect(craftspeople[1].id).toBe(0);
+    expect(craftspeople[2].id).toBe(2);
+  });
+});
+
+describe("Sort by last met date", () => {
+  it("should sort by oldest meeting date", () => {
+    const craftspeople = [
+      { id: 0, firstName: "Etienne", lastName: "Mustow", lastMeeting: new Date(2020, 1, 15) },
+      { id: 1, firstName: "Arnaud", lastName: "Claudel", lastMeeting: new Date(2020, 1, 14) },
+      { id: 2, firstName: "Naruto", lastName: "Uzumaki", lastMeeting: new Date(2020, 1, 13) },
+    ];
+
+    craftspeople.sort(sortByLastMeetingDate);
+    expect(craftspeople[0].id).toBe(2);
+    expect(craftspeople[1].id).toBe(1);
+    expect(craftspeople[2].id).toBe(0);
+  });
+
+  it("should give precedence to craftsperson with meeting date over craftsperson with no meeting date", () => {
+    const craftspeople = [
+      { id: 0, firstName: "Etienne", lastName: "Mustow", lastMeeting: new Date(2020, 1, 15) },
+      { id: 1, firstName: "Arnaud", lastName: "Claudel", lastMeeting: new Date(2020, 1, 14) },
+      { id: 2, firstName: "Naruto", lastName: "Uzumaki"},
+      { id: 3, firstName: "Chuck", lastName: "Norris"}
+    ];
+
+    craftspeople.sort(sortByLastMeetingDate);
+
+    expect(craftspeople[0].id).toBe(1);
+    expect(craftspeople[1].id).toBe(0);
+    expect(craftspeople[2].id).toBe(3);
+    expect(craftspeople[3].id).toBe(2);
   });
 });
