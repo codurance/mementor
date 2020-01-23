@@ -21,11 +21,11 @@ public class DynamicConfiguration {
         this.lastMeetingThresholdsInWeeks = lastMeetingThresholdsInWeeks;
     }
 
-    public int getLastMeetingThresholdsInWeeks() {
+    public Integer getLastMeetingThresholdsInWeeks() {
         return lastMeetingThresholdsInWeeks;
     }
 
-    public void setLastMeetingThresholdsInWeeks(int lastMeetingThresholdsInWeeks) {
+    public void setLastMeetingThresholdsInWeeks(Integer lastMeetingThresholdsInWeeks) {
         this.lastMeetingThresholdsInWeeks = lastMeetingThresholdsInWeeks;
     }
 }
