@@ -90,7 +90,7 @@ export default function ManageCraftsperson(props) {
         data-testid="adminPopupButton"
         onClick={handleShow}
       >
-        <FontAwesomeIcon icon={faCog} /> Craftspeople
+        <FontAwesomeIcon icon={faCog} /> Admin
       </Button>
 
       <Modal show={show} onHide={handleClose}>
