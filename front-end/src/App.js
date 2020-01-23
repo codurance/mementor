@@ -90,7 +90,8 @@ function App() {
 
     api({endpoint: `/config`, token: idToken})
     .then(response => response.json())
-    .then(body => setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks));
+    .then(body => setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks))
+    .catch(notifyUnexpectedBackendError);
   }, [defaultSort, shouldRender]);
 
   return (
