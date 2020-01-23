@@ -99,11 +99,11 @@ export default function Mentor({
         {craftsperson.mentor && (
           <Button
             className="remove-button remove-mentor"
-            variant="danger"
+            variant="link"
             data-testid="removementeebutton"
             onClick={removeMentorCallback}
           >
-            <FontAwesomeIcon className="times-icon" icon={faTimes} size="sm" />
+            <FontAwesomeIcon className="times-icon" icon={faTimes} size="lg" />
           </Button>
         )}
       </Row>

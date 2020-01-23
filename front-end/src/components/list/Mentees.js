@@ -71,7 +71,7 @@ export default function Mentees(props) {
               <Col sm={1}>
                 <Button
                   className="add-button"
-                  variant="success"
+                  variant="link"
                   data-testid="addMenteebutton"
                   onClick={() =>
                     addMentee(menteeToAdd, props.craftsperson, props.idToken)
@@ -80,7 +80,7 @@ export default function Mentees(props) {
                   <FontAwesomeIcon
                     className="plus-icon"
                     icon={faPlus}
-                    size="sm"
+                    size="lg"
                   />
                 </Button>
               </Col>
