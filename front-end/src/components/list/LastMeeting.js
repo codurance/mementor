@@ -24,8 +24,8 @@ export default function lastMeeting({
       type: "PUT",
       body: {
         craftspersonId: craftsperson.id,
-        lastMeeting: date.getTime() / 1000,
-      },
+        lastMeeting: date.getTime() / 1000
+      }
     }).then(response => {
       handleResponse(response, "Last meeting updated", rerender);
     });
@@ -54,13 +54,16 @@ export default function lastMeeting({
             />
           )}
           {craftsperson.lastMeeting &&
-            !validateLastMeetingThresoldWithCustomThreshold(craftsperson.lastMeeting, lastMeetingThresholdsInWeeks) && (
-              <FontAwesomeIcon
-                className="alert-icon"
-                data-testid="last-meeting-alert"
-                icon={faExclamationTriangle}
-                size="xl"
-              />
+            !validateLastMeetingThresoldWithCustomThreshold(
+              craftsperson.lastMeeting,
+              lastMeetingThresholdsInWeeks
+            ) && (
+                <FontAwesomeIcon
+                  className="alert-icon"
+                  data-testid="last-meeting-alert"
+                  icon={faExclamationTriangle}
+                  size="xl"
+                />
             )}
         </span>
       </Row>

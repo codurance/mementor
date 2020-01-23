@@ -32,14 +32,14 @@ export default function Mentee({ mentee, rerender, idToken }) {
           <Col sm={1}>
             <Button
               className="remove-button"
-              variant="danger"
+              variant="link"
               data-testid="removementeebutton"
               onClick={() => removeMentee()}
             >
               <FontAwesomeIcon
                 className="times-icon"
                 icon={faTimes}
-                size="sm"
+                size="lg"
               />
             </Button>
           </Col>
