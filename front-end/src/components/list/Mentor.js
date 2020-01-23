@@ -70,7 +70,14 @@ export default function Mentor({
     if (!craftsperson.mentor) {
       return "";
     }
-    return craftsperson.mentor.firstName + " " + craftsperson.mentor.lastName;
+    return `${craftsperson.mentor.firstName} ${craftsperson.mentor.lastName}`;
+  }
+
+  function getCraftspersonMentorOrNull(){
+    if (!craftsperson.mentor) {
+      return [];
+    }
+    return [craftsperson.mentor];
   }
 
   return (
@@ -87,6 +94,7 @@ export default function Mentor({
           options={filterCraftspeople(craftspeople, craftsperson)}
           placeholder="Select a mentor"
           onChange={addMentorCallBack}
+          selected={getCraftspersonMentorOrNull()}
         />
         {craftsperson.mentor && (
           <Button
