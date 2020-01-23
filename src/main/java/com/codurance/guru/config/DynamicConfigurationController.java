@@ -33,8 +33,10 @@ public class DynamicConfigurationController {
         if(dynamicConfiguration.getLastMeetingThresholdsInWeeks() <= 0) {
             return badRequest().body(new ErrorResponse("Last meeting threshold must be greater than 0"));
         }
+        DynamicConfiguration currentConfig = dynamicConfigurationRepository.findTopByOrderByIdDesc();
+        currentConfig.setLastMeetingThresholdsInWeeks(dynamicConfiguration.getLastMeetingThresholdsInWeeks());
+        dynamicConfigurationRepository.save(currentConfig);
 
-        dynamicConfigurationRepository.save(dynamicConfiguration);
         return noContent().build();
     }
 

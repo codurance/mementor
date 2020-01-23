@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -57,6 +58,21 @@ public class DynamicConfigurationIntegrationTest {
         when_the_config_is_updated();
 
         response.statusCode(204);
+
+        // valueOf to fix ambiguous method signatures
+        assertEquals(Integer.valueOf(2), repository.findTopByOrderByIdDesc().getLastMeetingThresholdsInWeeks());
+    }
+
+    @Test
+    public void the_update_will_not_add_a_new_config_to_the_repo() throws JSONException {
+        given_a_configuration_with(4);
+        given_a_json_config_to_insert(2);
+        long currentNumbersOfConfig = repository.count();
+
+        when_the_config_is_updated();
+
+        response.statusCode(204);
+        assertEquals(currentNumbersOfConfig, repository.count());
     }
 
     @Test
