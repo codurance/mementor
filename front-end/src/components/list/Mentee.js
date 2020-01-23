@@ -8,7 +8,7 @@ import { api } from "./../../util/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import "./Mentee.css";
-import { handleResponse, mentorRemovedMessage } from "../notification/notify";
+import { handleResponse, mentorRemovedMessage } from "../../util/notify";
 
 export default function Mentee({ mentee, rerender, idToken }) {
   function removeMentee() {

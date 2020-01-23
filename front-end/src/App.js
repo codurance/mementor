@@ -19,7 +19,7 @@ import Container from "react-bootstrap/Container";
 import "./App.css";
 import logo from "./mementor_logo.png";
 import "react-toastify/dist/ReactToastify.css";
-import { notifyUnexpectedBackendError } from "./components/notification/notify";
+import { notifyUnexpectedBackendError } from "./util/notify";
 
 toast.configure();
 
@@ -71,7 +71,7 @@ function App() {
   }
 
   useEffect(() => {
-    if(!isLoggedIn) {
+    if (!isLoggedIn) {
       // the api calls will fail because we're not authorized
       return;
     }
@@ -96,7 +96,7 @@ function App() {
             <Image className="main-logo" src={logo} />
             <GoogleLogout
               className="logout-button"
-              clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+              clientId="232062837025-i97turm1tg41ian5hjaq1ujao6q2569i.apps.googleusercontent.com"
               buttonText="Logout"
               onLogoutSuccess={logout}
             ></GoogleLogout>
@@ -107,7 +107,9 @@ function App() {
               <Col>
                 <SortingBar
                   onClick={makeSortOnClickListener(sortByNumberOfMentees)}
-                  onClick1={makeSortOnClickListener(sortByCraftspeopleWithoutMentor)}
+                  onClick1={makeSortOnClickListener(
+                    sortByCraftspeopleWithoutMentor
+                  )}
                   onClick2={makeSortOnClickListener(sortByLastMeetingDate)}
                 />
               </Col>
@@ -145,7 +147,7 @@ function App() {
           <Row>
             <GoogleLogin
               className="google-login"
-              clientId="677831756912-90mpqndj2c96nac10mgjciibcdoiinra.apps.googleusercontent.com"
+              clientId="232062837025-i97turm1tg41ian5hjaq1ujao6q2569i.apps.googleusercontent.com"
               buttonText="Login"
               onSuccess={login}
               onFailure={responseGoogle}

@@ -15,11 +15,13 @@ import {
   handleResponse,
   mentorAddedMessage,
   notifyFormValidationError
-} from "../notification/notify";
+} from "../../util/notify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function Mentees(props) {
+  let addMenteeRef = React.createRef();
+
   const [menteeToAdd, setMenteeToAdd] = useState(null);
 
   function addMentee(mentee, mentor, idToken) {
@@ -39,7 +41,10 @@ export default function Mentees(props) {
         handleResponse(
           response,
           mentorAddedMessage(mentor.firstName, mentee.firstName),
-          props.rerender
+          () => {
+            addMenteeRef.current.clear();
+            props.rerender();
+          }
         );
       });
     }
@@ -68,19 +73,20 @@ export default function Mentees(props) {
                   className="add-button"
                   variant="success"
                   data-testid="addMenteebutton"
+                  onClick={() =>
+                    addMentee(menteeToAdd, props.craftsperson, props.idToken)
+                  }
                 >
                   <FontAwesomeIcon
                     className="plus-icon"
                     icon={faPlus}
                     size="sm"
-                    onClick={() =>
-                      addMentee(menteeToAdd, props.craftsperson, props.idToken)
-                    }
                   />
                 </Button>
               </Col>
               <Col sm={11}>
                 <Typeahead
+                  ref={addMenteeRef}
                   id={"add-mentee-" + props.craftsperson.id}
                   labelKey={option => `${option.firstName} ${option.lastName}`}
                   placeholder="Select a mentee"
