@@ -12,17 +12,13 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
-@Component
 public class CraftspeopleService {
 
-    @Autowired
     private CraftspeopleRepository repository;
 
-    @Autowired
     private CraftspeopleValidator craftspeopleValidator;
 
     public CraftspeopleService(CraftspeopleRepository repository, CraftspeopleValidator validator) {
-
         this.repository = repository;
         this.craftspeopleValidator = validator;
     }
