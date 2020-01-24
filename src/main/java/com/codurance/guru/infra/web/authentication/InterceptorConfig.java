@@ -1,4 +1,4 @@
-package com.codurance.guru.core.craftspeople.middleware;
+package com.codurance.guru.infra.web.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,5 +1,6 @@
 package com.codurance.guru.core.craftspeople;
 
+import com.codurance.guru.infra.web.serialization.CraftspersonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;

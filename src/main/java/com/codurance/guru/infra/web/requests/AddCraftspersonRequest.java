@@ -1,4 +1,4 @@
-package com.codurance.guru.core.craftspeople.requests;
+package com.codurance.guru.infra.web.requests;
 
 import javax.validation.constraints.NotBlank;
 

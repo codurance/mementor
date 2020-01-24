@@ -1,6 +1,6 @@
 package com.codurance.guru.core.config;
 
-import com.codurance.guru.core.craftspeople.responses.ErrorResponse;
+import com.codurance.guru.infra.web.responses.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

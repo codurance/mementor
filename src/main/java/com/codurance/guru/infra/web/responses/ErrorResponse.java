@@ -1,4 +1,4 @@
-package com.codurance.guru.core.craftspeople.responses;
+package com.codurance.guru.infra.web.responses;
 
 public class ErrorResponse {
     private String message;

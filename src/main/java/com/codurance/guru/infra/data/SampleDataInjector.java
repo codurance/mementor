@@ -1,7 +1,9 @@
-package com.codurance.guru.core.craftspeople;
+package com.codurance.guru.infra.data;
 
 import com.codurance.guru.core.config.DynamicConfiguration;
 import com.codurance.guru.core.config.DynamicConfigurationRepository;
+import com.codurance.guru.core.craftspeople.CraftspeopleRepository;
+import com.codurance.guru.core.craftspeople.Craftsperson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -12,7 +14,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 @Component
-public class CraftspeopleSampleData {
+public class SampleDataInjector {
 
     @Autowired
     private CraftspeopleRepository craftspeopleRepository;
