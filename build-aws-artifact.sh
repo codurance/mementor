@@ -10,8 +10,6 @@ echo "deleting front-end/build .."
 rm -rf front-end/build
 echo "deleting target .."
 rm -rf target
-echo "deleting build .."
-rm -rf build
 echo "done."
 
 echo "#################################"
@@ -27,11 +25,9 @@ mvn package
 echo "done."
 
 echo "#################################"
-echo "##### Packaging the project #####"
+echo "##### Packaging AWS artifact #####"
 echo "#################################"
 
-echo "creating build directory .."
-mkdir -p build
 echo "zipping artifact .."
 zip target/mementor-aws.zip target/mementor.jar Dockerfile
 echo "done."

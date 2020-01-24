@@ -17,7 +17,7 @@ APP_NAME="mementor"
 REGION="eu-central-1"
 
 if [ "--no-build" = $2 ] ; then
-  echo "AWS artifact build skipped."
+  echo "AWS artifact build skipped"
 else
   ./build-aws-artifact.sh
 fi
