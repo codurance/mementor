@@ -51,6 +51,12 @@ Then you can run the deploy script:
 
 `./deploy-aws.sh integ`
 
+The artifact will be generated locally and pushed to AWS.
+Folders such as `front-end/build` and `target` will be cleaned before the build.
+
+If you already built the artifact and want to deploy it to multiples environment, 
+you can use append `--no-build` to skip the build.
+
 ## Format Front End VSCode
 
 To format the project and the files acording to the agreed convention, you'll need to download prettier extention. Follow this guide to do it https://github.com/prettier/prettier-vscode#installation, after the extention is downloaded, you'll have to manually save the files to trigger the format `cmd+S`
