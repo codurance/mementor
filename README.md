@@ -1,4 +1,4 @@
-# Guru (Mementor)
+# Mementor
 
 This is the final project from the apprentices from October to January 2019-20, this tool allows a better overview on the mentor/mentee relationship and track the meeting that they are having.
 
