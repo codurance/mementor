@@ -1,8 +1,8 @@
 package com.codurance.guru.configuration;
 
 import com.codurance.guru.GuruApplication;
-import com.codurance.guru.config.DynamicConfiguration;
-import com.codurance.guru.config.DynamicConfigurationRepository;
+import com.codurance.guru.core.config.DynamicConfiguration;
+import com.codurance.guru.core.config.DynamicConfigurationRepository;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import org.json.JSONException;
