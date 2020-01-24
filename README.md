@@ -57,7 +57,18 @@ Folders such as `front-end/build` and `target` will be cleaned before the build.
 If you already built the artifact and want to deploy it to multiples environment, 
 you can use append `--no-build` to skip the build.
 
-## Format Front End VSCode
+## RDS on AWS
+
+By default, the application uses an in-memory database.
+If you want to persist the data, you first need to add an RDS (or any other similar service).
+
+The database url is set in `application-ENV.properties`.
+The database credentials properties are defined in `application-ENV.properties` also but the values are from environment variables.
+
+In the elasticbeanstalk environment configuration, you need to set database credentials and also `SPRING_PROFILES_ACTIVE`, 
+in order to use the config file.     
+
+## Frontend formatting with VS Code
 
 To format the project and the files acording to the agreed convention, you'll need to download prettier extention. Follow this guide to do it https://github.com/prettier/prettier-vscode#installation, after the extention is downloaded, you'll have to manually save the files to trigger the format `cmd+S`
 
