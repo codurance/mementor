@@ -5,10 +5,8 @@ import com.codurance.guru.core.craftspeople.exceptions.InvalidMentorRelationship
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
 public class CraftspeopleValidator {
 
-    @Autowired
     private CraftspeopleRepository repository;
 
     public CraftspeopleValidator(CraftspeopleRepository repository) {

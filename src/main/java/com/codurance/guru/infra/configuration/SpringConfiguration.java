@@ -12,4 +12,9 @@ public class SpringConfiguration {
     public CraftspeopleService craftspeopleService(CraftspeopleRepository repository, CraftspeopleValidator validator) {
         return new CraftspeopleService(repository, validator);
     }
+
+    @Bean
+    public CraftspeopleValidator craftspeopleValidator(CraftspeopleRepository repository) {
+        return new CraftspeopleValidator(repository);
+    }
 }
