@@ -1,12 +1,10 @@
 #!/bin/bash
 
-set -e
-
 echo "#################################"
 echo "##### Cleaning the project #####"
 echo "#################################"
 
-echo "deleting front-end/build .."
+echo "deleting front- end/build .."
 rm -rf front-end/build
 echo "deleting target .."
 rm -rf target
