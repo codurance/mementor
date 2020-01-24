@@ -1,6 +1,7 @@
 package com.codurance.guru.core.craftspeople;
 
 import com.codurance.guru.GuruApplication;
+import com.codurance.guru.infra.repository.CraftspeopleRepositoryImpl;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -37,7 +38,7 @@ public class CraftspeopleControllerTest {
     int serverPort;
 
     @Autowired
-    private CraftspeopleRepository craftspeopleRepository;
+    private CraftspeopleRepositoryImpl craftspeopleRepository;
 
     private Craftsperson savedCraftsperson;
     private Craftsperson mentor;
@@ -201,8 +202,6 @@ public class CraftspeopleControllerTest {
                 .post("craftspeople/mentor/remove")
                 .then()
                 .statusCode(204);
-
-        craftspeopleRepository.flush();
 
         Craftsperson updatedMentor = craftspeopleRepository.findById(mentor.getId()).get();
         Craftsperson updatedMentee = craftspeopleRepository.findById(savedCraftsperson.getId()).get();
@@ -499,8 +498,6 @@ public class CraftspeopleControllerTest {
                 .post("craftspeople/mentor/add")
                 .then()
                 .statusCode(204);
-
-        craftspeopleRepository.flush();
     }
 
     private void when_you_remove_the_mentor_from_the_craftsperson() {

@@ -1,13 +1,18 @@
 package com.codurance.guru.core.craftspeople;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
+import java.awt.font.OpenType;
 import java.util.List;
+import java.util.Optional;
 
-@Repository
-public interface CraftspeopleRepository extends JpaRepository<Craftsperson, Integer> {
+public interface CraftspeopleRepository  {
 
     List<Craftsperson> findByFirstNameAndLastName(String firstName, String lastName);
 
+    Craftsperson save(Craftsperson craftsperson);
+
+    Optional<Craftsperson> findById(Integer id);
+
+    void deleteById(Integer craftspersonId);
+
+    List<Craftsperson> findAll();
 }

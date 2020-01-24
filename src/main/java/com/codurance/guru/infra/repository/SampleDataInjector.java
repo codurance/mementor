@@ -1,4 +1,4 @@
-package com.codurance.guru.infra.data;
+package com.codurance.guru.infra.repository;
 
 import com.codurance.guru.core.config.DynamicConfiguration;
 import com.codurance.guru.core.config.DynamicConfigurationRepository;
@@ -17,7 +17,7 @@ import java.time.ZoneOffset;
 public class SampleDataInjector {
 
     @Autowired
-    private CraftspeopleRepository craftspeopleRepository;
+    private CraftspeopleRepositoryImpl craftspeopleRepository;
 
     @Autowired
     private DynamicConfigurationRepository dynamicConfigurationRepository;

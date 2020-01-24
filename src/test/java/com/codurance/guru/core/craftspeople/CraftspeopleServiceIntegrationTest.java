@@ -1,6 +1,7 @@
 package com.codurance.guru.core.craftspeople;
 
 import com.codurance.guru.GuruApplication;
+import com.codurance.guru.infra.repository.CraftspeopleRepositoryImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class CraftspeopleServiceIntegrationTest {
     CraftspeopleService craftspeopleService;
 
     @Autowired
-    CraftspeopleRepository craftspeopleRepository;
+    CraftspeopleRepositoryImpl craftspeopleRepository;
 
 
 
