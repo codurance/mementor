@@ -10,7 +10,6 @@ import static org.mockito.BDDMockito.then;
 public class LastMeetingThresholdServiceTest {
 
     private LastMeetingThresholdService service;
-
     private LastMeetingThresholdRepository repositoryMock;
 
     @Before
