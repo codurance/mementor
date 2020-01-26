@@ -4,6 +4,7 @@ import com.codurance.guru.core.craftspeople.CraftspeopleService;
 import com.codurance.guru.core.craftspeople.exceptions.DuplicateMenteeException;
 import com.codurance.guru.core.craftspeople.exceptions.InvalidMentorRelationshipException;
 import com.codurance.guru.infra.web.requests.AddMentorRequest;
+import com.codurance.guru.infra.web.responses.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ public class MenteeController {
     private CraftspeopleService craftspeopleService;
 
     @PutMapping("add")
-    public ResponseEntity<?> setMentee(@Valid @RequestBody AddMentorRequest request) {
+    public ResponseEntity<ErrorResponse> setMentee(@Valid @RequestBody AddMentorRequest request) {
         try {
             craftspeopleService.setMentee(request.getMentorId(), request.getMenteeId());
             return successResponse();
