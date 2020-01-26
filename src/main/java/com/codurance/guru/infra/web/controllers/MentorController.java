@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
+import static com.codurance.guru.infra.web.responses.ErrorResponse.badRequestError;
+
 @Controller
 @RequestMapping("craftspeople/mentor")
 public class MentorController {
@@ -32,10 +34,6 @@ public class MentorController {
         } catch (InvalidMentorRelationshipException ex) {
             return badRequestError("The craftsperson can't mentor itself.");
         }
-    }
-
-    private ResponseEntity<ErrorResponse> badRequestError(String message) {
-        return ResponseEntity.badRequest().body(new ErrorResponse(message));
     }
 
     @PostMapping("remove")

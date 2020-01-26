@@ -27,14 +27,10 @@ public class MenteeController {
             craftspeopleService.setMentee(request.getMentorId(), request.getMenteeId());
             return noContent().build();
         } catch (InvalidMentorRelationshipException ex) {
-            return badRequestError("Cant add a craftsperson as their own mentor");
+            return ErrorResponse.badRequestError("Cant add a craftsperson as their own mentor");
         } catch (DuplicateMenteeException ex) {
-            return badRequestError("Mentee already exists");
+            return ErrorResponse.badRequestError("Mentee already exists");
         }
-    }
-
-    private ResponseEntity<ErrorResponse> badRequestError(String message) {
-        return badRequest().body(new ErrorResponse(message));
     }
 
     @PutMapping("remove/{menteeId}")
