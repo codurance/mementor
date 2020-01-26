@@ -411,7 +411,7 @@ public class CraftspeopleIT {
         RestAssured.given()
                 .delete("craftspeople/{craftspersonId}", craftsperson.getId())
                 .then()
-                .statusCode(200);
+                .statusCode(204);
     }
 
     private void when_the_get_method_is_called_to_query_the_added_craftsperson(){

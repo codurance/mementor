@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 
-import static Responses.errorResponse;
-import static Responses.successResponse;
+import static com.codurance.guru.infra.web.responses.Responses.errorResponse;
+import static com.codurance.guru.infra.web.responses.Responses.successResponse;
 
 @Controller
 public class LastMeetingController {
