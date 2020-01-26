@@ -27,22 +27,6 @@ public class CraftspeopleController {
     @Autowired
     private CraftspeopleService craftspeopleService;
 
-    @PostMapping("/craftspeople/add")
-    public ResponseEntity addNewCraftsperson(@Valid @RequestBody AddCraftspersonRequest request) {
-        try {
-            Craftsperson craftsperson = craftspeopleService.addCraftsperson(request.getFirstName(), request.getLastName());
-            return ok(craftsperson.getId());
-        } catch (ExistingCraftspersonException ex) {
-            return badRequest().body(new ErrorResponse("Craftsperson already exists."));
-        }
-    }
-
-    @DeleteMapping("/craftspeople/{craftspersonId}")
-    public ResponseEntity deleteCraftsperson(@PathVariable Integer craftspersonId) {
-        craftspeopleService.deleteCraftsperson(craftspersonId);
-        return ok().build();
-    }
-
     @GetMapping("/craftspeople")
     public List<Craftsperson> retrieveAll() {
         return craftspeopleService.retrieveAllCraftsperson();
