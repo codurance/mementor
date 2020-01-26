@@ -23,7 +23,7 @@ public class CraftspeopleService {
 
     public Craftsperson addCraftsperson(String firstName, String lastName) {
         if(craftspersonDoesNotExist(firstName, lastName)) {
-            return craftspeopleRepository.save(new Craftsperson(firstName, lastName));
+            return craftspeopleRepository.create(firstName, lastName);
         }
         throw new ExistingCraftspersonException();
     }

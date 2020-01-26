@@ -73,6 +73,11 @@ public class CraftspeopleRepositoryImpl implements CraftspeopleRepository {
         jpaRepository.save(mentee);
     }
 
+    @Override
+    public Craftsperson create(String firstName, String lastName) {
+        return jpaRepository.save(new CraftspersonEntity(firstName, lastName)).toPOJO();
+    }
+
     public long count() {
         return jpaRepository.count();
     }

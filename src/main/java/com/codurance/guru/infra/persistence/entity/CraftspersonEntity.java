@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,7 +26,7 @@ public class CraftspersonEntity {
     @ManyToOne
     private CraftspersonEntity mentor;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "mentor")
-    private List<CraftspersonEntity> mentees;
+    private List<CraftspersonEntity> mentees = new ArrayList<>();
     @Column(name = "last_meeting")
     private Instant lastMeeting;
 
@@ -33,8 +34,15 @@ public class CraftspersonEntity {
 
     }
 
+
+
     public CraftspersonEntity(Integer id) {
         this.id = id;
+    }
+
+    public CraftspersonEntity(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public CraftspersonEntity(Craftsperson craftsperson) {

@@ -21,4 +21,6 @@ public interface CraftspeopleRepository  {
     void removeMentor(int menteeId);
 
     void addMentor(int mentorId, int menteeId);
+
+    Craftsperson create(String firstName, String lastName);
 }
