@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 
+import static com.codurance.guru.infra.web.responses.ErrorResponse.errorResponse;
+import static com.codurance.guru.infra.web.responses.SuccessResponse.successResponse;
 import static org.springframework.http.ResponseEntity.*;
 
 @Controller
@@ -33,26 +35,25 @@ public class LastMeetingController {
     }
 
     @PutMapping("/config")
-    public ResponseEntity<ErrorResponse> update(@RequestBody LastMeetingThreshold lastMeetingThreshold) {
+    public ResponseEntity<?> update(@RequestBody LastMeetingThreshold lastMeetingThreshold) {
         if(lastMeetingThreshold.getLastMeetingThresholdsInWeeks() == null) {
-            return badRequest().body(new ErrorResponse("Last meeting threshold cannot be null"));
+            return errorResponse("Last meeting threshold cannot be null");
         }
-
         try {
             lastMeetingThresholdService.updateThreshold(lastMeetingThreshold.getLastMeetingThresholdsInWeeks());
-            return noContent().build();
+            return successResponse();
         } catch (LastMeetingThresholdNotGreaterThanZeroException e) {
-            return badRequest().body(new ErrorResponse("Last meeting threshold must be greater than 0"));
+            return errorResponse("Last meeting threshold must be greater than 0");
         }
     }
 
     @PutMapping("/craftspeople/lastmeeting")
-    public ResponseEntity<ErrorResponse> setLastMeeting(@Valid @RequestBody UpdateLastMeetingRequest request) {
+    public ResponseEntity<?> setLastMeeting(@Valid @RequestBody UpdateLastMeetingRequest request) {
         try {
             craftspeopleService.setLastMeeting(request.getCraftspersonId(), request.getLastMeeting());
-            return noContent().build();
+            return successResponse();
         } catch (InvalidLastMeetingDateException ex) {
-            return badRequest().body(new ErrorResponse("The last meeting date is too far in the future"));
+            return errorResponse("The last meeting date is too far in the future");
         }
     }
 
