@@ -3,10 +3,9 @@ package com.codurance.guru.infra.persistence.repository;
 import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThreshold;
 import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThresholdRepository;
 import com.codurance.guru.infra.persistence.entity.LastMeetingThresholdEntity;
+import com.codurance.guru.infra.persistence.repository.jpa.LastMeetingThresholdJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 @Component
 public class LastMeetingThresholdRepositoryImpl implements LastMeetingThresholdRepository {
@@ -43,7 +42,3 @@ public class LastMeetingThresholdRepositoryImpl implements LastMeetingThresholdR
     }
 }
 
-@Repository
-interface LastMeetingThresholdJpaRepository extends JpaRepository<LastMeetingThresholdEntity, Long> {
-    LastMeetingThresholdEntity findTopByOrderByIdDesc();
-}
