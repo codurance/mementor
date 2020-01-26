@@ -1,4 +1,4 @@
-package com.codurance.guru.infra.web;
+package com.codurance.guru.infra.web.controllers;
 
 import com.codurance.guru.core.craftspeople.CraftspeopleService;
 import com.codurance.guru.core.craftspeople.Craftsperson;

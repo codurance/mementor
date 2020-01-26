@@ -1,5 +1,7 @@
-package com.codurance.guru.core.configuration.lastmeeting.threshold;
+package com.codurance.guru.infra.web.controllers;
 
+import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThreshold;
+import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThresholdConfigRepository;
 import com.codurance.guru.infra.web.responses.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
