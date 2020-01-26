@@ -18,9 +18,6 @@ import static org.springframework.http.ResponseEntity.*;
 public class LastMeetingThresholdController {
 
     @Autowired
-    private LastMeetingThresholdRepositoryImpl lastMeetingThresholdConfigRepository;
-
-    @Autowired
     private LastMeetingThresholdService lastMeetingThresholdService;
 
     @GetMapping("/config")
