@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class SpringConfiguration {
+public class BeanConfiguration {
     @Bean
     public CraftspeopleService craftspeopleService(CraftspeopleRepository repository, CraftspeopleValidator validator) {
         return new CraftspeopleService(repository, validator);
