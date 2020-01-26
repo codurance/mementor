@@ -1,7 +1,9 @@
-package com.codurance.guru.infra.repository;
+package com.codurance.guru.infra.persistence;
 
 import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThreshold;
 import com.codurance.guru.core.craftspeople.Craftsperson;
+import com.codurance.guru.infra.persistence.repository.CraftspeopleRepositoryImpl;
+import com.codurance.guru.infra.persistence.repository.LastMeetingThresholdRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;

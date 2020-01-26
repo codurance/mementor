@@ -2,7 +2,7 @@ package com.codurance.guru.infra;
 
 import com.codurance.guru.GuruApplication;
 import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThreshold;
-import com.codurance.guru.infra.repository.LastMeetingThresholdRepositoryImpl;
+import com.codurance.guru.infra.persistence.repository.LastMeetingThresholdRepositoryImpl;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import org.hamcrest.Matchers;

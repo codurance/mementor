@@ -1,4 +1,4 @@
-package com.codurance.guru.infra.repository;
+package com.codurance.guru.infra.persistence.repository;
 
 import com.codurance.guru.core.craftspeople.CraftspeopleRepository;
 import com.codurance.guru.core.craftspeople.Craftsperson;

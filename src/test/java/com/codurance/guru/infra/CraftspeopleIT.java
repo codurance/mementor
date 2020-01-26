@@ -2,7 +2,7 @@ package com.codurance.guru.infra;
 
 import com.codurance.guru.GuruApplication;
 import com.codurance.guru.core.craftspeople.Craftsperson;
-import com.codurance.guru.infra.repository.CraftspeopleRepositoryImpl;
+import com.codurance.guru.infra.persistence.repository.CraftspeopleRepositoryImpl;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;

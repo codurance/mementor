@@ -3,7 +3,7 @@ package com.codurance.guru.infra;
 import com.codurance.guru.GuruApplication;
 import com.codurance.guru.core.craftspeople.CraftspeopleService;
 import com.codurance.guru.core.craftspeople.Craftsperson;
-import com.codurance.guru.infra.repository.CraftspeopleRepositoryImpl;
+import com.codurance.guru.infra.persistence.repository.CraftspeopleRepositoryImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
