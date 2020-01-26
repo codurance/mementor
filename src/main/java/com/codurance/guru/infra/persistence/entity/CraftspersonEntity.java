@@ -29,25 +29,12 @@ public class CraftspersonEntity {
     @Column(name = "last_meeting")
     private Instant lastMeeting;
 
-    public CraftspersonEntity() { }
+    public CraftspersonEntity() {
+
+    }
 
     public CraftspersonEntity(Integer id) {
         this.id = id;
-    }
-
-    public CraftspersonEntity(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public CraftspersonEntity(String firstName, String lastName, CraftspersonEntity mentor, Instant lastMeeting) {
-        this(firstName, lastName, mentor);
-        this.lastMeeting = lastMeeting;
-    }
-
-    public CraftspersonEntity(String firstName, String lastName, CraftspersonEntity mentor) {
-        this(firstName, lastName);
-        this.mentor = mentor;
     }
 
     public CraftspersonEntity(Craftsperson craftsperson) {
