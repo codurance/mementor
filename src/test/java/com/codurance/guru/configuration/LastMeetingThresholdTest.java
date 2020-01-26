@@ -1,8 +1,8 @@
 package com.codurance.guru.configuration;
 
 import com.codurance.guru.GuruApplication;
-import com.codurance.guru.core.config.DynamicConfiguration;
-import com.codurance.guru.core.config.DynamicConfigurationRepository;
+import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThreshold;
+import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThresholdConfigRepository;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import org.json.JSONException;
@@ -22,10 +22,10 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest(
         classes = GuruApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class DynamicConfigurationTest {
+public class LastMeetingThresholdTest {
 
     @Autowired
-    private DynamicConfigurationRepository repository;
+    private LastMeetingThresholdConfigRepository repository;
     private ValidatableResponse response;
     private JSONObject body;
 
@@ -104,7 +104,7 @@ public class DynamicConfigurationTest {
     }
 
     private void given_a_configuration_with(int threshold) {
-        repository.save(new DynamicConfiguration(threshold));
+        repository.save(new LastMeetingThreshold(threshold));
     }
 
     private void given_an_empty_repository() {

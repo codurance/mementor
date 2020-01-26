@@ -1,8 +1,7 @@
 package com.codurance.guru.infra.repository;
 
-import com.codurance.guru.core.config.DynamicConfiguration;
-import com.codurance.guru.core.config.DynamicConfigurationRepository;
-import com.codurance.guru.core.craftspeople.CraftspeopleRepository;
+import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThreshold;
+import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThresholdConfigRepository;
 import com.codurance.guru.core.craftspeople.Craftsperson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -20,15 +19,15 @@ public class SampleDataInjector {
     private CraftspeopleRepositoryImpl craftspeopleRepository;
 
     @Autowired
-    private DynamicConfigurationRepository dynamicConfigurationRepository;
+    private LastMeetingThresholdConfigRepository lastMeetingThresholdConfigRepository;
 
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
-        if(dynamicConfigurationRepository.count() > 0) {
+        if(lastMeetingThresholdConfigRepository.count() > 0) {
             System.out.println("config repository not empty, skipping initial data population");
         } else {
             System.out.println("injecting config sample data ..");
-            dynamicConfigurationRepository.save(new DynamicConfiguration(8));
+            lastMeetingThresholdConfigRepository.save(new LastMeetingThreshold(8));
         }
 
         if(craftspeopleRepository.count() > 0) {

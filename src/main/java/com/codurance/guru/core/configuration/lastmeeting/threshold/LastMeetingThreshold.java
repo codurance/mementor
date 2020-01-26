@@ -1,4 +1,4 @@
-package com.codurance.guru.core.config;
+package com.codurance.guru.core.configuration.lastmeeting.threshold;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class DynamicConfiguration {
+public class LastMeetingThreshold {
 
     @Id
     @GeneratedValue
@@ -15,9 +15,9 @@ public class DynamicConfiguration {
     @Column
     private Integer lastMeetingThresholdsInWeeks;
 
-    public DynamicConfiguration() {}
+    public LastMeetingThreshold() {}
 
-    public DynamicConfiguration(int lastMeetingThresholdsInWeeks) {
+    public LastMeetingThreshold(int lastMeetingThresholdsInWeeks) {
         this.lastMeetingThresholdsInWeeks = lastMeetingThresholdsInWeeks;
     }
 
