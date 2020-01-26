@@ -4,6 +4,7 @@ import com.codurance.guru.infra.web.serialization.CraftspersonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,10 @@ public class Craftsperson {
 
     public Craftsperson() { }
 
+    public Craftsperson(Integer id) {
+        this.id = id;
+    }
+
     public Craftsperson(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -51,8 +56,10 @@ public class Craftsperson {
                 .collect(Collectors.toList());
     }
 
-    public void setMentees(List<Craftsperson> mentees) {
-        this.mentees = mentees;
+    public void setMentees(List<Integer> mentees) {
+        this.mentees = mentees.stream()
+            .map(Craftsperson::new)
+            .collect(Collectors.toList());
     }
 
     public Integer getId() {
