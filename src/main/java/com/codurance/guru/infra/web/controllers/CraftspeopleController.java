@@ -56,14 +56,4 @@ public class CraftspeopleController {
                 .orElseGet(() -> notFound().build());
     }
 
-    @PutMapping("/craftspeople/lastmeeting")
-    public ResponseEntity<ErrorResponse> setLastMeeting(@Valid @RequestBody UpdateLastMeetingRequest request) {
-        try {
-            craftspeopleService.setLastMeeting(request.getCraftspersonId(), request.getLastMeeting());
-            return noContent().build();
-        } catch (InvalidLastMeetingDateException ex) {
-            return badRequest().body(new ErrorResponse("The last meeting date is too far in the future"));
-        }
-    }
-
 }
