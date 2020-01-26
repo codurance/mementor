@@ -19,4 +19,6 @@ public interface CraftspeopleRepository  {
     List<Craftsperson> findAll();
 
     void removeMentor(int menteeId);
+
+    void addMentor(int mentorId, int menteeId);
 }

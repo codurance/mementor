@@ -64,6 +64,15 @@ public class CraftspeopleRepositoryImpl implements CraftspeopleRepository {
         jpaRepository.save(craftspersonEntity);
     }
 
+    @Override
+    public void addMentor(int mentorId, int menteeId) {
+        CraftspersonEntity mentor = jpaRepository.findById(mentorId).get();
+        CraftspersonEntity mentee = jpaRepository.findById(menteeId).get();
+
+        mentee.setMentor(mentor);
+        jpaRepository.save(mentee);
+    }
+
     public long count() {
         return jpaRepository.count();
     }
