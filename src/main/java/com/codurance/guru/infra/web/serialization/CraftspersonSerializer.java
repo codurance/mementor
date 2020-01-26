@@ -3,9 +3,11 @@ package com.codurance.guru.infra.web.serialization;
 import com.codurance.guru.core.craftspeople.Craftsperson;
 import com.codurance.guru.infra.persistence.repository.CraftspeopleRepositoryImpl;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -13,13 +15,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class CraftspersonSerializer extends StdSerializer<Craftsperson> {
+public class CraftspersonSerializer extends JsonSerializer<Craftsperson> {
 
-    @Autowired
     private CraftspeopleRepositoryImpl craftspeopleRepository;
 
-    protected CraftspersonSerializer() {
-        super(Craftsperson.class);
+    public CraftspersonSerializer(CraftspeopleRepositoryImpl craftspeopleRepository) {
+        this.craftspeopleRepository = craftspeopleRepository;
     }
 
     @Override
