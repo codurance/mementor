@@ -1,12 +1,11 @@
-package com.codurance.guru.core.craftspeople;
+package com.codurance.guru.infra.persistence.entity;
 
+import com.codurance.guru.core.craftspeople.Craftsperson;
 import com.codurance.guru.infra.web.serialization.CraftspersonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,7 +13,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "craftspeople")
 @JsonSerialize(using = CraftspersonSerializer.class)
-public class Craftsperson {
+public class CraftspersonEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,54 +23,66 @@ public class Craftsperson {
     @Column(name = "last_name")
     private String lastName;
     @ManyToOne
-    private Craftsperson mentor;
+    private CraftspersonEntity mentor;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "mentor")
-    private List<Craftsperson> mentees = new ArrayList<>();
+    private List<CraftspersonEntity> mentees;
     @Column(name = "last_meeting")
     private Instant lastMeeting;
 
-    public Craftsperson() { }
+    public CraftspersonEntity() { }
 
-    public Craftsperson(Integer id) {
+    public CraftspersonEntity(Integer id) {
         this.id = id;
     }
 
-    public Craftsperson(String firstName, String lastName) {
+    public CraftspersonEntity(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Craftsperson(String firstName, String lastName, Craftsperson mentor, Instant lastMeeting) {
+    public CraftspersonEntity(String firstName, String lastName, CraftspersonEntity mentor, Instant lastMeeting) {
         this(firstName, lastName, mentor);
         this.lastMeeting = lastMeeting;
     }
 
-    public Craftsperson(String firstName, String lastName, Craftsperson mentor) {
+    public CraftspersonEntity(String firstName, String lastName, CraftspersonEntity mentor) {
         this(firstName, lastName);
         this.mentor = mentor;
     }
 
-    public Craftsperson(Integer id, String firstName, String lastName, Integer mentorId, List<Integer> menteesId, Instant lastMeeting) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.mentor = new Craftsperson(mentorId);
-        this.mentees = menteesId.stream()
-            .map(Craftsperson::new)
-            .collect(Collectors.toList());
-        this.lastMeeting = lastMeeting;
-    }
+    public CraftspersonEntity(Craftsperson craftsperson) {
+        this.id = craftsperson.getId();
+        this.firstName = craftsperson.getFirstName();
+        this.lastName = craftsperson.getLastName();
+        this.lastMeeting = craftsperson.getLastMeeting()
+                .orElse(null);
 
-    public List<Integer> getMentees() {
-        return mentees.stream()
-                .map(Craftsperson::getId)
+        this.mentor = craftsperson.getMentor()
+            .map(CraftspersonEntity::new)
+            .orElse(null);
+
+        this.mentees = craftsperson.getMentees().stream()
+                .map(CraftspersonEntity::new)
                 .collect(Collectors.toList());
     }
 
-    public void setMentees(List<Integer> mentees) {
-        this.mentees = mentees.stream()
-            .map(Craftsperson::new)
+    public Craftsperson toPOJO() {
+        Integer mentorId = mentor == null ? null : mentor.id;
+        List<Integer> menteesId = mentees.stream()
+            .map(CraftspersonEntity::getId)
             .collect(Collectors.toList());
+
+        return new Craftsperson(
+                id, firstName, lastName, mentorId, menteesId, lastMeeting
+        );
+    }
+
+    public List<CraftspersonEntity> getMentees() {
+        return mentees;
+    }
+
+    public void setMentees(List<CraftspersonEntity> mentees) {
+        this.mentees = mentees;
     }
 
     public Integer getId() {
@@ -102,10 +113,10 @@ public class Craftsperson {
         if(mentor == null) {
             return Optional.empty();
         }
-        return Optional.ofNullable(mentor.getId());
+        return Optional.of(mentor.getId());
     }
 
-    public void setMentor(Craftsperson mentor) {
+    public void setMentor(CraftspersonEntity mentor) {
         this.mentor = mentor;
     }
 
