@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import static org.springframework.http.ResponseEntity.*;
 
 @Controller
-public class LastMeetingThresholdConfigController {
+public class LastMeetingThresholdController {
 
     @Autowired
     private LastMeetingThresholdRepositoryImpl lastMeetingThresholdConfigRepository;
