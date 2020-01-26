@@ -11,7 +11,7 @@ public class ErrorResponse {
         this.message = message;
     }
 
-    public static ResponseEntity<ErrorResponse> badRequestError(String message) {
+    public static ResponseEntity<ErrorResponse> errorResponseadd (String message) {
         return badRequest().body(new ErrorResponse(message));
     }
 

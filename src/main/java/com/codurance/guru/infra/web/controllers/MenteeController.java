@@ -4,7 +4,6 @@ import com.codurance.guru.core.craftspeople.CraftspeopleService;
 import com.codurance.guru.core.craftspeople.exceptions.DuplicateMenteeException;
 import com.codurance.guru.core.craftspeople.exceptions.InvalidMentorRelationshipException;
 import com.codurance.guru.infra.web.requests.AddMentorRequest;
-import com.codurance.guru.infra.web.responses.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static org.springframework.http.ResponseEntity.*;
+import static com.codurance.guru.infra.web.responses.ErrorResponse.*;
+import static com.codurance.guru.infra.web.responses.SuccessResponse.successResponse;
 
 @Controller
 @RequestMapping("craftspeople/mentee")
@@ -22,20 +22,20 @@ public class MenteeController {
     private CraftspeopleService craftspeopleService;
 
     @PutMapping("add")
-    public ResponseEntity<ErrorResponse> setMentee(@Valid @RequestBody AddMentorRequest request) {
+    public ResponseEntity<?> setMentee(@Valid @RequestBody AddMentorRequest request) {
         try {
             craftspeopleService.setMentee(request.getMentorId(), request.getMenteeId());
-            return noContent().build();
+            return successResponse();
         } catch (InvalidMentorRelationshipException ex) {
-            return ErrorResponse.badRequestError("Cant add a craftsperson as their own mentor");
+            return errorResponse("Cant add a craftsperson as their own mentor");
         } catch (DuplicateMenteeException ex) {
-            return ErrorResponse.badRequestError("Mentee already exists");
+            return errorResponse("Mentee already exists");
         }
     }
 
     @PutMapping("remove/{menteeId}")
     public ResponseEntity<Void> removeMentee(@PathVariable int menteeId) {
         craftspeopleService.removeMentor(menteeId);
-        return noContent().build();
+        return successResponse();
     }
 }
