@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 import java.util.Optional;
 
+import static com.codurance.guru.infra.web.responses.Responses.successResponse;
 import static org.springframework.http.ResponseEntity.notFound;
 
 @Controller
@@ -23,8 +24,8 @@ public class CraftspeopleController {
     private CraftspeopleService craftspeopleService;
 
     @GetMapping
-    public List<Craftsperson> retrieveAll() {
-        return craftspeopleService.retrieveAllCraftsperson();
+    public ResponseEntity<List<Craftsperson>> retrieveAll() {
+        return successResponse(craftspeopleService.retrieveAllCraftsperson());
     }
 
     @GetMapping("{craftspersonId}")
