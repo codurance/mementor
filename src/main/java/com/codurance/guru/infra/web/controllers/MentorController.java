@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
-import static org.springframework.http.ResponseEntity.badRequest;
-
 @Controller
 @RequestMapping("craftspeople/mentor")
 public class MentorController {
@@ -30,10 +28,14 @@ public class MentorController {
             craftspeopleService.addMentor(request.getMentorId(), request.getMenteeId());
             return ResponseEntity.noContent().build();
         } catch (DuplicateMenteeException ex) {
-            return badRequest().body(new ErrorResponse("The craftsperson is already mentoring that mentee."));
+            return badRequestError("The craftsperson is already mentoring that mentee.");
         } catch (InvalidMentorRelationshipException ex) {
-            return badRequest().body(new ErrorResponse("The craftsperson can't mentor itself."));
+            return badRequestError("The craftsperson can't mentor itself.");
         }
+    }
+
+    private ResponseEntity<ErrorResponse> badRequestError(String message) {
+        return ResponseEntity.badRequest().body(new ErrorResponse(message));
     }
 
     @PostMapping("remove")
