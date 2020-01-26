@@ -24,10 +24,8 @@ public class MenteeController {
     @PutMapping("add")
     public ResponseEntity<ErrorResponse> setMentee(@Valid @RequestBody AddMentorRequest request) {
         try {
-            craftspeopleService.setMentee(
-                    request.getMentorId(),
-                    request.getMenteeId());
-            return ok().build();
+            craftspeopleService.setMentee(request.getMentorId(), request.getMenteeId());
+            return noContent().build();
         } catch (InvalidMentorRelationshipException ex) {
             return badRequestError("Cant add a craftsperson as their own mentor");
         } catch (DuplicateMenteeException ex) {
@@ -42,6 +40,6 @@ public class MenteeController {
     @PutMapping("remove/{menteeId}")
     public ResponseEntity<Void> removeMentee(@PathVariable int menteeId) {
         craftspeopleService.removeMentor(menteeId);
-        return ok().build();
+        return noContent().build();
     }
 }

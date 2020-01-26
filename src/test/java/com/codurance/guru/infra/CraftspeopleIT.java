@@ -474,7 +474,7 @@ public class CraftspeopleIT {
                 .body(requestBody.toString())
                 .put("craftspeople/mentee/add")
                 .then()
-                .statusCode(200)
+                .statusCode(204)
                 .extract()
                 .response();
     }
@@ -504,7 +504,7 @@ public class CraftspeopleIT {
                 .contentType(ContentType.JSON)
                 .put("craftspeople/mentee/remove/{craftspersonId}", savedCraftsperson.getId())
                 .then()
-                .statusCode(200)
+                .statusCode(204)
                 .extract()
                 .response();
     }
