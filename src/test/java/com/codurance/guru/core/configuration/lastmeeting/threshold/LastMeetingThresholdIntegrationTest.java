@@ -1,12 +1,12 @@
-package com.codurance.guru.configuration;
+package com.codurance.guru.core.configuration.lastmeeting.threshold;
 
 import com.codurance.guru.GuruApplication;
-import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThreshold;
-import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThresholdConfigRepository;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
+import org.hamcrest.Matchers;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,14 +15,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertEquals;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(
         classes = GuruApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class LastMeetingThresholdTest {
+public class LastMeetingThresholdIntegrationTest {
 
     @Autowired
     private LastMeetingThresholdConfigRepository repository;
@@ -69,7 +66,7 @@ public class LastMeetingThresholdTest {
         response.statusCode(204);
 
         // valueOf to fix ambiguous method signatures
-        assertEquals(Integer.valueOf(2), repository.findTopByOrderByIdDesc().getLastMeetingThresholdsInWeeks());
+        Assert.assertEquals(Integer.valueOf(2), repository.findTopByOrderByIdDesc().getLastMeetingThresholdsInWeeks());
     }
 
     @Test
@@ -81,7 +78,7 @@ public class LastMeetingThresholdTest {
         when_the_config_is_updated();
 
         response.statusCode(204);
-        assertEquals(currentNumbersOfConfig, repository.count());
+        Assert.assertEquals(currentNumbersOfConfig, repository.count());
     }
 
     @Test
@@ -132,11 +129,11 @@ public class LastMeetingThresholdTest {
     }
 
     private void then_the_threshold_config_is(int expectedThreshold) {
-        response.body("lastMeetingThresholdsInWeeks", equalTo(expectedThreshold));
+        response.body("lastMeetingThresholdsInWeeks", Matchers.equalTo(expectedThreshold));
     }
 
     private void then_there_is_an_error_with(String message) {
         response.statusCode(400)
-                .body("message", equalTo(   message));
+                .body("message", Matchers.equalTo(   message));
     }
 }
