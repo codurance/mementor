@@ -1,6 +1,5 @@
 package com.codurance.guru.core.configuration.lastmeeting.threshold;
 
-import com.codurance.guru.core.configuration.lastmeeting.threshold.exceptions.NullLastMeetingThresholdException;
 import com.codurance.guru.core.configuration.lastmeeting.threshold.exceptions.LastMeetingThresholdNotGreaterThanZeroException;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +20,13 @@ public class LastMeetingThresholdServiceTest {
     }
 
     @Test(expected = LastMeetingThresholdNotGreaterThanZeroException.class)
-    public void negative_valuee_shoulbd_rejected() {
+    public void negative_value_should_rejected() {
         service.updateThreshold(-1);
+    }
+
+    @Test(expected = LastMeetingThresholdNotGreaterThanZeroException.class)
+    public void zero_should_rejected() {
+        service.updateThreshold(0);
     }
 
     @Test
