@@ -3,31 +3,20 @@ package com.codurance.guru.core.craftspeople;
 import com.codurance.guru.infra.web.serialization.CraftspersonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Entity
-@Table(name = "craftspeople")
 @JsonSerialize(using = CraftspersonSerializer.class)
 public class Craftsperson {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "first_name")
     private String firstName;
-    @Column(name = "last_name")
     private String lastName;
-    @ManyToOne
     private Craftsperson mentor;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "mentor")
     private List<Craftsperson> mentees = new ArrayList<>();
-    @Column(name = "last_meeting")
     private Instant lastMeeting;
 
     public Craftsperson() { }
