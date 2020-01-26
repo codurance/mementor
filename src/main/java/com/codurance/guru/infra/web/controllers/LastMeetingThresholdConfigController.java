@@ -1,7 +1,7 @@
 package com.codurance.guru.infra.web.controllers;
 
 import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThreshold;
-import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThresholdConfigRepository;
+import com.codurance.guru.infra.repository.LastMeetingThresholdRepositoryImpl;
 import com.codurance.guru.infra.web.responses.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +16,11 @@ import static org.springframework.http.ResponseEntity.*;
 public class LastMeetingThresholdConfigController {
 
     @Autowired
-    private LastMeetingThresholdConfigRepository lastMeetingThresholdConfigRepository;
+    private LastMeetingThresholdRepositoryImpl lastMeetingThresholdConfigRepository;
 
     @GetMapping("/config")
     public ResponseEntity<LastMeetingThreshold> get() {
-        return ok(lastMeetingThresholdConfigRepository.findTopByOrderByIdDesc());
+        return ok(lastMeetingThresholdConfigRepository.getConfig());
     }
 
     @PutMapping("/config")
@@ -32,9 +32,8 @@ public class LastMeetingThresholdConfigController {
         if(lastMeetingThreshold.getLastMeetingThresholdsInWeeks() <= 0) {
             return badRequest().body(new ErrorResponse("Last meeting threshold must be greater than 0"));
         }
-        LastMeetingThreshold currentConfig = lastMeetingThresholdConfigRepository.findTopByOrderByIdDesc();
-        currentConfig.setLastMeetingThresholdsInWeeks(lastMeetingThreshold.getLastMeetingThresholdsInWeeks());
-        lastMeetingThresholdConfigRepository.save(currentConfig);
+
+        lastMeetingThresholdConfigRepository.updateThreshold(lastMeetingThreshold.getLastMeetingThresholdsInWeeks());
 
         return noContent().build();
     }

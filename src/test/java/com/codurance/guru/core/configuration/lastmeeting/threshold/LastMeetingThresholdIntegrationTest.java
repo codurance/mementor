@@ -1,6 +1,7 @@
 package com.codurance.guru.core.configuration.lastmeeting.threshold;
 
 import com.codurance.guru.GuruApplication;
+import com.codurance.guru.infra.repository.LastMeetingThresholdRepositoryImpl;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import org.hamcrest.Matchers;
@@ -22,7 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class LastMeetingThresholdIntegrationTest {
 
     @Autowired
-    private LastMeetingThresholdConfigRepository repository;
+    private LastMeetingThresholdRepositoryImpl repository;
     private ValidatableResponse response;
     private JSONObject body;
 
@@ -66,7 +67,7 @@ public class LastMeetingThresholdIntegrationTest {
         response.statusCode(204);
 
         // valueOf to fix ambiguous method signatures
-        Assert.assertEquals(Integer.valueOf(2), repository.findTopByOrderByIdDesc().getLastMeetingThresholdsInWeeks());
+        Assert.assertEquals(Integer.valueOf(2), repository.getConfig().getLastMeetingThresholdsInWeeks());
     }
 
     @Test
