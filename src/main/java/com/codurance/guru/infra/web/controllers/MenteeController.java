@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static com.codurance.guru.infra.web.responses.ErrorResponse.*;
-import static com.codurance.guru.infra.web.responses.SuccessResponse.successResponse;
+import static Responses.successResponse;
 
 @Controller
 @RequestMapping("craftspeople/mentee")
@@ -27,9 +26,9 @@ public class MenteeController {
             craftspeopleService.setMentee(request.getMentorId(), request.getMenteeId());
             return successResponse();
         } catch (InvalidMentorRelationshipException ex) {
-            return errorResponse("Cant add a craftsperson as their own mentor");
+            return Responses.errorResponse("Cant add a craftsperson as their own mentor");
         } catch (DuplicateMenteeException ex) {
-            return errorResponse("Mentee already exists");
+            return Responses.errorResponse("Mentee already exists");
         }
     }
 

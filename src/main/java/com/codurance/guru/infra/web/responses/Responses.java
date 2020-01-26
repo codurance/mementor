@@ -1,12 +1,14 @@
 package com.codurance.guru.infra.web.responses;
 
-import feign.Response;
 import org.springframework.http.ResponseEntity;
 
-import static org.springframework.http.ResponseEntity.noContent;
-import static org.springframework.http.ResponseEntity.ok;
+import static org.springframework.http.ResponseEntity.*;
 
-public class SuccessResponse {
+public class Responses {
+
+    public static ResponseEntity<ErrorResponse> errorResponse(String message) {
+        return badRequest().body(new ErrorResponse(message));
+    }
 
     public static ResponseEntity<Void> successResponse() {
         return noContent().build();
@@ -15,5 +17,4 @@ public class SuccessResponse {
     public static <T> ResponseEntity<T> successResponse(T body) {
         return ok(body);
     }
-
 }

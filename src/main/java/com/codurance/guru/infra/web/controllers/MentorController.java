@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
-import static com.codurance.guru.infra.web.responses.ErrorResponse.errorResponse;
-import static com.codurance.guru.infra.web.responses.SuccessResponse.successResponse;
+import static Responses.errorResponse;
+import static Responses.successResponse;
 
 @Controller
 @RequestMapping("craftspeople/mentor")

@@ -11,10 +11,6 @@ public class ErrorResponse {
         this.message = message;
     }
 
-    public static ResponseEntity<ErrorResponse> errorResponse(String message) {
-        return badRequest().body(new ErrorResponse(message));
-    }
-
     public String getMessage() {
         return message;
     }

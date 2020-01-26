@@ -6,7 +6,6 @@ import com.codurance.guru.core.configuration.lastmeeting.threshold.exceptions.La
 import com.codurance.guru.core.craftspeople.CraftspeopleService;
 import com.codurance.guru.core.craftspeople.exceptions.InvalidLastMeetingDateException;
 import com.codurance.guru.infra.web.requests.UpdateLastMeetingRequest;
-import com.codurance.guru.infra.web.responses.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 
-import static com.codurance.guru.infra.web.responses.ErrorResponse.errorResponse;
-import static com.codurance.guru.infra.web.responses.SuccessResponse.successResponse;
-import static org.springframework.http.ResponseEntity.*;
+import static Responses.errorResponse;
+import static Responses.successResponse;
 
 @Controller
 public class LastMeetingController {
