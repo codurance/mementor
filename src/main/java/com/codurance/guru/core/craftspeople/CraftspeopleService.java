@@ -49,12 +49,7 @@ public class CraftspeopleService {
     }
 
     public void removeMentor(int menteeId){
-        Craftsperson mentee = repository.findById(menteeId).get();
-
-        mentee.setMentorId(null);
-        mentee.setLastMeeting(null);
-
-        repository.save(mentee);
+        repository.removeMentor(menteeId);
     }
 
     public List<Craftsperson> retrieveAllCraftsperson() {

@@ -34,25 +34,4 @@ public class CraftspeopleServiceUnitTest {
     public void cant_set_last_meeting_in_the_future() {
         service.setLastMeeting(1, (int) Instant.now().plus(2, ChronoUnit.DAYS).getEpochSecond());
     }
-
-    @Test
-    public void removing_a_mentor_should_remove_the_last_meeting() {
-        given_a_craftsperson_and_his_mentor();
-        when_the_mentor_is_removed();
-        then_both_the_mentor_and_the_last_meeting_are_removed();
-    }
-
-    private void then_both_the_mentor_and_the_last_meeting_are_removed() {
-        then(mentee).should().setMentorId(null);
-        then(mentee).should().setLastMeeting(null);
-        then(repository).should().save(mentee);
-    }
-
-    private void when_the_mentor_is_removed() {
-        service.removeMentor(ID);
-    }
-
-    private void given_a_craftsperson_and_his_mentor() {
-        given(repository.findById(ID)).willReturn(Optional.of(mentee));
-    }
 }

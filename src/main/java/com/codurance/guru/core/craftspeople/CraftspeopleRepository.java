@@ -17,4 +17,6 @@ public interface CraftspeopleRepository  {
     void deleteById(Integer craftspersonId);
 
     List<Craftsperson> findAll();
+
+    void removeMentor(int menteeId);
 }

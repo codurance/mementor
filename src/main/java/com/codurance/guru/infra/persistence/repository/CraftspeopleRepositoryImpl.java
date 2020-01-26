@@ -55,6 +55,15 @@ public class CraftspeopleRepositoryImpl implements CraftspeopleRepository {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void removeMentor(int menteeId) {
+        CraftspersonEntity craftspersonEntity = jpaRepository.findById(menteeId).get();
+        craftspersonEntity.setMentor(null);
+        craftspersonEntity.setLastMeeting(null);
+
+        jpaRepository.save(craftspersonEntity);
+    }
+
     public long count() {
         return jpaRepository.count();
     }
