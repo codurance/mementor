@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
 public class LastMeetingThresholdServiceTest {
@@ -33,5 +35,13 @@ public class LastMeetingThresholdServiceTest {
         service.updateThreshold(1);
         then(repositoryMock).should()
                 .updateThreshold(1);
+    }
+
+    @Test
+    public void get_current_threshold() {
+        LastMeetingThreshold currentThreshold = new LastMeetingThreshold(1);
+        given(repositoryMock.getCurrentThreshold()).willReturn(currentThreshold);
+
+        assertEquals(currentThreshold, service.getCurrentThreshold());
     }
 }

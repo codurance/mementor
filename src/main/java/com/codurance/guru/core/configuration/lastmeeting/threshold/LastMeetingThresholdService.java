@@ -15,4 +15,8 @@ public class LastMeetingThresholdService {
         }
         repository.updateThreshold(newThresholdValue);
     }
+
+    public LastMeetingThreshold getCurrentThreshold() {
+        return repository.getCurrentThreshold();
+    }
 }

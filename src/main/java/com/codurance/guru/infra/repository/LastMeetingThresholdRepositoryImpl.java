@@ -20,6 +20,11 @@ public class LastMeetingThresholdRepositoryImpl implements LastMeetingThresholdR
         jpaRepository.save(currentConfig);
     }
 
+    @Override
+    public LastMeetingThreshold getCurrentThreshold() {
+        return null;
+    }
+
     public LastMeetingThreshold getConfig() {
         return jpaRepository.findTopByOrderByIdDesc();
     }
