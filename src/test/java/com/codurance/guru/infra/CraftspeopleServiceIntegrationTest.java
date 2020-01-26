@@ -1,6 +1,8 @@
-package com.codurance.guru.core.craftspeople;
+package com.codurance.guru.infra;
 
 import com.codurance.guru.GuruApplication;
+import com.codurance.guru.core.craftspeople.CraftspeopleService;
+import com.codurance.guru.core.craftspeople.Craftsperson;
 import com.codurance.guru.infra.repository.CraftspeopleRepositoryImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,8 +24,6 @@ public class CraftspeopleServiceIntegrationTest {
 
     @Autowired
     CraftspeopleRepositoryImpl craftspeopleRepository;
-
-
 
     private Craftsperson mentor;
     private Craftsperson mentee;

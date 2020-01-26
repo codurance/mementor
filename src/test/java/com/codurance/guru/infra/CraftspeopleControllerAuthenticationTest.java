@@ -1,4 +1,4 @@
-package com.codurance.guru.core.craftspeople;
+package com.codurance.guru.infra;
 
 import com.codurance.guru.GuruApplication;
 import io.restassured.RestAssured;
