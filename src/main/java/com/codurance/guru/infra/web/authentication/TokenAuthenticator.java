@@ -19,7 +19,7 @@ import java.util.Collections;
 public class TokenAuthenticator extends HandlerInterceptorAdapter {
 
     @Value("${google.client.id:clientId}")
-    private String CLIENT_ID;
+    private String clientId;
 
     @Override
     public boolean preHandle(
@@ -47,7 +47,7 @@ public class TokenAuthenticator extends HandlerInterceptorAdapter {
         JacksonFactory jsonFactory = new JacksonFactory();
         HttpTransport transport = new NetHttpTransport();
         return new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
-                .setAudience(Collections.singletonList(CLIENT_ID))
+                .setAudience(Collections.singletonList(clientId))
                 .build();
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class InterceptorConfig implements WebMvcConfigurer {
+public class AuthInterceptorConfig implements WebMvcConfigurer {
 
     @Value("${should.filter.requests:true}")
     private boolean shouldFilterRequests;
