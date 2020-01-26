@@ -67,13 +67,7 @@ public class CraftspeopleService {
 
     public void setMentee(int mentorId, int menteeId) throws DuplicateMenteeException, InvalidMentorRelationshipException {
         craftspeopleValidator.validateSetMentee(mentorId, menteeId);
-
-        Craftsperson mentor = craftspeopleRepository.findById(mentorId).get();
-        Craftsperson mentee = craftspeopleRepository.findById(menteeId).get();
-
-        mentee.setMentorId(mentor);
-
-        craftspeopleRepository.save(mentee);
+        craftspeopleRepository.addMentor(mentorId, menteeId);
     }
 
     private boolean craftspersonDoesNotExist(String firstName, String lastName) {
