@@ -25,7 +25,7 @@ public class LastMeetingThresholdController {
 
     @GetMapping("/config")
     public ResponseEntity<LastMeetingThreshold> get() {
-        return ok(lastMeetingThresholdConfigRepository.getConfig());
+        return ok(lastMeetingThresholdService.getCurrentThreshold());
     }
 
     @PutMapping("/config")

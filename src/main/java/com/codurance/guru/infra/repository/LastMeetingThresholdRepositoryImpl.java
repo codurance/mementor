@@ -22,7 +22,7 @@ public class LastMeetingThresholdRepositoryImpl implements LastMeetingThresholdR
 
     @Override
     public LastMeetingThreshold getCurrentThreshold() {
-        return null;
+        return jpaRepository.findTopByOrderByIdDesc();
     }
 
     public LastMeetingThreshold getConfig() {
