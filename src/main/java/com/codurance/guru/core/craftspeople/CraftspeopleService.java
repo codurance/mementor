@@ -1,11 +1,9 @@
 package com.codurance.guru.core.craftspeople;
 
+import com.codurance.guru.core.craftspeople.exceptions.DuplicateMenteeException;
 import com.codurance.guru.core.craftspeople.exceptions.ExistingCraftspersonException;
 import com.codurance.guru.core.craftspeople.exceptions.InvalidLastMeetingDateException;
-import com.codurance.guru.core.craftspeople.exceptions.DuplicateMenteeException;
 import com.codurance.guru.core.craftspeople.exceptions.InvalidMentorRelationshipException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

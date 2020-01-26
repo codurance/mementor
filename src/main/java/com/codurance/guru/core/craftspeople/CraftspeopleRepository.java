@@ -1,6 +1,5 @@
 package com.codurance.guru.core.craftspeople;
 
-import java.awt.font.OpenType;
 import java.util.List;
 import java.util.Optional;
 

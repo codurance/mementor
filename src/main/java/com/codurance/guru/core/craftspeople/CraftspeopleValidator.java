@@ -2,8 +2,6 @@ package com.codurance.guru.core.craftspeople;
 
 import com.codurance.guru.core.craftspeople.exceptions.DuplicateMenteeException;
 import com.codurance.guru.core.craftspeople.exceptions.InvalidMentorRelationshipException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 public class CraftspeopleValidator {
 
