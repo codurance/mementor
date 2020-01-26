@@ -53,7 +53,7 @@ public class CraftspeopleController {
     public List<Craftsperson> retrieveAll() {
         return craftspeopleService.retrieveAllCraftsperson();
     }
-men
+
     @GetMapping("/craftspeople/{craftspersonId}")
     public ResponseEntity retrieveCraftsperson(@PathVariable Integer craftspersonId) {
         Optional<Craftsperson> retrievedCraftsperson = craftspeopleService.retrieveCraftsperson(craftspersonId);
