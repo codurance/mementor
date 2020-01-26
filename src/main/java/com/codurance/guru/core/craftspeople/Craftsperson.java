@@ -76,8 +76,11 @@ public class Craftsperson {
         this.lastName = lastName;
     }
 
-    public Optional<Craftsperson> getMentor() {
-        return Optional.ofNullable(mentor);
+    public Optional<Integer> getMentor() {
+        if(mentor == null) {
+            return Optional.empty();
+        }
+        return Optional.of(mentor.getId());
     }
 
     public void setMentor(Craftsperson mentor) {

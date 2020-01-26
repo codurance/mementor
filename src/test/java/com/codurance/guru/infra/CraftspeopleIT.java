@@ -357,7 +357,7 @@ public class CraftspeopleIT {
 
     private void then_the_relationship_between_mentor_and_mentee_is_lost(Craftsperson updatedMentor, Craftsperson updatedMentee) {
         assertTrue(updatedMentee.getMentor().isPresent());
-        assertEquals(craftspersonOne.getId(), updatedMentee.getMentor().get().getId());
+        assertEquals(craftspersonOne.getId(), updatedMentee.getMentor().get());
         assertTrue("mentee not found in the mentor's mentees list", updatedMentor.getMentees()
                 .stream()
                 .map(Craftsperson::getId)
