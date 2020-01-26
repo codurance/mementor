@@ -72,6 +72,6 @@ public class CraftspeopleServiceIT {
 
     private void given_a_craftsperson_with_a_mentor() {
         mentor = craftspeopleRepository.save(new Craftsperson("Jose", "Wenzel"));
-        mentee = craftspeopleRepository.save(new Craftsperson("Arnaud", "CLAUDEL", mentor));
+        mentee = craftspeopleRepository.save(new Craftsperson("Arnaud", "CLAUDEL", mentor.getId()));
     }
 }
