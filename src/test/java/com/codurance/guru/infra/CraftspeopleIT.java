@@ -210,7 +210,6 @@ public class CraftspeopleIT {
         assertTrue("mentor was not removed", updatedMentee.getMentor().isEmpty());
         assertTrue("mentee is still in the mentor's mentees list", updatedMentor.getMentees()
                 .stream()
-                .map(Craftsperson::getId)
                 .noneMatch(savedCraftsperson.getId()::equals));
     }
 
@@ -360,7 +359,6 @@ public class CraftspeopleIT {
         assertEquals(craftspersonOne.getId(), updatedMentee.getMentor().get());
         assertTrue("mentee not found in the mentor's mentees list", updatedMentor.getMentees()
                 .stream()
-                .map(Craftsperson::getId)
                 .anyMatch(actualMenteeId -> craftspersonTwo.getId().equals(actualMenteeId)));
     }
 

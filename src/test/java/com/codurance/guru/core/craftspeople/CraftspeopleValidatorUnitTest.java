@@ -34,12 +34,11 @@ public class CraftspeopleValidatorUnitTest {
     public void cant_add_duplicate_mentee_to_craftsperson() {
         Craftsperson craftsperson = new Craftsperson("ed", "rixon");
         Craftsperson mentee = new Craftsperson("giulio", "peps", craftsperson);
-
+        mentee.setId(3);
         craftsperson.setMentees(List.of(mentee));
 
         BDDMockito.given(repository.findById(2)).willReturn(Optional.of(craftsperson));
-        BDDMockito.given(repository.findById(3)).willReturn(Optional.of(mentee));
 
-        validator.validateSetMentee(2, 3);
+        validator.validateSetMentee(2, mentee.getId());
     }
 }

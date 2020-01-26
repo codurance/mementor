@@ -30,6 +30,8 @@ public class CraftspersonSerializer extends StdSerializer<Craftsperson> {
                 .orElse(null);
 
         List<Person> mentees = craftsperson.getMentees().stream()
+                .map(craftspeopleRepository::findById)
+                .flatMap(Optional::stream)
                 .map(Person::new)
                 .collect(Collectors.toList());
 

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "craftspeople")
@@ -44,8 +45,10 @@ public class Craftsperson {
         this.mentor = mentor;
     }
 
-    public List<Craftsperson> getMentees() {
-        return mentees;
+    public List<Integer> getMentees() {
+        return mentees.stream()
+                .map(Craftsperson::getId)
+                .collect(Collectors.toList());
     }
 
     public void setMentees(List<Craftsperson> mentees) {

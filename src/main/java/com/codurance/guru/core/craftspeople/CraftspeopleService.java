@@ -43,9 +43,8 @@ public class CraftspeopleService {
     public void deleteCraftsperson(Integer craftspersonId) {
         Craftsperson craftspersonToRemove = repository.findById(craftspersonId).get();
 
-        for (Craftsperson mentee: craftspersonToRemove.getMentees()) {
-            mentee.setMentor(null);
-            repository.save(mentee);
+        for (Integer menteeId: craftspersonToRemove.getMentees()) {
+            removeMentor(menteeId);
         }
 
         repository.deleteById(craftspersonId);
