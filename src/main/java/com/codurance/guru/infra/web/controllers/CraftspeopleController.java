@@ -33,7 +33,7 @@ public class CraftspeopleController {
         Optional<Craftsperson> retrievedCraftsperson = craftspeopleService.retrieveCraftsperson(craftspersonId);
         return retrievedCraftsperson
                 .map(Responses::successResponse)
-                .orElseGet(() -> notFound().build());
+                .orElseGet(Responses::notFound);
     }
 
 }

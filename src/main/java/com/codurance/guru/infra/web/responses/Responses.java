@@ -10,7 +10,11 @@ public class Responses {
         return badRequest().body(new ErrorResponse(message));
     }
 
-    public static ResponseEntity<Void> successResponse() {
+    public static <T> ResponseEntity<T> notFound() {
+        return ResponseEntity.notFound().build();
+    }
+
+    public static <T> ResponseEntity<T> successResponse() {
         return noContent().build();
     }
 
