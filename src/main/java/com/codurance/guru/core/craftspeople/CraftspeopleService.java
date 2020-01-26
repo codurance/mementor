@@ -12,47 +12,47 @@ import java.util.Optional;
 
 public class CraftspeopleService {
 
-    private CraftspeopleRepository repository;
+    private CraftspeopleRepository craftspeopleRepository;
 
     private CraftspeopleValidator craftspeopleValidator;
 
-    public CraftspeopleService(CraftspeopleRepository repository, CraftspeopleValidator validator) {
-        this.repository = repository;
+    public CraftspeopleService(CraftspeopleRepository craftspeopleRepository, CraftspeopleValidator validator) {
+        this.craftspeopleRepository = craftspeopleRepository;
         this.craftspeopleValidator = validator;
     }
 
     public Craftsperson addCraftsperson(String firstName, String lastName) {
         if(craftspersonDoesNotExist(firstName, lastName)) {
-            return repository.save(new Craftsperson(firstName, lastName));
+            return craftspeopleRepository.save(new Craftsperson(firstName, lastName));
         }
         throw new ExistingCraftspersonException();
     }
 
     public void addMentor(int mentorId, int menteeId) throws DuplicateMenteeException, InvalidMentorRelationshipException {
         craftspeopleValidator.validateSetMentee(mentorId, menteeId);
-        repository.addMentor(mentorId, menteeId);
+        craftspeopleRepository.addMentor(mentorId, menteeId);
     }
 
     public void deleteCraftsperson(Integer craftspersonId) {
-        Craftsperson craftspersonToRemove = repository.findById(craftspersonId).get();
+        Craftsperson craftspersonToRemove = craftspeopleRepository.findById(craftspersonId).get();
 
         for (Integer menteeId: craftspersonToRemove.getMenteeIds()) {
             removeMentor(menteeId);
         }
 
-        repository.deleteById(craftspersonId);
+        craftspeopleRepository.deleteById(craftspersonId);
     }
 
     public void removeMentor(int menteeId){
-        repository.removeMentor(menteeId);
+        craftspeopleRepository.removeMentor(menteeId);
     }
 
     public List<Craftsperson> retrieveAllCraftsperson() {
-        return repository.findAll();
+        return craftspeopleRepository.findAll();
     }
 
     public Optional<Craftsperson> retrieveCraftsperson(Integer craftspersonId) {
-        return repository.findById(craftspersonId);
+        return craftspeopleRepository.findById(craftspersonId);
     }
 
     public void setLastMeeting(int craftspersonId, int lastMeeting) {
@@ -62,21 +62,21 @@ public class CraftspeopleService {
             throw new InvalidLastMeetingDateException();
         }
 
-        repository.updateLastmeeting(craftspersonId, lastMeetingInstant);
+        craftspeopleRepository.updateLastmeeting(craftspersonId, lastMeetingInstant);
     }
 
     public void setMentee(int mentorId, int menteeId) throws DuplicateMenteeException, InvalidMentorRelationshipException {
         craftspeopleValidator.validateSetMentee(mentorId, menteeId);
 
-        Craftsperson mentor = repository.findById(mentorId).get();
-        Craftsperson mentee = repository.findById(menteeId).get();
+        Craftsperson mentor = craftspeopleRepository.findById(mentorId).get();
+        Craftsperson mentee = craftspeopleRepository.findById(menteeId).get();
 
         mentee.setMentorId(mentor);
 
-        repository.save(mentee);
+        craftspeopleRepository.save(mentee);
     }
 
     private boolean craftspersonDoesNotExist(String firstName, String lastName) {
-        return repository.findByFirstNameAndLastName(firstName,lastName).size() == 0;
+        return craftspeopleRepository.findByFirstNameAndLastName(firstName,lastName).size() == 0;
     }
 }
