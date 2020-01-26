@@ -59,9 +59,7 @@ public class CraftspersonEntity {
             .map(CraftspersonEntity::getId)
             .collect(Collectors.toList());
 
-        return new Craftsperson(
-                id, firstName, lastName, mentorId, menteesId, lastMeeting
-        );
+        return new Craftsperson(id, firstName, lastName, mentorId, menteesId, lastMeeting);
     }
 
     public List<CraftspersonEntity> getMentees() {
@@ -106,7 +104,6 @@ public class CraftspersonEntity {
     public void setMentor(CraftspersonEntity mentor) {
         this.mentor = mentor;
     }
-
 
     public Optional<Instant> getLastMeeting() {
         return Optional.ofNullable(lastMeeting);
