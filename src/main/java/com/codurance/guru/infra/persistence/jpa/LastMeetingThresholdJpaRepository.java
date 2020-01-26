@@ -1,4 +1,4 @@
-package com.codurance.guru.infra.persistence.repository.jpa;
+package com.codurance.guru.infra.persistence.jpa;
 
 import com.codurance.guru.infra.persistence.entity.LastMeetingThresholdEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

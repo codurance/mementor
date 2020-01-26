@@ -3,7 +3,7 @@ package com.codurance.guru.infra.persistence.repository;
 import com.codurance.guru.core.craftspeople.CraftspeopleRepository;
 import com.codurance.guru.core.craftspeople.Craftsperson;
 import com.codurance.guru.infra.persistence.entity.CraftspersonEntity;
-import com.codurance.guru.infra.persistence.repository.jpa.CraftspeopleJpaRepository;
+import com.codurance.guru.infra.persistence.jpa.CraftspeopleJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

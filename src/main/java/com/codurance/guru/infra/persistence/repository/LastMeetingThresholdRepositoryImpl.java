@@ -3,7 +3,7 @@ package com.codurance.guru.infra.persistence.repository;
 import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThreshold;
 import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThresholdRepository;
 import com.codurance.guru.infra.persistence.entity.LastMeetingThresholdEntity;
-import com.codurance.guru.infra.persistence.repository.jpa.LastMeetingThresholdJpaRepository;
+import com.codurance.guru.infra.persistence.jpa.LastMeetingThresholdJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
