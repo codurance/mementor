@@ -2,6 +2,7 @@ package com.codurance.guru.infra.web.controllers;
 
 import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThreshold;
 import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThresholdService;
+import com.codurance.guru.core.configuration.lastmeeting.threshold.exceptions.LastMeetingThresholdNotGreaterThanZeroException;
 import com.codurance.guru.infra.repository.LastMeetingThresholdRepositoryImpl;
 import com.codurance.guru.infra.web.responses.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +34,12 @@ public class LastMeetingThresholdController {
             return badRequest().body(new ErrorResponse("Last meeting threshold cannot be null"));
         }
 
-        if(lastMeetingThreshold.getLastMeetingThresholdsInWeeks() <= 0) {
+        try {
+            lastMeetingThresholdService.updateThreshold(lastMeetingThreshold.getLastMeetingThresholdsInWeeks());
+            return noContent().build();
+        } catch (LastMeetingThresholdNotGreaterThanZeroException e) {
             return badRequest().body(new ErrorResponse("Last meeting threshold must be greater than 0"));
         }
-
-        lastMeetingThresholdService.updateThreshold(lastMeetingThreshold.getLastMeetingThresholdsInWeeks());
-
-        return noContent().build();
     }
 
 }
