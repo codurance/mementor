@@ -24,17 +24,9 @@ public class Craftsperson {
         this.mentorId = mentorId;
     }
 
-    public Craftsperson(String firstName, String lastName, Craftsperson mentor) {
-        this(firstName, lastName, mentor.id);
-    }
-
     public Craftsperson(String firstName, String lastName, Integer mentorId, Instant lastMeeting) {
         this(firstName, lastName, mentorId);
         this.lastMeeting = lastMeeting;
-    }
-
-    public Craftsperson(String firstName, String lastName, Craftsperson mentor, Instant lastMeeting) {
-        this(firstName, lastName, mentor.id, lastMeeting);
     }
 
     public Craftsperson(Integer id, String firstName, String lastName, Integer mentorId, List<Integer> menteeIds, Instant lastMeeting) {

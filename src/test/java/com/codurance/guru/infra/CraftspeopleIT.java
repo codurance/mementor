@@ -253,7 +253,7 @@ public class CraftspeopleIT {
 
     private void given_a_craftsperson_with_a_mentor() {
         mentor = craftspeopleRepository.save(new Craftsperson("Jose", "Wenzel"));
-        savedCraftsperson = craftspeopleRepository.save(new Craftsperson("Arnaud", "CLAUDEL", mentor, Instant.now()));
+        savedCraftsperson = craftspeopleRepository.save(new Craftsperson("Arnaud", "CLAUDEL", mentor.getId(), Instant.now()));
     }
 
     private void given_a_json_with_a_first_name_and_a_last_name_for_a_new_craftsperson() throws JSONException {
