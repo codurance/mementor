@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(
         classes = GuruApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class LastMeetingThresholdIntegrationTest {
+public class LastMeetingThresholdIT {
 
     @Autowired
     private LastMeetingThresholdRepositoryImpl repository;

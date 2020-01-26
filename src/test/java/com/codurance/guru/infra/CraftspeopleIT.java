@@ -33,7 +33,7 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest(
         classes = GuruApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class CraftspeopleControllerTest {
+public class CraftspeopleIT {
 
     @LocalServerPort
     int serverPort;

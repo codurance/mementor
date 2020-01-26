@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(
         classes = GuruApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class CraftspeopleServiceIntegrationTest {
+public class CraftspeopleServiceIT {
 
     @Autowired
     CraftspeopleService craftspeopleService;

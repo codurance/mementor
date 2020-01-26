@@ -19,7 +19,7 @@ import static io.restassured.RestAssured.given;
         classes = GuruApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         properties = {"should.filter.requests=true"})
-public class CraftspeopleControllerAuthenticationTest {
+public class AuthenticationIT {
 
     private JSONObject requestBody;
 
