@@ -57,11 +57,11 @@ public class CraftspersonEntity {
         this.lastMeeting = craftsperson.getLastMeeting()
                 .orElse(null);
 
-        this.mentor = craftsperson.getMentor()
+        this.mentor = craftsperson.getMentorId()
             .map(CraftspersonEntity::new)
             .orElse(null);
 
-        this.mentees = craftsperson.getMentees().stream()
+        this.mentees = craftsperson.getMenteeIds().stream()
                 .map(CraftspersonEntity::new)
                 .collect(Collectors.toList());
     }

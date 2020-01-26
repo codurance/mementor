@@ -35,7 +35,7 @@ public class CraftspeopleValidatorUnitTest {
         Craftsperson craftsperson = new Craftsperson("ed", "rixon");
         Craftsperson mentee = new Craftsperson("giulio", "peps", craftsperson);
         mentee.setId(3);
-        craftsperson.setMentees(List.of(mentee.getId()));
+        craftsperson.addMentee(mentee.getId());
 
         BDDMockito.given(repository.findById(2)).willReturn(Optional.of(craftsperson));
 

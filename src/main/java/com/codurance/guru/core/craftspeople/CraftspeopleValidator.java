@@ -28,6 +28,6 @@ public class CraftspeopleValidator {
     private boolean existingMentee(int mentorId, int menteeId) {
         Craftsperson mentor = repository.findById(mentorId).get();
 
-        return mentor.getMentees().contains(menteeId);
+        return mentor.getMenteeIds().contains(menteeId);
     }
 }

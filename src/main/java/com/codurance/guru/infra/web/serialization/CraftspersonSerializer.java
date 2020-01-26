@@ -5,9 +5,6 @@ import com.codurance.guru.infra.persistence.repository.CraftspeopleRepositoryImp
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -25,12 +22,12 @@ public class CraftspersonSerializer extends JsonSerializer<Craftsperson> {
 
     @Override
     public void serialize(Craftsperson craftsperson, JsonGenerator gen, SerializerProvider provider) throws IOException {
-        Person mentor = craftsperson.getMentor()
+        Person mentor = craftsperson.getMentorId()
                 .flatMap(craftspeopleRepository::findById)
                 .map(Person::new)
                 .orElse(null);
 
-        List<Person> mentees = craftsperson.getMentees().stream()
+        List<Person> mentees = craftsperson.getMenteeIds().stream()
                 .map(craftspeopleRepository::findById)
                 .flatMap(Optional::stream)
                 .map(Person::new)

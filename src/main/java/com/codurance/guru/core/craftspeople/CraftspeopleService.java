@@ -34,14 +34,14 @@ public class CraftspeopleService {
         Craftsperson mentor = repository.findById(mentorId).get();
         Craftsperson mentee = repository.findById(menteeId).get();
 
-        mentee.setMentor(mentor);
+        mentee.setMentorId(mentor);
         repository.save(mentee);
     }
 
     public void deleteCraftsperson(Integer craftspersonId) {
         Craftsperson craftspersonToRemove = repository.findById(craftspersonId).get();
 
-        for (Integer menteeId: craftspersonToRemove.getMentees()) {
+        for (Integer menteeId: craftspersonToRemove.getMenteeIds()) {
             removeMentor(menteeId);
         }
 
@@ -51,7 +51,7 @@ public class CraftspeopleService {
     public void removeMentor(int menteeId){
         Craftsperson mentee = repository.findById(menteeId).get();
 
-        mentee.setMentor(null);
+        mentee.setMentorId(null);
         mentee.setLastMeeting(null);
 
         repository.save(mentee);
@@ -83,7 +83,7 @@ public class CraftspeopleService {
         Craftsperson mentor = repository.findById(mentorId).get();
         Craftsperson mentee = repository.findById(menteeId).get();
 
-        mentee.setMentor(mentor);
+        mentee.setMentorId(mentor);
 
         repository.save(mentee);
     }

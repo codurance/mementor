@@ -207,8 +207,8 @@ public class CraftspeopleIT {
         Craftsperson updatedMentor = craftspeopleRepository.findById(mentor.getId()).get();
         Craftsperson updatedMentee = craftspeopleRepository.findById(savedCraftsperson.getId()).get();
 
-        assertTrue("mentor was not removed", updatedMentee.getMentor().isEmpty());
-        assertTrue("mentee is still in the mentor's mentees list", updatedMentor.getMentees()
+        assertTrue("mentor was not removed", updatedMentee.getMentorId().isEmpty());
+        assertTrue("mentee is still in the mentor's mentees list", updatedMentor.getMenteeIds()
                 .stream()
                 .noneMatch(savedCraftsperson.getId()::equals));
     }
@@ -345,7 +345,7 @@ public class CraftspeopleIT {
 
     private void then_the_craftsperson_should_not_have_a_mentor() {
         //noinspection OptionalGetWithoutIsPresent
-        assertTrue(craftspeopleRepository.findById(savedCraftsperson.getId()).get().getMentor().isEmpty());
+        assertTrue(craftspeopleRepository.findById(savedCraftsperson.getId()).get().getMentorId().isEmpty());
     }
 
     private void then_the_last_meeting_is_updated() {
@@ -355,9 +355,9 @@ public class CraftspeopleIT {
     }
 
     private void then_the_relationship_between_mentor_and_mentee_is_lost(Craftsperson updatedMentor, Craftsperson updatedMentee) {
-        assertTrue(updatedMentee.getMentor().isPresent());
-        assertEquals(craftspersonOne.getId(), updatedMentee.getMentor().get());
-        assertTrue("mentee not found in the mentor's mentees list", updatedMentor.getMentees()
+        assertTrue(updatedMentee.getMentorId().isPresent());
+        assertEquals(craftspersonOne.getId(), updatedMentee.getMentorId().get());
+        assertTrue("mentee not found in the mentor's mentees list", updatedMentor.getMenteeIds()
                 .stream()
                 .anyMatch(actualMenteeId -> craftspersonTwo.getId().equals(actualMenteeId)));
     }

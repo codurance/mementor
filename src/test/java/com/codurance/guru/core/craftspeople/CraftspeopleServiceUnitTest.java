@@ -43,7 +43,7 @@ public class CraftspeopleServiceUnitTest {
     }
 
     private void then_both_the_mentor_and_the_last_meeting_are_removed() {
-        then(mentee).should().setMentor(null);
+        then(mentee).should().setMentorId(null);
         then(mentee).should().setLastMeeting(null);
         then(repository).should().save(mentee);
     }
