@@ -7,6 +7,7 @@ import com.codurance.guru.infra.persistence.jpa.CraftspeopleJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,44 +16,51 @@ import java.util.stream.Collectors;
 public class CraftspeopleRepositoryImpl implements CraftspeopleRepository {
 
     @Autowired
-    CraftspeopleJpaRepository craftspeopleJpaRepository;
+    CraftspeopleJpaRepository jpaRepository;
 
     public List<Craftsperson> findByFirstNameAndLastName(String firstName, String lastName) {
-        return craftspeopleJpaRepository
+        return jpaRepository
                 .findByFirstNameAndLastName(firstName, lastName).stream()
                 .map(CraftspersonEntity::toPOJO)
                 .collect(Collectors.toList());
     }
 
     @Override
+    public void updateLastmeeting(Integer id, Instant lastMeeting) {
+        CraftspersonEntity craftsperson = jpaRepository.findById(id).get();
+        craftsperson.setLastMeeting(lastMeeting);
+        jpaRepository.save(craftsperson);
+    }
+
+    @Override
     public Craftsperson save(Craftsperson craftsperson) {
-        return craftspeopleJpaRepository.save(new CraftspersonEntity(craftsperson)).toPOJO();
+        return jpaRepository.save(new CraftspersonEntity(craftsperson)).toPOJO();
     }
 
     @Override
     public Optional<Craftsperson> findById(Integer id) {
-        return craftspeopleJpaRepository.findById(id)
+        return jpaRepository.findById(id)
                 .map(CraftspersonEntity::toPOJO);
     }
 
     @Override
     public void deleteById(Integer craftspersonId) {
-        craftspeopleJpaRepository.deleteById(craftspersonId);
+        jpaRepository.deleteById(craftspersonId);
     }
 
     @Override
     public List<Craftsperson> findAll() {
-        return craftspeopleJpaRepository.findAll().stream()
+        return jpaRepository.findAll().stream()
                 .map(CraftspersonEntity::toPOJO)
                 .collect(Collectors.toList());
     }
 
     public long count() {
-        return craftspeopleJpaRepository.count();
+        return jpaRepository.count();
     }
 
     public boolean existsById(Integer id) {
-        return craftspeopleJpaRepository.existsById(id);
+        return jpaRepository.existsById(id);
     }
 }
 

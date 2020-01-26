@@ -1,11 +1,14 @@
 package com.codurance.guru.core.craftspeople;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
 public interface CraftspeopleRepository  {
 
     List<Craftsperson> findByFirstNameAndLastName(String firstName, String lastName);
+
+    void updateLastmeeting(Integer id, Instant lastMeeting);
 
     Craftsperson save(Craftsperson craftsperson);
 

@@ -72,9 +72,7 @@ public class CraftspeopleService {
             throw new InvalidLastMeetingDateException();
         }
 
-        Craftsperson craftsperson = repository.findById(craftspersonId).get();
-        craftsperson.setLastMeeting(lastMeetingInstant);
-        repository.save(craftsperson);
+        repository.updateLastmeeting(craftspersonId, lastMeetingInstant);
     }
 
     public void setMentee(int mentorId, int menteeId) throws DuplicateMenteeException, InvalidMentorRelationshipException {
