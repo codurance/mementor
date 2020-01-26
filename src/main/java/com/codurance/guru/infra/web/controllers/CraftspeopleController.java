@@ -27,19 +27,6 @@ public class CraftspeopleController {
     @Autowired
     private CraftspeopleService craftspeopleService;
 
-    @PostMapping("/craftspeople/mentor/add")
-    public ResponseEntity addMentor(@Valid @RequestBody AddMentorRequest request) {
-        try {
-            craftspeopleService.addMentor(request.getMentorId(), request.getMenteeId());
-            return ResponseEntity.noContent().build();
-
-        } catch (DuplicateMenteeException ex) {
-            return badRequest().body(new ErrorResponse("The craftsperson is already mentoring that mentee."));
-        } catch (InvalidMentorRelationshipException ex) {
-            return badRequest().body(new ErrorResponse("The craftsperson can't mentor itself."));
-        }
-    }
-
     @PostMapping("/craftspeople/add")
     public ResponseEntity addNewCraftsperson(@Valid @RequestBody AddCraftspersonRequest request) {
         try {
@@ -62,17 +49,11 @@ public class CraftspeopleController {
         return ok().build();
     }
 
-    @PostMapping("/craftspeople/mentor/remove")
-    public ResponseEntity<Void> removeMentor(@Valid @RequestBody RemoveMentorRequest request) {
-        craftspeopleService.removeMentor(request.getMenteeId());
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping("/craftspeople")
     public List<Craftsperson> retrieveAll() {
         return craftspeopleService.retrieveAllCraftsperson();
     }
-
+men
     @GetMapping("/craftspeople/{craftspersonId}")
     public ResponseEntity retrieveCraftsperson(@PathVariable Integer craftspersonId) {
         Optional<Craftsperson> retrievedCraftsperson = craftspeopleService.retrieveCraftsperson(craftspersonId);
