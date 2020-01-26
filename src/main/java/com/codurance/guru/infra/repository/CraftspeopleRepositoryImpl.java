@@ -48,3 +48,10 @@ public class CraftspeopleRepositoryImpl implements CraftspeopleRepository {
         return craftspeopleJpaRepository.existsById(id);
     }
 }
+
+@Repository
+interface CraftspeopleJpaRepository extends JpaRepository<Craftsperson, Integer> {
+
+    List<Craftsperson> findByFirstNameAndLastName(String firstName, String lastName);
+
+}
