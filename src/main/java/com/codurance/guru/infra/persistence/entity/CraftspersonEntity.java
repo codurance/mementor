@@ -34,8 +34,6 @@ public class CraftspersonEntity {
 
     }
 
-
-
     public CraftspersonEntity(Integer id) {
         this.id = id;
     }

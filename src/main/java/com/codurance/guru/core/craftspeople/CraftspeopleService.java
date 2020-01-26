@@ -71,6 +71,6 @@ public class CraftspeopleService {
     }
 
     private boolean craftspersonDoesNotExist(String firstName, String lastName) {
-        return craftspeopleRepository.findByFirstNameAndLastName(firstName,lastName).size() == 0;
+        return craftspeopleRepository.findByFirstNameAndLastName(firstName,lastName).isEmpty();
     }
 }
