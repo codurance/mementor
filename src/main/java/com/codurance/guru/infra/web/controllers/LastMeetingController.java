@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import static org.springframework.http.ResponseEntity.*;
 
 @Controller
-public class LastMeetingThresholdController {
+public class LastMeetingController {
 
     @Autowired
     private LastMeetingThresholdService lastMeetingThresholdService;
