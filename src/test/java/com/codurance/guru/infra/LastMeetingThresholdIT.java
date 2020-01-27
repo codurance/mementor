@@ -68,7 +68,7 @@ public class LastMeetingThresholdIT {
         response.statusCode(204);
 
         // valueOf to fix ambiguous method signatures
-        Assert.assertEquals(Integer.valueOf(2), repository.getConfig().getLastMeetingThresholdsInWeeks());
+        Assert.assertEquals(2, repository.getConfig().getLastMeetingThresholdsInWeeks());
     }
 
     @Test

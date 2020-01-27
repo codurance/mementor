@@ -8,7 +8,7 @@ public class LastMeetingThreshold {
         this.lastMeetingThresholdsInWeeks = lastMeetingThresholdsInWeeks;
     }
 
-    public Integer getLastMeetingThresholdsInWeeks() {
+    public int getLastMeetingThresholdsInWeeks() {
         return lastMeetingThresholdsInWeeks;
     }
 }
