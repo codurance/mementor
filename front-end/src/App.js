@@ -25,9 +25,7 @@ function App() {
   const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
   const [shouldRender, setShouldRender] = useState(false);
   const [craftspeople, setCraftsPeople] = useState([]);
-  const [filteredCraftspeople, setFilteredCraftspeople] = useState(
-    craftspeople,
-  );
+  const [filteredCraftspeople, setFilteredCraftspeople] = useState(craftspeople);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [idToken, setIdToken] = useState(null);
   const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
