@@ -26,7 +26,7 @@ public class CraftspeopleRepositoryImpl implements CraftspeopleRepository {
     }
 
     @Override
-    public void updateLastmeeting(Integer id, Instant lastMeeting) {
+    public void updateLastMeeting(Integer id, Instant lastMeeting) {
         CraftspersonEntity craftsperson = jpaRepository.findById(id).get();
         craftsperson.setLastMeeting(lastMeeting);
         jpaRepository.save(craftsperson);

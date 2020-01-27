@@ -8,7 +8,7 @@ public interface CraftspeopleRepository  {
 
     List<Craftsperson> findByFirstNameAndLastName(String firstName, String lastName);
 
-    void updateLastmeeting(Integer id, Instant lastMeeting);
+    void updateLastMeeting(Integer id, Instant lastMeeting);
 
     Craftsperson save(Craftsperson craftsperson);
 

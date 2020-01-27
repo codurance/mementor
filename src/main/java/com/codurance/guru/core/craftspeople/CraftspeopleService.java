@@ -62,7 +62,7 @@ public class CraftspeopleService {
             throw new InvalidLastMeetingDateException();
         }
 
-        craftspeopleRepository.updateLastmeeting(craftspersonId, lastMeetingInstant);
+        craftspeopleRepository.updateLastMeeting(craftspersonId, lastMeetingInstant);
     }
 
     public void setMentee(int mentorId, int menteeId) throws DuplicateMenteeException, InvalidMentorRelationshipException {
