@@ -9,11 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class SerializerConfiguration extends SimpleModule {
 
-    private CraftspeopleRepositoryImpl craftspeopleRepository;
-
     @Autowired
     public SerializerConfiguration(CraftspeopleRepositoryImpl craftspeopleRepository) {
-        this.craftspeopleRepository = craftspeopleRepository;
         addSerializer(Craftsperson.class, new CraftspersonSerializer(craftspeopleRepository));
     }
 }

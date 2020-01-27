@@ -21,14 +21,11 @@ import static io.restassured.RestAssured.given;
         properties = {"should.filter.requests=true"})
 public class AuthenticationIT {
 
-    private JSONObject requestBody;
-
     @LocalServerPort
     int randomServerPort;
 
     @Before
     public void setUp() {
-        requestBody = new JSONObject();
         RestAssured.port = randomServerPort;
     }
 
