@@ -7,46 +7,49 @@ import java.util.Optional;
 
 public class Craftsperson {
 
-    private Integer id;
-    private String firstName;
-    private String lastName;
-    private Integer mentorId;
-    private List<Integer> menteeIds = new ArrayList<>();
-    private Instant lastMeeting;
+    private final Integer id;
+    private final String firstName;
+    private final String lastName;
+    private final Integer mentorId;
+    private final List<Integer> menteeIds;
+    private final Instant lastMeeting;
 
-    public Craftsperson(String firstName, String lastName) {
+    public Craftsperson(Integer id, String firstName, String lastName, Integer mentorId, Instant lastMeeting, List<Integer> menteeIds) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.mentorId = mentorId;
+        this.lastMeeting = lastMeeting;
+        this.menteeIds = menteeIds;
+    }
+
+    public Craftsperson(Integer id, String firstName, String lastName, Integer mentorId, Instant lastMeeting) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.mentorId = mentorId;
+        this.lastMeeting = lastMeeting;
+        this.menteeIds = new ArrayList<>();
+    }
+
+    public Craftsperson(String firstName, String lastName) {
+        this(null, firstName, lastName, null, null);
     }
 
     public Craftsperson(Integer id, String firstName, String lastName, Integer mentorId) {
-        this(firstName, lastName);
-        this.id = id;
-        this.mentorId = mentorId;
+        this(id, firstName, lastName, mentorId, null);
     }
 
     public Craftsperson(String firstName, String lastName, Integer mentorId) {
-        this(firstName, lastName);
-        this.mentorId = mentorId;
+        this(null, firstName, lastName, mentorId, null);
     }
 
     public Craftsperson(String firstName, String lastName, List<Integer> menteeIds) {
-        this(firstName, lastName);
-        this.menteeIds = menteeIds;
+        this(null, firstName, lastName, null, null, menteeIds);
     }
 
     public Craftsperson(String firstName, String lastName, Integer mentorId, Instant lastMeeting) {
-        this(firstName, lastName, mentorId);
-        this.lastMeeting = lastMeeting;
-    }
-
-    public Craftsperson(Integer id, String firstName, String lastName, Integer mentorId, List<Integer> menteeIds, Instant lastMeeting) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.mentorId = mentorId;
-        this.menteeIds = menteeIds;
-        this.lastMeeting = lastMeeting;
+        this(null, firstName, lastName, mentorId, lastMeeting);
     }
 
     public Integer getId() {
