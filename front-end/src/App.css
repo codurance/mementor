@@ -59,3 +59,7 @@
   background: #f7f7f7;
   border: none;
 }
+
+.craftsperson-row-container {
+  transition: background-color 0.5s ease-in-out;
+}
