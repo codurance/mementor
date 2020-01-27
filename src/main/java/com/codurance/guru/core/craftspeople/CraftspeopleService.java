@@ -28,9 +28,13 @@ public class CraftspeopleService {
         throw new ExistingCraftspersonException();
     }
 
-    public void addMentor(int mentorId, int menteeId) throws DuplicateMenteeException, InvalidMentorRelationshipException {
+    public void addMentor(int mentorId, int menteeId) {
         craftspeopleValidator.validateSetMentee(mentorId, menteeId);
         craftspeopleRepository.addMentor(mentorId, menteeId);
+    }
+
+    public void setMentee(int mentorId, int menteeId) {
+        addMentor(mentorId, menteeId);
     }
 
     public void deleteCraftsperson(Integer craftspersonId) {
@@ -63,11 +67,6 @@ public class CraftspeopleService {
         }
 
         craftspeopleRepository.updateLastMeeting(craftspersonId, lastMeetingInstant);
-    }
-
-    public void setMentee(int mentorId, int menteeId) throws DuplicateMenteeException, InvalidMentorRelationshipException {
-        craftspeopleValidator.validateSetMentee(mentorId, menteeId);
-        craftspeopleRepository.addMentor(mentorId, menteeId);
     }
 
     private boolean craftspersonDoesNotExist(String firstName, String lastName) {
