@@ -21,11 +21,12 @@ public class CraftspeopleService {
         this.craftspeopleValidator = validator;
     }
 
-    public Craftsperson addCraftsperson(String firstName, String lastName) {
+    public void addCraftsperson(String firstName, String lastName) {
         if(craftspersonDoesNotExist(firstName, lastName)) {
-            return craftspeopleRepository.create(firstName, lastName);
+            craftspeopleRepository.create(firstName, lastName);
+        } else {
+            throw new ExistingCraftspersonException();
         }
-        throw new ExistingCraftspersonException();
     }
 
     public void addMentor(int mentorId, int menteeId) {
