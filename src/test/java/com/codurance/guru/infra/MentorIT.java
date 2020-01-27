@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -99,6 +100,19 @@ public class MentorIT {
         assertTrue("mentee is still in the mentor's mentees list", updatedMentor.getMenteeIds()
                 .stream()
                 .noneMatch(savedCraftsperson.getId()::equals));
+    }
+
+    @Test
+    public void retrieve_craftsperson_with_a_mentor() {
+        given_a_craftsperson_with_a_mentor();
+
+        get("craftspeople/{craftspersonId}", savedCraftsperson.getId())
+                .then().assertThat()
+                .body("id", equalTo(savedCraftsperson.getId()))
+                .body("mentor.firstName", equalTo(mentor.getFirstName()))
+                .body("mentor.lastName", equalTo(mentor.getLastName()))
+                .body("mentor.id", equalTo(mentor.getId()))
+                .body("lastMeeting", equalTo((int)savedCraftsperson.getLastMeeting().get().getEpochSecond()));
     }
 
     private void given_a_craftsperson_with_a_mentor() {
