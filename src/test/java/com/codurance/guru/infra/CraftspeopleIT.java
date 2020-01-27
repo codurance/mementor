@@ -26,8 +26,7 @@ import java.util.UUID;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -61,11 +60,18 @@ public class CraftspeopleIT {
 
     @Test
     public void add_a_craftsperson() throws JSONException {
-        given_a_json_with_a_first_name_and_a_last_name_for_a_new_craftsperson();
+        String firstName = randomString();
+        String lastName = randomString();
+
+        given_a_json_with_a_first_name_and_a_last_name_for_a_new_craftsperson(firstName + 1, lastName);
 
         when_the_post_method_on_the_api_is_called_for_adding_a_craftsperson();
 
-        then_the_craftsperson_has_to_be_saved_in_the_repository();
+        then_the_craftsperson_has_to_be_saved_in_the_repository(firstName, lastName);
+    }
+
+    private static String randomString() {
+        return UUID.randomUUID().toString();
     }
 
     @Test
@@ -256,9 +262,9 @@ public class CraftspeopleIT {
         savedCraftsperson = craftspeopleRepository.save(new Craftsperson("Arnaud", "CLAUDEL", mentor.getId(), Instant.now()));
     }
 
-    private void given_a_json_with_a_first_name_and_a_last_name_for_a_new_craftsperson() throws JSONException {
-        requestBody.put("firstName", "Arnaldo");
-        requestBody.put("lastName", "ARNAUD");
+    private void given_a_json_with_a_first_name_and_a_last_name_for_a_new_craftsperson(String firstName, String lastName) throws JSONException {
+        requestBody.put("firstName", firstName);
+        requestBody.put("lastName", lastName);
     }
 
     private void given_a_json_with_a_first_name_and_no_last_name_for_a_new_craftsperson() throws JSONException {
@@ -314,16 +320,8 @@ public class CraftspeopleIT {
                 .body("mentees[0].id", equalTo(craftspeople.get(1).getId()));
     }
 
-    private void then_the_craftsperson_has_to_be_saved_in_the_repository() {
-
-        Integer newId = Integer.parseInt(response.asString());
-
-        response = RestAssured.get("craftspeople/{craftspersonId}", newId);
-
-        response.then().assertThat()
-                .body("firstName", equalTo("Arnaldo"))
-                .body("lastName", equalTo("ARNAUD"))
-                .statusCode(200);
+    private void then_the_craftsperson_has_to_be_saved_in_the_repository(String firstName, String lastName) {
+        assertFalse("added craftsperson could not be found", craftspeopleRepository.findByFirstNameAndLastName(firstName, lastName).isEmpty());
     }
 
     private void then_the_craftsperson_retrieved_has_a_mentor() {
