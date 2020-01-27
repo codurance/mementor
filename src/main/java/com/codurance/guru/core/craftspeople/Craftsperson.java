@@ -19,9 +19,20 @@ public class Craftsperson {
         this.lastName = lastName;
     }
 
+    public Craftsperson(Integer id, String firstName, String lastName, Integer mentorId) {
+        this(firstName, lastName);
+        this.id = id;
+        this.mentorId = mentorId;
+    }
+
     public Craftsperson(String firstName, String lastName, Integer mentorId) {
         this(firstName, lastName);
         this.mentorId = mentorId;
+    }
+
+    public Craftsperson(String firstName, String lastName, List<Integer> menteeIds) {
+        this(firstName, lastName);
+        this.menteeIds = menteeIds;
     }
 
     public Craftsperson(String firstName, String lastName, Integer mentorId, Instant lastMeeting) {
@@ -62,19 +73,4 @@ public class Craftsperson {
         return Optional.ofNullable(lastMeeting);
     }
 
-    public void setMentorId(Craftsperson mentor) {
-        this.mentorId = mentor == null ? null : mentor.id;
-    }
-
-    public void setLastMeeting(Instant lastMeeting) {
-        this.lastMeeting = lastMeeting;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void addMentee(Integer menteeId) {
-        this.menteeIds.add(menteeId);
-    }
 }

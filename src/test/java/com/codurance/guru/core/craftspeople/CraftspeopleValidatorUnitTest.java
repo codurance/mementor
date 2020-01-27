@@ -32,10 +32,8 @@ public class CraftspeopleValidatorUnitTest {
 
     @Test(expected = DuplicateMenteeException.class)
     public void cant_add_duplicate_mentee_to_craftsperson() {
-        Craftsperson craftsperson = new Craftsperson("ed", "rixon");
-        Craftsperson mentee = new Craftsperson("giulio", "peps", craftsperson.getId());
-        mentee.setId(3);
-        craftsperson.addMentee(mentee.getId());
+        Craftsperson craftsperson = new Craftsperson("ed", "rixon", List.of(3));
+        Craftsperson mentee = new Craftsperson(3, "giulio", "peps", craftsperson.getId());
 
         BDDMockito.given(repository.findById(2)).willReturn(Optional.of(craftsperson));
 
