@@ -84,14 +84,6 @@ public class LastMeetingThresholdIT {
     }
 
     @Test
-    public void null_values_should_be_rejected() throws JSONException {
-        given_a_json_config_to_insert(null);
-
-        when_the_config_is_updated();
-        then_there_is_an_error_with("Last meeting threshold cannot be null");
-    }
-
-    @Test
     public void zero_or_negative_values_should_be_rejected() throws JSONException {
         given_a_json_config_to_insert(-1);
         when_the_config_is_updated();

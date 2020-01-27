@@ -2,9 +2,7 @@ package com.codurance.guru.core.configuration.lastmeeting.threshold;
 
 public class LastMeetingThreshold {
 
-    private Integer lastMeetingThresholdsInWeeks;
-
-    public LastMeetingThreshold() {}
+    private final int lastMeetingThresholdsInWeeks;
 
     public LastMeetingThreshold(int lastMeetingThresholdsInWeeks) {
         this.lastMeetingThresholdsInWeeks = lastMeetingThresholdsInWeeks;
@@ -12,9 +10,5 @@ public class LastMeetingThreshold {
 
     public Integer getLastMeetingThresholdsInWeeks() {
         return lastMeetingThresholdsInWeeks;
-    }
-
-    public void setLastMeetingThresholdsInWeeks(Integer lastMeetingThresholdsInWeeks) {
-        this.lastMeetingThresholdsInWeeks = lastMeetingThresholdsInWeeks;
     }
 }

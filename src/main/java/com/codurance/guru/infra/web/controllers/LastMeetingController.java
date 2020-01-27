@@ -6,6 +6,7 @@ import com.codurance.guru.core.configuration.lastmeeting.threshold.exceptions.La
 import com.codurance.guru.core.craftspeople.CraftspeopleService;
 import com.codurance.guru.core.craftspeople.exceptions.InvalidLastMeetingDateException;
 import com.codurance.guru.infra.web.requests.UpdateLastMeetingRequest;
+import com.codurance.guru.infra.web.requests.UpdateLastMeetingThresholdRequest;
 import com.codurance.guru.infra.web.responses.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,10 +35,7 @@ public class LastMeetingController {
     }
 
     @PutMapping("/config")
-    public ResponseEntity<ErrorResponse> update(@RequestBody LastMeetingThreshold lastMeetingThreshold) {
-        if(lastMeetingThreshold.getLastMeetingThresholdsInWeeks() == null) {
-            return errorResponse("Last meeting threshold cannot be null");
-        }
+    public ResponseEntity<ErrorResponse> update(@Valid @RequestBody UpdateLastMeetingThresholdRequest lastMeetingThreshold) {
         try {
             lastMeetingThresholdService.updateThreshold(lastMeetingThreshold.getLastMeetingThresholdsInWeeks());
             return successResponse();
