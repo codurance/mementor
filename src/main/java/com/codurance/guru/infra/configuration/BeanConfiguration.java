@@ -1,6 +1,5 @@
 package com.codurance.guru.infra.configuration;
 
-import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThreshold;
 import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThresholdRepository;
 import com.codurance.guru.core.configuration.lastmeeting.threshold.LastMeetingThresholdService;
 import com.codurance.guru.core.craftspeople.CraftspeopleRepository;

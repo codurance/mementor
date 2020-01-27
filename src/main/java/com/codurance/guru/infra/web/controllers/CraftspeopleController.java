@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.codurance.guru.infra.web.responses.Responses.successResponse;
-import static org.springframework.http.ResponseEntity.notFound;
 
 @Controller
 @RequestMapping("craftspeople")

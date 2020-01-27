@@ -1,9 +1,5 @@
 package com.codurance.guru.infra.web.responses;
 
-import org.springframework.http.ResponseEntity;
-
-import static org.springframework.http.ResponseEntity.badRequest;
-
 public class ErrorResponse {
     private String message;
 
