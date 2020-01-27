@@ -19,16 +19,16 @@ export function SortingBar(props) {
             <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
               <ToggleButton
                 variant="light"
-                onClick={props.onClick}
+                onClick={props.numberOfMenteesEvent}
                 prechecked
                 value={1}
               >
                 Number of mentees
               </ToggleButton>
-              <ToggleButton variant="light" onClick={props.onClick1} value={2}>
+              <ToggleButton variant="light" onClick={props.menteesWithoutMentorListener} value={2}>
                 Unmentored craftsperson
               </ToggleButton>
-              <ToggleButton variant="light" onClick={props.onClick2} value={3}>
+              <ToggleButton variant="light" onClick={props.lastMeetingDateListener} value={3}>
                 Last meeting
               </ToggleButton>
             </ToggleButtonGroup>

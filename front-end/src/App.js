@@ -101,11 +101,11 @@ function App() {
             <Row>
               <Col>
                 <SortingBar
-                  onClick={makeSortOnClickListener(sortByNumberOfMentees)}
-                  onClick1={makeSortOnClickListener(
+                  numberOfMenteesEvent={makeSortOnClickListener(sortByNumberOfMentees)}
+                  menteesWithoutMentorListener={makeSortOnClickListener(
                     sortByCraftspeopleWithoutMentor
                   )}
-                  onClick2={makeSortOnClickListener(sortByLastMeetingDate)}
+                  lastMeetingDateListener={makeSortOnClickListener(sortByLastMeetingDate)}
                 />
               </Col>
               <Col>
