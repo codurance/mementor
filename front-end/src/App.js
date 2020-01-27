@@ -36,7 +36,7 @@ function App() {
   const [idToken, setIdToken] = useState(null);
   const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
   const [currentSearchValue, setCurrentSearchValue] = useState(null);
-  const [activeRow, setActiveRow] = useState('craftsperson-row-container-74');
+  const [activeRow, setActiveRow] = useState(null);
 
   function login(googleUser) {
     setIsLoggedIn(true);
