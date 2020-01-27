@@ -37,6 +37,7 @@ function App() {
   const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
   const [currentSearchValue, setCurrentSearchValue] = useState(null);
   const [activeRow, setActiveRow] = useState('craftsperson-row-container-74');
+  const [fetchConfig, setFetchConfig] = useState(null);
 
   function login(googleUser) {
     setIsLoggedIn(true);
@@ -78,6 +79,18 @@ function App() {
       // the api calls will fail because we're not authorized
       return;
     }
+
+    api({endpoint: `/config`, token: idToken})
+    .then(response => response.json())
+    .then(body => setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks))
+    .catch(notifyUnexpectedBackendError);
+  }, [fetchConfig]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      // the api calls will fail because we're not authorized
+      return;
+    }
     api({ endpoint: "/craftspeople", token: idToken })
       .then(response => response.json())
       .then(fetchedCraftspeople => {
@@ -89,11 +102,6 @@ function App() {
         notifyUnexpectedBackendError(error);
         setBackendFetchError(error);
       });
-
-    api({endpoint: `/config`, token: idToken})
-    .then(response => response.json())
-    .then(body => setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks))
-    .catch(notifyUnexpectedBackendError);
   }, [defaultSort, shouldRender]);
 
   useEffect(() => {
@@ -110,6 +118,8 @@ function App() {
     element.scrollIntoView({behavior: "auto", block: "center"});
     setTimeout(() => element.style.background = 'none', 1000);
   }, [filteredCraftspeople]);
+
+  console.log('app rerenders');
 
   return (
     <div className="App">
@@ -137,6 +147,7 @@ function App() {
                 <ManageCraftsperson
                   craftspeople={craftspeople}
                   rerender={rerender}
+                  setFetchConfig={() => setFetchConfig(!fetchConfig)}
                   idToken={idToken}
                   lastMeetingThresholdDefaultValue={lastMeetingThresholdsInWeeks}
                 />

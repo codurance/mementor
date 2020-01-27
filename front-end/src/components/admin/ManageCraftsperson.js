@@ -109,6 +109,7 @@ export default function ManageCraftsperson(props) {
             }
             idToken={props.idToken}
             rerender={props.rerender}
+            setFetchConfig={props.setFetchConfig}
           />
           <h5 className="admin-label">New craftsperson</h5>
           <InputGroup className="mb-3">
