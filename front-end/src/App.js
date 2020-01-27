@@ -107,7 +107,7 @@ function App() {
       return;
     }
     element.style.background = '#706f6f';
-    element.scrollIntoView({behavior: "smooth", block: "center"});
+    element.scrollIntoView({behavior: "auto", block: "center"});
     setTimeout(() => element.style.background = 'none', 1000);
   }, [filteredCraftspeople]);
 
