@@ -52,7 +52,7 @@ function App() {
   }
 
   function rerender() {
-    setShouldRender(!shouldRender);
+    fetchCraftspeople();
   }
 
   function rerenderAndScrollToActiveRow(rowId) {
@@ -73,6 +73,7 @@ function App() {
       setFilteredCraftspeople(filteredCraftspeople);
     };
   }
+  console.log('app rerenders for');
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -86,34 +87,33 @@ function App() {
     .catch(notifyUnexpectedBackendError);
   }, [fetchConfig]);
 
-  useEffect(() => {
+  function fetchCraftspeople() {
     if (!isLoggedIn) {
       // the api calls will fail because we're not authorized
       return;
     }
+    console.log('fetching ..');
     api({ endpoint: "/craftspeople", token: idToken })
       .then(response => response.json())
       .then(fetchedCraftspeople => {
-        fetchedCraftspeople.sort(sortAlgorithm);
         setCraftsPeople(fetchedCraftspeople);
-        setFilteredCraftspeople(fetchedCraftspeople);
       })
       .catch(error => {
         notifyUnexpectedBackendError(error);
         setBackendFetchError(error);
       });
-
-    api({endpoint: `/config`, token: idToken})
-    .then(response => response.json())
-    .then(body => setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks))
-    .catch(notifyUnexpectedBackendError);
-  }, [defaultSort, shouldRender]);
+  }
 
   useEffect(() => {
-    setFilteredCraftspeople(filter(craftspeople, currentSearchValue));
-  }, [craftspeople, currentSearchValue])
+    console.log('updating active row .. ')
+  },[activeRow]);
 
   useEffect(() => {
+    fetchCraftspeople();
+  }, [defaultSort, idToken]);
+
+  useEffect(() => {
+    console.log('scrolling')
     const element = document.getElementById(activeRow);
     if(!element) {
       // no selected row
@@ -122,7 +122,12 @@ function App() {
     element.style.background = '#706f6f';
     element.scrollIntoView({behavior: "auto", block: "center"});
     setTimeout(() => element.style.background = 'none', 1000);
-  }, [filteredCraftspeople]);
+  }, [craftspeople]);
+
+  function getList() {
+    return filter(craftspeople.slice(), currentSearchValue)
+      .sort(sortAlgorithm);
+  }
 
   return (
     <div className="App">
@@ -133,7 +138,6 @@ function App() {
           </Container>
           <Container>
             <SearchBar searchValue={currentSearchValue} updateSearchValue={(searchValue) => {
-              filterCraftspeople(searchValue);
               setCurrentSearchValue(searchValue);
               }} />
             <Row>
@@ -164,7 +168,8 @@ function App() {
             </Container>
           )}
           <Container>
-            {filteredCraftspeople.map(craftsperson => (
+            {getList()
+              .map(craftsperson => (
               <CraftspersonRow
                 key={craftsperson.id}
                 craftsperson={craftsperson}
