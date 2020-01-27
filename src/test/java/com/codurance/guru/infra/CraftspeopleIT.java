@@ -63,7 +63,7 @@ public class CraftspeopleIT {
         String firstName = randomString();
         String lastName = randomString();
 
-        given_a_json_with_a_first_name_and_a_last_name_for_a_new_craftsperson(firstName + 1, lastName);
+        given_a_json_with_a_first_name_and_a_last_name_for_a_new_craftsperson(firstName, lastName);
 
         when_the_post_method_on_the_api_is_called_for_adding_a_craftsperson();
 
