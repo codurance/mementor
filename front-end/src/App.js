@@ -26,7 +26,6 @@ toast.configure();
 function App() {
   const defaultSort = sortByNumberOfMentees;
   const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
-  const [backendFetchError, setBackendFetchError] = useState(null);
   const [shouldRender, setShouldRender] = useState(false);
   const [craftspeople, setCraftsPeople] = useState([]);
   const [filteredCraftspeople, setFilteredCraftspeople] = useState(
@@ -37,9 +36,8 @@ function App() {
   const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
 
   function login(googleUser) {
-    setIsLoggedIn(true);
-    setBackendFetchError(null);
     const id_token = googleUser.getAuthResponse().id_token;
+    setIsLoggedIn(true);
     setIdToken(id_token);
     rerender();
   }
@@ -80,7 +78,6 @@ function App() {
       })
       .catch(error => {
         notifyUnexpectedBackendError(error);
-        setBackendFetchError(error);
       });
 
     api({endpoint: `/config`, token: idToken})
@@ -89,54 +86,9 @@ function App() {
     .catch(notifyUnexpectedBackendError);
   }, [defaultSort, shouldRender]);
 
-  return (
-    <div className="App">
-      {isLoggedIn && (
-        <div>
-          <Container>
-            <Image className="main-logo" src={logo} />
-          </Container>
-          <Container>
-            <SearchBar onEnter={filterCraftspeople} />
-            <Row>
-              <Col>
-                <SortingBar
-                  numberOfMenteesEvent={makeSortOnClickListener(sortByNumberOfMentees)}
-                  menteesWithoutMentorListener={makeSortOnClickListener(
-                    sortByCraftspeopleWithoutMentor
-                  )}
-                  lastMeetingDateListener={makeSortOnClickListener(sortByLastMeetingDate)}
-                />
-              </Col>
-              <Col>
-                <ManageCraftsperson
-                  craftspeople={craftspeople}
-                  rerender={rerender}
-                  idToken={idToken}
-                  lastMeetingThresholdDefaultValue={lastMeetingThresholdsInWeeks}
-                />
-              </Col>
-            </Row>
-          </Container>
-          {backendFetchError && (
-            <Container className="alert alert-danger" role="alert">
-              <strong>Oh snap!</strong> Looks like there was an error while
-              fetching the data.
-            </Container>
-          )}
-          {filteredCraftspeople.map(craftsperson => (
-            <CraftspersonRow
-              key={craftsperson.id}
-              craftsperson={craftsperson}
-              craftspeople={craftspeople}
-              rerender={rerender}
-              lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
-              idToken={idToken}
-            />
-          ))}
-        </div>
-      )}
-      {!isLoggedIn && (
+  if (!isLoggedIn) {
+    return (
+      <div>
         <Container>
           <Row>
             <Image className="main-logo-login" src={logo} />
@@ -155,7 +107,47 @@ function App() {
             <p className="love">With love by the 2019/2020 apprentices</p>
           </Row>
         </Container>
-      )}
+      </div>
+    )
+  }
+
+  return (
+    <div className="App">
+        <div>
+          <Container>
+            <Image className="main-logo" src={logo} />
+          </Container>
+          <Container>
+            <SearchBar onEnter={filterCraftspeople} />
+            <Row>
+              <Col>
+                <SortingBar
+                  numberOfMenteesEvent={makeSortOnClickListener(sortByNumberOfMentees)}
+                  menteesWithoutMentorEvent={makeSortOnClickListener(sortByCraftspeopleWithoutMentor)}
+                  lastMeetingDateEvent={makeSortOnClickListener(sortByLastMeetingDate)}
+                />
+              </Col>
+              <Col>
+                <ManageCraftsperson
+                  craftspeople={craftspeople}
+                  rerender={rerender}
+                  idToken={idToken}
+                  lastMeetingThresholdDefaultValue={lastMeetingThresholdsInWeeks}
+                />
+              </Col>
+            </Row>
+          </Container>
+          {filteredCraftspeople.map(craftsperson => (
+            <CraftspersonRow
+              key={craftsperson.id}
+              craftsperson={craftsperson}
+              craftspeople={craftspeople}
+              rerender={rerender}
+              lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
+              idToken={idToken}
+            />
+          ))}
+        </div>
     </div>
   );
 }

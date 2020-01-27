@@ -62,7 +62,7 @@ export default function lastMeeting({
                   className="alert-icon"
                   data-testid="last-meeting-alert"
                   icon={faExclamationTriangle}
-                  size="xl"
+                  size="xs"
                 />
             )}
         </span>

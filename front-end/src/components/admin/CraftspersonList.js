@@ -11,7 +11,6 @@ export default function CraftspersonList(props) {
       data-testid="craftspersonList"
     >
       {props.craftspeople
-        .slice()
         .sort(sortAlphabetically)
         .map(craftsperson => (
           <ListGroup.Item

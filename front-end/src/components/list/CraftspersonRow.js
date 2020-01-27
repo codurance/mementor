@@ -48,7 +48,7 @@ export default function CraftspersonRow({
             </Row>
           </Card.Header>
           <Accordion.Collapse eventKey="0">
-            <Card.Body class="mentees-container">
+            <Card.Body className="mentees-container">
               <Mentees
                 rerender={rerender}
                 craftsperson={craftsperson}
