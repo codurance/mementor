@@ -455,8 +455,6 @@ public class CraftspeopleIT {
                 .body(requestBody.toString())
                 .post("craftspeople/add");
 
-        savedId = Integer.parseInt(response.asString());
-
         requestBody.put("firstName", craftspersonTwo.getFirstName());
         requestBody.put("lastName", craftspersonTwo.getLastName());
 

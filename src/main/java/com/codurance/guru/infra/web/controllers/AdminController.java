@@ -4,6 +4,7 @@ import com.codurance.guru.core.craftspeople.CraftspeopleService;
 import com.codurance.guru.core.craftspeople.Craftsperson;
 import com.codurance.guru.core.craftspeople.exceptions.ExistingCraftspersonException;
 import com.codurance.guru.infra.web.requests.AddCraftspersonRequest;
+import com.codurance.guru.infra.web.responses.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,10 +23,10 @@ public class AdminController {
     private CraftspeopleService craftspeopleService;
 
     @PostMapping("add")
-    public ResponseEntity<?> addNewCraftsperson(@Valid @RequestBody AddCraftspersonRequest request) {
+    public ResponseEntity<ErrorResponse> addNewCraftsperson(@Valid @RequestBody AddCraftspersonRequest request) {
         try {
-            Craftsperson craftsperson = craftspeopleService.addCraftsperson(request.getFirstName(), request.getLastName());
-            return successResponse(craftsperson.getId());
+            craftspeopleService.addCraftsperson(request.getFirstName(), request.getLastName());
+            return successResponse();
         } catch (ExistingCraftspersonException ex) {
             return errorResponse("Craftsperson already exists.");
         }
