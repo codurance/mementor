@@ -37,6 +37,7 @@ function App() {
   const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
   const [currentSearchValue, setCurrentSearchValue] = useState(null);
   const [activeRow, setActiveRow] = useState(null);
+  const [fetchConfig, setFetchConfig] = useState(null);
 
   function login(googleUser) {
     setIsLoggedIn(true);
@@ -72,6 +73,18 @@ function App() {
       setFilteredCraftspeople(filteredCraftspeople);
     };
   }
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      // the api calls will fail because we're not authorized
+      return;
+    }
+
+    api({endpoint: `/config`, token: idToken})
+    .then(response => response.json())
+    .then(body => setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks))
+    .catch(notifyUnexpectedBackendError);
+  }, [fetchConfig]);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -137,6 +150,7 @@ function App() {
                 <ManageCraftsperson
                   craftspeople={craftspeople}
                   rerender={rerender}
+                  setFetchConfig={() => setFetchConfig(!fetchConfig)}
                   idToken={idToken}
                   lastMeetingThresholdDefaultValue={lastMeetingThresholdsInWeeks}
                 />

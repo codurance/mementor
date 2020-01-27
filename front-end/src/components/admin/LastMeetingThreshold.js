@@ -10,6 +10,7 @@ import Container from "react-bootstrap/Container";
 
 export default function LastMeetingThreshold({
   rerender,
+  setFetchConfig,
   lastMeetingThresholdDefaultValue,
   idToken
 }) {
@@ -31,7 +32,7 @@ export default function LastMeetingThreshold({
         lastMeetingThresholdsInWeeks: lastMeetingThreshold
       }
     }).then(response => {
-      handleResponse(response, "Last meeting threshold updated", rerender);
+      handleResponse(response, "Last meeting threshold updated", () => setFetchConfig());
     });
   }
 
