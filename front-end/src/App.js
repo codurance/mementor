@@ -31,6 +31,8 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [idToken, setIdToken] = useState(null);
   const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
+  const [currentSearchValue, setCurrentSearchValue] = useState(null);
+  const [activeRow, setActiveRow] = useState(null);
 
   function login(googleUser) {
     const id_token = googleUser.getAuthResponse().id_token;
@@ -46,6 +48,11 @@ function App() {
   function rerender() {
     setShouldRender(!shouldRender);
   }
+
+  function rerenderAndScrollToActiveRow(rowId) {
+    setActiveRow(rowId);
+    rerender();
+  } 
 
   function filterCraftspeople(searchedValue) {
     setFilteredCraftspeople(filter(craftspeople, searchedValue));
@@ -82,6 +89,21 @@ function App() {
     .then(body => setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks))
     .catch(notifyUnexpectedBackendError);
   }, [defaultSort, shouldRender]);
+
+  useEffect(() => {
+    setFilteredCraftspeople(filter(craftspeople, currentSearchValue));
+  }, [craftspeople, currentSearchValue])
+
+  useEffect(() => {
+    const element = document.getElementById(activeRow);
+    if(!element) {
+      // no selected row
+      return;
+    }
+    element.style.background = '#706f6f';
+    element.scrollIntoView({behavior: "auto", block: "center"});
+    setTimeout(() => element.style.background = 'none', 1000);
+  }, [filteredCraftspeople]);
 
   if (!isLoggedIn) {
     return (

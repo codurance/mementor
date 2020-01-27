@@ -13,14 +13,24 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 export default function CraftspersonRow({
   craftsperson,
   craftspeople,
-  rerender,
+  rerenderAndScrollToActiveRow,
   lastMeetingThresholdsInWeeks,
   idToken
 }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
+  function makeId() {
+    return 'craftsperson-row-container-' + craftsperson.id;
+  }
+
+  function rerender () {
+    rerenderAndScrollToActiveRow(makeId());
+  }
+
   return (
-    <Accordion className="accordion-container">
+    <Accordion 
+      className="accordion-container craftsperson-row-container"
+      id={makeId()}>
       <Container>
         <Card>
           <Card.Header className="craftsperson-card">

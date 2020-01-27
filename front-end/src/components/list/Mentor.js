@@ -66,13 +66,6 @@ export default function Mentor({
     });
   }
 
-  function getCraftspersonMentorNameOrNull() {
-    if (!craftsperson.mentor) {
-      return "";
-    }
-    return `${craftsperson.mentor.firstName} ${craftsperson.mentor.lastName}`;
-  }
-
   function getCraftspersonMentorOrNull(){
     if (!craftsperson.mentor) {
       return [];
@@ -87,7 +80,6 @@ export default function Mentor({
         <Typeahead
           className="mentor-dropdown"
           id={"remove-mentor-" + craftsperson.id}
-          defaultInputValue={getCraftspersonMentorNameOrNull()}
           ref={mentorSelect}
           inputProps={{ "data-testid": "add-mentor-select" }}
           labelKey={option => `${option.firstName} ${option.lastName}`}

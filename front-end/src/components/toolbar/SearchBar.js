@@ -3,17 +3,14 @@ import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import ReactDOM from "react-dom";
-import faSearch from "@fortawesome/free-solid-svg-icons/faSearch";
+import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function SearchBar(props) {
+export default function SearchBar({searchValue, updateSearchValue}) {
   let searchInputRef = null;
 
-  const [searchedValue, setSearchedValue] = useState(null);
-
   const clearSearchInput = () => {
-    setSearchedValue("");
-    props.onEnter("");
+    updateSearchValue("");
     ReactDOM.findDOMNode(searchInputRef).value = "";
   };
 
@@ -34,11 +31,10 @@ export default function SearchBar(props) {
         aria-describedby="basic-addon1"
         placeholder="Find Craftsperson..."
         onChange={e => {
-          props.onEnter(e.target.value);
-          setSearchedValue(e.target.value);
+          updateSearchValue(e.target.value);
         }}
       />
-      {searchedValue && (
+      {searchValue && (
         <Button
           className="clear-search"
           onClick={clearSearchInput}
