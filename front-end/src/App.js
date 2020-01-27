@@ -52,7 +52,7 @@ function App() {
   }
 
   function rerender() {
-    setShouldRender(!shouldRender);
+    fetchCraftspeople();
   }
 
   function rerenderAndScrollToActiveRow(rowId) {
@@ -60,19 +60,14 @@ function App() {
     rerender();
   } 
 
-  function filterCraftspeople(searchedValue) {
-    setFilteredCraftspeople(filter(craftspeople, searchedValue));
-  }
-
   function makeSortOnClickListener(sortAlgorithmToUse) {
     return () => {
       setSortAlgorithm(() => sortAlgorithmToUse);
       // here we don't use the current algorithm because it's outdated
-      craftspeople.sort(sortAlgorithmToUse);
-      filteredCraftspeople.sort(sortAlgorithmToUse);
-      setFilteredCraftspeople(filteredCraftspeople);
     };
   }
+
+  console.log('app rerenders for');
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -86,29 +81,33 @@ function App() {
     .catch(notifyUnexpectedBackendError);
   }, [fetchConfig]);
 
-  useEffect(() => {
+  function fetchCraftspeople() {
     if (!isLoggedIn) {
       // the api calls will fail because we're not authorized
       return;
     }
+    console.log('fetching ..');
     api({ endpoint: "/craftspeople", token: idToken })
       .then(response => response.json())
       .then(fetchedCraftspeople => {
-        fetchedCraftspeople.sort(sortAlgorithm);
         setCraftsPeople(fetchedCraftspeople);
-        setFilteredCraftspeople(fetchedCraftspeople);
       })
       .catch(error => {
         notifyUnexpectedBackendError(error);
         setBackendFetchError(error);
       });
-  }, [defaultSort, shouldRender]);
+  }
 
   useEffect(() => {
-    setFilteredCraftspeople(filter(craftspeople, currentSearchValue));
-  }, [craftspeople, currentSearchValue])
+    console.log('updating active row .. ')
+  },[activeRow]);
 
   useEffect(() => {
+    fetchCraftspeople();
+  }, [defaultSort, idToken]);
+
+  useEffect(() => {
+    console.log('scrolling')
     const element = document.getElementById(activeRow);
     if(!element) {
       // no selected row
@@ -117,9 +116,12 @@ function App() {
     element.style.background = '#706f6f';
     element.scrollIntoView({behavior: "auto", block: "center"});
     setTimeout(() => element.style.background = 'none', 1000);
-  }, [filteredCraftspeople]);
+  }, [craftspeople]);
 
-  console.log('app rerenders');
+  function getList() {
+    return filter(craftspeople.slice(), currentSearchValue)
+      .sort(sortAlgorithm);
+  }
 
   return (
     <div className="App">
@@ -130,7 +132,6 @@ function App() {
           </Container>
           <Container>
             <SearchBar searchValue={currentSearchValue} updateSearchValue={(searchValue) => {
-              filterCraftspeople(searchValue);
               setCurrentSearchValue(searchValue);
               }} />
             <Row>
@@ -161,7 +162,8 @@ function App() {
             </Container>
           )}
           <Container>
-            {filteredCraftspeople.map(craftsperson => (
+            {getList()
+              .map(craftsperson => (
               <CraftspersonRow
                 key={craftsperson.id}
                 craftsperson={craftsperson}
