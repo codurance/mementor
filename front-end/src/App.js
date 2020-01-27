@@ -36,6 +36,7 @@ function App() {
   const [idToken, setIdToken] = useState(null);
   const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
   const [currentSearchValue, setCurrentSearchValue] = useState(null);
+  const [activeRow, setActiveRow] = useState('craftsperson-row-container-74');
 
   function login(googleUser) {
     setIsLoggedIn(true);
@@ -52,6 +53,11 @@ function App() {
   function rerender() {
     setShouldRender(!shouldRender);
   }
+
+  function rerenderAndScrollToActiveRow(rowId) {
+    setActiveRow(rowId);
+    rerender();
+  } 
 
   function filterCraftspeople(searchedValue) {
     setFilteredCraftspeople(filter(craftspeople, searchedValue));
@@ -94,6 +100,17 @@ function App() {
     setFilteredCraftspeople(filter(craftspeople, currentSearchValue));
   }, [craftspeople, currentSearchValue])
 
+  useEffect(() => {
+    const element = document.getElementById(activeRow);
+    if(!element) {
+      // no selected row
+      return;
+    }
+    element.style.background = '#706f6f';
+    element.scrollIntoView({behavior: "smooth", block: "center"});
+    setTimeout(() => element.style.background = 'none', 1000);
+  }, [filteredCraftspeople]);
+
   return (
     <div className="App">
       {isLoggedIn && (
@@ -132,16 +149,18 @@ function App() {
               fetching the data.
             </Container>
           )}
-          {filteredCraftspeople.map(craftsperson => (
-            <CraftspersonRow
-              key={craftsperson.id}
-              craftsperson={craftsperson}
-              craftspeople={craftspeople}
-              rerender={rerender}
-              lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
-              idToken={idToken}
-            />
-          ))}
+          <Container>
+            {filteredCraftspeople.map(craftsperson => (
+              <CraftspersonRow
+                key={craftsperson.id}
+                craftsperson={craftsperson}
+                craftspeople={craftspeople}
+                rerenderAndScrollToActiveRow={rerenderAndScrollToActiveRow}
+                lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
+                idToken={idToken}
+              />
+            ))}
+          </Container>
         </div>
       )}
       {!isLoggedIn && (
