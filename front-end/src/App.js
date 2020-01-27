@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, setState} from "react";
 import { toast } from "react-toastify";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { api } from "./util/api";
@@ -28,7 +28,7 @@ function App() {
   const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
   const [backendFetchError, setBackendFetchError] = useState(null);
   const [shouldRender, setShouldRender] = useState(false);
-  const [craftspeople, setCraftsPeople] = useState([]);
+  const [craftspeople, setCraftsPeople] = useState({list: [], id: null});
   const [filteredCraftspeople, setFilteredCraftspeople] = useState(
     craftspeople,
   );
@@ -51,13 +51,12 @@ function App() {
     console.log(response);
   }
 
-  function rerender() {
-    fetchCraftspeople();
+  function rerender(rowId) {
+    fetchCraftspeople(rowId);
   }
 
   function rerenderAndScrollToActiveRow(rowId) {
-    setActiveRow(rowId);
-    rerender();
+    rerender(rowId);
   } 
 
   function makeSortOnClickListener(sortAlgorithmToUse) {
@@ -69,7 +68,7 @@ function App() {
 
   console.log('app rerenders for');
 
-  useEffect(() => {
+  function doFetchConfig() {
     if (!isLoggedIn) {
       // the api calls will fail because we're not authorized
       return;
@@ -79,9 +78,13 @@ function App() {
     .then(response => response.json())
     .then(body => setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks))
     .catch(notifyUnexpectedBackendError);
+  }
+
+  useEffect(() => {
+    doFetchConfig();
   }, [fetchConfig]);
 
-  function fetchCraftspeople() {
+  function fetchCraftspeople(rowId) {
     if (!isLoggedIn) {
       // the api calls will fail because we're not authorized
       return;
@@ -90,7 +93,7 @@ function App() {
     api({ endpoint: "/craftspeople", token: idToken })
       .then(response => response.json())
       .then(fetchedCraftspeople => {
-        setCraftsPeople(fetchedCraftspeople);
+          setCraftsPeople({list: fetchedCraftspeople, id: rowId});  
       })
       .catch(error => {
         notifyUnexpectedBackendError(error);
@@ -103,12 +106,13 @@ function App() {
   },[activeRow]);
 
   useEffect(() => {
-    fetchCraftspeople();
+    fetchCraftspeople(1);
+    doFetchConfig();
   }, [defaultSort, idToken]);
 
   useEffect(() => {
     console.log('scrolling')
-    const element = document.getElementById(activeRow);
+    const element = document.getElementById(craftspeople.id);
     if(!element) {
       // no selected row
       return;
@@ -119,7 +123,7 @@ function App() {
   }, [craftspeople]);
 
   function getList() {
-    return filter(craftspeople.slice(), currentSearchValue)
+    return filter(craftspeople.list.slice(), currentSearchValue)
       .sort(sortAlgorithm);
   }
 
@@ -146,7 +150,7 @@ function App() {
               </Col>
               <Col>
                 <ManageCraftsperson
-                  craftspeople={craftspeople}
+                  craftspeople={craftspeople.list}
                   rerender={rerender}
                   setFetchConfig={() => setFetchConfig(!fetchConfig)}
                   idToken={idToken}
@@ -167,7 +171,7 @@ function App() {
               <CraftspersonRow
                 key={craftsperson.id}
                 craftsperson={craftsperson}
-                craftspeople={craftspeople}
+                craftspeople={craftspeople.list}
                 rerenderAndScrollToActiveRow={rerenderAndScrollToActiveRow}
                 lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
                 idToken={idToken}
