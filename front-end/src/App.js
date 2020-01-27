@@ -8,12 +8,9 @@ import {
   sortByNumberOfMentees,
   sortByLastMeetingDate
 } from "./util/sorting";
-import SearchBar from "./components/toolbar/SearchBar";
-import { SortingBar } from "./components/toolbar/SortingBar";
+import MenuBar from './components/toolbar/MenuBar';
 import CraftspersonRow from "./components/list/CraftspersonRow";
-import ManageCraftsperson from "./components/admin/ManageCraftsperson";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import "./App.css";
@@ -114,29 +111,18 @@ function App() {
   return (
     <div className="App">
         <div>
-          <Container>
-            <Image className="main-logo" src={logo} />
-          </Container>
-          <Container>
-            <SearchBar onEnter={filterCraftspeople} />
-            <Row>
-              <Col>
-                <SortingBar
-                  numberOfMenteesEvent={makeSortOnClickListener(sortByNumberOfMentees)}
-                  menteesWithoutMentorEvent={makeSortOnClickListener(sortByCraftspeopleWithoutMentor)}
-                  lastMeetingDateEvent={makeSortOnClickListener(sortByLastMeetingDate)}
-                />
-              </Col>
-              <Col>
-                <ManageCraftsperson
-                  craftspeople={craftspeople}
-                  rerender={rerender}
-                  idToken={idToken}
-                  lastMeetingThresholdDefaultValue={lastMeetingThresholdsInWeeks}
-                />
-              </Col>
-            </Row>
-          </Container>
+          <MenuBar 
+          logo={logo} 
+          searchFilter={filterCraftspeople}
+          filters={{
+            numberOfMentees:makeSortOnClickListener(sortByNumberOfMentees), 
+            craftspeopleWithoutMentors:makeSortOnClickListener(sortByCraftspeopleWithoutMentor), 
+            lastMeetingDate:makeSortOnClickListener(sortByLastMeetingDate)
+          }}
+          craftspeople={craftspeople}
+          rerender={rerender}
+          idToken={idToken}
+          meetingThreshold={lastMeetingThresholdsInWeeks}/>
           {filteredCraftspeople.map(craftsperson => (
             <CraftspersonRow
               key={craftsperson.id}

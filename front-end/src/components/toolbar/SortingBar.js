@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import "./SortingBar.css"
 
-export function SortingBar(props) {
+export default function SortingBar(props) {
   return (
     <Container className="sorting-bar-container">
       <Row>
@@ -15,7 +15,7 @@ export function SortingBar(props) {
         </Col>
         <Col sm={10}>
           <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
-            <ToggleButton variant="light" onClick={props.numberOfMenteesEvent} prechecked value={1}>
+            <ToggleButton variant="light" onClick={props.numberOfMenteesListener} prechecked value={1}>
               Number of mentees
             </ToggleButton>
             <ToggleButton variant="light" onClick={props.menteesWithoutMentorListener} value={2}>
