@@ -35,6 +35,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [idToken, setIdToken] = useState(null);
   const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
+  const [currentSearchValue, setCurrentSearchValue] = useState(null);
 
   function login(googleUser) {
     setIsLoggedIn(true);
@@ -89,6 +90,10 @@ function App() {
     .catch(notifyUnexpectedBackendError);
   }, [defaultSort, shouldRender]);
 
+  useEffect(() => {
+    setFilteredCraftspeople(filter(craftspeople, currentSearchValue));
+  }, [craftspeople, currentSearchValue])
+
   return (
     <div className="App">
       {isLoggedIn && (
@@ -97,7 +102,10 @@ function App() {
             <Image className="main-logo" src={logo} />
           </Container>
           <Container>
-            <SearchBar onEnter={filterCraftspeople} />
+            <SearchBar searchValue={currentSearchValue} updateSearchValue={(searchValue) => {
+              filterCraftspeople(searchValue);
+              setCurrentSearchValue(searchValue);
+              }} />
             <Row>
               <Col>
                 <SortingBar
