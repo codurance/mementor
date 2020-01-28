@@ -26,6 +26,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -99,6 +100,22 @@ public class CraftspeopleControllerTest {
 
         then_the_response_should_be_no_content();
         then_the_last_meeting_is_updated();
+    }
+
+    @Test
+    public void can_remove_a_craftsperson_last_meeting() throws JSONException {
+        given_a_craftsperson_with_a_mentor();
+
+        when_the_last_meeting_is_removed(savedCraftsperson.getId());
+
+        then_the_response_should_be_no_content();
+        then_the_last_meeting_is_removed();
+    }
+
+    @Test
+    public void cant_remove_an_unknown_craftspersons_last_meeting() {
+        when_the_last_meeting_is_removed(100);
+        then_the_response_should_be_not_found();
     }
 
     @Test
@@ -285,6 +302,10 @@ public class CraftspeopleControllerTest {
         requestBody.put("lastName", "ARNAUD");
     }
 
+    private void given_the_request_body_with_a_craftsperson_id() throws JSONException {
+        requestBody.put("craftspersonId", savedCraftsperson.getId());
+    }
+
     private void given_the_request_body_has_a_last_meeting_set() throws JSONException {
         requestBody.put("craftspersonId", savedCraftsperson.getId());
         requestBody.put("lastMeeting", lastMeetingEpoch);
@@ -347,6 +368,12 @@ public class CraftspeopleControllerTest {
     private void then_the_craftsperson_should_not_have_a_mentor() {
         //noinspection OptionalGetWithoutIsPresent
         assertTrue(craftspeopleRepository.findById(savedCraftsperson.getId()).get().getMentor().isEmpty());
+    }
+
+    private void then_the_last_meeting_is_removed() {
+        Craftsperson person = craftspeopleRepository.findById(savedCraftsperson.getId()).get();
+        Optional<Instant> lastMeeting = person.getLastMeeting();
+        assertFalse(lastMeeting.isPresent());
     }
 
     private void then_the_last_meeting_is_updated() {
@@ -440,7 +467,13 @@ public class CraftspeopleControllerTest {
         response = given()
                 .contentType("application/json")
                 .body(requestBody.toString())
-                .put("craftspeople/lastmeeting");
+                .put("craftspeople/lastmeeting/add");
+    }
+
+    private void when_the_last_meeting_is_removed(int craftspersonId) {
+        response = given()
+                .contentType("application/json")
+                .post(String.format("craftspeople/lastmeeting/remove/%s", craftspersonId));
     }
 
     private void when_the_post_method_on_the_api_is_called_for_adding_a_craftsperson() {

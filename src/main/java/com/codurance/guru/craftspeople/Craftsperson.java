@@ -91,4 +91,13 @@ public class Craftsperson {
     public void setLastMeeting(Instant lastMeeting){
         this.lastMeeting = lastMeeting;
     }
+
+    public void removeLastMeeting() {
+        this.lastMeeting = null;
+    }
+
+    public void removeMentor() {
+        this.mentor = null;
+        this.lastMeeting = null;
+    }
 }

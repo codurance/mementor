@@ -9,6 +9,8 @@ import "./LastMeeting.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { validateLastMeetingThresoldWithCustomThreshold } from "../../util/date";
+import Button from "react-bootstrap/Button";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 export default function lastMeeting({
   craftsperson,
@@ -19,7 +21,7 @@ export default function lastMeeting({
 }) {
   function setLastMeeting(date) {
     api({
-      endpoint: "/craftspeople/lastmeeting",
+      endpoint: "/craftspeople/lastmeeting/add",
       token: idToken,
       type: "PUT",
       body: {
@@ -31,41 +33,62 @@ export default function lastMeeting({
     });
   }
 
+  function removeLastMeeting(date) {
+    api({
+      endpoint: `/craftspeople/lastmeeting/remove/${craftsperson.id}`,
+      token: idToken,
+      type: "POST"
+    }).then(response => {
+      handleResponse(response, "Last meeting removed", refreshCraftspeople);
+    });
+  }
+
   return (
     <Col lg className="last-meeting-container">
       <h5 className="last-meeting-label">Last Meeting</h5>
-      <Row className="last-meeting-picker-container">
-        <span data-testid="date-picker-container">
-          {!craftsperson.mentor && "-"}
-          {craftsperson.mentor && (
-            <DatePicker
-              className="date-picker"
-              selected={
-                craftsperson.lastMeeting
-                  ? new Date(craftsperson.lastMeeting * 1000)
-                  : null
-              }
-              placeholderText="Select date..."
-              dateFormat="dd MMMM yyyy"
-              customInput={
-                <input data-testid="lastMeetingDatePicker" type="text" />
-              }
-              onChange={setLastMeeting}
+      <Row
+        className="last-meeting-picker-container"
+        data-testid="date-picker-container"
+      >
+        {!craftsperson.mentor && "-"}
+        {craftsperson.mentor && (
+          <DatePicker
+            className="date-picker"
+            selected={
+              craftsperson.lastMeeting
+                ? new Date(craftsperson.lastMeeting * 1000)
+                : null
+            }
+            placeholderText="Select date..."
+            dateFormat="dd MMMM yyyy"
+            customInput={
+              <input data-testid="lastMeetingDatePicker" type="text" />
+            }
+            onChange={setLastMeeting}
+          />
+        )}
+        {craftsperson.lastMeeting && (
+          <Button
+            className="remove-button remove-last-meeting"
+            variant="link"
+            data-testid="removelastmeetingbutton"
+            onClick={removeLastMeeting}
+          >
+            <FontAwesomeIcon className="times-icon" icon={faTimes} size="lg" />
+          </Button>
+        )}
+        {craftsperson.lastMeeting &&
+          !validateLastMeetingThresoldWithCustomThreshold(
+            craftsperson.lastMeeting,
+            lastMeetingThresholdsInWeeks
+          ) && (
+            <FontAwesomeIcon
+              className="alert-icon"
+              data-testid="last-meeting-alert"
+              icon={faExclamationTriangle}
+              size="lg"
             />
           )}
-          {craftsperson.lastMeeting &&
-            !validateLastMeetingThresoldWithCustomThreshold(
-              craftsperson.lastMeeting,
-              lastMeetingThresholdsInWeeks
-            ) && (
-              <FontAwesomeIcon
-                className="alert-icon"
-                data-testid="last-meeting-alert"
-                icon={faExclamationTriangle}
-                size="lg"
-              />
-            )}
-        </span>
       </Row>
     </Col>
   );

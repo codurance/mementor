@@ -1,9 +1,6 @@
 package com.codurance.guru.craftspeople;
 
-import com.codurance.guru.craftspeople.exceptions.ExistingCraftspersonException;
-import com.codurance.guru.craftspeople.exceptions.InvalidLastMeetingDateException;
-import com.codurance.guru.craftspeople.exceptions.DuplicateMenteeException;
-import com.codurance.guru.craftspeople.exceptions.InvalidMentorRelationshipException;
+import com.codurance.guru.craftspeople.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -37,18 +34,18 @@ public class CraftspeopleService {
     public void addMentor(int mentorId, int menteeId) throws DuplicateMenteeException, InvalidMentorRelationshipException {
         craftspeopleValidator.validateSetMentee(mentorId, menteeId);
 
-        Craftsperson mentor = repository.findById(mentorId).get();
-        Craftsperson mentee = repository.findById(menteeId).get();
+        Craftsperson mentor = getCraftsperson(mentorId);
+        Craftsperson mentee = getCraftsperson(menteeId);
 
         mentee.setMentor(mentor);
         repository.save(mentee);
     }
 
     public void deleteCraftsperson(Integer craftspersonId) {
-        Craftsperson craftspersonToRemove = repository.findById(craftspersonId).get();
+        Craftsperson craftspersonToRemove = getCraftsperson(craftspersonId);
 
         for (Craftsperson mentee: craftspersonToRemove.getMentees()) {
-            mentee.setMentor(null);
+            mentee.removeMentor();
             repository.save(mentee);
         }
 
@@ -56,11 +53,9 @@ public class CraftspeopleService {
     }
 
     public void removeMentor(int menteeId){
-        Craftsperson mentee = repository.findById(menteeId).get();
+        Craftsperson mentee = getCraftsperson(menteeId);
 
-        mentee.setMentor(null);
-        mentee.setLastMeeting(null);
-
+        mentee.removeMentor();
         repository.save(mentee);
     }
 
@@ -79,20 +74,36 @@ public class CraftspeopleService {
             throw new InvalidLastMeetingDateException();
         }
 
-        Craftsperson craftsperson = repository.findById(craftspersonId).get();
+        Craftsperson craftsperson = getCraftsperson(craftspersonId);
         craftsperson.setLastMeeting(lastMeetingInstant);
+        repository.save(craftsperson);
+    }
+
+    public void removeLastMeeting(int craftspersonId) {
+        Craftsperson craftsperson = getCraftsperson(craftspersonId);
+        craftsperson.removeLastMeeting();
         repository.save(craftsperson);
     }
 
     public void setMentee(int mentorId, int menteeId) throws DuplicateMenteeException, InvalidMentorRelationshipException {
         craftspeopleValidator.validateSetMentee(mentorId, menteeId);
 
-        Craftsperson mentor = repository.findById(mentorId).get();
-        Craftsperson mentee = repository.findById(menteeId).get();
+        Craftsperson mentor = getCraftsperson(mentorId);
+        Craftsperson mentee = getCraftsperson(menteeId);
 
         mentee.setMentor(mentor);
 
         repository.save(mentee);
+    }
+
+    private Craftsperson getCraftsperson(int craftspersonId) {
+        Optional<Craftsperson> craftsperson = repository.findById(craftspersonId);
+
+        if (!craftsperson.isPresent()){
+            throw new CraftspersonDoesntExistException();
+        }
+
+        return craftsperson.get();
     }
 
     private boolean craftspersonDoesNotExist(String firstName, String lastName) {
