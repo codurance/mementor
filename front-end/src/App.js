@@ -49,7 +49,7 @@ function App() {
   }
 
   function rerender(rowId) {
-    fetchCraftspeople(rowId);
+    refreshCraftspeople(rowId);
   }
 
   function rerenderAndScrollToActiveRow(rowId) {
@@ -77,7 +77,7 @@ function App() {
       .catch(notifyUnexpectedBackendError);
   }
 
-  function fetchCraftspeople(rowId) {
+  function refreshCraftspeople(rowId) {
     if (!isLoggedIn) {
       // the api calls will fail because we're not authorized
       return;
@@ -95,9 +95,9 @@ function App() {
   }
 
   useEffect(() => {
-    fetchCraftspeople(1);
+    refreshCraftspeople();
     refreshConfig();
-  }, [defaultSort, idToken]);
+  }, [idToken]);
 
   useEffect(() => {
     console.log("scrolling");
