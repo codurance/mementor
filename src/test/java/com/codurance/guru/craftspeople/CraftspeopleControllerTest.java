@@ -1,8 +1,6 @@
 package com.codurance.guru.craftspeople;
 
 import com.codurance.guru.GuruApplication;
-import com.google.api.client.json.Json;
-import groovy.json.JsonException;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
