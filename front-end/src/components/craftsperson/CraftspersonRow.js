@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Craftsperson from "./Craftsperson";
-import Mentees from "./Mentees";
+import Mentees from "../mentee/Mentees";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";

@@ -10,12 +10,13 @@ import {
 } from "./util/sorting";
 import SearchBar from "./components/toolbar/SearchBar";
 import { SortingBar } from "./components/toolbar/SortingBar";
-import CraftspersonRow from "./components/list/CraftspersonRow";
+import CraftspersonRow from "./components/craftsperson/CraftspersonRow";
 import ManageCraftsperson from "./components/admin/ManageCraftsperson";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
+import Listgroup from 'react-bootstrap/ListGroup';
 import "./App.css";
 import logo from "./mementor_logo.png";
 import "react-toastify/dist/ReactToastify.css";
@@ -151,16 +152,17 @@ function App() {
             </Container>
           )}
           <Container>
-            {getList().map(craftsperson => (
-              <CraftspersonRow
-                key={craftsperson.id}
-                craftsperson={craftsperson}
-                craftspeople={craftspeople.list}
-                refreshCraftspeople={refreshCraftspeople}
-                lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
-                idToken={idToken}
-              />
-            ))}
+            <Listgroup>
+              {getList().map(craftsperson => (
+                <CraftspersonRow
+                  key={craftsperson.id}
+                  craftsperson={craftsperson}
+                  craftspeople={craftspeople.list}
+                  refreshCraftspeople={refreshCraftspeople}
+                  lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
+                  idToken={idToken}/>
+              ))}
+            </Listgroup>
           </Container>
         </div>
       )}
