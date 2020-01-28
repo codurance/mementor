@@ -41,19 +41,10 @@ function App() {
     setBackendFetchError(null);
     const id_token = googleUser.getAuthResponse().id_token;
     setIdToken(id_token);
-    rerender();
   }
 
   function responseGoogle(response) {
     console.log(response);
-  }
-
-  function rerender(rowId) {
-    refreshCraftspeople(rowId);
-  }
-
-  function rerenderAndScrollToActiveRow(rowId) {
-    rerender(rowId);
   }
 
   function makeSortOnClickListener(sortAlgorithmToUse) {
@@ -144,7 +135,7 @@ function App() {
               <Col>
                 <ManageCraftsperson
                   craftspeople={craftspeople.list}
-                  rerender={rerender}
+                  rerender={refreshCraftspeople}
                   refreshConfig={refreshConfig}
                   idToken={idToken}
                   lastMeetingThresholdDefaultValue={
@@ -166,7 +157,7 @@ function App() {
                 key={craftsperson.id}
                 craftsperson={craftsperson}
                 craftspeople={craftspeople.list}
-                rerenderAndScrollToActiveRow={rerenderAndScrollToActiveRow}
+                rerenderAndScrollToActiveRow={refreshCraftspeople}
                 lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
                 idToken={idToken}
               />
