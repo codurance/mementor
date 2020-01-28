@@ -28,9 +28,6 @@ function App() {
   const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
   const [backendFetchError, setBackendFetchError] = useState(null);
   const [craftspeople, setCraftsPeople] = useState({ list: [], id: null });
-  const [filteredCraftspeople, setFilteredCraftspeople] = useState(
-    craftspeople
-  );
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [idToken, setIdToken] = useState(null);
   const [
