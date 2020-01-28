@@ -1,5 +1,3 @@
-import { toast } from "react-toastify";
-
 export function api({
   endpoint,
   token,
