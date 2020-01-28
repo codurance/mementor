@@ -9,7 +9,6 @@ describe("when rendering", () => {
       it("should render the add mentee row", () => {
         const { getByTestId } = render(
           <Mentees
-            rerender={() => {}}
             craftsperson={[]}
             mentees={[]}
             craftspeople={[]}
@@ -22,7 +21,6 @@ describe("when rendering", () => {
       it("should render the mentee and the add-mentee row", () => {
         const { getByTestId } = render(
           <Mentees
-            rerender={() => {}}
             craftsperson={[]}
             mentees={[
               {

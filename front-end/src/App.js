@@ -35,26 +35,16 @@ function App() {
     setLastMeetingThresholdsInWeeks
   ] = useState(null);
   const [currentSearchValue, setCurrentSearchValue] = useState(null);
-  const [fetchConfig, setFetchConfig] = useState(null);
 
   function login(googleUser) {
     setIsLoggedIn(true);
     setBackendFetchError(null);
     const id_token = googleUser.getAuthResponse().id_token;
     setIdToken(id_token);
-    rerender();
   }
 
   function responseGoogle(response) {
     console.log(response);
-  }
-
-  function rerender(rowId) {
-    fetchCraftspeople(rowId);
-  }
-
-  function rerenderAndScrollToActiveRow(rowId) {
-    rerender(rowId);
   }
 
   function makeSortOnClickListener(sortAlgorithmToUse) {
@@ -64,7 +54,7 @@ function App() {
   }
   console.log("app rerenders for");
 
-  function doFetchConfig() {
+  function refreshConfig() {
     if (!isLoggedIn) {
       // the api calls will fail because we're not authorized
       return;
@@ -78,11 +68,7 @@ function App() {
       .catch(notifyUnexpectedBackendError);
   }
 
-  useEffect(() => {
-    doFetchConfig();
-  }, [fetchConfig]);
-
-  function fetchCraftspeople(rowId) {
+  function refreshCraftspeople(rowId) {
     if (!isLoggedIn) {
       // the api calls will fail because we're not authorized
       return;
@@ -100,9 +86,9 @@ function App() {
   }
 
   useEffect(() => {
-    fetchCraftspeople(1);
-    doFetchConfig();
-  }, [defaultSort, idToken]);
+    refreshCraftspeople();
+    refreshConfig();
+  }, [idToken]);
 
   useEffect(() => {
     console.log("scrolling");
@@ -149,8 +135,8 @@ function App() {
               <Col>
                 <ManageCraftsperson
                   craftspeople={craftspeople.list}
-                  rerender={rerender}
-                  setFetchConfig={() => setFetchConfig(!fetchConfig)}
+                  refreshCraftspeople={refreshCraftspeople}
+                  refreshConfig={refreshConfig}
                   idToken={idToken}
                   lastMeetingThresholdDefaultValue={
                     lastMeetingThresholdsInWeeks
@@ -171,7 +157,7 @@ function App() {
                 key={craftsperson.id}
                 craftsperson={craftsperson}
                 craftspeople={craftspeople.list}
-                rerenderAndScrollToActiveRow={rerenderAndScrollToActiveRow}
+                refreshCraftspeople={refreshCraftspeople}
                 lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
                 idToken={idToken}
               />

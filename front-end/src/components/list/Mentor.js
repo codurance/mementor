@@ -17,7 +17,7 @@ import "./Mentor.css";
 export default function Mentor({
   craftsperson,
   craftspeople,
-  rerender,
+  refreshCraftspeople,
   idToken
 }) {
   let mentorSelect = React.createRef();
@@ -41,7 +41,7 @@ export default function Mentor({
       handleResponse(
         response,
         mentorAddedMessage(mentorFirstname, menteeFirstname),
-        rerender
+        refreshCraftspeople
       );
     });
   }
@@ -60,7 +60,7 @@ export default function Mentor({
         mentorRemovedMessage(craftsperson.firstName),
         () => {
           mentorSelect.current.clear();
-          rerender();
+          refreshCraftspeople();
         }
       );
     });
