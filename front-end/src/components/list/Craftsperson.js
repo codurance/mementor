@@ -22,13 +22,13 @@ export default function Craftsperson({
       <Mentor
         craftsperson={craftsperson}
         craftspeople={craftspeople}
-        rerender={refreshCraftspeople}
+        refreshCraftspeople={refreshCraftspeople}
         idToken={idToken}
       />
       <LastMeeting
         craftsperson={craftsperson}
         craftspeople={craftspeople}
-        rerender={refreshCraftspeople}
+        refreshCraftspeople={refreshCraftspeople}
         idToken={idToken}
         lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
       />

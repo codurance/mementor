@@ -61,7 +61,7 @@ export default function CraftspersonRow({
           <Accordion.Collapse eventKey="0">
             <Card.Body class="mentees-container">
               <Mentees
-                rerender={refreshCraftspeopleWithRowId}
+                refreshCraftspeople={refreshCraftspeopleWithRowId}
                 craftsperson={craftsperson}
                 mentees={craftsperson.mentees}
                 craftspeople={craftspeople}

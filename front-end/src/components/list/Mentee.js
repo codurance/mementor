@@ -10,7 +10,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import "./Mentee.css";
 import { handleResponse, mentorRemovedMessage } from "../../util/notify";
 
-export default function Mentee({ mentee, rerender, idToken }) {
+export default function Mentee({ mentee, refreshCraftspeople, idToken }) {
   function removeMentee() {
     api({
       endpoint: `/craftspeople/mentee/remove/${mentee.id}`,
@@ -20,7 +20,7 @@ export default function Mentee({ mentee, rerender, idToken }) {
       handleResponse(
         response,
         mentorRemovedMessage(mentee.firstName),
-        rerender
+        refreshCraftspeople
       );
     });
   }
