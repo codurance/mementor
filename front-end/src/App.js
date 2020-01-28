@@ -35,7 +35,6 @@ function App() {
   const [idToken, setIdToken] = useState(null);
   const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
   const [currentSearchValue, setCurrentSearchValue] = useState(null);
-  const [activeRow] = useState(null);
   const [fetchConfig, setFetchConfig] = useState(null);
 
   function login(googleUser) {
@@ -102,10 +101,6 @@ function App() {
         setBackendFetchError(error);
       });
   }
-
-  useEffect(() => {
-    console.log('updating active row .. ')
-  },[activeRow]);
 
   useEffect(() => {
     fetchCraftspeople(1);
