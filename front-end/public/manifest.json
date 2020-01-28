@@ -1,0 +1,7 @@
+{
+  "name": "Mementor",
+  "theme_color": "#d70021",
+  "background_color": "#6600af",
+  "display": "standalone",
+  "start_url": "/"
+}

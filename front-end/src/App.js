@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { toast } from "react-toastify";
 import GoogleLogin from "react-google-login";
 import { api } from "./util/api";
@@ -35,9 +35,9 @@ function App() {
   ] = useState(null);
   const [currentSearchValue, setCurrentSearchValue] = useState(null);
 
-  function isUserLoggedIn() {
+  const isUserLoggedIn = useCallback(() =>  {
     return idToken;
-  }
+  }, [idToken]);
 
   function login(googleUser) {
     setBackendFetchError(null);
@@ -54,9 +54,8 @@ function App() {
       setSortAlgorithm(() => sortAlgorithmToUse);
     };
   }
-  console.log("app rerenders for");
 
-  function refreshConfig() {
+  const refreshConfig = useCallback(() => {
     if (!isUserLoggedIn()) {
       // the api calls will fail because we're not authorized
       return;
@@ -68,9 +67,9 @@ function App() {
         setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks)
       )
       .catch(notifyUnexpectedBackendError);
-  }
+  }, [idToken, isUserLoggedIn]);
 
-  function refreshCraftspeople(rowId) {
+  const refreshCraftspeople = useCallback((rowId) => {
     if (!isUserLoggedIn()) {
       // the api calls will fail because we're not authorized
       return;
@@ -85,12 +84,12 @@ function App() {
         notifyUnexpectedBackendError(error);
         setBackendFetchError(error);
       });
-  }
+  }, [idToken, isUserLoggedIn]);
 
   useEffect(() => {
     refreshCraftspeople();
     refreshConfig();
-  }, [idToken]);
+  }, [refreshConfig, refreshCraftspeople]);
 
   useEffect(() => {
     console.log("scrolling");
