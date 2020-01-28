@@ -11,7 +11,7 @@ import {
 import SearchBar from "./components/toolbar/SearchBar";
 import { SortingBar } from "./components/toolbar/SortingBar";
 import CraftspersonRow from "./components/craftsperson/CraftspersonRow";
-import ManageCraftsperson from "./components/admin/ManageCraftsperson";
+import ManageCraftsperson from "./components/craftsperson-manager/ManageCraftsperson";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
