@@ -74,7 +74,6 @@ function App() {
       // the api calls will fail because we're not authorized
       return;
     }
-    console.log("fetching ..");
     api({ endpoint: "/craftspeople", token: idToken })
       .then(response => response.json())
       .then(fetchedCraftspeople => {
@@ -92,7 +91,6 @@ function App() {
   }, [refreshConfig, refreshCraftspeople]);
 
   useEffect(() => {
-    console.log("scrolling");
     const element = document.getElementById(craftspeople.id);
     if (!element) {
       // no selected row
