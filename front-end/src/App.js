@@ -28,7 +28,6 @@ function App() {
   const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
   const [backendFetchError, setBackendFetchError] = useState(null);
   const [craftspeople, setCraftsPeople] = useState({ list: [], id: null });
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [idToken, setIdToken] = useState(null);
   const [
     lastMeetingThresholdsInWeeks,
@@ -36,8 +35,11 @@ function App() {
   ] = useState(null);
   const [currentSearchValue, setCurrentSearchValue] = useState(null);
 
+  function isUserLoggedIn() {
+    return idToken;
+  }
+
   function login(googleUser) {
-    setIsLoggedIn(true);
     setBackendFetchError(null);
     const id_token = googleUser.getAuthResponse().id_token;
     setIdToken(id_token);
@@ -55,7 +57,7 @@ function App() {
   console.log("app rerenders for");
 
   function refreshConfig() {
-    if (!isLoggedIn) {
+    if (!isUserLoggedIn()) {
       // the api calls will fail because we're not authorized
       return;
     }
@@ -69,7 +71,7 @@ function App() {
   }
 
   function refreshCraftspeople(rowId) {
-    if (!isLoggedIn) {
+    if (!isUserLoggedIn()) {
       // the api calls will fail because we're not authorized
       return;
     }
@@ -110,7 +112,7 @@ function App() {
 
   return (
     <div className="App">
-      {isLoggedIn && (
+      {isUserLoggedIn() && (
         <div>
           <Container>
             <Image className="main-logo" src={logo} />
@@ -165,7 +167,7 @@ function App() {
           </Container>
         </div>
       )}
-      {!isLoggedIn && (
+      {!isUserLoggedIn() && (
         <Container>
           <Row>
             <Image className="main-logo-login" src={logo} />
