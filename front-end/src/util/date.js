@@ -13,7 +13,10 @@ export function validateLastMeetingThresold(lastMeeting) {
   );
 }
 
-export function validateLastMeetingThresoldWithCustomThreshold(lastMeeting, thresholdInWeeks) {
+export function validateLastMeetingThresoldWithCustomThreshold(
+  lastMeeting,
+  thresholdInWeeks
+) {
   return validateLastMeetingThresoldWithCustomDateAndThreshold(
     new Date(),
     lastMeetingToDate(lastMeeting),
@@ -36,6 +39,6 @@ export function validateLastMeetingThresoldWithCustomDateAndThreshold(
   thresholdInWeeks
 ) {
   const dateToCheckCopy = new Date(dateToCheck.getTime());
-  dateToCheckCopy.setDate(dateToCheckCopy.getDate() + (thresholdInWeeks * 7 ));
+  dateToCheckCopy.setDate(dateToCheckCopy.getDate() + thresholdInWeeks * 7);
   return dateToCheckCopy.getTime() > initDate.getTime();
 }

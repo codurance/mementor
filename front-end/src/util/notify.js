@@ -6,13 +6,13 @@ export function notifySuccess(message) {
 }
 
 export function notifyBackendError(response) {
-  if(response.status >= 500) {
-    notifyUnexpectedBackendError(response)
+  if (response.status >= 500) {
+    notifyUnexpectedBackendError(response);
   } else {
     response
-    .json()
-    .then(body => toast.warn(body.message))
-    .catch(notifyUnexpectedBackendError);
+      .json()
+      .then(body => toast.warn(body.message))
+      .catch(notifyUnexpectedBackendError);
   }
 }
 

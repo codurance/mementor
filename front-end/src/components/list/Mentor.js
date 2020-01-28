@@ -66,7 +66,7 @@ export default function Mentor({
     });
   }
 
-  function getCraftspersonMentorOrNull(){
+  function getCraftspersonMentorOrNull() {
     if (!craftsperson.mentor) {
       return [];
     }

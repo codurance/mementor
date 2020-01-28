@@ -3,10 +3,10 @@ import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import ReactDOM from "react-dom";
-import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
+import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function SearchBar({searchValue, updateSearchValue}) {
+export default function SearchBar({ searchValue, updateSearchValue }) {
   let searchInputRef = null;
 
   const clearSearchInput = () => {
