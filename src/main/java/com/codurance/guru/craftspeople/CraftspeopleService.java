@@ -1,9 +1,6 @@
 package com.codurance.guru.craftspeople;
 
-import com.codurance.guru.craftspeople.exceptions.ExistingCraftspersonException;
-import com.codurance.guru.craftspeople.exceptions.InvalidLastMeetingDateException;
-import com.codurance.guru.craftspeople.exceptions.DuplicateMenteeException;
-import com.codurance.guru.craftspeople.exceptions.InvalidMentorRelationshipException;
+import com.codurance.guru.craftspeople.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -48,7 +45,7 @@ public class CraftspeopleService {
         Craftsperson craftspersonToRemove = repository.findById(craftspersonId).get();
 
         for (Craftsperson mentee: craftspersonToRemove.getMentees()) {
-            mentee.setMentor(null);
+            mentee.removeMentor();
             repository.save(mentee);
         }
 
@@ -58,9 +55,7 @@ public class CraftspeopleService {
     public void removeMentor(int menteeId){
         Craftsperson mentee = repository.findById(menteeId).get();
 
-        mentee.setMentor(null);
-        mentee.setLastMeeting(null);
-
+        mentee.removeMentor();
         repository.save(mentee);
     }
 
@@ -81,6 +76,17 @@ public class CraftspeopleService {
 
         Craftsperson craftsperson = repository.findById(craftspersonId).get();
         craftsperson.setLastMeeting(lastMeetingInstant);
+        repository.save(craftsperson);
+    }
+
+    public void removeLastMeeting(int craftspersonId) throws CraftspersonDoesntExistException {
+        Optional<Craftsperson> optionalCraftsperson = repository.findById(craftspersonId);
+
+        if (!optionalCraftsperson.isPresent()){
+            throw new CraftspersonDoesntExistException();
+        }
+        Craftsperson craftsperson = optionalCraftsperson.get();
+        craftsperson.removeLastMeeting();
         repository.save(craftsperson);
     }
 

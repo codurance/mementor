@@ -19,7 +19,7 @@ export default function lastMeeting({
 }) {
   function setLastMeeting(date) {
     api({
-      endpoint: "/craftspeople/lastmeeting",
+      endpoint: "/craftspeople/lastmeeting/add",
       token: idToken,
       type: "PUT",
       body: {
@@ -28,6 +28,19 @@ export default function lastMeeting({
       }
     }).then(response => {
       handleResponse(response, "Last meeting updated", rerender);
+    });
+  }
+
+  function removeLastMeeting(date) {
+    api({
+      endpoint: "/craftspeople/lastmeeting/remove",
+      token: idToken,
+      type: "POST",
+      body: {
+        craftspersonId: craftsperson.id
+      }
+    }).then(response => {
+      handleResponse(response, "Last meeting removed", rerender);
     });
   }
 
