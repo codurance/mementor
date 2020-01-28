@@ -15,9 +15,9 @@ export default function Craftsperson({
   return (
     <Row>
       <Col lg className="craftsperson-name-container">
-        <h2 className="craftsperson-name" data-testid="craftspersonName">
+        <h4 className="craftsperson-name" data-testid="craftspersonName">
           {craftsperson.firstName} {craftsperson.lastName}
-        </h2>
+        </h4>
       </Col>
       <Mentor
         craftsperson={craftsperson}
@@ -39,9 +39,9 @@ export default function Craftsperson({
         >
           Mentees
         </h5>
-        <h2 className="mentee-count" data-testid="craftspersonMenteeValue">
+        <h4 className="mentee-count" data-testid="craftspersonMenteeValue">
           {craftsperson.mentees ? craftsperson.mentees.length : "0"}
-        </h2>
+        </h4>
       </Col>
     </Row>
   );

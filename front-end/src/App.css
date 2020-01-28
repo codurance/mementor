@@ -63,3 +63,7 @@
 .craftsperson-row-container {
   transition: background-color 0.5s ease-in-out;
 }
+
+.card-header {
+  padding: 0rem;
+}
