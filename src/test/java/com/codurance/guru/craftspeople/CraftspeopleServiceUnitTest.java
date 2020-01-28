@@ -1,5 +1,6 @@
 package com.codurance.guru.craftspeople;
 
+import com.codurance.guru.craftspeople.exceptions.CraftspersonDoesntExistException;
 import com.codurance.guru.craftspeople.exceptions.InvalidLastMeetingDateException;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,24 +36,8 @@ public class CraftspeopleServiceUnitTest {
         service.setLastMeeting(1, (int) Instant.now().plus(2, ChronoUnit.DAYS).getEpochSecond());
     }
 
-    @Test
-    public void removing_a_mentor_should_remove_the_last_meeting() {
-        given_a_craftsperson_and_his_mentor();
-        when_the_mentor_is_removed();
-        then_both_the_mentor_and_the_last_meeting_are_removed();
-    }
-
-    private void then_both_the_mentor_and_the_last_meeting_are_removed() {
-        then(mentee).should().setMentor(null);
-        then(mentee).should().setLastMeeting(null);
-        then(repository).should().save(mentee);
-    }
-
-    private void when_the_mentor_is_removed() {
-        service.removeMentor(ID);
-    }
-
-    private void given_a_craftsperson_and_his_mentor() {
-        given(repository.findById(ID)).willReturn(Optional.of(mentee));
+    @Test(expected = CraftspersonDoesntExistException.class)
+    public void cant_remove_last_meeting_from_an_unknown_craftsperson() throws CraftspersonDoesntExistException {
+        service.removeLastMeeting(100);
     }
 }

@@ -1,15 +1,13 @@
 package com.codurance.guru.craftspeople;
 
-import com.codurance.guru.craftspeople.exceptions.DuplicateMenteeException;
-import com.codurance.guru.craftspeople.exceptions.ExistingCraftspersonException;
-import com.codurance.guru.craftspeople.exceptions.InvalidLastMeetingDateException;
-import com.codurance.guru.craftspeople.exceptions.InvalidMentorRelationshipException;
+import com.codurance.guru.craftspeople.exceptions.*;
 import com.codurance.guru.craftspeople.requests.AddCraftspersonRequest;
 import com.codurance.guru.craftspeople.requests.AddMentorRequest;
 import com.codurance.guru.craftspeople.requests.RemoveMentorRequest;
 import com.codurance.guru.craftspeople.requests.UpdateLastMeetingRequest;
 import com.codurance.guru.craftspeople.responses.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,13 +77,23 @@ public class CraftspeopleController {
                 .orElseGet(() -> notFound().build());
     }
 
-    @PutMapping("/craftspeople/lastmeeting")
+    @PutMapping("/craftspeople/lastmeeting/add")
     public ResponseEntity<ErrorResponse> setLastMeeting(@Valid @RequestBody UpdateLastMeetingRequest request) {
         try {
             craftspeopleService.setLastMeeting(request.getCraftspersonId(), request.getLastMeeting());
             return noContent().build();
         } catch (InvalidLastMeetingDateException ex) {
             return badRequest().body(new ErrorResponse("The last meeting date is too far in the future"));
+        }
+    }
+
+    @PostMapping("/craftspeople/lastmeeting/remove/{craftspersonId}")
+    public ResponseEntity<ErrorResponse> removeLastMeeting(@PathVariable Integer craftspersonId) {
+        try {
+            craftspeopleService.removeLastMeeting(craftspersonId);
+            return noContent().build();
+        } catch (CraftspersonDoesntExistException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("That craftsperson doesn't exist"));
         }
     }
 
