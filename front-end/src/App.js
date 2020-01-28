@@ -54,7 +54,6 @@ function App() {
       setSortAlgorithm(() => sortAlgorithmToUse);
     };
   }
-  console.log("app rerenders for");
 
   const refreshConfig = useCallback(() => {
     if (!isUserLoggedIn()) {
