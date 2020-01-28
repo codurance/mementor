@@ -20,7 +20,6 @@ export function SortingBar(props) {
               <ToggleButton
                 variant="light"
                 onClick={props.onClick}
-                prechecked
                 value={1}
               >
                 Number of mentees
