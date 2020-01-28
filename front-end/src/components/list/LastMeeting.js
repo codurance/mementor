@@ -39,7 +39,7 @@ export default function lastMeeting({
       token: idToken,
       type: "POST"
     }).then(response => {
-      handleResponse(response, "Last meeting removed", rerender);
+      handleResponse(response, "Last meeting removed", refreshCraftspeople);
     });
   }
 

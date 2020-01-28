@@ -34,15 +34,15 @@ public class CraftspeopleService {
     public void addMentor(int mentorId, int menteeId) throws DuplicateMenteeException, InvalidMentorRelationshipException {
         craftspeopleValidator.validateSetMentee(mentorId, menteeId);
 
-        Craftsperson mentor = repository.findById(mentorId).get();
-        Craftsperson mentee = repository.findById(menteeId).get();
+        Craftsperson mentor = getCraftsperson(mentorId);
+        Craftsperson mentee = getCraftsperson(menteeId);
 
         mentee.setMentor(mentor);
         repository.save(mentee);
     }
 
     public void deleteCraftsperson(Integer craftspersonId) {
-        Craftsperson craftspersonToRemove = repository.findById(craftspersonId).get();
+        Craftsperson craftspersonToRemove = getCraftsperson(craftspersonId);
 
         for (Craftsperson mentee: craftspersonToRemove.getMentees()) {
             mentee.removeMentor();
@@ -53,7 +53,7 @@ public class CraftspeopleService {
     }
 
     public void removeMentor(int menteeId){
-        Craftsperson mentee = repository.findById(menteeId).get();
+        Craftsperson mentee = getCraftsperson(menteeId);
 
         mentee.removeMentor();
         repository.save(mentee);
@@ -74,18 +74,13 @@ public class CraftspeopleService {
             throw new InvalidLastMeetingDateException();
         }
 
-        Craftsperson craftsperson = repository.findById(craftspersonId).get();
+        Craftsperson craftsperson = getCraftsperson(craftspersonId);
         craftsperson.setLastMeeting(lastMeetingInstant);
         repository.save(craftsperson);
     }
 
-    public void removeLastMeeting(int craftspersonId) throws CraftspersonDoesntExistException {
-        Optional<Craftsperson> optionalCraftsperson = repository.findById(craftspersonId);
-
-        if (!optionalCraftsperson.isPresent()){
-            throw new CraftspersonDoesntExistException();
-        }
-        Craftsperson craftsperson = optionalCraftsperson.get();
+    public void removeLastMeeting(int craftspersonId) {
+        Craftsperson craftsperson = getCraftsperson(craftspersonId);
         craftsperson.removeLastMeeting();
         repository.save(craftsperson);
     }
@@ -93,12 +88,22 @@ public class CraftspeopleService {
     public void setMentee(int mentorId, int menteeId) throws DuplicateMenteeException, InvalidMentorRelationshipException {
         craftspeopleValidator.validateSetMentee(mentorId, menteeId);
 
-        Craftsperson mentor = repository.findById(mentorId).get();
-        Craftsperson mentee = repository.findById(menteeId).get();
+        Craftsperson mentor = getCraftsperson(mentorId);
+        Craftsperson mentee = getCraftsperson(menteeId);
 
         mentee.setMentor(mentor);
 
         repository.save(mentee);
+    }
+
+    private Craftsperson getCraftsperson(int craftspersonId) {
+        Optional<Craftsperson> craftsperson = repository.findById(craftspersonId);
+
+        if (!craftsperson.isPresent()){
+            throw new CraftspersonDoesntExistException();
+        }
+
+        return craftsperson.get();
     }
 
     private boolean craftspersonDoesNotExist(String firstName, String lastName) {
