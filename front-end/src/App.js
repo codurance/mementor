@@ -135,7 +135,7 @@ function App() {
               <Col>
                 <ManageCraftsperson
                   craftspeople={craftspeople.list}
-                  rerender={refreshCraftspeople}
+                  refreshCraftspeople={refreshCraftspeople}
                   refreshConfig={refreshConfig}
                   idToken={idToken}
                   lastMeetingThresholdDefaultValue={
@@ -157,7 +157,7 @@ function App() {
                 key={craftsperson.id}
                 craftsperson={craftsperson}
                 craftspeople={craftspeople.list}
-                rerenderAndScrollToActiveRow={refreshCraftspeople}
+                refreshCraftspeople={refreshCraftspeople}
                 lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
                 idToken={idToken}
               />

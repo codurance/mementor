@@ -8,7 +8,7 @@ import "./Craftsperson.css";
 export default function Craftsperson({
   craftsperson,
   craftspeople,
-  rerender,
+  refreshCraftspeople,
   idToken,
   lastMeetingThresholdsInWeeks
 }) {
@@ -22,13 +22,13 @@ export default function Craftsperson({
       <Mentor
         craftsperson={craftsperson}
         craftspeople={craftspeople}
-        rerender={rerender}
+        rerender={refreshCraftspeople}
         idToken={idToken}
       />
       <LastMeeting
         craftsperson={craftsperson}
         craftspeople={craftspeople}
-        rerender={rerender}
+        rerender={refreshCraftspeople}
         idToken={idToken}
         lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
       />

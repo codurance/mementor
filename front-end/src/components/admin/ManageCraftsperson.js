@@ -54,7 +54,7 @@ export default function ManageCraftsperson(props) {
         lastName
       }
     }).then(response => {
-      handleResponse(response, "Craftsperson added", props.rerender);
+      handleResponse(response, "Craftsperson added", props.refreshCraftspeople);
     });
   }
 
@@ -75,7 +75,7 @@ export default function ManageCraftsperson(props) {
       }).then(response => {
         handleResponse(response, "Craftsperson removed", () => {
           setIdToDelete(null);
-          props.rerender();
+          props.refreshCraftspeople();
         });
       });
     }
