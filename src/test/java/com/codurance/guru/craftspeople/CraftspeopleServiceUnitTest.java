@@ -37,7 +37,12 @@ public class CraftspeopleServiceUnitTest {
     }
 
     @Test(expected = CraftspersonDoesntExistException.class)
-    public void cant_remove_last_meeting_from_an_unknown_craftsperson() throws CraftspersonDoesntExistException {
+    public void cant_remove_last_meeting_from_an_unknown_craftsperson() {
         service.removeLastMeeting(100);
+    }
+
+    @Test(expected = CraftspersonDoesntExistException.class)
+    public void cant_delete_an_unknown_craftsperson() {
+        service.deleteCraftsperson(100);
     }
 }
