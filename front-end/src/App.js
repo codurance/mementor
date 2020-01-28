@@ -61,10 +61,6 @@ function App() {
   function makeSortOnClickListener(sortAlgorithmToUse) {
     return () => {
       setSortAlgorithm(() => sortAlgorithmToUse);
-      // here we don't use the current algorithm because it's outdated
-      craftspeople.sort(sortAlgorithmToUse);
-      filteredCraftspeople.sort(sortAlgorithmToUse);
-      setFilteredCraftspeople(filteredCraftspeople);
     };
   }
   console.log('app rerenders for');
