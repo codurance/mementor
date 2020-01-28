@@ -35,7 +35,6 @@ function App() {
     setLastMeetingThresholdsInWeeks
   ] = useState(null);
   const [currentSearchValue, setCurrentSearchValue] = useState(null);
-  const [fetchConfig, setFetchConfig] = useState(null);
 
   function login(googleUser) {
     setIsLoggedIn(true);
@@ -64,7 +63,7 @@ function App() {
   }
   console.log("app rerenders for");
 
-  function doFetchConfig() {
+  function refreshConfig() {
     if (!isLoggedIn) {
       // the api calls will fail because we're not authorized
       return;
@@ -77,10 +76,6 @@ function App() {
       )
       .catch(notifyUnexpectedBackendError);
   }
-
-  useEffect(() => {
-    doFetchConfig();
-  }, [fetchConfig]);
 
   function fetchCraftspeople(rowId) {
     if (!isLoggedIn) {
@@ -101,7 +96,7 @@ function App() {
 
   useEffect(() => {
     fetchCraftspeople(1);
-    doFetchConfig();
+    refreshConfig();
   }, [defaultSort, idToken]);
 
   useEffect(() => {
@@ -150,7 +145,7 @@ function App() {
                 <ManageCraftsperson
                   craftspeople={craftspeople.list}
                   rerender={rerender}
-                  setFetchConfig={() => setFetchConfig(!fetchConfig)}
+                  refreshConfig={refreshConfig}
                   idToken={idToken}
                   lastMeetingThresholdDefaultValue={
                     lastMeetingThresholdsInWeeks

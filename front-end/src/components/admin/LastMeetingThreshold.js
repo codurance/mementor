@@ -9,8 +9,7 @@ import { handleResponse, notifyFormValidationError } from "../../util/notify";
 import Container from "react-bootstrap/Container";
 
 export default function LastMeetingThreshold({
-  rerender,
-  setFetchConfig,
+  refreshConfig,
   lastMeetingThresholdDefaultValue,
   idToken
 }) {
@@ -33,7 +32,7 @@ export default function LastMeetingThreshold({
       }
     }).then(response => {
       handleResponse(response, "Last meeting threshold updated", () =>
-        setFetchConfig()
+        refreshConfig()
       );
     });
   }

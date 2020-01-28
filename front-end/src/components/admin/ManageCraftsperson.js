@@ -105,8 +105,7 @@ export default function ManageCraftsperson(props) {
               props.lastMeetingThresholdDefaultValue
             }
             idToken={props.idToken}
-            rerender={props.rerender}
-            setFetchConfig={props.setFetchConfig}
+            refreshConfig={props.refreshConfig}
           />
           <h5 className="admin-label">New craftsperson</h5>
           <InputGroup className="mb-3">
