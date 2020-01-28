@@ -9,7 +9,7 @@ describe("Testing the API", () => {
     fetch.mockResponseOnce();
 
     api({
-      endpoint: "/restApiTest",
+      endpoint: "/restApiTest"
     }).then(_ => {});
 
     expect(fetch.mock.calls.length).toEqual(1);

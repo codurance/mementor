@@ -3,9 +3,9 @@ import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import React from "react";
 import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col"
-import Row from "react-bootstrap/Row"
-import "./SortingBar.css"
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import "./SortingBar.css";
 
 export function SortingBar(props) {
   return (

@@ -3,7 +3,7 @@ import {
   sortByNumberOfMentees,
   sortByCraftspeopleWithoutMentor,
   sortAlphabetically,
-  sortByLastMeetingDate,
+  sortByLastMeetingDate
 } from "./sorting";
 
 const fixtureData = Array.from(FIXTURE);
@@ -16,19 +16,19 @@ describe("when given an array of objects", () => {
           {
             firstName: "Riccardo",
             lastName: "Toni",
-            mentees: ["ed rixon", "jose pablo", "giulio perrone"],
+            mentees: ["ed rixon", "jose pablo", "giulio perrone"]
           },
           {
             firstName: "Ed",
             lastName: "Rixon",
-            mentees: ["arnaud claudel", "giulia mantuano"],
+            mentees: ["arnaud claudel", "giulia mantuano"]
           },
           {
             firstName: "Etienne",
             lastName: "Mustow",
-            mentees: ["riccardo toni"],
-          },
-        ]),
+            mentees: ["riccardo toni"]
+          }
+        ])
       );
     });
   });
@@ -38,25 +38,25 @@ describe("when given an array of objects", () => {
       expect(
         fixtureData
           .slice(fixtureData.length - 3, fixtureData.length)
-          .sort(sortByNumberOfMentees),
+          .sort(sortByNumberOfMentees)
       ).toEqual(
         Array.from([
           {
             firstName: "Giulio",
             lastName: "Perrone",
-            mentees: [],
+            mentees: []
           },
           {
             firstName: "Jose",
             lastName: "Ernesto",
-            mentees: [],
+            mentees: []
           },
           {
             firstName: "Jose",
             lastName: "Pablo",
-            mentees: [],
-          },
-        ]),
+            mentees: []
+          }
+        ])
       );
     });
   });
@@ -68,40 +68,40 @@ describe("when given an array of objects", () => {
           {
             firstName: "Riccardo",
             lastName: "Toni",
-            mentees: ["ed rixon", "jose pablo", "giulio perrone"],
+            mentees: ["ed rixon", "jose pablo", "giulio perrone"]
           },
           {
             firstName: "Ed",
             lastName: "Rixon",
-            mentees: ["arnaud claudel", "giulia mantuano"],
+            mentees: ["arnaud claudel", "giulia mantuano"]
           },
           {
             firstName: "Arnaud",
             lastName: "Claudel",
             mentor: "El hombre",
-            mentees: ["etienne mustow"],
+            mentees: ["etienne mustow"]
           },
           {
             firstName: "Etienne",
             lastName: "Mustow",
-            mentees: ["riccardo toni"],
+            mentees: ["riccardo toni"]
           },
           {
             firstName: "Giulio",
             lastName: "Perrone",
-            mentees: [],
+            mentees: []
           },
           {
             firstName: "Jose",
             lastName: "Ernesto",
-            mentees: [],
+            mentees: []
           },
           {
             firstName: "Jose",
             lastName: "Pablo",
-            mentees: [],
-          },
-        ]),
+            mentees: []
+          }
+        ])
       );
     });
   });
@@ -112,7 +112,7 @@ describe("craftspeople without mentor sort", () => {
     const craftpeople = [
       { id: 0, firstName: "Arnaud", lastName: "Claudel", mentor: null },
       { id: 1, firstName: "Brnaud", lastName: "Claudel", mentor: {} },
-      { id: 2, firstName: "Drnaud", lastName: "Claudel", mentor: null },
+      { id: 2, firstName: "Drnaud", lastName: "Claudel", mentor: null }
     ];
     const sortedCraftpeople = craftpeople.sort(sortByCraftspeopleWithoutMentor);
     expect(sortedCraftpeople[2].id).toBe(1);
@@ -122,7 +122,7 @@ describe("craftspeople without mentor sort", () => {
     const craftpeople = [
       { id: 0, firstName: "Arnaud", lastName: "Claudel", mentor: {} },
       { id: 1, firstName: "Brnaud", lastName: "Claudel", mentor: null },
-      { id: 2, firstName: "Drnaud", lastName: "Claudel", mentor: {} },
+      { id: 2, firstName: "Drnaud", lastName: "Claudel", mentor: {} }
     ];
     const sortedCraftpeople = craftpeople.sort(sortByCraftspeopleWithoutMentor);
     expect(sortedCraftpeople[0].id).toBe(1);
@@ -133,7 +133,7 @@ describe("craftspeople without mentor sort", () => {
       { id: 0, firstName: "Arnaud", lastName: "Claudel", mentor: null },
       { id: 3, firstName: "Brnaud", lastName: "Claudel", mentor: {} },
       { id: 1, firstName: "Drnaud", lastName: "Claudel", mentor: {} },
-      { id: 2, firstName: "Crnaud", lastName: "Claudel", mentor: null },
+      { id: 2, firstName: "Crnaud", lastName: "Claudel", mentor: null }
     ];
     const sortedCraftpeople = craftpeople.sort(sortByCraftspeopleWithoutMentor);
     expect(sortedCraftpeople[0].id).toBe(0);
@@ -148,7 +148,7 @@ describe("Alphabetical sort", () => {
     const craftspeople = [
       { id: 0, firstName: "Etienne", lastName: "Mustow" },
       { id: 1, firstName: "Arnaud", lastName: "Claudel" },
-      { id: 2, firstName: "Naruto", lastName: "Uzumaki" },
+      { id: 2, firstName: "Naruto", lastName: "Uzumaki" }
     ];
 
     craftspeople.sort(sortAlphabetically);
@@ -161,9 +161,24 @@ describe("Alphabetical sort", () => {
 describe("Sort by last met date", () => {
   it("should sort by oldest meeting date", () => {
     const craftspeople = [
-      { id: 0, firstName: "Etienne", lastName: "Mustow", lastMeeting: new Date(2020, 1, 15) },
-      { id: 1, firstName: "Arnaud", lastName: "Claudel", lastMeeting: new Date(2020, 1, 14) },
-      { id: 2, firstName: "Naruto", lastName: "Uzumaki", lastMeeting: new Date(2020, 1, 13) },
+      {
+        id: 0,
+        firstName: "Etienne",
+        lastName: "Mustow",
+        lastMeeting: new Date(2020, 1, 15)
+      },
+      {
+        id: 1,
+        firstName: "Arnaud",
+        lastName: "Claudel",
+        lastMeeting: new Date(2020, 1, 14)
+      },
+      {
+        id: 2,
+        firstName: "Naruto",
+        lastName: "Uzumaki",
+        lastMeeting: new Date(2020, 1, 13)
+      }
     ];
 
     craftspeople.sort(sortByLastMeetingDate);

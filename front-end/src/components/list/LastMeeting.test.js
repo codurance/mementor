@@ -10,17 +10,17 @@ describe("last meeting component", () => {
       <LastMeeting
         craftsperson={{
           mentor: { firstName: "", lastName: "" },
-          lastMeeting: 1500000000,
+          lastMeeting: 1500000000
         }}
         craftspeople={[]}
-      />,
+      />
     );
     expect(getByTestId("lastMeetingDatePicker").value).toBe("14 July 2017");
   });
 
   it("shouldnt show date picker when no mentor", () => {
     const { queryByTestId, getByTestId } = render(
-      <LastMeeting craftsperson={{}} craftspeople={[]} />,
+      <LastMeeting craftsperson={{}} craftspeople={[]} />
     );
     expect(queryByTestId("lastMeetingDatePicker")).toBe(null);
     expect(getByTestId("date-picker-container")).toHaveTextContent("-");
@@ -28,7 +28,7 @@ describe("last meeting component", () => {
 
   it("should be empty when no last meeting", () => {
     const { getByTestId } = render(
-      <LastMeeting craftsperson={{ mentor: {} }} craftspeople={[]} />,
+      <LastMeeting craftsperson={{ mentor: {} }} craftspeople={[]} />
     );
     expect(getByTestId("lastMeetingDatePicker").value).toBe("");
   });
@@ -41,11 +41,11 @@ describe("last meeting component", () => {
       <LastMeeting
         craftsperson={{
           mentor: { firstName: "", lastName: "" },
-          lastMeeting: dateToLastMeeting(lastMeetingDate),
+          lastMeeting: dateToLastMeeting(lastMeetingDate)
         }}
         craftspeople={[]}
         lastMeetingThresholdsInWeeks={6}
-      />,
+      />
     );
     expect(queryByTestId("last-meeting-alert")).toBeNull();
   });
@@ -58,11 +58,11 @@ describe("last meeting component", () => {
       <LastMeeting
         craftsperson={{
           mentor: { firstName: "", lastName: "" },
-          lastMeeting: dateToLastMeeting(lastMeetingDate),
+          lastMeeting: dateToLastMeeting(lastMeetingDate)
         }}
         craftspeople={[]}
         lastMeetingThresholdsInWeeks={3}
-      />,
+      />
     );
     expect(queryByTestId("last-meeting-alert")).not.toBeNull();
   });
@@ -72,10 +72,10 @@ describe("last meeting component", () => {
       <LastMeeting
         craftsperson={{
           mentor: { firstName: "", lastName: "" },
-          lastMeeting: null,
+          lastMeeting: null
         }}
         craftspeople={[]}
-      />,
+      />
     );
     expect(queryByTestId("last-meeting-alert")).toBeNull();
   });

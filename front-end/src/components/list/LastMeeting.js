@@ -58,12 +58,12 @@ export default function lastMeeting({
               craftsperson.lastMeeting,
               lastMeetingThresholdsInWeeks
             ) && (
-                <FontAwesomeIcon
-                  className="alert-icon"
-                  data-testid="last-meeting-alert"
-                  icon={faExclamationTriangle}
-                  size="lg"
-                />
+              <FontAwesomeIcon
+                className="alert-icon"
+                data-testid="last-meeting-alert"
+                icon={faExclamationTriangle}
+                size="lg"
+              />
             )}
         </span>
       </Row>

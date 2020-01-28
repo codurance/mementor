@@ -1,14 +1,14 @@
 import "@testing-library/jest-dom/extend-expect";
 import {
   validateLastMeetingThresoldWithCustomDate,
-  validateLastMeetingThresoldWithCustomDateAndThreshold,
+  validateLastMeetingThresoldWithCustomDateAndThreshold
 } from "./date";
 
 describe("last meeting thresold function", () => {
   describe("with custom init date", () => {
     function doTest(initDate, dateToCheck, expectedResult) {
       expect(
-        validateLastMeetingThresoldWithCustomDate(initDate, dateToCheck),
+        validateLastMeetingThresoldWithCustomDate(initDate, dateToCheck)
       ).toBe(expectedResult);
     }
 
@@ -30,8 +30,8 @@ describe("last meeting thresold function", () => {
         validateLastMeetingThresoldWithCustomDateAndThreshold(
           initDate,
           dateToCheck,
-          threshold,
-        ),
+          threshold
+        )
       ).toBe(expectedResult);
     }
     it("should accept a threshold in weeks", () => {

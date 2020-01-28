@@ -11,10 +11,7 @@ import { api } from "../../util/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { validateName } from "../../util/validate";
-import {
-  handleResponse,
-  notifyFormValidationError
-} from "../../util/notify";
+import { handleResponse, notifyFormValidationError } from "../../util/notify";
 import LastMeetingThreshold from "./LastMeetingThreshold";
 
 export default function ManageCraftsperson(props) {
@@ -23,7 +20,7 @@ export default function ManageCraftsperson(props) {
   const [idToDelete, setIdToDelete] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
-  
+
   const handleClose = () => {
     setIdToDelete(null);
     setShow(false);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import GoogleLogin from "react-google-login";
 import { api } from "./util/api";
@@ -27,13 +27,16 @@ function App() {
   const defaultSort = sortByNumberOfMentees;
   const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
   const [backendFetchError, setBackendFetchError] = useState(null);
-  const [craftspeople, setCraftsPeople] = useState({list: [], id: null});
+  const [craftspeople, setCraftsPeople] = useState({ list: [], id: null });
   const [filteredCraftspeople, setFilteredCraftspeople] = useState(
-    craftspeople,
+    craftspeople
   );
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [idToken, setIdToken] = useState(null);
-  const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
+  const [
+    lastMeetingThresholdsInWeeks,
+    setLastMeetingThresholdsInWeeks
+  ] = useState(null);
   const [currentSearchValue, setCurrentSearchValue] = useState(null);
   const [fetchConfig, setFetchConfig] = useState(null);
 
@@ -55,15 +58,14 @@ function App() {
 
   function rerenderAndScrollToActiveRow(rowId) {
     rerender(rowId);
-  } 
-
+  }
 
   function makeSortOnClickListener(sortAlgorithmToUse) {
     return () => {
       setSortAlgorithm(() => sortAlgorithmToUse);
     };
   }
-  console.log('app rerenders for');
+  console.log("app rerenders for");
 
   function doFetchConfig() {
     if (!isLoggedIn) {
@@ -71,10 +73,12 @@ function App() {
       return;
     }
 
-    api({endpoint: `/config`, token: idToken})
-    .then(response => response.json())
-    .then(body => setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks))
-    .catch(notifyUnexpectedBackendError);
+    api({ endpoint: `/config`, token: idToken })
+      .then(response => response.json())
+      .then(body =>
+        setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks)
+      )
+      .catch(notifyUnexpectedBackendError);
   }
 
   useEffect(() => {
@@ -86,11 +90,11 @@ function App() {
       // the api calls will fail because we're not authorized
       return;
     }
-    console.log('fetching ..');
+    console.log("fetching ..");
     api({ endpoint: "/craftspeople", token: idToken })
       .then(response => response.json())
       .then(fetchedCraftspeople => {
-          setCraftsPeople({list: fetchedCraftspeople, id: rowId});  
+        setCraftsPeople({ list: fetchedCraftspeople, id: rowId });
       })
       .catch(error => {
         notifyUnexpectedBackendError(error);
@@ -104,20 +108,21 @@ function App() {
   }, [defaultSort, idToken]);
 
   useEffect(() => {
-    console.log('scrolling')
+    console.log("scrolling");
     const element = document.getElementById(craftspeople.id);
-    if(!element) {
+    if (!element) {
       // no selected row
       return;
     }
-    element.style.background = '#706f6f';
-    element.scrollIntoView({behavior: "auto", block: "center"});
-    setTimeout(() => element.style.background = 'none', 1000);
+    element.style.background = "#706f6f";
+    element.scrollIntoView({ behavior: "auto", block: "center" });
+    setTimeout(() => (element.style.background = "none"), 1000);
   }, [craftspeople]);
 
   function getList() {
-    return filter(craftspeople.list.slice(), currentSearchValue)
-      .sort(sortAlgorithm);
+    return filter(craftspeople.list.slice(), currentSearchValue).sort(
+      sortAlgorithm
+    );
   }
 
   return (
@@ -128,9 +133,12 @@ function App() {
             <Image className="main-logo" src={logo} />
           </Container>
           <Container>
-            <SearchBar searchValue={currentSearchValue} updateSearchValue={(searchValue) => {
-              setCurrentSearchValue(searchValue);
-              }} />
+            <SearchBar
+              searchValue={currentSearchValue}
+              updateSearchValue={searchValue => {
+                setCurrentSearchValue(searchValue);
+              }}
+            />
             <Row>
               <Col>
                 <SortingBar
@@ -147,7 +155,9 @@ function App() {
                   rerender={rerender}
                   setFetchConfig={() => setFetchConfig(!fetchConfig)}
                   idToken={idToken}
-                  lastMeetingThresholdDefaultValue={lastMeetingThresholdsInWeeks}
+                  lastMeetingThresholdDefaultValue={
+                    lastMeetingThresholdsInWeeks
+                  }
                 />
               </Col>
             </Row>
@@ -159,8 +169,7 @@ function App() {
             </Container>
           )}
           <Container>
-            {getList()
-              .map(craftsperson => (
+            {getList().map(craftsperson => (
               <CraftspersonRow
                 key={craftsperson.id}
                 craftsperson={craftsperson}

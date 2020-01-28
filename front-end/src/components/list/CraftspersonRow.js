@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Craftsperson from "./Craftsperson";
 import Mentees from "./Mentees";
 import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row"
-import Container from "react-bootstrap/Container"
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
 import Accordion from "react-bootstrap/Accordion";
 import Button from "react-bootstrap/Button";
 import "./CraftspersonRow.css";
@@ -20,17 +20,18 @@ export default function CraftspersonRow({
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   function makeId() {
-    return 'craftsperson-row-container-' + craftsperson.id;
+    return "craftsperson-row-container-" + craftsperson.id;
   }
 
-  function rerender () {
+  function rerender() {
     rerenderAndScrollToActiveRow(makeId());
   }
 
   return (
-    <Accordion 
+    <Accordion
       className="accordion-container craftsperson-row-container"
-      id={makeId()}>
+      id={makeId()}
+    >
       <Container>
         <Card>
           <Card.Header className="craftsperson-card">

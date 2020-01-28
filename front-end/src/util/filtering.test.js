@@ -25,7 +25,7 @@ describe("filter functionality", () => {
       { id: 1, firstName: "José", lastName: "Wenzel" },
       { id: 2, firstName: "ed", lastName: "rixon" },
       { id: 3, firstName: "abc", lastName: "123" },
-      { id: 4, firstName: "def", lastName: "456" },
+      { id: 4, firstName: "def", lastName: "456" }
     ];
 
     const filterResult = filterCraftspeople(craftspeople, craftspeople[0]);
@@ -40,11 +40,11 @@ describe("filter functionality", () => {
         id: 1,
         firstName: "José",
         lastName: "Wenzel",
-        mentor: { id: 2, firstName: "ed", lastName: "rixon" },
+        mentor: { id: 2, firstName: "ed", lastName: "rixon" }
       },
       { id: 2, firstName: "ed", lastName: "rixon" },
       { id: 3, firstName: "abc", lastName: "123" },
-      { id: 4, firstName: "def", lastName: "456" },
+      { id: 4, firstName: "def", lastName: "456" }
     ];
 
     const filterResult = filterCraftspeople(craftspeople, craftspeople[0]);
@@ -60,12 +60,12 @@ describe("filter functionality", () => {
         lastName: "Wenzel",
         mentees: [
           { id: 3, firstName: "abc", lastName: "123" },
-          { id: 4, firstName: "def", lastName: "456" },
-        ],
+          { id: 4, firstName: "def", lastName: "456" }
+        ]
       },
       { id: 2, firstName: "ed", lastName: "rixon" },
       { id: 3, firstName: "abc", lastName: "123" },
-      { id: 4, firstName: "def", lastName: "456" },
+      { id: 4, firstName: "def", lastName: "456" }
     ];
 
     const filterResult = filterCraftspeople(craftspeople, craftspeople[0]);

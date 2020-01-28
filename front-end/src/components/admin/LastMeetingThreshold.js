@@ -32,14 +32,18 @@ export default function LastMeetingThreshold({
         lastMeetingThresholdsInWeeks: lastMeetingThreshold
       }
     }).then(response => {
-      handleResponse(response, "Last meeting threshold updated", () => setFetchConfig());
+      handleResponse(response, "Last meeting threshold updated", () =>
+        setFetchConfig()
+      );
     });
   }
 
   return (
     <Container>
       <Row>
-        <h5 className="admin-label">Amount of allowed weeks for last meeting</h5>
+        <h5 className="admin-label">
+          Amount of allowed weeks for last meeting
+        </h5>
         <InputGroup className="mb-3">
           <FormControl
             required
