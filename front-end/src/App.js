@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { toast } from "react-toastify";
 import GoogleLogin from "react-google-login";
 import { api } from "./util/api";
@@ -28,33 +28,25 @@ function App() {
   const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
   const [backendFetchError, setBackendFetchError] = useState(null);
   const [craftspeople, setCraftsPeople] = useState({ list: [], id: null });
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [idToken, setIdToken] = useState(null);
   const [
     lastMeetingThresholdsInWeeks,
     setLastMeetingThresholdsInWeeks
   ] = useState(null);
   const [currentSearchValue, setCurrentSearchValue] = useState(null);
-  const [fetchConfig, setFetchConfig] = useState(null);
+
+  const isUserLoggedIn = useCallback(() =>  {
+    return idToken;
+  }, [idToken]);
 
   function login(googleUser) {
-    setIsLoggedIn(true);
     setBackendFetchError(null);
     const id_token = googleUser.getAuthResponse().id_token;
     setIdToken(id_token);
-    rerender();
   }
 
   function responseGoogle(response) {
     console.log(response);
-  }
-
-  function rerender(rowId) {
-    fetchCraftspeople(rowId);
-  }
-
-  function rerenderAndScrollToActiveRow(rowId) {
-    rerender(rowId);
   }
 
   function makeSortOnClickListener(sortAlgorithmToUse) {
@@ -62,10 +54,9 @@ function App() {
       setSortAlgorithm(() => sortAlgorithmToUse);
     };
   }
-  console.log("app rerenders for");
 
-  function doFetchConfig() {
-    if (!isLoggedIn) {
+  const refreshConfig = useCallback(() => {
+    if (!isUserLoggedIn()) {
       // the api calls will fail because we're not authorized
       return;
     }
@@ -76,18 +67,13 @@ function App() {
         setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks)
       )
       .catch(notifyUnexpectedBackendError);
-  }
+  }, [idToken, isUserLoggedIn]);
 
-  useEffect(() => {
-    doFetchConfig();
-  }, [fetchConfig]);
-
-  function fetchCraftspeople(rowId) {
-    if (!isLoggedIn) {
+  const refreshCraftspeople = useCallback((rowId) => {
+    if (!isUserLoggedIn()) {
       // the api calls will fail because we're not authorized
       return;
     }
-    console.log("fetching ..");
     api({ endpoint: "/craftspeople", token: idToken })
       .then(response => response.json())
       .then(fetchedCraftspeople => {
@@ -97,15 +83,14 @@ function App() {
         notifyUnexpectedBackendError(error);
         setBackendFetchError(error);
       });
-  }
+  }, [idToken, isUserLoggedIn]);
 
   useEffect(() => {
-    fetchCraftspeople(1);
-    doFetchConfig();
-  }, [defaultSort, idToken]);
+    refreshCraftspeople();
+    refreshConfig();
+  }, [refreshConfig, refreshCraftspeople]);
 
   useEffect(() => {
-    console.log("scrolling");
     const element = document.getElementById(craftspeople.id);
     if (!element) {
       // no selected row
@@ -124,7 +109,7 @@ function App() {
 
   return (
     <div className="App">
-      {isLoggedIn && (
+      {isUserLoggedIn() && (
         <div>
           <Container>
             <Image className="main-logo" src={logo} />
@@ -149,8 +134,8 @@ function App() {
               <Col>
                 <ManageCraftsperson
                   craftspeople={craftspeople.list}
-                  rerender={rerender}
-                  setFetchConfig={() => setFetchConfig(!fetchConfig)}
+                  refreshCraftspeople={refreshCraftspeople}
+                  refreshConfig={refreshConfig}
                   idToken={idToken}
                   lastMeetingThresholdDefaultValue={
                     lastMeetingThresholdsInWeeks
@@ -171,7 +156,7 @@ function App() {
                 key={craftsperson.id}
                 craftsperson={craftsperson}
                 craftspeople={craftspeople.list}
-                rerenderAndScrollToActiveRow={rerenderAndScrollToActiveRow}
+                refreshCraftspeople={refreshCraftspeople}
                 lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
                 idToken={idToken}
               />
@@ -179,7 +164,7 @@ function App() {
           </Container>
         </div>
       )}
-      {!isLoggedIn && (
+      {!isUserLoggedIn() && (
         <Container>
           <Row>
             <Image className="main-logo-login" src={logo} />

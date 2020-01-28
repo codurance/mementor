@@ -13,7 +13,7 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 export default function CraftspersonRow({
   craftsperson,
   craftspeople,
-  rerenderAndScrollToActiveRow,
+  refreshCraftspeople,
   lastMeetingThresholdsInWeeks,
   idToken
 }) {
@@ -23,8 +23,8 @@ export default function CraftspersonRow({
     return "craftsperson-row-container-" + craftsperson.id;
   }
 
-  function rerender() {
-    rerenderAndScrollToActiveRow(makeId());
+  function refreshCraftspeopleWithRowId() {
+    refreshCraftspeople(makeId());
   }
 
   return (
@@ -39,7 +39,7 @@ export default function CraftspersonRow({
               <Craftsperson
                 craftsperson={craftsperson}
                 craftspeople={craftspeople}
-                rerender={rerender}
+                refreshCraftspeople={refreshCraftspeopleWithRowId}
                 idToken={idToken}
                 lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
               />
@@ -59,9 +59,9 @@ export default function CraftspersonRow({
             </Row>
           </Card.Header>
           <Accordion.Collapse eventKey="0">
-            <Card.Body class="mentees-container">
+            <Card.Body className="mentees-container">
               <Mentees
-                rerender={rerender}
+                refreshCraftspeople={refreshCraftspeopleWithRowId}
                 craftsperson={craftsperson}
                 mentees={craftsperson.mentees}
                 craftspeople={craftspeople}

@@ -15,7 +15,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 export default function lastMeeting({
   craftsperson,
   craftspeople,
-  rerender,
+  refreshCraftspeople,
   idToken,
   lastMeetingThresholdsInWeeks
 }) {
@@ -29,7 +29,7 @@ export default function lastMeeting({
         lastMeeting: date.getTime() / 1000
       }
     }).then(response => {
-      handleResponse(response, "Last meeting updated", rerender);
+      handleResponse(response, "Last meeting updated", refreshCraftspeople);
     });
   }
 

@@ -43,7 +43,7 @@ export default function Mentees(props) {
           mentorAddedMessage(mentor.firstName, mentee.firstName),
           () => {
             addMenteeRef.current.clear();
-            props.rerender();
+            props.refreshCraftspeople();
           }
         );
       });
@@ -56,7 +56,7 @@ export default function Mentees(props) {
         {props.mentees.sort(sortAlphabetically).map(mentee => (
           <Mentee
             key={mentee.id}
-            rerender={props.rerender}
+            refreshCraftspeople={props.refreshCraftspeople}
             mentee={mentee}
             idToken={props.idToken}
           />
