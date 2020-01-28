@@ -8,12 +8,12 @@ import {
   sortByNumberOfMentees,
   sortByLastMeetingDate
 } from "./util/sorting";
-import SearchBar from "./components/toolbar/SearchBar";
-import { SortingBar } from "./components/toolbar/SortingBar";
+
+
 import CraftspersonRow from "./components/craftsperson/CraftspersonRow";
-import ManageCraftsperson from "./components/craftsperson-manager/ManageCraftsperson";
+
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import MenuBar from './components/toolbar/MenuBar';
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Listgroup from 'react-bootstrap/ListGroup';
@@ -112,45 +112,19 @@ function App() {
     <div className="App">
       {isUserLoggedIn() && (
         <div>
-          <Container>
-            <Image className="main-logo" src={logo} />
-          </Container>
-          <Container>
-            <SearchBar
-              searchValue={currentSearchValue}
-              updateSearchValue={searchValue => {
-                setCurrentSearchValue(searchValue);
-              }}
-            />
-            <Row>
-              <Col>
-                <SortingBar
-                  onClick={makeSortOnClickListener(sortByNumberOfMentees)}
-                  onClick1={makeSortOnClickListener(
-                    sortByCraftspeopleWithoutMentor
-                  )}
-                  onClick2={makeSortOnClickListener(sortByLastMeetingDate)}
-                />
-              </Col>
-              <Col>
-                <ManageCraftsperson
-                  craftspeople={craftspeople.list}
-                  refreshCraftspeople={refreshCraftspeople}
-                  refreshConfig={refreshConfig}
-                  idToken={idToken}
-                  lastMeetingThresholdDefaultValue={
-                    lastMeetingThresholdsInWeeks
-                  }
-                />
-              </Col>
-            </Row>
-          </Container>
-          {backendFetchError && (
-            <Container className="alert alert-danger" role="alert">
-              <strong>Oh snap!</strong> Looks like there was an error while
-              fetching the data.
-            </Container>
-          )}
+          <MenuBar 
+          logo={logo}
+          searchValue={currentSearchValue} 
+          updateSearchValue={searchValue => {setCurrentSearchValue(searchValue)}} 
+          numberOfMenteesListener={makeSortOnClickListener(sortByNumberOfMentees)}
+          craftspeopleWithoutMentorListener={makeSortOnClickListener(sortByCraftspeopleWithoutMentor)}
+          lastMeetingDateListener={makeSortOnClickListener(sortByLastMeetingDate)}
+          craftspeople={craftspeople.list}
+          refreshCraftspeople={refreshCraftspeople}
+          refreshConfig={refreshConfig}
+          idToken={idToken}
+          lastMeetingThresholdDefaultValue={lastMeetingThresholdsInWeeks}
+          />
           <Container>
             <Listgroup>
               {getList().map(craftsperson => (

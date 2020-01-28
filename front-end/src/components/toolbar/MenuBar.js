@@ -14,21 +14,25 @@ export default function MenuBar(props) {
             <Image className="main-logo" src={props.logo} />
           </Container>
           <Container>
-            <SearchBar onEnter={props.searchFilter} />
+            <SearchBar
+              searchValue={props.currentSearchValue}
+              updateSearchValue={props.searchValue}
+            />
             <Row>
               <Col>
                 <SortingBar
-                  numberOfMenteesListener={props.filters.numberOfMentees}
-                  menteesWithoutMentorListener={props.filters.craftspeopleWithoutMentors}
-                  lastMeetingDateListener={props.filters.lastMeetingDate}
+                  onClick={props.numberOfMenteesListener}
+                  onClick1={props.craftspeopleWithoutMentorListener}
+                  onClick2={props.lastMeetingDateListener}
                 />
               </Col>
               <Col>
                 <ManageCraftsperson
                   craftspeople={props.craftspeople}
-                  rerender={props.rerender}
+                  refreshCraftspeople={props.refreshCraftspeople}
+                  refreshConfig={props.refreshConfig}
                   idToken={props.idToken}
-                  lastMeetingThresholdDefaultValue={props.meetingThreshold}
+                  lastMeetingThresholdDefaultValue={props.lastMeetingThresholdDefaultValue}
                 />
               </Col>
             </Row>

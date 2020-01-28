@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import "./SortingBar.css";
 
-export function SortingBar(props) {
+export default function SortingBar(props) {
   return (
     <Container className="sorting-bar-container">
       <Row>
