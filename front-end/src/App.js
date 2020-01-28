@@ -1,6 +1,6 @@
-import React, { useEffect, useState, setState} from "react";
+import React, { useEffect, useState} from "react";
 import { toast } from "react-toastify";
-import GoogleLogin, { GoogleLogout } from "react-google-login";
+import GoogleLogin from "react-google-login";
 import { api } from "./util/api";
 import { filter } from "./util/filtering";
 import {
@@ -27,7 +27,6 @@ function App() {
   const defaultSort = sortByNumberOfMentees;
   const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
   const [backendFetchError, setBackendFetchError] = useState(null);
-  const [shouldRender, setShouldRender] = useState(false);
   const [craftspeople, setCraftsPeople] = useState({list: [], id: null});
   const [filteredCraftspeople, setFilteredCraftspeople] = useState(
     craftspeople,
@@ -36,7 +35,7 @@ function App() {
   const [idToken, setIdToken] = useState(null);
   const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
   const [currentSearchValue, setCurrentSearchValue] = useState(null);
-  const [activeRow, setActiveRow] = useState(null);
+  const [activeRow] = useState(null);
   const [fetchConfig, setFetchConfig] = useState(null);
 
   function login(googleUser) {
@@ -59,9 +58,6 @@ function App() {
     rerender(rowId);
   } 
 
-  function filterCraftspeople(searchedValue) {
-    setFilteredCraftspeople(filter(craftspeople, searchedValue));
-  }
 
   function makeSortOnClickListener(sortAlgorithmToUse) {
     return () => {
