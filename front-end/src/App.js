@@ -29,10 +29,7 @@ function App() {
   const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
   const [craftspeople, setCraftsPeople] = useState({ list: [], id: null });
   const [idToken, setIdToken] = useState(null);
-  const [
-    lastMeetingThresholdsInWeeks,
-    setLastMeetingThresholdsInWeeks
-  ] = useState(null);
+  const [lastMeetingThresholdsInWeeks,setLastMeetingThresholdsInWeeks] = useState(null);
   const [currentSearchValue, setCurrentSearchValue] = useState(null);
 
   const isUserLoggedIn = useCallback(() =>  {

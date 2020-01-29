@@ -16,20 +16,15 @@ export default function SortingBar(props) {
         </Col>
         <Col sm={10}>
           <ButtonToolbar>
-            <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
-              <ToggleButton
+            <ToggleButtonGroup type="radio" name="options" defaultValue={0}>
+              {props.filters.map((filter, index) => (
+                <ToggleButton
                 variant="light"
-                onClick={props.onClick}
-                value={1}
-              >
-                Number of mentees
-              </ToggleButton>
-              <ToggleButton variant="light" onClick={props.onClick1} value={2}>
-                Unmentored craftsperson
-              </ToggleButton>
-              <ToggleButton variant="light" onClick={props.onClick2} value={3}>
-                Last meeting
-              </ToggleButton>
+                onClick={filter.filter}
+                value={index}>
+                  {filter.filterName}
+                </ToggleButton>
+              ))}
             </ToggleButtonGroup>
           </ButtonToolbar>
         </Col>
