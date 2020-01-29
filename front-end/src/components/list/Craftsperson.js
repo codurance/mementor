@@ -32,7 +32,7 @@ export default function Craftsperson({
         idToken={idToken}
         lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
       />
-      <Col lg className="mentees-count-container">
+      <Col lg={2} md={2} className="mentees-count-container">
         <h5
           className="mentees-count-label"
           data-testid="craftspersonMenteeLabel"
