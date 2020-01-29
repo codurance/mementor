@@ -27,7 +27,6 @@ toast.configure();
 function App() {
   const defaultSort = sortByNumberOfMentees;
   const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
-  const [backendFetchError, setBackendFetchError] = useState(null);
   const [craftspeople, setCraftsPeople] = useState({ list: [], id: null });
   const [idToken, setIdToken] = useState(null);
   const [
@@ -41,7 +40,6 @@ function App() {
   }, [idToken]);
 
   function login(googleUser) {
-    setBackendFetchError(null);
     const id_token = googleUser.getAuthResponse().id_token;
     setIdToken(id_token);
   }
@@ -82,7 +80,6 @@ function App() {
       })
       .catch(error => {
         notifyUnexpectedBackendError(error);
-        setBackendFetchError(error);
       });
   }, [idToken, isUserLoggedIn]);
 
