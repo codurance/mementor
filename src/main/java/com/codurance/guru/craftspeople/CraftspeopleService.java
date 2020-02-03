@@ -25,7 +25,7 @@ public class CraftspeopleService {
     }
 
     public Craftsperson addCraftsperson(String firstName, String lastName) {
-        if(craftspersonDoesNotExist(firstName, lastName)) {
+        if (craftspersonDoesNotExist(firstName, lastName)) {
             return repository.save(new Craftsperson(firstName, lastName));
         }
         throw new ExistingCraftspersonException();
@@ -44,7 +44,7 @@ public class CraftspeopleService {
     public void deleteCraftsperson(Integer craftspersonId) {
         Craftsperson craftspersonToRemove = getCraftsperson(craftspersonId);
 
-        for (Craftsperson mentee: craftspersonToRemove.getMentees()) {
+        for (Craftsperson mentee : craftspersonToRemove.getMentees()) {
             mentee.removeMentor();
             repository.save(mentee);
         }
@@ -52,7 +52,7 @@ public class CraftspeopleService {
         repository.deleteById(craftspersonId);
     }
 
-    public void removeMentor(int menteeId){
+    public void removeMentor(int menteeId) {
         Craftsperson mentee = getCraftsperson(menteeId);
 
         mentee.removeMentor();
@@ -70,7 +70,7 @@ public class CraftspeopleService {
     public void setLastMeeting(int craftspersonId, int lastMeeting) {
         Instant lastMeetingInstant = Instant.ofEpochSecond(lastMeeting);
 
-        if (lastMeetingInstant.isAfter(Instant.now().plus(1, ChronoUnit.DAYS))){
+        if (lastMeetingInstant.isAfter(Instant.now().plus(1, ChronoUnit.DAYS))) {
             throw new InvalidLastMeetingDateException();
         }
 
@@ -97,16 +97,10 @@ public class CraftspeopleService {
     }
 
     private Craftsperson getCraftsperson(int craftspersonId) {
-        Optional<Craftsperson> craftsperson = repository.findById(craftspersonId);
-
-        if (!craftsperson.isPresent()){
-            throw new CraftspersonDoesntExistException();
-        }
-
-        return craftsperson.get();
+        return repository.findById(craftspersonId).orElseThrow(CraftspersonDoesntExistException::new);
     }
 
     private boolean craftspersonDoesNotExist(String firstName, String lastName) {
-        return repository.findByFirstNameAndLastName(firstName,lastName).size() == 0;
+        return repository.findByFirstNameAndLastName(firstName, lastName).size() == 0;
     }
 }

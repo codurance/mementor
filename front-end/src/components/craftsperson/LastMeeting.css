@@ -25,4 +25,6 @@
 
 .alert-icon {
   color: rgb(216, 202, 0);
+  margin-left: 5px;
+  margin-top: 10px;
 }
