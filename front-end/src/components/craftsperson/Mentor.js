@@ -74,7 +74,7 @@ export default function Mentor({
   }
 
   return (
-    <Col lg className="mentor-container">
+    <Col xs={{ span: 6, offset: 3}} sm={{ span:6, offset: 0}} md={{ span:6, offset: 0}} lg={{ span:3, offset: 0}} className="mentor-container">
       <h5 className="mentor-label">Mentored by</h5>
       <Row className="mentor-dropdown-container">
         <Typeahead

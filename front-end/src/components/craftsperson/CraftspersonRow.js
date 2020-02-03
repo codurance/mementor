@@ -28,14 +28,10 @@ export default function CraftspersonRow({
   }
 
   return (
-    <Accordion
-      className="accordion-container craftsperson-row-container"
-      id={makeId()}
-    >
+    <Accordion className="accordion-container craftsperson-row-container" id={makeId()}>
       <Container>
         <Card>
           <Card.Header className="craftsperson-card">
-            <div className="justify-content-center">
               <Craftsperson
                 craftsperson={craftsperson}
                 craftspeople={craftspeople}
@@ -43,18 +39,14 @@ export default function CraftspersonRow({
                 idToken={idToken}
                 lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
               />
-            </div>
             <Row>
               <Accordion.Toggle
                 className="mentees-toggle"
                 as={Button}
                 variant="link"
                 eventKey="0"
-                onClick={() => setIsCollapsed(!isCollapsed)}
-              >
-                <FontAwesomeIcon
-                  icon={isCollapsed ? faChevronUp : faChevronDown}
-                />
+                onClick={() => setIsCollapsed(!isCollapsed)}>
+                <FontAwesomeIcon icon={isCollapsed ? faChevronUp : faChevronDown}/>
               </Accordion.Toggle>
             </Row>
           </Card.Header>

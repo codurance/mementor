@@ -44,7 +44,7 @@ export default function lastMeeting({
   }
 
   return (
-    <Col lg className="last-meeting-container">
+    <Col xs={{ span: 6, offset: 3}} sm={{ span:6, offset: 0}} md={{ span:6, offset: 0}} lg={{ span:3, offset: 0}} className="last-meeting-container">
       <h5 className="last-meeting-label">Last Meeting</h5>
       <Row
         className="last-meeting-picker-container"

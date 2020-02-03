@@ -51,7 +51,6 @@ export default function Mentees(props) {
   }
 
   return (
-    <div>
       <ListGroup data-testid="list">
         {props.mentees.sort(sortAlphabetically).map(mentee => (
           <Mentee
@@ -101,6 +100,5 @@ export default function Mentees(props) {
           </Container>
         </ListGroupItem>
       </ListGroup>
-    </div>
   );
 }

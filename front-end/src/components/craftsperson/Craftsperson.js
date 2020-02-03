@@ -14,7 +14,7 @@ export default function Craftsperson({
 }) {
   return (
     <Row>
-      <Col lg className="craftsperson-name-container">
+      <Col xs={{ span: 6, offset: 3}} sm={{ span:6, offset: 0}} md={{ span:6, offset: 0}} lg={{ span:3, offset: 0}} className="craftsperson-name-container">
         <h4 className="craftsperson-name" data-testid="craftspersonName">
           {craftsperson.firstName} {craftsperson.lastName}
         </h4>
@@ -32,7 +32,7 @@ export default function Craftsperson({
         idToken={idToken}
         lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
       />
-      <Col lg className="mentees-count-container">
+      <Col xs={{ span: 6, offset: 3}} sm={{ span:6, offset: 0}} md={{ span:6, offset: 0}} lg={{ span:3, offset: 0}} className="mentees-count-container">
         <h5
           className="mentees-count-label"
           data-testid="craftspersonMenteeLabel"
