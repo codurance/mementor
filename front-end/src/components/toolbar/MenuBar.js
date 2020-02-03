@@ -28,8 +28,6 @@ export default function MenuBar(props) {
     <>
       <Container>
         <Image className="main-logo" src={props.logo} />
-      </Container>
-      <Container>
         <SearchBar
           searchValue={props.currentSearchValue}
           updateSearchValue={props.searchValue}

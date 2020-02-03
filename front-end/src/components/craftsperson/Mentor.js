@@ -74,9 +74,8 @@ export default function Mentor({
   }
 
   return (
-    <Col xs={{ span: 6, offset: 3}} sm={{ span:6, offset: 0}} md={{ span:6, offset: 0}} lg={{ span:3, offset: 0}} className="mentor-container">
+    <Col xs={{ span: 10, offset: 1}} sm={{ span:10, offset: 1}} md={{ span:6, offset: 3}} lg={{ span:3, offset: 0}} className="mentor-container">
       <h5 className="mentor-label">Mentored by</h5>
-      <Row className="mentor-dropdown-container">
         <Typeahead
           className="mentor-dropdown"
           id={"remove-mentor-" + craftsperson.id}
@@ -98,7 +97,6 @@ export default function Mentor({
             <FontAwesomeIcon className="times-icon" icon={faTimes} size="lg" />
           </Button>
         )}
-      </Row>
     </Col>
   );
 }
