@@ -1,4 +1,6 @@
 branch-defaults:
+  ebconfig:
+    environment: mementor-integ
   master:
     environment: mementor-integ
 deploy:
