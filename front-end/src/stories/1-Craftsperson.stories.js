@@ -50,7 +50,7 @@ export const With2Mentees = () =>
       {id: 1, firstName: "Arnaud", lastName: "CLAUDEEL",
         mentees: [
           {id: 3, firstName:"Jose", lastName: "Rixon"},
-          {id: 4, firstName:"Jose", lastName: "Rixon"}]
+          {id: 4, firstName:"Ed", lastName: "Wenzel"}]
       }}
     craftspeople={[]}
   />;
