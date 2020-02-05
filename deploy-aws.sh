@@ -2,7 +2,7 @@
 
 if [ $# -lt 1 ] ; then
     echo "USAGE: $0 environment-name"
-    echo "  environment-name: prod | integ"
+    echo "  environment-name: production | integration"
     echo "  --no-build: skip build phase, will fail if the artifact does not exist"
     echo $@
     exit 1
