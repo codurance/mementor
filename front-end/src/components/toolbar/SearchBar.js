@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function SearchBar(props) {
   let searchInputRef = null;
 
-  const [searchedValue, setSearchedValue] = useState(null);
+  const [searchedValue, setSearchedValue] = useState(props.defaultValue);
 
   const clearSearchInput = () => {
     setSearchedValue("");
@@ -33,6 +33,7 @@ export default function SearchBar(props) {
         aria-label="Craftsperson searchbar"
         aria-describedby="basic-addon1"
         placeholder="Find Craftsperson..."
+        value={searchedValue}
         onChange={e => {
           props.onEnter(e.target.value);
           setSearchedValue(e.target.value);

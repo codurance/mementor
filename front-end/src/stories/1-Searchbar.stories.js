@@ -9,3 +9,6 @@ export default {
 
 export const Default = () =>
   <SearchBar onEnter={() => {}}/>;
+
+export const WithText = () =>
+  <SearchBar defaultValue={"Arnaud"} onEnter={() => {}}/>;
