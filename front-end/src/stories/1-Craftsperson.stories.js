@@ -24,10 +24,6 @@ export const WithAMentor = () =>
   />;
 
 export const WithAnRecentLastMeeting = () =>
-  (
-    <div>
-      <LinkTo story="SortingBar">Go back</LinkTo>
-      <button onClick={linkTo('Sorting bar')}>Go to "Default"</button>
       <CraftspersonRow
         craftsperson={
           {id: 1, firstName: "Arnaud", lastName: "CLAUDEEL",
@@ -36,8 +32,7 @@ export const WithAnRecentLastMeeting = () =>
           }}
         lastMeetingThresholdsInWeeks={2}
         craftspeople= {[]}
-      />
-    </div>);
+      />;
 
 export const WithAnOldLastMeeting = () =>
       <CraftspersonRow
