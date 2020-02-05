@@ -9,6 +9,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
+    "bootstrap": "^4.4.1",
     "lodash": "^4.17.15",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
@@ -23,7 +24,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -41,6 +44,14 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^5.3.12",
+    "@storybook/addon-docs": "^5.3.12",
+    "@storybook/addon-links": "^5.3.12",
+    "@storybook/addon-storysource": "^5.3.12",
+    "@storybook/addon-viewport": "^5.3.12",
+    "@storybook/addons": "^5.3.10",
+    "@storybook/preset-create-react-app": "^1.5.2",
+    "@storybook/react": "^5.3.10",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.4.3",

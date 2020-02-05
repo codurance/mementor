@@ -1,0 +1,20 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import Craftsperson from "../components/list/Craftsperson";
+
+<Meta title="MDX/Craftsperson" component={Craftsperson} />
+
+# Checkbox
+
+With `MDX` we can define a story for `Checkbox` right in the middle of our
+markdown documentation.
+
+<Preview>
+  <Story name="all checkboxes">
+    <form>
+      <Craftsperson
+          craftsperson={{id: 1, firstName: "Arnaud", lastName: "CLAUDEEL"}}
+          craftspeople={[]}
+        />;
+    </form>
+  </Story>
+</Preview>
