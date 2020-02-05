@@ -1,6 +1,4 @@
 import React from 'react';
-import SearchBar from "../components/toolbar/SearchBar";
-import { SortingBar } from "../components/toolbar/SortingBar";
 import Craftsperson from "../components/list/Craftsperson";
 import { LinkTo, linkTo } from '@storybook/addon-links'
 
@@ -16,7 +14,7 @@ export const Default = () =>
     craftspeople={[]}
   />;
 
-export const Mentored = () =>
+export const WithAMentor = () =>
   <Craftsperson
     craftsperson={
       {id: 1, firstName: "Arnaud", lastName: "CLAUDEEL",
@@ -25,7 +23,7 @@ export const Mentored = () =>
     craftspeople={[]}
   />;
 
-export const MentoredWithLastMeeting = () =>
+export const WithAnRecentLastMeeting = () =>
   (
     <div>
       <LinkTo story="SortingBar">Go back</LinkTo>
@@ -34,13 +32,24 @@ export const MentoredWithLastMeeting = () =>
         craftsperson={
           {id: 1, firstName: "Arnaud", lastName: "CLAUDEEL",
             mentor: {id: 3, firstName:"Jose", lastName: "Rixon"},
-            lastMeeting: 15_000_0000
+            lastMeeting: new Date().getTime() / 1000
           }}
+        lastMeetingThresholdsInWeeks={2}
         craftspeople= {[]}
       />
     </div>);
 
-export const WithMentees = () =>
+export const WithAnOldLastMeeting = () =>
+      <Craftsperson
+        craftsperson={
+          {id: 1, firstName: "Arnaud", lastName: "CLAUDEEL",
+            mentor: {id: 3, firstName:"Jose", lastName: "Rixon"},
+            lastMeeting: 15_000_0000
+          }}
+        craftspeople= {[]}
+      />;
+
+export const With2Mentees = () =>
   <Craftsperson
     craftsperson={
       {id: 1, firstName: "Arnaud", lastName: "CLAUDEEL",
