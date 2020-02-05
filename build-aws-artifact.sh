@@ -27,5 +27,5 @@ echo "##### Packaging AWS artifact #####"
 echo "#################################"
 
 echo "zipping artifact .."
-zip target/mementor-aws.zip target/mementor.jar Dockerfile .ebextensions/ssl-rewrite.config
+zip target/mementor-aws.zip target/mementor.jar Dockerfile
 echo "done."
