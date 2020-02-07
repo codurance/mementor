@@ -9,14 +9,65 @@ import Container from "react-bootstrap/Container";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import { notifyUnexpectedBackendError } from "./util/notify";
-import { BrowserRouter as Router } from "react-router-dom";
 import { Header } from "./Header";
 import { Toolbar } from "./Toolbar";
 import { ErrorFetch } from "./ErrorFetch";
 import { Login } from "./Login";
+import * as PropTypes from "prop-types";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route, Link
+} from "react-router-dom";
 
 
 toast.configure();
+
+class MainView extends React.Component {
+  render() {
+    return <Container>
+      <SearchBar
+        searchValue={this.props.searchValue}
+        updateSearchValue={this.props.updateSearchValue}
+      />
+      <Toolbar sortByMentees={this.props.sortByMentees}
+               sortByMentor={this.props.sortByMentor}
+               sortByLastMeeting={this.props.sortByLastMeeting}
+               craftspeople={this.props.craftspeople}
+               refreshCraftspeople={this.props.refreshCraftspeople}
+               refreshConfig={this.props.refreshConfig}
+               idToken={this.props.idToken}
+               lastMeetingThresholdDefaultValue={this.props.lastMeetingThresholdDefaultValue}
+      />
+      <Container>
+        {this.props.list.map(this.props.prop11)}
+      </Container>
+    </Container>;
+  }
+}
+
+MainView.propTypes = {
+  searchValue: PropTypes.any,
+  updateSearchValue: PropTypes.func,
+  sortByMentees: PropTypes.func,
+  sortByMentor: PropTypes.func,
+  sortByLastMeeting: PropTypes.func,
+  craftspeople: PropTypes.shape({ id: PropTypes.any, list: PropTypes.any }),
+  refreshCraftspeople: PropTypes.func,
+  refreshConfig: PropTypes.func,
+  idToken: PropTypes.any,
+  lastMeetingThresholdDefaultValue: PropTypes.any,
+  list: PropTypes.any,
+  prop11: PropTypes.func
+};
+
+class Audit  extends React.Component {
+  render() {
+    return <Container>
+      <h1>HOLA MUNDO</h1>
+    </Container>;
+  }
+}
 
 function App() {
   const defaultSort = sortByNumberOfMentees;
@@ -109,35 +160,31 @@ function App() {
             <ErrorFetch/>
           )}
           <Header/>
-          <Container>
-            <SearchBar
-              searchValue={currentSearchValue}
-              updateSearchValue={searchValue => {
+          <Switch>
+            <Route path="/activities">
+              <Audit />
+              <Link to="/">Home</Link>
+            </Route>
+            <Route exact path="/">
+              <MainView searchValue={currentSearchValue} updateSearchValue={searchValue => {
                 setCurrentSearchValue(searchValue);
-              }}
-            />
-            <Toolbar sortByMentees={makeSortOnClickListener(sortByNumberOfMentees)}
-                     sortByMentor={makeSortOnClickListener(sortByCraftspeopleWithoutMentor)}
-                     sortByLastMeeting={makeSortOnClickListener(sortByLastMeetingDate)}
-                     craftspeople={craftspeople}
-                     refreshCraftspeople={refreshCraftspeople}
-                     refreshConfig={refreshConfig}
-                     idToken={idToken}
-                     lastMeetingThresholdDefaultValue={lastMeetingThresholdsInWeeks}
-            />
-            <Container>
-              {getList().map(craftsperson => (
-                <CraftspersonRow
-                  key={craftsperson.id}
-                  craftsperson={craftsperson}
-                  craftspeople={craftspeople.list}
-                  refreshCraftspeople={refreshCraftspeople}
-                  lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
-                  idToken={idToken}
-                />
-              ))}
-            </Container>
-          </Container>
+              }} sortByMentees={makeSortOnClickListener(sortByNumberOfMentees)}
+                        sortByMentor={makeSortOnClickListener(sortByCraftspeopleWithoutMentor)}
+                        sortByLastMeeting={makeSortOnClickListener(sortByLastMeetingDate)} craftspeople={craftspeople}
+                        refreshCraftspeople={refreshCraftspeople} refreshConfig={refreshConfig} idToken={idToken}
+                        lastMeetingThresholdDefaultValue={lastMeetingThresholdsInWeeks} list={getList()}
+                        prop11={craftsperson => (
+                          <CraftspersonRow
+                            key={craftsperson.id}
+                            craftsperson={craftsperson}
+                            craftspeople={craftspeople.list}
+                            refreshCraftspeople={refreshCraftspeople}
+                            lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
+                            idToken={idToken}
+                          />
+                        )}/>
+            </Route>
+          </Switch>
         </div>}
       </Router>
     </div>
