@@ -1,25 +1,23 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import GoogleLogin from "react-google-login";
 import { api } from "./util/api";
 import { filter } from "./util/filtering";
-import {
-  sortByCraftspeopleWithoutMentor,
-  sortByNumberOfMentees,
-  sortByLastMeetingDate
-} from "./util/sorting";
+import { sortByCraftspeopleWithoutMentor, sortByLastMeetingDate, sortByNumberOfMentees } from "./util/sorting";
 import SearchBar from "./components/toolbar/SearchBar";
-import { SortingBar } from "./components/toolbar/SortingBar";
 import CraftspersonRow from "./components/list/CraftspersonRow";
-import ManageCraftsperson from "./components/admin/ManageCraftsperson";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import "./App.css";
 import logo from "./mementor_logo.png";
 import "react-toastify/dist/ReactToastify.css";
 import { notifyUnexpectedBackendError } from "./util/notify";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Header } from "./Header";
+import { Toolbar } from "./Toolbar";
+import { ErrorFetch } from "./ErrorFetch";
+
 
 toast.configure();
 
@@ -35,7 +33,7 @@ function App() {
   ] = useState(null);
   const [currentSearchValue, setCurrentSearchValue] = useState(null);
 
-  const isUserLoggedIn = useCallback(() =>  {
+  const isUserLoggedIn = useCallback(() => {
     return idToken;
   }, [idToken]);
 
@@ -109,11 +107,12 @@ function App() {
 
   return (
     <div className="App">
-      {isUserLoggedIn() && (
-        <div>
-          <Container>
-            <Image className="main-logo" src={logo} />
-          </Container>
+      <Router>
+        {isUserLoggedIn() && <div>
+          {backendFetchError && (
+            <ErrorFetch/>
+          )}
+          <Header/>
           <Container>
             <SearchBar
               searchValue={currentSearchValue}
@@ -121,70 +120,48 @@ function App() {
                 setCurrentSearchValue(searchValue);
               }}
             />
-            <Row>
-              <Col>
-                <SortingBar
-                  onClick={makeSortOnClickListener(sortByNumberOfMentees)}
-                  onClick1={makeSortOnClickListener(
-                    sortByCraftspeopleWithoutMentor
-                  )}
-                  onClick2={makeSortOnClickListener(sortByLastMeetingDate)}
-                />
-              </Col>
-              <Col>
-                <ManageCraftsperson
+            <Toolbar onClick={makeSortOnClickListener(sortByNumberOfMentees)} onClick1={makeSortOnClickListener(
+              sortByCraftspeopleWithoutMentor
+            )} onClick2={makeSortOnClickListener(sortByLastMeetingDate)} craftspeople={craftspeople}
+                     refreshCraftspeople={refreshCraftspeople} refreshConfig={refreshConfig} idToken={idToken}
+                     lastMeetingThresholdDefaultValue={lastMeetingThresholdsInWeeks}/>
+            <Container>
+              {getList().map(craftsperson => (
+                <CraftspersonRow
+                  key={craftsperson.id}
+                  craftsperson={craftsperson}
                   craftspeople={craftspeople.list}
                   refreshCraftspeople={refreshCraftspeople}
-                  refreshConfig={refreshConfig}
+                  lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
                   idToken={idToken}
-                  lastMeetingThresholdDefaultValue={
-                    lastMeetingThresholdsInWeeks
-                  }
                 />
-              </Col>
+              ))}
+            </Container>
+          </Container>
+        </div>}
+        {!isUserLoggedIn() && (
+          <Container>
+            <Row>
+              <Image className="main-logo-login" src={logo}/>
+            </Row>
+            <Row>
+              <GoogleLogin
+                className="google-login"
+                clientId="232062837025-i97turm1tg41ian5hjaq1ujao6q2569i.apps.googleusercontent.com"
+                buttonText="Login"
+                onSuccess={login}
+                onFailure={responseGoogle}
+                cookiePolicy={"single_host_origin"}
+              />
+            </Row>
+            <Row>
+              <p className="love">With love by the 2019/2020 apprentices</p>
             </Row>
           </Container>
-          {backendFetchError && (
-            <Container className="alert alert-danger" role="alert">
-              <strong>Oh snap!</strong> Looks like there was an error while
-              fetching the data.
-            </Container>
-          )}
-          <Container>
-            {getList().map(craftsperson => (
-              <CraftspersonRow
-                key={craftsperson.id}
-                craftsperson={craftsperson}
-                craftspeople={craftspeople.list}
-                refreshCraftspeople={refreshCraftspeople}
-                lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
-                idToken={idToken}
-              />
-            ))}
-          </Container>
-        </div>
-      )}
-      {!isUserLoggedIn() && (
-        <Container>
-          <Row>
-            <Image className="main-logo-login" src={logo} />
-          </Row>
-          <Row>
-            <GoogleLogin
-              className="google-login"
-              clientId="232062837025-i97turm1tg41ian5hjaq1ujao6q2569i.apps.googleusercontent.com"
-              buttonText="Login"
-              onSuccess={login}
-              onFailure={responseGoogle}
-              cookiePolicy={"single_host_origin"}
-            />
-          </Row>
-          <Row>
-            <p className="love">With love by the 2019/2020 apprentices</p>
-          </Row>
-        </Container>
-      )}
+        )}
+      </Router>
     </div>
   );
 }
+
 export default App;
