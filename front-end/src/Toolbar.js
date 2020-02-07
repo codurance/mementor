@@ -9,23 +9,25 @@ export function Toolbar(props) {
   return <Row>
     <Col>
       <SortingBar
-        onClick={props.onClick}
-        onClick1={props.onClick1}
-        onClick2={props.onClick2}
+        sortByMentees={props.sortByMentees}
+        sortByMentor={props.sortByMentor}
+        sortByLastMeeting={props.sortByLastMeeting}
       />
     </Col>
     <Col>
-      <AdminToolbar craftspeople={props.craftspeople} refreshCraftspeople={props.refreshCraftspeople}
-                    refreshConfig={props.refreshConfig} idToken={props.idToken}
+      <AdminToolbar craftspeople={props.craftspeople}
+                    refreshCraftspeople={props.refreshCraftspeople}
+                    refreshConfig={props.refreshConfig}
+                    idToken={props.idToken}
                     lastMeetingThresholdDefaultValue={props.lastMeetingThresholdDefaultValue}/>
     </Col>
   </Row>;
 }
 
 Toolbar.propTypes = {
-  onClick: PropTypes.func,
-  onClick1: PropTypes.func,
-  onClick2: PropTypes.func,
+  sortByMentees: PropTypes.func,
+  sortByMentor: PropTypes.func,
+  sortByLastMeeting: PropTypes.func,
   craftspeople: PropTypes.shape({ id: PropTypes.any, list: PropTypes.any }),
   refreshCraftspeople: PropTypes.func,
   refreshConfig: PropTypes.func,

@@ -116,11 +116,15 @@ function App() {
                 setCurrentSearchValue(searchValue);
               }}
             />
-            <Toolbar onClick={makeSortOnClickListener(sortByNumberOfMentees)} onClick1={makeSortOnClickListener(
-              sortByCraftspeopleWithoutMentor
-            )} onClick2={makeSortOnClickListener(sortByLastMeetingDate)} craftspeople={craftspeople}
-                     refreshCraftspeople={refreshCraftspeople} refreshConfig={refreshConfig} idToken={idToken}
-                     lastMeetingThresholdDefaultValue={lastMeetingThresholdsInWeeks}/>
+            <Toolbar sortByMentees={makeSortOnClickListener(sortByNumberOfMentees)}
+                     sortByMentor={makeSortOnClickListener(sortByCraftspeopleWithoutMentor)}
+                     sortByLastMeeting={makeSortOnClickListener(sortByLastMeetingDate)}
+                     craftspeople={craftspeople}
+                     refreshCraftspeople={refreshCraftspeople}
+                     refreshConfig={refreshConfig}
+                     idToken={idToken}
+                     lastMeetingThresholdDefaultValue={lastMeetingThresholdsInWeeks}
+            />
             <Container>
               {getList().map(craftsperson => (
                 <CraftspersonRow
