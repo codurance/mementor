@@ -1,22 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import GoogleLogin from "react-google-login";
 import { api } from "./util/api";
 import { filter } from "./util/filtering";
 import { sortByCraftspeopleWithoutMentor, sortByLastMeetingDate, sortByNumberOfMentees } from "./util/sorting";
 import SearchBar from "./components/toolbar/SearchBar";
 import CraftspersonRow from "./components/list/CraftspersonRow";
-import Row from "react-bootstrap/Row";
-import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import "./App.css";
-import logo from "./mementor_logo.png";
 import "react-toastify/dist/ReactToastify.css";
 import { notifyUnexpectedBackendError } from "./util/notify";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Header } from "./Header";
 import { Toolbar } from "./Toolbar";
 import { ErrorFetch } from "./ErrorFetch";
+import { Login } from "./Login";
 
 
 toast.configure();
@@ -37,14 +34,10 @@ function App() {
     return idToken;
   }, [idToken]);
 
-  function login(googleUser) {
+  function successfulLogin(googleUser) {
     setBackendFetchError(null);
     const id_token = googleUser.getAuthResponse().id_token;
     setIdToken(id_token);
-  }
-
-  function responseGoogle(response) {
-    console.log(response);
   }
 
   function makeSortOnClickListener(sortAlgorithmToUse) {
@@ -108,6 +101,9 @@ function App() {
   return (
     <div className="App">
       <Router>
+        {!isUserLoggedIn() && (
+          <Login onSuccess={successfulLogin}/>
+        )}
         {isUserLoggedIn() && <div>
           {backendFetchError && (
             <ErrorFetch/>
@@ -139,26 +135,6 @@ function App() {
             </Container>
           </Container>
         </div>}
-        {!isUserLoggedIn() && (
-          <Container>
-            <Row>
-              <Image className="main-logo-login" src={logo}/>
-            </Row>
-            <Row>
-              <GoogleLogin
-                className="google-login"
-                clientId="232062837025-i97turm1tg41ian5hjaq1ujao6q2569i.apps.googleusercontent.com"
-                buttonText="Login"
-                onSuccess={login}
-                onFailure={responseGoogle}
-                cookiePolicy={"single_host_origin"}
-              />
-            </Row>
-            <Row>
-              <p className="love">With love by the 2019/2020 apprentices</p>
-            </Row>
-          </Container>
-        )}
       </Router>
     </div>
   );
