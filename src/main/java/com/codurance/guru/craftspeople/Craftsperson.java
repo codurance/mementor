@@ -100,4 +100,8 @@ public class Craftsperson {
         this.mentor = null;
         this.lastMeeting = null;
     }
+
+    public String getFullName() {
+        return String.format("%s %s",firstName, lastName);
+    }
 }

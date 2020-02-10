@@ -13,22 +13,6 @@ export function MainView(props) {
   const defaultSort = sortByNumberOfMentees;
   const [sortAlgorithm, setSortAlgorithm] = useState(() => defaultSort);
   const [craftspeople, setCraftsPeople] = useState({ list: [], id: null });
-  const [lastMeetingThresholdsInWeeks, setLastMeetingThresholdsInWeeks] = useState(null);
-
-  const refreshConfig = useCallback(() => {
-    if (!props.isUserLoggedIn) {
-      // the api calls will fail because we're not authorized
-      return;
-    }
-
-    api({ endpoint: `/config`, token: props.idToken })
-      .then(response => response.json())
-      .then(body =>
-        setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks)
-      )
-      .catch(notifyUnexpectedBackendError);
-  }, [props.idToken, props.isUserLoggedIn]);
-
   const [currentSearchValue, setCurrentSearchValue] = useState(null);
 
   function makeSortOnClickListener(sortAlgorithmToUse) {
@@ -56,8 +40,8 @@ export function MainView(props) {
 
   useEffect(() => {
     refreshCraftspeople();
-    refreshConfig();
-  }, [refreshConfig, refreshCraftspeople]);
+    props.refreshConfig();
+  }, [props.refreshConfig, refreshCraftspeople]);
 
   useEffect(() => {
     const element = document.getElementById(craftspeople.id);
@@ -86,9 +70,9 @@ export function MainView(props) {
              sortByLastMeeting={makeSortOnClickListener(sortByLastMeetingDate)}
              craftspeople={craftspeople}
              refreshCraftspeople={refreshCraftspeople}
-             refreshConfig={refreshConfig}
+             refreshConfig={props.refreshConfig}
              idToken={props.idToken}
-             lastMeetingThresholdDefaultValue={lastMeetingThresholdsInWeeks}
+             lastMeetingThresholdDefaultValue={props.lastMeetingThresholdsInWeeks}
     />
     <Container>
       {getList().map(craftsperson => (
@@ -97,7 +81,7 @@ export function MainView(props) {
           craftsperson={craftsperson}
           craftspeople={craftspeople.list}
           refreshCraftspeople={refreshCraftspeople}
-          lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
+          lastMeetingThresholdsInWeeks={props.lastMeetingThresholdsInWeeks}
           idToken={props.idToken}
         />
       ))}

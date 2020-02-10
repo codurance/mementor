@@ -6,12 +6,18 @@ import com.codurance.guru.craftspeople.requests.AddMentorRequest;
 import com.codurance.guru.craftspeople.requests.RemoveMentorRequest;
 import com.codurance.guru.craftspeople.requests.UpdateLastMeetingRequest;
 import com.codurance.guru.craftspeople.responses.ErrorResponse;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,10 +29,18 @@ public class CraftspeopleController {
     @Autowired
     private CraftspeopleService craftspeopleService;
 
+    @Autowired
+    private HttpServletRequest httpServletRequest;
+
     @PostMapping("/craftspeople/mentor/add")
     public ResponseEntity addMentor(@Valid @RequestBody AddMentorRequest request) {
         try {
             craftspeopleService.addMentor(request.getMentorId(), request.getMenteeId());
+
+//            GoogleIdToken idToken = (GoogleIdToken) httpServletRequest.getSession().getAttribute("idToken");
+//            GoogleIdToken.Payload tokenPayload = idToken.getPayload();
+//            tokenPayload.getEmail();
+
             return ResponseEntity.noContent().build();
 
         } catch (DuplicateMenteeException ex) {

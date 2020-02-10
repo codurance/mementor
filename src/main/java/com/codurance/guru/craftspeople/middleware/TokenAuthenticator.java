@@ -11,6 +11,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
@@ -22,24 +23,22 @@ public class TokenAuthenticator extends HandlerInterceptorAdapter {
     private String CLIENT_ID;
 
     @Override
-    public boolean preHandle(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            Object handler) {
+    public boolean preHandle(HttpServletRequest request,
+                             HttpServletResponse response,
+                             Object handler) {
         String token = request.getHeader("Authorization");
-
         try {
-            return authenticateToken(token);
+            return authenticateToken(token, request);
         } catch (Exception ex) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false;
         }
     }
 
-    private boolean authenticateToken(String token) throws GeneralSecurityException, IOException {
+    protected boolean authenticateToken(String token, HttpServletRequest request) throws GeneralSecurityException, IOException {
         GoogleIdTokenVerifier verifier = buildGoogleIdTokenVerifier();
-
         GoogleIdToken idToken = verifier.verify(token);
+        request.getSession().setAttribute("idToken", idToken);
         return idToken != null;
     }
 
