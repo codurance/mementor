@@ -35,11 +35,11 @@ public class EventControllerTest {
 
         List<Event> events = new ArrayList<>();
 
-        events.add(new Event(new Craftsperson("John", "Doe0"),"Message 0"));
-        events.add(new Event(new Craftsperson("John", "Doe1"),"Message 1"));
-        events.add(new Event(new Craftsperson("John", "Doe2"),"Message 2"));
-        events.add(new Event(new Craftsperson("John", "Doe3"),"Message 3"));
-        events.add(new Event(new Craftsperson("John", "Doe4"),"Message 4"));
+        events.add(new Event("Blamo","Message 0"));
+        events.add(new Event("Shlami","Message 1"));
+        events.add(new Event("Grumbo","Message 2"));
+        events.add(new Event("Plumbus","Message 3"));
+        events.add(new Event("Dinglebop","Message 4"));
 
         for (Event event :
                 events) {

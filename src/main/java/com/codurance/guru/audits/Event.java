@@ -21,8 +21,8 @@ public class Event {
 
     public Event() { }
 
-    public Event(Craftsperson createdBy, String message) {
-        this.createdBy = createdBy.getFullName();
+    public Event(String createdBy, String message) {
+        this.createdBy = createdBy;
         this.message = message;
         this.created = Instant.now();
     }

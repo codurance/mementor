@@ -22,9 +22,9 @@ import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(SpringRunner.class)
-@DirtiesContext
 @SpringBootTest(
         classes = GuruApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
@@ -76,22 +76,19 @@ public class CraftspeopleControllerAuthenticationTest {
 
     @Test
     public void an_event_is_saved() throws JSONException {
-        String username = "edward.rixon@codurance.com";
-        var token = TestJWTGenerator.createToken(username);
+        String name = "mrocket@example.com";
 
         requestBody.put("mentorId", "1");
         requestBody.put("menteeId", "2");
 
-        var response = RestAssured.given()
-                .header("Authorization", token)
+        RestAssured.given()
+                .header("Authorization", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1ODEzNDU1NjMsImV4cCI6NDA3NDMzMTE2MywiYXVkIjoid3d3LnJvY2tldGVyLmNvbSIsInN1YiI6Impyb2NrZXRAcm9ja2V0ZXIuY29tIiwibmFtZSI6Ik1pY2hhZWwgUm9ja2V0IiwiU3VybmFtZSI6IlJvY2tldCIsIkVtYWlsIjoibXJvY2tldEBleGFtcGxlLmNvbSIsIlJvbGUiOlsiTWFuYWdlciIsIlByb2plY3QgQWRtaW5pc3RyYXRvciJdfQ.aAcIf677nk4zfv3X_gYhZFEyvhnB_FQQcXzNYuR0lYE")
                 .contentType(ContentType.JSON)
                 .body(requestBody.toString())
                 .post("craftspeople/mentor/add")
                 .then()
-                .statusCode(200)
-                .extract()
-                .response();
+                .statusCode(204);
 
-        assertThat(eventRepository.findAll().stream().filter(e -> e.getCreatedBy().equals(username)).count() == 1);
+        assertTrue(eventRepository.findAll().stream().filter(e -> e.getCreatedBy().equals(name)).count() == 1);
     }
 }

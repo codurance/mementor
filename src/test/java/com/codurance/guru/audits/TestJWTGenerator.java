@@ -10,8 +10,10 @@ import java.util.Date;
 // This worked first time
 public class TestJWTGenerator {
 
+    private static String jwt;
+
     public static String createToken(String username) {
-        String jwt = Jwts.builder()
+        jwt = Jwts.builder()
                 .setSubject(username)
                 .setExpiration(Date.from(Instant.now().plus(Duration.ofHours(1L))))
                 .signWith(SignatureAlgorithm.HS512, "SECRET")
@@ -19,4 +21,5 @@ public class TestJWTGenerator {
 
         return jwt;
     }
+
 }
