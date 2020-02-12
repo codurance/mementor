@@ -10,6 +10,7 @@ import { MainView } from "./MainView";
 import { Audit } from "./Audit";
 import { api } from "./util/api";
 import { notifyUnexpectedBackendError } from "./util/notify";
+import Container from "react-bootstrap/Container";
 
 toast.configure();
 
@@ -52,11 +53,13 @@ function App() {
           {backendFetchError && (
             <ErrorFetch/>
           )}
-          <Header/>
+          <Container>
+            <Header/>
+          </Container>
           <Switch>
             <Route path="/activities">
-              <Audit idToken={idToken}/>
               <Link to="/">Home</Link>
+              <Audit idToken={idToken}/>
             </Route>
             <Route exact path="/">
               <MainView idToken={idToken}

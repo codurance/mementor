@@ -4,7 +4,9 @@ import logo from "./mementor_logo.png";
 import React from "react";
 
 export function Header() {
-  return <Container>
+  return (
+  <Container>
     <Image className="main-logo" src={logo}/>
-  </Container>;
+  </Container>
+  );
 }

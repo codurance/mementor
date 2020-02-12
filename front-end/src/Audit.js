@@ -1,4 +1,6 @@
 import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col"
+import Row from "react-bootstrap/Row";
 import React, { useState, useEffect } from "react";
 import { notifyUnexpectedBackendError } from "./util/notify";
 import { api } from "./util/api";
@@ -33,7 +35,7 @@ export function Audit(props) {
     {events && 
     <Container>
       {events.map(event => (
-        <AuditRow message={event.message} />
+          <AuditRow message={event.message} />
       ))}
     </Container>
     }
