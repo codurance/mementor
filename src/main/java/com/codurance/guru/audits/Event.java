@@ -1,25 +1,25 @@
 package com.codurance.guru.audits;
 
-import com.codurance.guru.craftspeople.Craftsperson;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
+@Table(name = "events")
+@JsonSerialize
 public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    private Integer id;
 
-    String createdBy;
-    String message;
-    Instant created;
+    private String createdBy;
+    private String message;
+    private Instant created;
 
-    public Event() { }
+    public Event() {
+    }
 
     public Event(String createdBy, String message) {
         this.createdBy = createdBy;
@@ -27,7 +27,35 @@ public class Event {
         this.created = Instant.now();
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public String getCreatedBy() {
         return createdBy;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Instant getCreated() {
+        return created;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setCreated(Instant created) {
+        this.created = created;
     }
 }

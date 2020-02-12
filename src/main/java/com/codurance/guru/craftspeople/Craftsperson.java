@@ -26,7 +26,8 @@ public class Craftsperson {
     @Column(name = "last_meeting")
     private Instant lastMeeting;
 
-    public Craftsperson() { }
+    public Craftsperson() {
+    }
 
     public Craftsperson(String firstName, String lastName) {
         this.firstName = firstName;
@@ -88,7 +89,7 @@ public class Craftsperson {
         return Optional.ofNullable(lastMeeting);
     }
 
-    public void setLastMeeting(Instant lastMeeting){
+    public void setLastMeeting(Instant lastMeeting) {
         this.lastMeeting = lastMeeting;
     }
 
@@ -102,6 +103,6 @@ public class Craftsperson {
     }
 
     public String getFullName() {
-        return String.format("%s %s",firstName, lastName);
+        return String.format("%s %s", firstName, lastName);
     }
 }

@@ -1,6 +1,5 @@
 package com.codurance.guru.audits;
 
-import com.codurance.guru.craftspeople.Craftsperson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -22,11 +21,11 @@ public class EventServiceTest {
     public void can_save_an_event() {
         EventService eventService = new EventService(repository);
 
-        Event eventToSave = new Event("Rick","Message 0");
+        Event eventToSave = new Event("Rick", "Message 0");
 
         eventService.addEvent(eventToSave);
 
-        verify(repository, times(1)).save(eventToSave);
+        verify(repository, times(1)).saveAndFlush(eventToSave);
 
     }
 
@@ -36,10 +35,10 @@ public class EventServiceTest {
 
         List<Event> events = new ArrayList<>();
 
-        events.add(new Event("Morty","Message 0"));
-        events.add(new Event("Summer","Message 1"));
-        events.add(new Event("Jerry","Message 2"));
-        events.add(new Event("Beth","Message 3"));
+        events.add(new Event("Morty", "Message 0"));
+        events.add(new Event("Summer", "Message 1"));
+        events.add(new Event("Jerry", "Message 2"));
+        events.add(new Event("Beth", "Message 3"));
 
         when(repository.findAll()).thenReturn(events);
 

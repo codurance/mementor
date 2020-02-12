@@ -2,7 +2,6 @@ import Container from "react-bootstrap/Container";
 import React from "react";
 import { notifyUnexpectedBackendError } from "./util/notify";
 import { api } from "./util/api";
-import { forEach } from "react-bootstrap/cjs/ElementChildren";
 
 export function Audit(props) {
 

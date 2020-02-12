@@ -37,7 +37,7 @@ public class TokenAuthenticator extends HandlerInterceptorAdapter {
     protected boolean authenticateToken(String token, HttpServletRequest request) throws GeneralSecurityException, IOException {
         GoogleIdTokenVerifier verifier = buildGoogleIdTokenVerifier();
         GoogleIdToken idToken = verifier.verify(token);
-        request.getSession().setAttribute("idToken", idToken);
+        request.getSession().setAttribute("name", idToken.getPayload().get("name"));
         return idToken != null;
     }
 

@@ -15,8 +15,8 @@ public class EventService {
         this.repository = repository;
     }
 
-    public void addEvent(Event event) {
-        repository.save(event);
+    public Event addEvent(Event event) {
+        return repository.saveAndFlush(event);
     }
 
     public List<Event> retrieveAll() {
