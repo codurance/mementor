@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,11 +71,11 @@ public class CraftspeopleController {
 
     }
 
-    @PutMapping("craftspeople/mentee/remove/{menteeId}")
-    public ResponseEntity removeMentee(@PathVariable int menteeId) {
-        craftspeopleService.removeMentor(menteeId);
+    @PutMapping("craftspeople/mentee/remove")
+    public ResponseEntity removeMentee(@Valid @RequestBody RemoveMentorRequest request) {
+        craftspeopleService.removeMentor(request.getMenteeId());
 
-        auditor.removeMentee(getActorName(), menteeId);
+        auditor.removeMentee(getActorName(), request);
 
         return ok().build();
     }
@@ -147,9 +146,10 @@ public class CraftspeopleController {
     }
 
     private String getActorName() {
-        var attributeNames = httpServletRequest.getSession().getAttributeNames();
-        if(attributeNames.asIterator().next().equals("name"))
+        try {
             return httpServletRequest.getSession().getAttribute("name").toString();
-        return "Unknown User";
+        } catch (Exception e) {
+            return "Unknown User";
+        }
     }
 }

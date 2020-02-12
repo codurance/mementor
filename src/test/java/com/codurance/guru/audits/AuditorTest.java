@@ -107,9 +107,13 @@ public class AuditorTest {
 
     @Test
     public void can_create_an_event_for_removing_a_mentee_from_a_craftsperson() {
-        Event event = auditor.removeMentee(user, craftspersonOne.getId());
+        RemoveMentorRequest request = new RemoveMentorRequest();
+        request.setMenteeId(craftspersonOne.getId());
+        request.setMentorId(craftspersonTwo.getId());
 
-        assertEquals("Arnaldo Arnaldo removed the mentor of edward rixon",
+        Event event = auditor.removeMentee(user, request);
+
+        assertEquals("Arnaldo Arnaldo removed josito wenzelooooooooooooooooó as a mentor of edward rixon",
                 eventRepository.findById(event.getId()).get().getMessage());
     }
 
@@ -117,10 +121,11 @@ public class AuditorTest {
     public void can_create_an_event_for_removing_the_mentor_of_a_craftsperson() {
         RemoveMentorRequest request = new RemoveMentorRequest();
         request.setMenteeId(craftspersonOne.getId());
+        request.setMentorId(craftspersonTwo.getId());
 
         Event event = auditor.removeMentor(user, request);
 
-        assertEquals("Arnaldo Arnaldo removed the mentor of edward rixon",
+        assertEquals("Arnaldo Arnaldo removed josito wenzelooooooooooooooooó as a mentor of edward rixon",
                 eventRepository.findById(event.getId()).get().getMessage());
     }
 }

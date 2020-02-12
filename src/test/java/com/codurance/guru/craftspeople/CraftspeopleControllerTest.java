@@ -194,12 +194,13 @@ public class CraftspeopleControllerTest {
     }
 
     @Test
-    public void remove_mentee() {
+    public void remove_mentee() throws JSONException {
         given_a_craftsperson_with_a_mentor();
 
+        given_a_json_with_a_mentor_id_and_a_mentee_id(mentor.getId(), savedCraftsperson.getId());
         when_you_remove_the_mentor_from_the_craftsperson();
 
-        then_the_craftsperson_should_not_have_a_mentor();
+        then_the_craftsperson_should_not_have_a_mentor(savedCraftsperson);
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -209,6 +210,7 @@ public class CraftspeopleControllerTest {
 
         JSONObject request = new JSONObject();
         request.put("menteeId", savedCraftsperson.getId());
+        request.put("mentorId", mentor.getId());
 
         RestAssured.given()
                 .contentType("application/json")
@@ -366,6 +368,11 @@ public class CraftspeopleControllerTest {
     private void then_the_craftsperson_should_not_have_a_mentor() {
         //noinspection OptionalGetWithoutIsPresent
         assertTrue(craftspeopleRepository.findById(savedCraftsperson.getId()).get().getMentor().isEmpty());
+    }
+
+    private void then_the_craftsperson_should_not_have_a_mentor(Craftsperson person) {
+        //noinspection OptionalGetWithoutIsPresent
+        assertTrue(craftspeopleRepository.findById(person.getId()).get().getMentor().isEmpty());
     }
 
     private void then_the_last_meeting_is_removed() {
@@ -537,7 +544,8 @@ public class CraftspeopleControllerTest {
     private void when_you_remove_the_mentor_from_the_craftsperson() {
         RestAssured.given()
                 .contentType(ContentType.JSON)
-                .put("craftspeople/mentee/remove/{craftspersonId}", savedCraftsperson.getId())
+                .body(requestBody.toString())
+                .put("craftspeople/mentee/remove")
                 .then()
                 .statusCode(200)
                 .extract()

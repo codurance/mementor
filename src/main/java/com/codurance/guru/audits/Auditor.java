@@ -75,17 +75,19 @@ public class Auditor {
                         getFullName(request.getMentorId()))));
     }
 
-    public Event removeMentee(String actorName, int menteeId) {
+    public Event removeMentee(String actorName, RemoveMentorRequest request) {
         return eventService.addEvent(new Event(actorName,
-                String.format("%s removed the mentor of %s",
+                String.format("%s removed %s as a mentor of %s",
                         actorName,
-                        getFullName(menteeId))));
+                        getFullName(request.getMentorId()),
+                        getFullName(request.getMenteeId()))));
     }
 
     public Event removeMentor(String actorName, RemoveMentorRequest request) {
         return eventService.addEvent(new Event(actorName,
-                String.format("%s removed the mentor of %s",
+                String.format("%s removed %s as a mentor of %s",
                         actorName,
+                        getFullName(request.getMentorId()),
                         getFullName(request.getMenteeId()))));
     }
 
