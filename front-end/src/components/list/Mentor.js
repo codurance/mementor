@@ -52,6 +52,7 @@ export default function Mentor({
       token: idToken,
       type: "POST",
       body: {
+        mentorId: craftsperson.mentor.id,
         menteeId: craftsperson.id
       }
     }).then(response => {

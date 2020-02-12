@@ -55,7 +55,7 @@ function App() {
           <Header/>
           <Switch>
             <Route path="/activities">
-              <Audit/>
+              <Audit idToken={idToken}/>
               <Link to="/">Home</Link>
             </Route>
             <Route exact path="/">

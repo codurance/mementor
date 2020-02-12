@@ -1,24 +1,42 @@
 import Container from "react-bootstrap/Container";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { notifyUnexpectedBackendError } from "./util/notify";
 import { api } from "./util/api";
+import Spinner from "react-bootstrap/Spinner";
+import AuditRow from "./AuditRow";
 
 export function Audit(props) {
 
-  const auditList = () => {
+  const [events, setEvents] = useState(null);
+
+  const eventList = () => {
     api({
-      endpoint: "/audits", token: props.idToken
+      endpoint: "/events", token: props.idToken
     }).then(response => response.json())
+      .then(fetchedEvents => {
+        setEvents(fetchedEvents)
+      })
       .catch(error => {
         notifyUnexpectedBackendError(error);
-        props.backEndError(error);
       });
   };
 
-  return <Container>
-    <h1>HOLA MUNDO</h1>
-    {auditList.map(audit => (
-      <Audit details={audit}/>
-    ))}
-  </Container>;
+  useEffect(() => {
+    eventList();
+  }, [])
+
+  return (
+  <Container>
+    {!events &&
+      <Spinner animation="grow" />
+    }
+    {events && 
+    <Container>
+      {events.map(event => (
+        <AuditRow message={event.message} />
+      ))}
+    </Container>
+    }
+  </Container>
+  );
 }

@@ -57,6 +57,7 @@ export default function Mentees(props) {
           <Mentee
             key={mentee.id}
             refreshCraftspeople={props.refreshCraftspeople}
+            mentor={props.craftsperson}
             mentee={mentee}
             idToken={props.idToken}
           />
