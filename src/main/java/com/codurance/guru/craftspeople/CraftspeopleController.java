@@ -147,8 +147,8 @@ public class CraftspeopleController {
     }
 
     private String getActorName() {
-        var attributeNames = Collections.singletonList(httpServletRequest.getSession().getAttributeNames());
-        if (attributeNames.contains("name"))
+        var attributeNames = httpServletRequest.getSession().getAttributeNames();
+        if(attributeNames.asIterator().next().equals("name"))
             return httpServletRequest.getSession().getAttribute("name").toString();
         return "Unknown User";
     }
