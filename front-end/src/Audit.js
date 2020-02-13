@@ -1,6 +1,5 @@
 import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col"
-import Row from "react-bootstrap/Row";
+import Table from "react-bootstrap/Table";
 import React, { useState, useEffect } from "react";
 import { notifyUnexpectedBackendError } from "./util/notify";
 import { api } from "./util/api";
@@ -27,6 +26,10 @@ export function Audit(props) {
     eventList();
   }, [])
 
+  function sortedEvents() {
+    return events.sort(events.created).reverse();
+  }
+  
   return (
   <Container>
     {!events &&
@@ -34,9 +37,19 @@ export function Audit(props) {
     }
     {events && 
     <Container>
-      {events.map(event => (
-          <AuditRow message={event.message} />
+      <Table striped bordered>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Message</th>
+        </tr>
+      </thead>
+      <tbody>
+      {sortedEvents().map(event => (
+          <AuditRow event={event} />
       ))}
+      </tbody>
+      </Table>
     </Container>
     }
   </Container>

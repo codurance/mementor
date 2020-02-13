@@ -149,6 +149,7 @@ public class CraftspeopleController {
         try {
             return httpServletRequest.getSession().getAttribute("name").toString();
         } catch (Exception e) {
+            //  nice
             return "Unknown User";
         }
     }
