@@ -36,7 +36,7 @@ function App() {
   }, [idToken]);
 
   const refreshConfig = useCallback(() => {
-    if (!isUserLoggedIn) {
+    if (!isUserLoggedIn()) {
       // the api calls will fail because we're not authorized
       return;
     }
@@ -44,7 +44,7 @@ function App() {
     api({ endpoint: `/config`, token: idToken })
       .then(response => response.json())
       .then(body =>
-        setLastMeetingThresholdsInWeeks(lastMeetingThresholdsInWeeks)
+        setLastMeetingThresholdsInWeeks(body.lastMeetingThresholdsInWeeks)
       )
       .catch(notifyUnexpectedBackendError);
   }, [idToken, isUserLoggedIn]);

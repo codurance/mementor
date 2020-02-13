@@ -1,6 +1,5 @@
 import React from "react";
 import Moment from 'moment';
-import { ListGroup, Col, Row } from "react-bootstrap"
 
 export default function EventRow(props) {
     return (
