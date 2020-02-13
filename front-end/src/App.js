@@ -36,11 +36,6 @@ function App() {
   }, [idToken]);
 
   const refreshConfig = useCallback(() => {
-    if (!isUserLoggedIn()) {
-      // the api calls will fail because we're not authorized
-      return;
-    }
-
     api({ endpoint: `/config`, token: idToken })
       .then(response => response.json())
       .then(body =>
@@ -77,7 +72,6 @@ function App() {
               <Route exact path="/">
                 <MainView
                   idToken={idToken}
-                  isUserLoggedIn={isUserLoggedIn}
                   backEndError={setBackendFetchError}
                   refreshConfig={refreshConfig}
                   lastMeetingThresholdsInWeeks={lastMeetingThresholdsInWeeks}
