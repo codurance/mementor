@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
-import logo from "./mementor_logo.png";
+import logo from "../mementor_logo.png";
 import GoogleLogin from "react-google-login";
 import React from "react";
 

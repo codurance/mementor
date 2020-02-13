@@ -1,12 +1,12 @@
 import Container from "react-bootstrap/Container";
-import SearchBar from "./components/toolbar/SearchBar";
-import { Toolbar } from "./Toolbar";
+import SearchBar from "../components/toolbar/SearchBar";
+import { Toolbar } from "../components/toolbar/Toolbar";
 import React, { useCallback, useEffect, useState } from "react";
-import { api } from "./util/api";
-import { notifyUnexpectedBackendError } from "./util/notify";
-import CraftspersonRow from "./components/list/CraftspersonRow";
-import { filter } from "./util/filtering";
-import { sortByCraftspeopleWithoutMentor, sortByLastMeetingDate, sortByNumberOfMentees } from "./util/sorting";
+import { api } from "../util/api";
+import { notifyUnexpectedBackendError } from "../util/notify";
+import CraftspersonRow from "../components/list/CraftspersonRow";
+import { filter } from "../util/filtering";
+import { sortByCraftspeopleWithoutMentor, sortByLastMeetingDate, sortByNumberOfMentees } from "../util/sorting";
 
 export function MainView(props) {
 
@@ -74,7 +74,6 @@ export function MainView(props) {
              idToken={props.idToken}
              lastMeetingThresholdDefaultValue={props.lastMeetingThresholdsInWeeks}
     />
-    <Container>
       {getList().map(craftsperson => (
         <CraftspersonRow
           key={craftsperson.id}
@@ -85,6 +84,5 @@ export function MainView(props) {
           idToken={props.idToken}
         />
       ))}
-    </Container>
   </Container>;
 }

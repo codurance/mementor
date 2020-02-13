@@ -1,6 +1,6 @@
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { SortingBar } from "./components/toolbar/SortingBar";
+import { SortingBar } from "./SortingBar";
 import { AdminToolbar } from "./AdminToolbar";
 import * as PropTypes from "prop-types";
 import React from "react";

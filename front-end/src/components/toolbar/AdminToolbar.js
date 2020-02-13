@@ -1,4 +1,4 @@
-import ManageCraftsperson from "./components/admin/ManageCraftsperson";
+import ManageCraftsperson from "../admin/ManageCraftsperson";
 import * as PropTypes from "prop-types";
 import React from "react";
 
