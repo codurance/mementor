@@ -146,11 +146,9 @@ public class CraftspeopleController {
     }
 
     private String getActorName() {
-        try {
+        if(httpServletRequest.getSession().getAttribute("name") != null)
             return httpServletRequest.getSession().getAttribute("name").toString();
-        } catch (Exception e) {
-            //  nice
-            return "Unknown User";
-        }
+
+        return "Unknown User";
     }
 }
