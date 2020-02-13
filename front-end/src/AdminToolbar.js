@@ -1,11 +1,10 @@
-import { Link } from "react-router-dom";
 import ManageCraftsperson from "./components/admin/ManageCraftsperson";
 import * as PropTypes from "prop-types";
 import React from "react";
 
 export function AdminToolbar(props) {
   return <>
-    <Link to="/activities">Activities</Link>
+    
     <ManageCraftsperson
       craftspeople={props.craftspeople.list}
       refreshCraftspeople={props.refreshCraftspeople}

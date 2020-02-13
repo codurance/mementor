@@ -9,10 +9,11 @@ import CraftspersonList from "./CraftspersonList";
 import "./ManageCraftsperson.css";
 import { api } from "../../util/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
+import { faCog, faThList } from "@fortawesome/free-solid-svg-icons";
 import { validateName } from "../../util/validate";
 import { handleResponse, notifyFormValidationError } from "../../util/notify";
 import LastMeetingThreshold from "./LastMeetingThreshold";
+import { Link } from "react-router-dom";
 
 export default function ManageCraftsperson(props) {
   const [show, setShow] = useState(false);
@@ -83,6 +84,11 @@ export default function ManageCraftsperson(props) {
 
   return (
     <Row className="admin-button">
+      <Link className="event-button" to="/events">
+        <Button variant="secondary">
+          <FontAwesomeIcon icon={faThList} /> Events
+        </Button>
+      </Link>
       <Button
         variant="secondary"
         data-testid="adminPopupButton"
