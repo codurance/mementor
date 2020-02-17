@@ -24,14 +24,12 @@ import java.util.UUID;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
         classes = GuruApplication.class,
-        webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CraftspeopleControllerTest {
 
     @LocalServerPort
@@ -144,7 +142,7 @@ public class CraftspeopleControllerTest {
     }
 
     @Test
-    public void cant_be_mentee_of_oneself() throws JSONException{
+    public void cant_be_mentee_of_oneself() throws JSONException {
         given_a_json_with_a_mentor_and_a_mentee_with_the_same_id();
 
         when_the_post_method_on_the_api_is_called_to_add_a_mentee_to_a_craftsperson_with_an_invalid_request_body();
@@ -153,7 +151,7 @@ public class CraftspeopleControllerTest {
     }
 
     @Test
-    public void cant_have_duplicate_mentees_as_a_mentor() throws JSONException{
+    public void cant_have_duplicate_mentees_as_a_mentor() throws JSONException {
         given_a_craftsperson_with_a_mentor();
         given_a_json_with_a_mentor_id_and_a_mentee_id(mentor.getId(), savedCraftsperson.getId());
 
@@ -196,12 +194,13 @@ public class CraftspeopleControllerTest {
     }
 
     @Test
-    public void remove_mentee() {
+    public void remove_mentee() throws JSONException {
         given_a_craftsperson_with_a_mentor();
 
+        given_a_json_with_a_mentor_id_and_a_mentee_id(mentor.getId(), savedCraftsperson.getId());
         when_you_remove_the_mentor_from_the_craftsperson();
 
-        then_the_craftsperson_should_not_have_a_mentor();
+        then_the_craftsperson_should_not_have_a_mentor(savedCraftsperson);
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -211,6 +210,7 @@ public class CraftspeopleControllerTest {
 
         JSONObject request = new JSONObject();
         request.put("menteeId", savedCraftsperson.getId());
+        request.put("mentorId", mentor.getId());
 
         RestAssured.given()
                 .contentType("application/json")
@@ -354,7 +354,7 @@ public class CraftspeopleControllerTest {
                 .body("mentor.firstName", equalTo(mentor.getFirstName()))
                 .body("mentor.lastName", equalTo(mentor.getLastName()))
                 .body("mentor.id", equalTo(mentor.getId()))
-                .body("lastMeeting", equalTo((int)savedCraftsperson.getLastMeeting().get().getEpochSecond()));
+                .body("lastMeeting", equalTo((int) savedCraftsperson.getLastMeeting().get().getEpochSecond()));
     }
 
     private void then_the_craftsperson_retrieved_has_mentees() {
@@ -368,6 +368,11 @@ public class CraftspeopleControllerTest {
     private void then_the_craftsperson_should_not_have_a_mentor() {
         //noinspection OptionalGetWithoutIsPresent
         assertTrue(craftspeopleRepository.findById(savedCraftsperson.getId()).get().getMentor().isEmpty());
+    }
+
+    private void then_the_craftsperson_should_not_have_a_mentor(Craftsperson person) {
+        //noinspection OptionalGetWithoutIsPresent
+        assertTrue(craftspeopleRepository.findById(person.getId()).get().getMentor().isEmpty());
     }
 
     private void then_the_last_meeting_is_removed() {
@@ -408,7 +413,7 @@ public class CraftspeopleControllerTest {
 
     private void then_the_response_should_contain_the_existing_craftsperson_error() {
         response.then().assertThat()
-            .body("message", equalTo("Craftsperson already exists."));
+                .body("message", equalTo("Craftsperson already exists."));
     }
 
     private void then_the_response_should_contain_the_last_meeting_error() {
@@ -443,7 +448,7 @@ public class CraftspeopleControllerTest {
                 .statusCode(200);
     }
 
-    private void when_the_get_method_is_called_to_query_the_added_craftsperson(){
+    private void when_the_get_method_is_called_to_query_the_added_craftsperson() {
         craftspeople = craftspeopleRepository.findByFirstNameAndLastName(craftspersonOne.getFirstName(), craftspersonOne.getLastName());
     }
 
@@ -516,13 +521,13 @@ public class CraftspeopleControllerTest {
 
     private void when_the_post_method_on_the_api_is_called_to_add_a_mentee_to_a_craftsperson_with_an_invalid_request_body() {
         response = RestAssured.given()
-            .contentType(ContentType.JSON)
-            .body(requestBody.toString())
-            .put("craftspeople/mentee/add")
-            .then()
-            .statusCode(400)
-            .extract()
-            .response();
+                .contentType(ContentType.JSON)
+                .body(requestBody.toString())
+                .put("craftspeople/mentee/add")
+                .then()
+                .statusCode(400)
+                .extract()
+                .response();
     }
 
     private void when_the_post_method_on_the_api_is_called_to_add_a_mentor_to_a_craftsperson() {
@@ -539,7 +544,8 @@ public class CraftspeopleControllerTest {
     private void when_you_remove_the_mentor_from_the_craftsperson() {
         RestAssured.given()
                 .contentType(ContentType.JSON)
-                .put("craftspeople/mentee/remove/{craftspersonId}", savedCraftsperson.getId())
+                .body(requestBody.toString())
+                .put("craftspeople/mentee/remove")
                 .then()
                 .statusCode(200)
                 .extract()

@@ -1,5 +1,6 @@
 package com.codurance.guru.craftspeople;
 
+import com.codurance.guru.audits.Auditor;
 import com.codurance.guru.craftspeople.exceptions.*;
 import com.codurance.guru.craftspeople.requests.AddCraftspersonRequest;
 import com.codurance.guru.craftspeople.requests.AddMentorRequest;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -23,10 +25,19 @@ public class CraftspeopleController {
     @Autowired
     private CraftspeopleService craftspeopleService;
 
+    @Autowired
+    private HttpServletRequest httpServletRequest;
+
+    @Autowired
+    private Auditor auditor;
+
     @PostMapping("/craftspeople/mentor/add")
     public ResponseEntity addMentor(@Valid @RequestBody AddMentorRequest request) {
         try {
             craftspeopleService.addMentor(request.getMentorId(), request.getMenteeId());
+
+            auditor.addMentor(getActorName(), request.getMentorId(), request.getMenteeId());
+
             return ResponseEntity.noContent().build();
 
         } catch (DuplicateMenteeException ex) {
@@ -40,6 +51,9 @@ public class CraftspeopleController {
     public ResponseEntity addNewCraftsperson(@Valid @RequestBody AddCraftspersonRequest request) {
         try {
             Craftsperson craftsperson = craftspeopleService.addCraftsperson(request.getFirstName(), request.getLastName());
+
+            auditor.addCraftsperson(getActorName(), request.getFirstName(), request.getLastName());
+
             return ok(craftsperson.getId());
         } catch (ExistingCraftspersonException ex) {
             return badRequest().body(new ErrorResponse("Craftsperson already exists."));
@@ -48,19 +62,30 @@ public class CraftspeopleController {
 
     @DeleteMapping("/craftspeople/{craftspersonId}")
     public ResponseEntity deleteCraftsperson(@PathVariable Integer craftspersonId) {
+        String craftspersonName = craftspeopleService.retrieveCraftsperson(craftspersonId).get().getFullName();
         craftspeopleService.deleteCraftsperson(craftspersonId);
+
+        auditor.deleteCraftsperson(getActorName(), craftspersonName);
+
         return ok().build();
+
     }
 
-    @PutMapping("craftspeople/mentee/remove/{menteeId}")
-    public ResponseEntity removeMentee(@PathVariable int menteeId) {
-        craftspeopleService.removeMentor(menteeId);
+    @PutMapping("craftspeople/mentee/remove")
+    public ResponseEntity removeMentee(@Valid @RequestBody RemoveMentorRequest request) {
+        craftspeopleService.removeMentor(request.getMenteeId());
+
+        auditor.removeMentee(getActorName(), request.getMentorId(), request.getMenteeId());
+
         return ok().build();
     }
 
     @PostMapping("/craftspeople/mentor/remove")
-    public ResponseEntity<Void> removeMentor(@Valid @RequestBody RemoveMentorRequest request) {
+    public ResponseEntity removeMentor(@Valid @RequestBody RemoveMentorRequest request) {
         craftspeopleService.removeMentor(request.getMenteeId());
+
+        auditor.removeMentor(getActorName(), request.getMentorId(), request.getMenteeId());
+
         return ResponseEntity.noContent().build();
     }
 
@@ -72,6 +97,7 @@ public class CraftspeopleController {
     @GetMapping("/craftspeople/{craftspersonId}")
     public ResponseEntity retrieveCraftsperson(@PathVariable Integer craftspersonId) {
         Optional<Craftsperson> retrievedCraftsperson = craftspeopleService.retrieveCraftsperson(craftspersonId);
+
         return retrievedCraftsperson
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> notFound().build());
@@ -81,6 +107,9 @@ public class CraftspeopleController {
     public ResponseEntity<ErrorResponse> setLastMeeting(@Valid @RequestBody UpdateLastMeetingRequest request) {
         try {
             craftspeopleService.setLastMeeting(request.getCraftspersonId(), request.getLastMeeting());
+
+            auditor.setLastMeeting(getActorName(), request.getCraftspersonId(), request.getLastMeeting());
+
             return noContent().build();
         } catch (InvalidLastMeetingDateException ex) {
             return badRequest().body(new ErrorResponse("The last meeting date is too far in the future"));
@@ -91,6 +120,9 @@ public class CraftspeopleController {
     public ResponseEntity<ErrorResponse> removeLastMeeting(@PathVariable Integer craftspersonId) {
         try {
             craftspeopleService.removeLastMeeting(craftspersonId);
+
+            auditor.removeLastMeeting(getActorName(), craftspersonId);
+
             return noContent().build();
         } catch (CraftspersonDoesntExistException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("That craftsperson doesn't exist"));
@@ -103,11 +135,21 @@ public class CraftspeopleController {
             craftspeopleService.setMentee(
                     request.getMentorId(),
                     request.getMenteeId());
+
+            auditor.setMentee(getActorName(), request.getMenteeId(), request.getMentorId());
+
             return ok().build();
         } catch (InvalidMentorRelationshipException ex) {
             return badRequest().body(new ErrorResponse("Cant add a craftsperson as their own mentor"));
         } catch (DuplicateMenteeException ex) {
             return badRequest().body(new ErrorResponse("Mentee already exists"));
         }
+    }
+
+    private String getActorName() {
+        if(httpServletRequest.getSession().getAttribute("name") != null)
+            return httpServletRequest.getSession().getAttribute("name").toString();
+
+        return "Unknown User";
     }
 }

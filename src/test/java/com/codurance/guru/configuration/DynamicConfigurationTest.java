@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest(
         classes = GuruApplication.class,
-        webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class DynamicConfigurationTest {
 
     @Autowired
@@ -137,6 +137,6 @@ public class DynamicConfigurationTest {
 
     private void then_there_is_an_error_with(String message) {
         response.statusCode(400)
-                .body("message", equalTo(   message));
+                .body("message", equalTo(message));
     }
 }

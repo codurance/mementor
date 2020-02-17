@@ -67,3 +67,7 @@
 .card-header {
   padding: 0rem;
 }
+
+.App__home-button {
+  margin: 10px 30px;
+}
