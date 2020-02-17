@@ -36,7 +36,7 @@ public class CraftspeopleController {
         try {
             craftspeopleService.addMentor(request.getMentorId(), request.getMenteeId());
 
-            auditor.addMentor(getActorName(), request);
+            auditor.addMentor(getActorName(), request.getMentorId(), request.getMenteeId());
 
             return ResponseEntity.noContent().build();
 
@@ -52,7 +52,7 @@ public class CraftspeopleController {
         try {
             Craftsperson craftsperson = craftspeopleService.addCraftsperson(request.getFirstName(), request.getLastName());
 
-            auditor.addCraftsperson(getActorName(), request);
+            auditor.addCraftsperson(getActorName(), request.getFirstName(), request.getLastName());
 
             return ok(craftsperson.getId());
         } catch (ExistingCraftspersonException ex) {
@@ -75,7 +75,7 @@ public class CraftspeopleController {
     public ResponseEntity removeMentee(@Valid @RequestBody RemoveMentorRequest request) {
         craftspeopleService.removeMentor(request.getMenteeId());
 
-        auditor.removeMentee(getActorName(), request);
+        auditor.removeMentee(getActorName(), request.getMentorId(), request.getMenteeId());
 
         return ok().build();
     }
@@ -84,7 +84,7 @@ public class CraftspeopleController {
     public ResponseEntity removeMentor(@Valid @RequestBody RemoveMentorRequest request) {
         craftspeopleService.removeMentor(request.getMenteeId());
 
-        auditor.removeMentor(getActorName(), request);
+        auditor.removeMentor(getActorName(), request.getMentorId(), request.getMenteeId());
 
         return ResponseEntity.noContent().build();
     }
@@ -97,6 +97,7 @@ public class CraftspeopleController {
     @GetMapping("/craftspeople/{craftspersonId}")
     public ResponseEntity retrieveCraftsperson(@PathVariable Integer craftspersonId) {
         Optional<Craftsperson> retrievedCraftsperson = craftspeopleService.retrieveCraftsperson(craftspersonId);
+
         return retrievedCraftsperson
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> notFound().build());
@@ -107,7 +108,7 @@ public class CraftspeopleController {
         try {
             craftspeopleService.setLastMeeting(request.getCraftspersonId(), request.getLastMeeting());
 
-            auditor.setLastMeeting(getActorName(), request);
+            auditor.setLastMeeting(getActorName(), request.getCraftspersonId(), request.getLastMeeting());
 
             return noContent().build();
         } catch (InvalidLastMeetingDateException ex) {
@@ -135,7 +136,7 @@ public class CraftspeopleController {
                     request.getMentorId(),
                     request.getMenteeId());
 
-            auditor.setMentee(getActorName(), request);
+            auditor.setMentee(getActorName(), request.getMenteeId(), request.getMentorId());
 
             return ok().build();
         } catch (InvalidMentorRelationshipException ex) {

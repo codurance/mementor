@@ -3,10 +3,6 @@ package com.codurance.guru.audits;
 import com.codurance.guru.GuruApplication;
 import com.codurance.guru.craftspeople.CraftspeopleRepository;
 import com.codurance.guru.craftspeople.Craftsperson;
-import com.codurance.guru.craftspeople.requests.AddCraftspersonRequest;
-import com.codurance.guru.craftspeople.requests.AddMentorRequest;
-import com.codurance.guru.craftspeople.requests.RemoveMentorRequest;
-import com.codurance.guru.craftspeople.requests.UpdateLastMeetingRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,11 +43,7 @@ public class AuditorTest {
 
     @Test
     public void can_create_an_event_for_adding_a_mentor_with_correct_message_details() {
-        AddMentorRequest request = new AddMentorRequest();
-        request.setMentorId(craftspersonOne.getId());
-        request.setMenteeId(craftspersonTwo.getId());
-
-        Event event = auditor.addMentor(user, request);
+        Event event = auditor.addMentor(user, craftspersonOne.getId(), craftspersonTwo.getId());
 
         assertEquals("Arnaldo Arnaldo added edward rixon as a mentor to josito wenzelooooooooooooooooó",
                 eventRepository.findById(event.getId()).get().getMessage());
@@ -59,11 +51,7 @@ public class AuditorTest {
 
     @Test
     public void can_create_an_event_for_adding_a_craftsperson() {
-        AddCraftspersonRequest request = new AddCraftspersonRequest();
-        request.setFirstName("edward");
-        request.setLastName("rixon");
-
-        Event event = auditor.addCraftsperson(user, request);
+        Event event = auditor.addCraftsperson(user, "edward", "rixon");
 
         assertEquals("Arnaldo Arnaldo added edward rixon as a new craftsperson",
                 eventRepository.findById(event.getId()).get().getMessage());
@@ -79,11 +67,7 @@ public class AuditorTest {
 
     @Test
     public void can_create_an_event_for_setting_the_last_meeting() {
-        UpdateLastMeetingRequest request = new UpdateLastMeetingRequest();
-        request.setCraftspersonId(craftspersonOne.getId());
-        request.setLastMeeting(1501234567);
-
-        Event event = auditor.setLastMeeting(user, request);
+        Event event = auditor.setLastMeeting(user, craftspersonOne.getId(), 1501234567);
 
         assertEquals("Arnaldo Arnaldo updated the last meeting for edward rixon to 28/07/2017",
                 eventRepository.findById(event.getId()).get().getMessage());
@@ -99,37 +83,25 @@ public class AuditorTest {
 
     @Test
     public void can_create_an_event_for_setting_the_mentee_for_a_craftsperson() {
-        AddMentorRequest request = new AddMentorRequest();
-        request.setMentorId(craftspersonOne.getId());
-        request.setMenteeId(craftspersonTwo.getId());
+        Event event = auditor.setMentee(user, craftspersonOne.getId(), craftspersonTwo.getId());
 
-        Event event = auditor.setMentee(user, request);
-
-        assertEquals("Arnaldo Arnaldo added josito wenzelooooooooooooooooó as a mentee to edward rixon",
+        assertEquals("Arnaldo Arnaldo added edward rixon as a mentee to josito wenzelooooooooooooooooó",
                 eventRepository.findById(event.getId()).get().getMessage());
     }
 
     @Test
     public void can_create_an_event_for_removing_a_mentee_from_a_craftsperson() {
-        RemoveMentorRequest request = new RemoveMentorRequest();
-        request.setMenteeId(craftspersonOne.getId());
-        request.setMentorId(craftspersonTwo.getId());
+        Event event = auditor.removeMentee(user, craftspersonOne.getId(), craftspersonTwo.getId());
 
-        Event event = auditor.removeMentee(user, request);
-
-        assertEquals("Arnaldo Arnaldo removed josito wenzelooooooooooooooooó as a mentor of edward rixon",
+        assertEquals("Arnaldo Arnaldo removed edward rixon as a mentor of josito wenzelooooooooooooooooó",
                 eventRepository.findById(event.getId()).get().getMessage());
     }
 
     @Test
     public void can_create_an_event_for_removing_the_mentor_of_a_craftsperson() {
-        RemoveMentorRequest request = new RemoveMentorRequest();
-        request.setMenteeId(craftspersonOne.getId());
-        request.setMentorId(craftspersonTwo.getId());
+        Event event = auditor.removeMentor(user, craftspersonOne.getId(), craftspersonTwo.getId());
 
-        Event event = auditor.removeMentor(user, request);
-
-        assertEquals("Arnaldo Arnaldo removed josito wenzelooooooooooooooooó as a mentor of edward rixon",
+        assertEquals("Arnaldo Arnaldo removed edward rixon as a mentor of josito wenzelooooooooooooooooó",
                 eventRepository.findById(event.getId()).get().getMessage());
     }
 }

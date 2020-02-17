@@ -1,10 +1,6 @@
 package com.codurance.guru.audits;
 
-import com.codurance.guru.craftspeople.CraftspeopleRepository;
-import com.codurance.guru.craftspeople.requests.AddCraftspersonRequest;
-import com.codurance.guru.craftspeople.requests.AddMentorRequest;
-import com.codurance.guru.craftspeople.requests.RemoveMentorRequest;
-import com.codurance.guru.craftspeople.requests.UpdateLastMeetingRequest;
+import com.codurance.guru.craftspeople.CraftspeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,43 +16,43 @@ public class Auditor {
     EventService eventService;
 
     @Autowired
-    CraftspeopleRepository craftspeopleRepository;
+    CraftspeopleService craftspeopleService;
 
-    public Auditor(EventService eventService, CraftspeopleRepository craftspeopleRepository) {
+    public Auditor(EventService eventService, CraftspeopleService craftspeopleService) {
         this.eventService = eventService;
-        this.craftspeopleRepository = craftspeopleRepository;
+        this.craftspeopleService = craftspeopleService;
     }
 
-    public Event addMentor(String actorName, AddMentorRequest request) {
+    public Event addMentor(String actorName, int mentorId, int menteeId) {
         return eventService.addEvent(new Event(actorName,
                 String.format("%s added %s as a mentor to %s",
                         actorName,
-                        getFullName(request.getMentorId()),
-                        getFullName(request.getMenteeId()))));
+                        getFullName(mentorId),
+                        getFullName(menteeId))));
     }
 
-    public Event addCraftsperson(String actorName, AddCraftspersonRequest request) {
+    public Event addCraftsperson(String actorName, String firstName, String lastName) {
         return eventService.addEvent(new Event(actorName,
                 String.format("%s added %s %s as a new craftsperson",
                         actorName,
-                        request.getFirstName(),
-                        request.getLastName())));
+                        firstName,
+                        lastName)));
     }
 
-    public Event deleteCraftsperson(String actorName, String craftspersonBeingDeletedName) {
+    public Event deleteCraftsperson(String actorName, String fullName) {
         return eventService.addEvent(new Event(actorName,
                 String.format("%s deleted %s from the system",
                         actorName,
-                        craftspersonBeingDeletedName)));
+                        fullName)));
     }
 
-    public Event setLastMeeting(String actorName, UpdateLastMeetingRequest request) {
-        Instant lastMeetingInstant = Instant.ofEpochSecond(request.getLastMeeting());
+    public Event setLastMeeting(String actorName, int craftspersonId, Integer lastMeetingSeconds) {
+        Instant lastMeetingInstant = Instant.ofEpochSecond(lastMeetingSeconds);
 
         return eventService.addEvent(new Event(actorName,
                 String.format("%s updated the last meeting for %s to %s",
                         actorName,
-                        getFullName(request.getCraftspersonId()),
+                        getFullName(craftspersonId),
                         getDateAsString(lastMeetingInstant))));
     }
 
@@ -67,32 +63,32 @@ public class Auditor {
                         getFullName(craftspersonId))));
     }
 
-    public Event setMentee(String actorName, AddMentorRequest request) {
+    public Event setMentee(String actorName, int menteeId, int mentorId) {
         return eventService.addEvent(new Event(actorName,
                 String.format("%s added %s as a mentee to %s",
                         actorName,
-                        getFullName(request.getMenteeId()),
-                        getFullName(request.getMentorId()))));
+                        getFullName(menteeId),
+                        getFullName(mentorId))));
     }
 
-    public Event removeMentee(String actorName, RemoveMentorRequest request) {
+    public Event removeMentee(String actorName, int mentorId, int menteeId) {
         return eventService.addEvent(new Event(actorName,
                 String.format("%s removed %s as a mentor of %s",
                         actorName,
-                        getFullName(request.getMentorId()),
-                        getFullName(request.getMenteeId()))));
+                        getFullName(mentorId),
+                        getFullName(menteeId))));
     }
 
-    public Event removeMentor(String actorName, RemoveMentorRequest request) {
+    public Event removeMentor(String actorName, int mentorId, int menteeId) {
         return eventService.addEvent(new Event(actorName,
                 String.format("%s removed %s as a mentor of %s",
                         actorName,
-                        getFullName(request.getMentorId()),
-                        getFullName(request.getMenteeId()))));
+                        getFullName(mentorId),
+                        getFullName(menteeId))));
     }
 
     private String getFullName(int craftspersonId) {
-        return craftspeopleRepository.findById(craftspersonId).get().getFullName();
+        return craftspeopleService.retrieveCraftsperson(craftspersonId).get().getFullName();
     }
 
     private String getDateAsString(Instant lastMeetingInstant) {
