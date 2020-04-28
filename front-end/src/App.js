@@ -27,7 +27,7 @@ function App() {
 
   function successfulLogin(googleUser) {
     setBackendFetchError(null);
-    const id_token = googleUser.getAuthResponse().id_token;
+    const id_token = 'googleUser.getAuthResponse().id_token';
     setIdToken(id_token);
   }
 
@@ -47,8 +47,8 @@ function App() {
   return (
     <div className="App">
       <Router>
-        {!isUserLoggedIn() && <Login onSuccess={successfulLogin} />}
-        {isUserLoggedIn() && (
+        {/* {!isUserLoggedIn() && <Login onSuccess={successfulLogin} />} */}
+        {/* {isUserLoggedIn() && ( */}
           <div>
             {backendFetchError && <ErrorFetch />}
             <Container>
@@ -79,7 +79,7 @@ function App() {
               </Route>
             </Switch>
           </div>
-        )}
+        {/* )} */}
       </Router>
     </div>
   );

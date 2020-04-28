@@ -2,11 +2,14 @@ branch-defaults:
   ebconfig:
     environment: mementor-integration
   master:
-    environment: mementor-integration
+    environment: mementor-production
 deploy:
   artifact: target/mementor-aws.zip
 environment-defaults:
   mementor-integration:
+    branch: null
+    repository: null
+  mementor-production:
     branch: null
     repository: null
 global:
