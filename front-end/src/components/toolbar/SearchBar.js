@@ -26,6 +26,7 @@ export default function SearchBar({ searchValue, updateSearchValue }) {
       <FormControl
         ref={searchedInputElement => (searchInputRef = searchedInputElement)}
         className="searchBarInput"
+        id="SearchBarInput"
         data-testid="SearchBarInput"
         aria-label="Craftsperson searchbar"
         aria-describedby="basic-addon1"

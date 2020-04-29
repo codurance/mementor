@@ -15,7 +15,8 @@ export default function Craftsperson({
   return (
     <Row>
       <Col lg className="craftsperson-name-container">
-        <h4 className="craftsperson-name" data-testid="craftspersonName">
+        <h4 className="craftsperson-name"
+            data-testid="craftspersonName">
           {craftsperson.firstName} {craftsperson.lastName}
         </h4>
       </Col>

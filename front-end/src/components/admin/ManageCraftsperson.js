@@ -91,6 +91,7 @@ export default function ManageCraftsperson(props) {
       </Link>
       <Button
         variant="secondary"
+        id="adminPopupButton"
         data-testid="adminPopupButton"
         onClick={handleShow}
       >
@@ -136,7 +137,10 @@ export default function ManageCraftsperson(props) {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="light" onClick={handleClose}>
+          <Button
+              id="cancelCraftspersonButton"
+              variant="light"
+              onClick={handleClose}>
             Cancel
           </Button>
           <Button
