@@ -115,6 +115,7 @@ export default function ManageCraftsperson(props) {
             refreshConfig={props.refreshConfig}
           />
           <h5 className="admin-label">New craftsperson</h5>
+          <div>
           <InputGroup className="mb-3">
             <FormControl
               required
@@ -127,9 +128,12 @@ export default function ManageCraftsperson(props) {
               placeholder="Last Name..."
             />
             <InputGroup.Append>
+            <div>
               <Button onClick={() => addCraftsperson()}>Add</Button>
+              </div>
             </InputGroup.Append>
           </InputGroup>
+          </div>
           <h5 className="admin-label">Existing craftspeople</h5>
           <CraftspersonList
             craftspeople={props.craftspeople}

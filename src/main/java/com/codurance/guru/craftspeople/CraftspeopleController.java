@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import static org.springframework.http.ResponseEntity.*;
 
@@ -52,10 +53,14 @@ public class CraftspeopleController {
         try {
             Craftsperson craftsperson = craftspeopleService.addCraftsperson(request.getFirstName(), request.getLastName());
 
+            Random random = new Random();
+            if (random.nextBoolean()) {
+                Thread.sleep(15000);
+            }
             auditor.addCraftsperson(getActorName(), request.getFirstName(), request.getLastName());
 
             return ok(craftsperson.getId());
-        } catch (ExistingCraftspersonException ex) {
+        } catch (ExistingCraftspersonException | InterruptedException ex) {
             return badRequest().body(new ErrorResponse("Craftsperson already exists."));
         }
     }
