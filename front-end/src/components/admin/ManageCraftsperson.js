@@ -118,15 +118,15 @@ export default function ManageCraftsperson(props) {
             <FormControl
               required
               onChange={handleFirstName}
-              placeholder="First Name..."
+              placeholder="First Name"
             />
             <FormControl
               required
               onChange={handleLastName}
-              placeholder="Last Name..."
+              placeholder="Last Name"
             />
             <InputGroup.Append>
-              <Button onClick={() => addCraftsperson()}>Add</Button>
+              <Button onClick={() => addCraftsperson()}>Create</Button>
             </InputGroup.Append>
           </InputGroup>
           <h5 className="admin-label">Existing craftspeople</h5>
